@@ -14,8 +14,12 @@ class Wall:
             self.start = Vector(ax, ay)
             self.end = Vector(bx, by)
 
-    def distance_to(self, p):
-        """The shortest distance from the wall to point p."""
+
+    def projection(self, p):
+        """Return the projection of a point on this wall.
+
+        If the point is outside the wall, return the nearest end point."""
+
         #    From http://www.codeguru.com/forum/showthread.php?t=194400:
         #
         #    Let the point be C (Cx,Cy) and the line be AB (Ax,Ay) to (Bx,By).
@@ -50,39 +54,25 @@ class Wall:
 
         if r > 1:
             # The point p is past the end of the wall
-            return p.distance_to(self.end)
+            return self.end
         if r < 0:
             # The point p is past the beginning of the wall
-            return p.distance_to(self.start)
+            return self.start
 
-        P = Vector(self.start.x + r*(self.end.x-self.start.x),
+        return Vector(self.start.x + r*(self.end.x-self.start.x),
                 self.start.y + r*(self.end.y-self.start.y))
 
-        return P.distance_to(p)
+    def distance_to(self, p):
+        """The shortest distance from the wall to point p."""
+
+        return self.projection(p).distance_to(p)
 
         
     def length(self):
         return self.start.distance_to(self.end)
 
-    def screen_coords(self, width, height, factor):
-        self.start.screen_coords(width, height, factor)
-        self.end.screen_coords(width, height, factor)
-
     def clone(self):
         return Wall(self.start.clone(), self.end.clone())
-
-    def multiplied(self, x):
-        s = self.start * x
-        e = self.end * x
-        return Wall(s, e)
-
-
-    def translated(self, dx, dy):
-        s = self.start.clone()
-        e = self.end.clone()
-        s.slide_xy(dx, dy)
-        e.slide_xy(dx, dy)
-        return Wall(s, e)
 
 if __name__ == "__main__":
     p = Vector(12,-2)

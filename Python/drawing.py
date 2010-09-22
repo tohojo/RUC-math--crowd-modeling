@@ -35,11 +35,33 @@ class Canvas:
         pygame.display.flip()
 
     def draw_wall(self, w):
-        w = w.clone()
-        w.screen_coords(SCREEN_WIDTH, SCREEN_HEIGHT, PIXEL_FACTOR)
-        pygame.draw.line(self.screen, DRAW_COLOR, w.start.as_tuple(), w.end.as_tuple())
+        pygame.draw.line(self.screen, DRAW_COLOR, 
+                Helper.screen_coords(w.start), 
+                Helper.screen_coords(w.end))
 
     def draw_actor(self, a):
-        a = a.clone()
-        a.screen_coords(SCREEN_WIDTH, SCREEN_HEIGHT, PIXEL_FACTOR)
-        pygame.draw.circle(self.screen, DRAW_COLOR, a.as_tuple(), a.radius)
+        pygame.draw.circle(self.screen, DRAW_COLOR, 
+                Helper.screen_coords(a), Helper.screen_radius(a.radius))
+
+
+class Helper:
+
+    @staticmethod
+    def screen_coords(x, y = None):
+        if hasattr(x, "as_tuple"):
+            (x, y) = x.as_tuple()
+        x *= PIXEL_FACTOR
+        y *= -PIXEL_FACTOR
+
+        shift_w = SCREEN_WIDTH/2
+        shift_h = SCREEN_HEIGHT/2
+
+        x += shift_w
+        y += shift_h
+
+        return (x,y)
+
+    @staticmethod
+    def screen_radius(r):
+        return r*PIXEL_FACTOR
+
