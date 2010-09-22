@@ -101,6 +101,18 @@ class Vector:
         '''
         self.x = self.x + dx
         self.y = self.y + dy
+
+
+    def screen_coords(self, width, height, factor):
+
+        self.x *= factor
+        self.y *= -factor
+
+        shift_w = width/2
+        shift_h = height/2
+
+        self.x += shift_w
+        self.y += shift_h
     
     def rotate(self, rad):
         """Rotate counter-clockwise by rad radians.

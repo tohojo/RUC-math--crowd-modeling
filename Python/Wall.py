@@ -5,10 +5,14 @@ from Vector import Vector
 
 class Wall:
 
-    def __init__(self, start, end):
+    def __init__(self, ax, ay, bx=0.0, by=0.0):
         "Start and end are Vectors"
-        self.start = start
-        self.end = end
+        if isinstance(ax, Vector) and isinstance(ay, Vector):
+            self.start = ax
+            self.end = ay
+        else:
+            self.start = Vector(ax, ay)
+            self.end = Vector(bx, by)
 
     def distance_to(self, p):
         """The shortest distance from the wall to point p."""
@@ -59,6 +63,26 @@ class Wall:
         
     def length(self):
         return self.start.distance_to(self.end)
+
+    def screen_coords(self, width, height, factor):
+        self.start.screen_coords(width, height, factor)
+        self.end.screen_coords(width, height, factor)
+
+    def clone(self):
+        return Wall(self.start.clone(), self.end.clone())
+
+    def multiplied(self, x):
+        s = self.start * x
+        e = self.end * x
+        return Wall(s, e)
+
+
+    def translated(self, dx, dy):
+        s = self.start.clone()
+        e = self.end.clone()
+        s.slide_xy(dx, dy)
+        e.slide_xy(dx, dy)
+        return Wall(s, e)
 
 if __name__ == "__main__":
     p = Vector(12,-2)
