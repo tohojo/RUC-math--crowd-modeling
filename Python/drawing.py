@@ -4,7 +4,7 @@ import pygame
 
 SCREEN_WIDTH=600
 SCREEN_HEIGHT=600
-PIXEL_FACTOR = 30
+PIXEL_FACTOR = 3
 BG_COLOR = (255,255,255)
 DRAW_COLOR = pygame.Color(0,0,0)
 
@@ -42,6 +42,10 @@ class Canvas:
     def draw_actor(self, a):
         pygame.draw.circle(self.screen, DRAW_COLOR, 
                 Helper.screen_coords(a), Helper.screen_radius(a.radius))
+
+    def draw_proj(self, p):
+        pygame.draw.circle(self.screen, DRAW_COLOR, 
+                Helper.screen_coords(p), 2)
 
 
 class Helper:

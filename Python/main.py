@@ -10,19 +10,19 @@ def main():
     canvas = Canvas()
 
     actors = [
-            Actor(0.0, 1.0, 0.25),
-            Actor(1.0, 2.0, 0.20),
-            Actor(-2.0, -4.0, 0.40),
+            Actor(0.0, 10.0, 2.5),
+            Actor(-20.0, 40.0, 4.0, Vector(0.6, -0.6)),
+            Actor(-20.0, -40.0, 4.0),
             ]
     walls = [
-            Wall(-5, -5, 5, -5),
-            Wall(-5, -5, -5, 5),
-            Wall(-5, 5, 5, 5),
-            Wall(5, -5, 5, 5),
-            Wall(-2, -2, 2, -2),
-            Wall(-2, -2, -2, 2),
-            Wall(-2, 2, 2, 2),
-            Wall(2, -2, 2, 2),
+            Wall(-50, -50, 50, -50),
+            Wall(-50, -50, -50, 50),
+            Wall(-50, 50, 50, 50),
+            Wall(50, -50, 50, 50),
+#            Wall(-20, -20, 20, -20),
+#            Wall(-20, -20, -20, 20),
+#            Wall(-20, 20, 20, 20),
+#            Wall(20, -20, 20, 20),
             ]
 
     while canvas.tick():
@@ -33,9 +33,14 @@ def main():
             canvas.draw_wall(w)
 
         for a in actors:
-            a.update_move_vector(walls)
+            if a.has_escaped():
+                actors.remove(a)
+            a.update_move_vector(walls, actors)
             a.update_pos()
             canvas.draw_actor(a)
+            for w in walls:
+                P = w.projection(a)
+                canvas.draw_proj(P)
         
         canvas.update()
 
