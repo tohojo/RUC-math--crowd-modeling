@@ -1,0 +1,73 @@
+\documentclass[12pt,a4paper]{report} % (fold)
+\usepackage[utf8x]{inputenc}
+\usepackage{ucs}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\renewcommand{\baselinestretch}{1.5}
+\usepackage{xcolor}
+\usepackage[danish]{babel}
+
+\usepackage[compact]{titlesec} 
+\newcommand{\bigrule}{\titlerule[0.5mm]} 
+\titleformat{\chapter}[display] 
+{\bfseries\Huge\color[rgb]{.22,.44,.47}} 
+{% 
+ \vskip-4em 
+ \titlerule 
+ \filright 
+ \Large\chaptertitlename\ 
+ \Large\thechapter} 
+{0mm} 
+{\filright} 
+[\vspace{0.5mm} \bigrule] % (end)
+
+\author{Mikkel Hartmann}
+\title{explanation of the model}
+\begin{document} 
+
+in this section we will go through the model in great detail. First of all, the change in position of agent $\alpha$ is given by
+	\begin{equation}
+		\frac{d \vec{r_{\alpha}}}{dt} = \vec{V_{\alpha}} \left( t \right)
+	\end{equation}
+And, as we know from newtonian physics, the accerlation of a gent $\alpha$ is then given bu the summation of all the forces acting on the agent.
+\begin{equation}
+	\frac{d \vec{V_{\alpha}}}{dt} = \vec{f_{\alpha}} \left( t \right) + \vec{\xi_{\alpha}}\left( t \right)
+\end{equation}
+here $\vec{\xi_{\alpha}} \left( t \right)$ is a random fluctuation of agent $\alpha$. $\vec{f_{\alpha}} \left( t \right)$ is a summation of all the forces action in agent $\alpha$ from the environment and other agent. More specifically it is given by:
+\begin{equation}
+	\vec{f_{\alpha}} = \vec{f^{0}_{\alpha}}\left( \vec{V_{\alpha}} \right) + \vec{f_{\alpha B}} \left( \vec{r_{\alpha}} \right) + \sum_{\beta \neq \alpha} \vec{f_{\alpha \beta}} \left(\vec{r_{\alpha}}, \vec{V_{\alpha}}, \vec{r_{\beta}}, \vec{V_{\beta}} \right) + \sum_{i} \vec{f_{\alpha i}} \left( \vec{r_{\alpha}}, \vec{r_{i}}, t \right)
+\end{equation}
+So this is a summation of four different kinds of forces. The first term on the right hand side is a velocity dependent force and it is given by:
+\begin{equation}
+	\vec{f^{0}_{\alpha}}\left( \vec{V_{\alpha}} \right) = \frac{1}{\tau} \left( V_{\alpha}^{0} \vec{e_{\alpha}} - \vec{V_{\alpha}} \right)
+\end{equation}
+here $\tau$ is the relaxation time, that is the time step between each calculation. $\vec{V_{\alpha}}$ is the current velocity of the agent and $V_{\alpha}^{0}$ is the initial speed, that is the speed of the agent at the end of the last simulation step. $V_{\alpha}^{0}$ is given by:
+\begin{equation}
+	\vec{V_{\alpha}}^{0} = \left[ 1 - \eta_{\alpha} \left( t \right) \right] V_{\alpha}^{0} \left( 0 \right) + \eta_{\alpha} \left( t \right)V_{\alpha}^{\text{max}}
+\end{equation}
+here $V_{\alpha}^{0} \left( 0 \right)$ is the velocity at the beginning of the first simulation step and $V_{\alpha}^{\text{max}}$ is the maximum speed that the agent can acquire. $\eta_{\alpha}$ is called the impatience of the agent and is given by:
+\begin{equation}
+	\eta_{\alpha} \left( t \right) = 1 - \frac{\overline{V}_{\alpha} \left( t \right)}{V_{\alpha}^{0} \left( t \right)}
+\end{equation}
+Here $\overline{V}$ is the average speed in the desired direction and as earlier $V_{\alpha}^{0} \left( 0 \right)$ is the speed at the beginning of the first calculation step of the simulation. Here we can see why this term is called the impatience of the agent. If the fraction between the average speed in the desired direction and the initial speed is low the impatience term will be close to one. When the impatience term is close to one $V_{\alpha}^{0} \left( t \right)$ is dominated by $V_{\alpha}^{\text{max}}$. That is, if the agent have not moved very far in the desired direction compared to the initial speed the impatience of the agent will be close to one. This in term will cause the agent's future velocity to be dominated by the maximum velocity of the agent.
+
+\begin{tabular}{llll}
+\small{Symbol} & \small{Description} & \small{Unit} & r1c4\\
+\hline
+$A_1$ & \small{Controls the strength of the personal space force}  & r1c3 & r1c4\\
+\hline
+$A_2$ & r2c2 & r2c3 & r2c4\\
+\hline
+$B_1$ & r3c2 & r3c3 & r3c4\\
+\hline
+$B_2$ & r3c2 & r3c3 & r3c4\\
+\hline
+	\caption{List of constants and variables}\\
+\end{tabular}
+
+
+
+
+\end{document}
