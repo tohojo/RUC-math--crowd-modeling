@@ -26,8 +26,8 @@
 \author{Mikkel Hartmann}
 \title{explanation of the model}
 \begin{document} 
-
-in this section we will go through the model in great detail. First of all, the change in position of agent $\alpha$ is given by
+\section{Explanation of model}
+In this section we will go through the model in great detail. First of all, the change in position of agent $\alpha$ is given by
 	\begin{equation}
 		\frac{d \vec{r_{\alpha}}}{dt} = \vec{V_{\alpha}} \left( t \right)
 	\end{equation}
@@ -36,7 +36,7 @@ And, as we know from newtonian physics, the accerlation of a gent $\alpha$ is th
 	\frac{d \vec{V_{\alpha}}}{dt} = \vec{f_{\alpha}} \left( t \right) + \vec{\xi_{\alpha}}\left( t \right)
 \end{equation}
 here $\vec{\xi_{\alpha}} \left( t \right)$ is a random fluctuation of agent $\alpha$. $\vec{f_{\alpha}} \left( t \right)$ is a summation of all the forces action in agent $\alpha$ from the environment and other agent. More specifically it is given by:
-\begin{equation}
+\begin{equation}\label{model}
 	\vec{f_{\alpha}} = \vec{f^{0}_{\alpha}}\left( \vec{V_{\alpha}} \right) + \vec{f_{\alpha B}} \left( \vec{r_{\alpha}} \right) + \sum_{\beta \neq \alpha} \vec{f_{\alpha \beta}} \left(\vec{r_{\alpha}}, \vec{V_{\alpha}}, \vec{r_{\beta}}, \vec{V_{\beta}} \right) + \sum_{i} \vec{f_{\alpha i}} \left( \vec{r_{\alpha}}, \vec{r_{i}}, t \right)
 \end{equation}
 So this is a summation of four different kinds of forces. The first term on the right hand side is a velocity dependent force and it is given by:
@@ -51,23 +51,45 @@ here $V_{\alpha}^{0} \left( 0 \right)$ is the velocity at the beginning of the f
 \begin{equation}
 	\eta_{\alpha} \left( t \right) = 1 - \frac{\overline{V}_{\alpha} \left( t \right)}{V_{\alpha}^{0} \left( t \right)}
 \end{equation}
-Here $\overline{V}$ is the average speed in the desired direction and as earlier $V_{\alpha}^{0} \left( 0 \right)$ is the speed at the beginning of the first calculation step of the simulation. Here we can see why this term is called the impatience of the agent. If the fraction between the average speed in the desired direction and the initial speed is low the impatience term will be close to one. When the impatience term is close to one $V_{\alpha}^{0} \left( t \right)$ is dominated by $V_{\alpha}^{\text{max}}$. That is, if the agent have not moved very far in the desired direction compared to the initial speed the impatience of the agent will be close to one. This in term will cause the agent's future velocity to be dominated by the maximum velocity of the agent.
-
-\begin{tabular}{llll}
-\small{Symbol} & \small{Description} & \small{Unit} & r1c4\\
+Here $\overline{V}$ is the average speed in the desired direction and as earlier $V_{\alpha}^{0} \left( 0 \right)$ is the speed at the beginning of the first calculation step of the simulation. Here we can see why this term is called the impatience of the agent. If the fraction between the average speed in the desired direction and the initial speed is low the impatience term will be close to one. When the impatience term is close to one $V_{\alpha}^{0} \left( t \right)$ is dominated by $V_{\alpha}^{\text{max}}$. That is, if the agent have not moved very far in the desired direction compared to the initial speed the impatience of the agent will be close to one. This in term will cause the agent's future velocity to be dominated by the maximum velocity of the agent.\\
+Now the second term on the right hand side is the forces acting on agent $\alpha$ from the walls of the room. The force is given by:
+\begin{equation}
+\vec{f_{\alpha B}} \left( \vec{r_{\alpha}} \right) = - \nabla_{\vec{r_{\alpha}}} V_{B} \left( \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| \right) 
+\end{equation}
+Here $\nabla_{\vec{r_{\alpha}}}$ is the gradient and $V_B$ is a repulsive potential. $ \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|$ is the distance from agent $\alpha$ to the nearest point of the nearest wall.\\
+The third term is a summation of all the force between agent $\alpha$ and agent $\beta$. It is a function of the position vector and the velocity of both agents, and it is given by:
+\begin{equation}\label{agentinteraction}
+\sum_{\beta \left( \neq \alpha \right)} \vec{f_{\alpha \beta }}\left( t \right) = 
+A_{\alpha}^{1} exp \left( \frac{ r_{\alpha \beta} - d_{\alpha \beta }}{B_{\alpha}^1} \right)
+\vec{\eta_{\alpha \beta}} \cdot 
+\left( \lambda_{\alpha} + \left( 1 - \lambda_{\alpha} \right)  \right)+ 
+A_{\alpha}^{2} exp\left(\frac{r_{\alpha \beta} - d_{\alpha \beta}}{B_{\alpha}^{2}} \right)\vec{\eta_{\alpha \beta}}
+\end{equation}
+Here $A_{\alpha}^{1}$, $A_{\alpha}^{2}$, $B_{\alpha}^{1}$, $B_{\alpha}^{2}$ and $\lambda_{\alpha}$ are all constants that can differ for each agent. $r_{\alpha \beta}$ is the sum of the radii of $\alpha$ and $\beta$ that is 
+$r_{\alpha \beta} = r_{\alpha} + r_{\beta}$. $d_{\alpha \beta}$ is the distance from the center of mass of agent $\alpha$ and the center of mass of agent $\beta$ and is therefore given by $d_{\alpha \beta} = \|\vec{X_{\alpha}}\left( t \right) - \vec{X_{\beta}}\left( t \right) \|$. Here $\vec{X_{\alpha}}\left( t \right)$ amd $\vec{X_{\beta}}\left( t \right)$ are of course the vectors pointing to the center of mass of respectively agent $\alpha$ and $\beta$ at the time t. $\eta_{\alpha \beta}$ is the normal vector pointing from $\alpha$ to $\beta$ and it is given by:
+\begin{equation}
+\eta_{\alpha \beta} = \frac{\vec{X_{\alpha}}\left( t \right) - \vec{X_{\beta}}\left( t \right)}{\|\vec{X_{\alpha}}\left( t \right) - \vec{X_{\beta}}\left( t \right) \|}
+\end{equation}
+the angle $\phi$ in equation \ref{agentinteraction} is the angle between the normal vector pointing from agent $\beta$ to $\alpha$ and the direction in which agent $\alpha$ is moving. Cosine to the angle is $\cos \left( \phi \right)\left( t \right) = - \vec{\eta_{\alpha \beta}}\left( t \right) \cdot \vec{e_{\alpha}}\left( t \right)$.\\
+Equation \ref{agentinteraction} is divided into two terms. The first term on the right hand side reflects the agents tendency to stay at a certain distance from other agents. This part of the force is called the private sphere because the agent prefers to have some free space around him if possible. The radius of the private sphere can differ from agent to agent. The constant $A_{\alpha}^{1}$, $B_{\alpha}^{1}$ and $\lambda_{\alpha}$ control the nature of the private sphere $A_{\alpha}^1$ and $B_{\alpha}^1$ control the strength and range of the interaction respectively.\\
+The fourth and last term in equation \ref{model} represents the force from attraction in the room. Attractions can be either be either interesting sculptures or sights or familiar persons the agent prefer to be close to, such as friends and family. The mathematical structure of this force is the same as the force from other agents, however it is opposite in algebraic sign and has different constants. 
+\begin{center}
+\begin{tabular}{lll}
 \hline
-$A_1$ & \small{Controls the strength of the personal space force}  & r1c3 & r1c4\\
+\multicolumn{3}{|c|}{List of constants and variables}\\
 \hline
-$A_2$ & r2c2 & r2c3 & r2c4\\
+\small{\textbf{Symbol}} & \small{\textbf{Description}} & \small{\textbf{Unit}}\\
 \hline
-$B_1$ & r3c2 & r3c3 & r3c4\\
+$A_{\alpha}^{1}$ & \small{Controls the strength of the personal space force}\\
 \hline
-$B_2$ & r3c2 & r3c3 & r3c4\\
+$A_{\alpha}^{2}$ &  & \\
 \hline
-	\caption{List of constants and variables}\\
+$B_{\alpha}^{1}$ &  & \\
+\hline
+$B_{\alpha}^{2}$ &  & \\
+\hline
+$\lambda_{\alpha}g$ &  & \\
+\hline
 \end{tabular}
-
-
-
-
+\end{center}
 \end{document}
