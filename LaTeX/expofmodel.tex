@@ -31,23 +31,23 @@ In this section we will go through the model in great detail. First of all, the 
 	\begin{equation}
 		\frac{d \vec{r_{\alpha}}}{dt} = \vec{V_{\alpha}} \left( t \right)
 	\end{equation}
-And, as we know from newtonian physics, the accerlation of a gent $\alpha$ is then given bu the summation of all the forces acting on the agent.
+And, as we know from newtonian physics, the accerlation of a gent $\alpha$ is then given by the summation of all the forces acting on the agent.
 \begin{equation}
 	\frac{d \vec{V_{\alpha}}}{dt} = \vec{f_{\alpha}} \left( t \right) + \vec{\xi_{\alpha}}\left( t \right)
 \end{equation}
-here $\vec{\xi_{\alpha}} \left( t \right)$ is a random fluctuation of agent $\alpha$. $\vec{f_{\alpha}} \left( t \right)$ is a summation of all the forces action in agent $\alpha$ from the environment and other agent. More specifically it is given by:
+here $\vec{\xi_{\alpha}} \left( t \right)$ is a random fluctuation of agent $\alpha$. $\vec{f_{\alpha}} \left( t \right)$ is a summation of all the forces action in agent $\alpha$ from the environment and other agents. More specifically it is given by:
 \begin{equation}\label{model}
 	\vec{f_{\alpha}} = \vec{f^{0}_{\alpha}}\left( \vec{V_{\alpha}} \right) + \vec{f_{\alpha B}} \left( \vec{r_{\alpha}} \right) + \sum_{\beta \neq \alpha} \vec{f_{\alpha \beta}} \left(\vec{r_{\alpha}}, \vec{V_{\alpha}}, \vec{r_{\beta}}, \vec{V_{\beta}} \right) + \sum_{i} \vec{f_{\alpha i}} \left( \vec{r_{\alpha}}, \vec{r_{i}}, t \right)
 \end{equation}
-So this is a summation of four different kinds of forces. The first term on the right hand side is a velocity dependent force and it is given by:
+So this is a summation of four different kinds of forces. We will go through them one at a time explaining their role in the model and their mathematical structure. The first term on the right hand side is a velocity dependent force and it is given by:
 \begin{equation}
 	\vec{f^{0}_{\alpha}}\left( \vec{V_{\alpha}} \right) = \frac{1}{\tau} \left( V_{\alpha}^{0} \vec{e_{\alpha}} - \vec{V_{\alpha}} \right)
 \end{equation}
-here $\tau$ is the relaxation time, that is the time step between each calculation. $\vec{V_{\alpha}}$ is the current velocity of the agent and $V_{\alpha}^{0}$ is the initial speed, that is the speed of the agent at the end of the last simulation step. $V_{\alpha}^{0}$ is given by:
+Here $\tau$ is the relaxation time, that is the time step between each calculation. $\vec{V_{\alpha}}$ is the current velocity of the agent and $V_{\alpha}^{0}$ is the initial speed, that is the speed of the agent at the end of the last simulation step. $V_{\alpha}^{0}$ is given by:
 \begin{equation}
 	\vec{V_{\alpha}}^{0} = \left[ 1 - \eta_{\alpha} \left( t \right) \right] V_{\alpha}^{0} \left( 0 \right) + \eta_{\alpha} \left( t \right)V_{\alpha}^{\text{max}}
 \end{equation}
-here $V_{\alpha}^{0} \left( 0 \right)$ is the velocity at the beginning of the first simulation step and $V_{\alpha}^{\text{max}}$ is the maximum speed that the agent can acquire. $\eta_{\alpha}$ is called the impatience of the agent and is given by:
+Here $V_{\alpha}^{0} \left( 0 \right)$ is the velocity at the beginning of the first simulation step and $V_{\alpha}^{\text{max}}$ is the maximum speed that the agent can acquire. $\eta_{\alpha}$ is called the impatience of the agent and is given by:
 \begin{equation}
 	\eta_{\alpha} \left( t \right) = 1 - \frac{\overline{V}_{\alpha} \left( t \right)}{V_{\alpha}^{0} \left( t \right)}
 \end{equation}
@@ -71,24 +71,68 @@ $r_{\alpha \beta} = r_{\alpha} + r_{\beta}$. $d_{\alpha \beta}$ is the distance 
 \eta_{\alpha \beta} = \frac{\vec{X_{\alpha}}\left( t \right) - \vec{X_{\beta}}\left( t \right)}{\|\vec{X_{\alpha}}\left( t \right) - \vec{X_{\beta}}\left( t \right) \|}
 \end{equation}
 the angle $\phi$ in equation \ref{agentinteraction} is the angle between the normal vector pointing from agent $\beta$ to $\alpha$ and the direction in which agent $\alpha$ is moving. Cosine to the angle is $\cos \left( \phi \right)\left( t \right) = - \vec{\eta_{\alpha \beta}}\left( t \right) \cdot \vec{e_{\alpha}}\left( t \right)$.\\
-Equation \ref{agentinteraction} is divided into two terms. The first term on the right hand side reflects the agents tendency to stay at a certain distance from other agents. This part of the force is called the private sphere because the agent prefers to have some free space around him if possible. The radius of the private sphere can differ from agent to agent. The constant $A_{\alpha}^{1}$, $B_{\alpha}^{1}$ and $\lambda_{\alpha}$ control the nature of the private sphere $A_{\alpha}^1$ and $B_{\alpha}^1$ control the strength and range of the interaction respectively.\\
+Equation \ref{agentinteraction} is divided into two terms. The first term on the right hand side reflects the agents tendency to stay at a certain distance from other agents. This part of the force is called the private sphere because the agent prefers to have some free space around him if possible. The radius of the private sphere can differ from agent to agent. The constant $A_{\alpha}^{1}$, $B_{\alpha}^{1}$ and $\lambda_{\alpha}$ control the nature of the private sphere $A_{\alpha}^1$ and $B_{\alpha}^1$ control the strength and range of the interaction respectively. $\lambda_{\alpha}$ is there to take into account a persons tendency to focus on things happening in front of him rather than behind him.\\
 The fourth and last term in equation \ref{model} represents the force from attraction in the room. Attractions can be either be either interesting sculptures or sights or familiar persons the agent prefer to be close to, such as friends and family. The mathematical structure of this force is the same as the force from other agents, however it is opposite in algebraic sign and has different constants. 
 \begin{center}
 \begin{tabular}{lll}
 \hline
-\multicolumn{3}{|c|}{List of constants and variables}\\
+\multicolumn{3}{|c|}{\emph{List of constants and variables}}\\
 \hline
 \small{\textbf{Symbol}} & \small{\textbf{Description}} & \small{\textbf{Unit}}\\
 \hline
 $A_{\alpha}^{1}$ & \small{Controls the strength of the personal space force}\\
 \hline
-$A_{\alpha}^{2}$ &  & \\
+$A_{\alpha}^{2}$ & \small{Controls the strength of physical collisions}  & \\
 \hline
-$B_{\alpha}^{1}$ &  & \\
+$B_{\alpha}^{1}$ & \small{Controls the range of the personal space force} & \\
 \hline
-$B_{\alpha}^{2}$ &  & \\
+$B_{\alpha}^{2}$ & \small{Controls the range of physical collisions} & \\
 \hline
-$\lambda_{\alpha}g$ &  & \\
+$\lambda_{\alpha}$ &  & \\
+\hline
+$\vec{f_{\alpha}} \left( t \right)$ & All forces acting on agent $\alpha$  & \\
+\hline
+$\vec{f_{\alpha B}} \left( \vec{r_{\alpha}} \right)$ & Force on agent $\alpha$ from walls & \\
+\hline
+$\vec{f_{\alpha \beta}} \left( \vec{r_{\alpha}}, \vec{r_{\beta}}, \vec{V_{\alpha}}, \vec{V_{\beta}} \right)$ & Force on agent $\alpha$ from agent $\beta$ & \\
+\hline
+$\vec{f_{\alpha i}} \left( \vec{r_{\alpha}}, \vec{r_{i}}, t \right)$ & Force on agent $\alpha$ from attractions & \\
+\hline
+$V_{\alpha}^{0}$ & Initial speed of agent $\alpha$ & \\
+\hline
+$V_{\alpha}^{\text{max}}$ & Maximum speed of agent $\alpha$ & \\
+\hline
+$\vec{V_{\alpha}^{\text{0}}}$ & Desired velocity of agent $\alpha$ & \\
+\hline
+$\overline{V}_{\alpha}$ & Average speed in desired direction & \\
+\hline
+$\vec{e}_{\alpha}$ & Vector pointing in desired direction of agent $\alpha$ & \\
+\hline
+$\vec{r}_{\alpha}\left( t \right) $ & Vector pointing to position of agent $\alpha$ at time t & \\
+\hline
+$\vec{r}_{B}$ & Vector pointing to nearest point of wall & \\
+\hline
+$r_{\alpha}$ & Radius of agent $\alpha$ & \\
+\hline
+$r_{\beta}$ & Radius of agent $\beta$ & \\
+\hline
+$r_{\alpha \beta}$ & The sum of the radii of agent $\alpha$ and $\beta$ & \\
+\hline
+$\vec{X}_{\alpha}$ & Vector pointing to center of mass of agent $\alpha$ & \\
+\hline
+$\vec{X}_{\beta}$ & Vector pointing to center of mass of agent $\beta$ & \\
+\hline
+$d_{\alpha \beta}$ & Distance between center of mass of agent $\alpha$ and $\beta$ & \\
+\hline
+$\tau_{\alpha}$ & Relaxation time $\alpha$ and $\beta$ & \\
+\hline
+$\eta_{\alpha}$ & Impatience of agent $\alpha$ at time t & \\
+\hline
+$\vec{\eta}_{\alpha \beta}\left( t \right)$ & Normal vector pointing from $\alpha$ to $\beta$ at time t & \\
+\hline
+$\vec{\xi}\left( t \right)$ & Stochastic element & \\
+\hline
+$\phi_{\alpha \beta} \left( t \right)$ & Angle between agent $\alpha$ and $\beta$ & \\
 \hline
 \end{tabular}
 \end{center}
