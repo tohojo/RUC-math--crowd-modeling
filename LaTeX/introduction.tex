@@ -1,0 +1,67 @@
+% vim:ft=tex
+\section{Introduction}
+When a lot of people are gathered in a confined space, it is not immediately 
+obvious how they behave when moving around. It is also not obvious how to 
+design buildings and other areas where many people gather to allow for optimal 
+passage of crowds without jamming and related problems (such as inconvenience 
+for pedestrians and even injuries). It is cumbersome, or even dangerous, to 
+gather many people together to do experiments, especially if one wishes to 
+simulate a panic situation (which cannot necessarily be induced artificially).  
+It would thus be useful to be able to model a crowd of pedestrians and their 
+movement.
+
+A crowd of many people is a very complex system. One of the approaches to 
+handling this complexity is by using a computer simulation of a model derived 
+from the behaviour of individual actors, and through the outcome of this 
+simulation be able to say something meaningful about the whole system. There 
+are various ways of formulating such a model; among them is an approach that 
+models pedestrian behaviour using a concept called ``social forces'' 
+\cite{social-force}. This type of model describes individual behaviour using a 
+set of forces representing desired movement as well as the tendency to avoid 
+obstacles, other people etc. Through computer simulations this can be used to 
+say something about the whole system of moving pedestrians.
+
+The social force class of models represent an agent-based approach to 
+modelling crowds that we think is interesting. Since the original formulation 
+of the social force concept, it has been revised several times (e.g.  
+\cite{helbing00}). For this project we have selected the version presented in 
+\cite{self-org}, because this version has been expanded to include features 
+not available in earlier models\footnote{This should probably be expanded.}.  
+We think it will be interesting to look into what this model makes it possible 
+to say about the dynamics of a (virtual) crowd. This brings us to our problem 
+formulation:
+
+\subsection{Problem formulation}
+\begin{quote}
+    What are the properties of the model presented in \cite{self-org} and how 
+    do the model parameters affect these properties?
+\end{quote}
+
+\subsection{Approach to answering the problem formulation}
+We will seek to answer our problem formulation by subjecting our chosen model 
+to thorough analysis, determining which properties are used in the description 
+of the model to describe its behaviour. This analysis will include a review of 
+the model's parameters, where they come from, and what role they play in the 
+model as well as an assessment of what kind of model behaviour we expect from 
+the model.
+
+Based on this analysis, we will create a computer simulation of a virtual 
+scenario using the model. From this simulation we will illustrate the 
+properties of the model, and examine how the model parameters affect these 
+properties by varying the parameters in the simulation.
+
+We will give an assessment of how well the model fits empirical data, by 
+examining results obtained by others in the literature, rather than by doing 
+our own empirical study. Based on this, and our simulation, we will assess how 
+well this model is suited to modelling a crowd, and what its limitations are.
+
+\subsection{Exemplarity}
+Our project is exemplary to mathematical modelling for several reasons. First 
+of all, it is an example of applying mathematical theory to a field outside of 
+mathematics itself. The field we are working with (crowd simulation) is 
+relatively new, but has some established research. The model itself contains 
+non-trivial mathematics and is an example of a type of model (agent-based 
+models) used in many cases to study a complex system of interacting agents by 
+describing the individual behaviour of the agents and using simulations to 
+derive meaningful properties for the whole system. These factors combined 
+makes our project exemplary.
