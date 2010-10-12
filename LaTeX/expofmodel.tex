@@ -1,24 +1,31 @@
 % vim:ft=tex
 \section{Analysis of the model}
 In this section we will go through the model in great detail. First of all, 
-the change in position of agent $\alpha$ is given by
+as stated briefly earlier this model is an agent based social force model. This means
+that the model uses individual entities to say something about the crowd as a whole. 
+Each entity or agent is acted on by a collection of different forces. These forces can be
+either repulsive or attractive. The general approach of the model is fairly simple. An agent
+$\alpha$ wants to go in a desired direction with a desired speed. However the environment 
+and other agents might force agent $\alpha$ to stray from the desired direction or have speeds 
+different from the desired one. The change in position of agent $\alpha$ is given by:
 
 	\begin{equation}
 		\frac{d \vec{r_{\alpha}}}{dt} = \vec{V_{\alpha}} \left( t \right)
 	\end{equation}
 
 And, as we know from newtonian physics, the acceleration of agent $\alpha$ is 
-then given by the summation of all the forces acting on the agent.
+then given by the summation of all the forces acting on the agent:
 
 \begin{equation}
     \frac{d \vec{V_{\alpha}}}{dt} = \vec{f_{\alpha}} \left( t \right) + 
     \vec{\xi_{\alpha}}\left( t \right)
 \end{equation}
 
-here $\vec{\xi_{\alpha}} \left( t \right)$ is a random fluctuation of agent 
-$\alpha$. $\vec{f_{\alpha}} \left( t \right)$ is a summation of all the forces 
-action in agent $\alpha$ from the environment and other agents. More 
-specifically it is given by:
+here $\vec{\xi_{\alpha}} \left( t \right)$ is a random fluctuation of agent $\alpha$. This
+force is there to incorporate the fact that fact the identical initial condition
+generally will not lead to the same series of events. $\vec{f_{\alpha}} \left( t \right)$ 
+is a summation of all the forces action in agent $\alpha$ from the environment 
+and other agents. More specifically it is given by:
 
 \begin{equation}\label{model}
     \vec{f_{\alpha}} = \vec{f^{0}_{\alpha}}\left( \vec{V_{\alpha}} \right) + 
@@ -46,7 +53,7 @@ $V_{\alpha}^{0}$ is the initial speed, that is the speed of the agent at the
 end of the last simulation step. $V_{\alpha}^{0}$ is given by:
 
 \begin{equation}
-    \vec{V_{\alpha}}^{0} = \left[ 1 - \eta_{\alpha} \left( t \right) \right] 
+    V_{\alpha}^{0} = \left[ 1 - \eta_{\alpha} \left( t \right) \right] 
     V_{\alpha}^{0} \left( 0 \right) +
     \eta_{\alpha} \left( t \right)V_{\alpha}^{\text{max}}
 \end{equation}
