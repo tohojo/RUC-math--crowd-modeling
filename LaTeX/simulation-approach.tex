@@ -1,5 +1,57 @@
 % vim:ft=tex
 \section{Simulation approach}
+In this section, we describe how our simulation is implemented, and how the 
+implementation works.
+
+Our simulation is implemented in the Python programming language, using the 
+\emph{numpy} numerical calculation library. We assume a virtual coordinate 
+system using meters as a base unit, and with the origin in the lower left 
+corner of the area we simulate. Each pedestrian (or actor) is described by a 
+centre point and a radius, and each wall is described by a line segment 
+connecting two points.
+
+\subsection{Initial conditions}
+The initial conditions are the following:
+
+\begin{itemize}
+    \item A position, $P_n$, a velocity vector, $V_n$, and a desired direction 
+        vector, $V^D_{n}$ for each actor.
+    \item A position, $W_n$ for each wall.
+\end{itemize}
+
+The walls are set up to form the room we want to simulate, and the desired 
+destinations are set outside the exit(s) for all actors. The actors are 
+distributed throughout the room and given initial velocities and desired 
+walking speed towards the exit by means of some kind of 
+distribution\footnote{Further explanation to be added.}.
+
+Also, there is a time step parameter, set initially to $0.1$ seconds. And some 
+constants set arbitrarily.
+%TODO: Add real description of initial conditions.
+
+\subsection{The simulation steps}
+The simulation is divided into two parts: Finding the accelerations (or 
+resulting force) for all actors, and updating position and velocity for the 
+actors.  Since the acceleration for each actor is dependent on both position 
+and velocity of the other actors, splitting the calculations this way enables 
+us to do the calculations of each actor in any order, and even parallel. The 
+drawback is that the actors are only affected by the movement and positions of 
+other actors as they were at the end of the last simulation step. This means 
+that the time step has to be small enough that this doesn't matter in 
+practice.
+
+\subsubsection{Calculating the acceleration vectors}
+The acceleration vectors for each actor is calculated as follows:
+
+\begin{enumerate}
+    \item Determine the acceleration vector provided by the actors desired 
+        direction of movement.
+    \item For each other actor, calculate the acceleration vector provided by 
+        avoiding the actor.
+    \item Calculate avoidance accelerations form the walls.
+    \item Sum all these vectors.
+\end{enumerate}
+
 % start parameters: p_n, v_n for each person.
 % p for each wall
 %
