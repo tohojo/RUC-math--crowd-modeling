@@ -1,8 +1,8 @@
 % vim:ft=tex
 \section{Analysis of the model}
-In this section we will go through the model in great detail. First of all, 
-as stated briefly earlier this model is an agent based social force model. This means
-that the model uses individual entities to say something about the crowd as a whole. 
+In this section we will go through the model from the article \cite{self-org} in great detail. 
+First of all,  as stated briefly earlier this model is an agent based social force model. 
+This means that the model uses individual entities to say something about the crowd as a whole. 
 Each entity or agent is acted on by a collection of different forces. These forces can be
 either repulsive or attractive. The general approach of the model is fairly simple. An agent
 $\alpha$ wants to go in a desired direction with a desired speed. However the environment 
@@ -47,10 +47,9 @@ and it is given by:
     \left( V_{\alpha}^{0} \vec{e_{\alpha}} - \vec{V_{\alpha}} \right)
 \end{equation}
 
-Here $\tau$ is the relaxation time, that is the time step between each 
-calculation. $\vec{V_{\alpha}}$ is the current velocity of the agent and 
-$V_{\alpha}^{0}$ is the initial speed, that is the speed of the agent at the 
-end of the last simulation step. $V_{\alpha}^{0}$ is given by:
+Here $\tau$ is the relaxation time. $\vec{V_{\alpha}}$ is the 
+current velocity of the agent and $V_{\alpha}^{0}$ is the initial speed, that is 
+the speed of the agent at the end of the last simulation step. $V_{\alpha}^{0}$ is given by:
 
 \begin{equation}
     V_{\alpha}^{0} = \left[ 1 - \eta_{\alpha} \left( t \right) \right] 
@@ -59,9 +58,10 @@ end of the last simulation step. $V_{\alpha}^{0}$ is given by:
 \end{equation}
 
 Here $V_{\alpha}^{0} \left( 0 \right)$ is the velocity at the beginning of the 
-first simulation step and $V_{\alpha}^{\text{max}}$ is the maximum speed that 
-the agent can acquire. $\eta_{\alpha}$ is called the impatience of the agent 
-and is given by:
+first simulation step and $V_{\alpha}^{\text{max}}$ is the desired speed of agent
+$\alpha$, that is the speed that agent $\alpha$ will try to get if it is allowed by the 
+environment and other agents. $V_{\alpha}^{\text{max}}$ can be exceeded. $\eta_{\alpha}$ 
+is called the impatience or nervousness of the agent and is given by:
 
 \begin{equation}
 	\eta_{\alpha} \left( t \right) =
@@ -73,7 +73,7 @@ Here $\overline{V}$ is the average speed in the desired direction and as
 earlier $V_{\alpha}^{0} \left( 0 \right)$ is the speed at the beginning of the 
 first calculation step of the simulation.
 
-Now the second term on the right hand side is the forces acting on agent 
+Now the second term on the right hand side of \eqref{model} is the forces acting on agent 
 $\alpha$ from the walls of the room. The force is given by:
 
 \begin{equation}
@@ -86,8 +86,8 @@ Here $\nabla_{\vec{r_{\alpha}}}$ is the gradient and $V_B$ is a repulsive
 potential. $ \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|$ is the distance 
 from agent $\alpha$ to the nearest point of the nearest wall.
 
-The third term is a summation of all the force between agent $\alpha$ and 
-agent $\beta$. It is a function of the position vector and the velocity of 
+The third term on the right hand side of \eqref{model} is a summation of all the 
+force between agent $\alpha$ and agent $\beta$. It is a function of the position vector and the velocity of 
 both agents, and it is given by:
 
 \begin{equation}
@@ -168,7 +168,7 @@ $B_{\alpha}^{1}$ & \small{Controls the range of the personal space force} & \\
 \hline
 $B_{\alpha}^{2}$ & \small{Controls the range of physical collisions} & \\
 \hline
-$\lambda_{\alpha}$ &  & \\
+$\lambda_{\alpha}$ & The anisotropic character of pedestrian interaction & \\
 \hline
 $\vec{f_{\alpha}} \left( t \right)$ & All forces acting on agent $\alpha$  & \\
 \hline
