@@ -41,16 +41,37 @@ that the time step has to be small enough that this doesn't matter in
 practice.
 
 \subsubsection{Calculating the acceleration vectors}
-The acceleration vectors for each actor is calculated as follows:
+The acceleration vectors for each actor, $\alpha$, is calculated as follows:
 
 \begin{enumerate}
-    \item Determine the acceleration vector provided by the actors desired 
+    \item Determine the acceleration vector provided by the actors' desired 
         direction of movement.
-    \item For each other actor, calculate the acceleration vector provided by 
-        avoiding the actor.
-    \item Calculate avoidance accelerations form the walls.
-    \item Sum all these vectors.
+    \item For each other actor $\beta_1\dots\beta_n$, calculate the 
+        acceleration vector provided by avoiding the actor $\beta_i$.
+    \item Calculate acceleration vectors resulting from avoidance of the walls 
+        $w_1\dots w_n$.
+    \item Sum all the acceleration vectors to a resultant acceleration vector 
+        $a$.
 \end{enumerate}
+
+Steps one to three correspond to the three parts of the model.
+
+\subsection{Updating position and velocity}
+After every actor has been updated with a resulting acceleration vector from 
+the current simulation step, all actors update their position and velocity.  
+The position is updated by calculating a displacement vector as follows:
+
+\begin{equation}
+    \delta p = (v_x \delta t + \frac{1}{2}a_x \delta t^2, v_y \delta t + 
+    \frac{1}{2}a_y \delta t^2)
+\end{equation}
+
+Where $v_x$ and $v_y$ are the $x$ and $y$ components of the velocity vector, 
+$a_x$ and $a_y$ are the $x$ and $y$ components of the acceleration vector, and 
+$\delta t$ is the time step.
+
+After updating the position, the actor's velocity is updated by adding the 
+acceleration vector, to be used for the next simulation step.
 
 % start parameters: p_n, v_n for each person.
 % p for each wall
