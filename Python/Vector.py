@@ -136,3 +136,5 @@ class Vector:
         result.rotate(theta)
         result.slide(p.x, p.y)
         return result
+
+Point = Vector

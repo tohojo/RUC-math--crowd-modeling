@@ -1,6 +1,6 @@
 # vim:fileencoding=utf8
 
-from Vector import Vector
+from Vector import Vector, Point
 import numpy
 
 EPSILON = 10e-5
@@ -8,10 +8,25 @@ CALC_RANGE = 300
 
 class Actor(Vector):
 
-    def __init__(self, x, y, radius = 1.0, move_vector = Vector(0.6, 0.6)):
+    def __init__(self, x, y, **kwargs):
         Vector.__init__(self, x, y)
-        self.radius = radius
-        self.move_vector = move_vector
+
+        if kwargs.has_key("radius"):
+            self.radius = kwargs["radius"]
+        else:
+            self.radius = 0.5
+
+        if kwargs.has_key("velocity"):
+            self.velocity = kwargs["velocity"]
+        else:
+            self.velocity = Vector(1.0, 1.0)
+
+        if kwargs.has_key("target"):
+            self.target = kwargs["target"]
+        else:
+            self.target = Point(1.0, 1.0)
+
+        self.acceleration = Vector(0.0,0.0)
 
     @property
     def center(self):
@@ -38,49 +53,5 @@ class Actor(Vector):
         (x,y) = self.a
         return x > CALC_RANGE or x < -CALC_RANGE or y > CALC_RANGE or y < -CALC_RANGE
 
-    def update_move_vector(self, walls, actors):
-#        print [w.distance_to(self) for w in walls]
-        bounced = False
-        for w in walls:
-            if w.distance_to(self) <= self.radius and \
-                w.distance_to(self+self.move_vector) < w.distance_to(self):
-
-                P = w.projection(self)
-
-                proj_dir = P-self
-
-                if not bounced:
-                    self.update_direction(proj_dir, w)
-                    bounced = True
-
-        for a in actors:
-            if a == self: continue
-            if a.distance_to(self) <= (self.radius + a.radius) and \
-                a.distance_to(self+self.move_vector) < a.distance_to(self):
-
-                if not bounced:
-                    self.update_direction(a, a)
-                    bounced = True
-
-    def update_direction(self, P, w):
-
-        rads = P.angle(self.move_vector)
-
-        if rads > numpy.pi/2:
-            rads = numpy.pi- rads
-
-
-
-#                print numpy.rad2deg(rads), proj_dir, self.move_vector
-
-        rot = 2*rads
-
-
-        # rotate the way that will make us move away from the wall
-        if w.distance_to(self+self.move_vector.rotate(rot)) > w.distance_to(self):
-            self.move_vector = self.move_vector.rotate(rot)
-        else:
-            self.move_vector = self.move_vector.rotate(-rot)
-
-
-
+    def calculate_acceleration(self, walls, actors):
+        pass
