@@ -62,13 +62,13 @@ the current simulation step, all actors update their position and velocity.
 The position is updated by calculating a displacement vector as follows:
 
 \begin{equation}
-    \delta p = (v_x \delta t + \frac{1}{2}a_x \delta t^2, v_y \delta t + 
-    \frac{1}{2}a_y \delta t^2)
+    \Delta p = (v_x \Delta t + \frac{1}{2}a_x \Delta t^2, v_y \Delta t + 
+    \frac{1}{2}a_y \Delta t^2)
 \end{equation}
 
 Where $v_x$ and $v_y$ are the $x$ and $y$ components of the velocity vector, 
 $a_x$ and $a_y$ are the $x$ and $y$ components of the acceleration vector, and 
-$\delta t$ is the time step.
+$\Delta t$ is the time step.
 
 After updating the position, the actor's velocity is updated by adding the 
 acceleration vector, to be used for the next simulation step.
