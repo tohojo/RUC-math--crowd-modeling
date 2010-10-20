@@ -52,7 +52,12 @@ class Vector:
     
     def __mul__( self, scalar ):
         """Vector(x1*x2, y1*y2)"""
+        if type(scalar) != float and type(scalar) != int:
+            raise NotImplemented
         return Vector(self.a*scalar)
+
+    def __rmul__(self, scalar):
+        return self.__mul__(scalar)
     
     def __div__(self, scalar):
         """Vector(x1/x2, y1/y2)"""
@@ -87,6 +92,9 @@ class Vector:
         """Reset x & y coordinates."""
         self.a[0] = x
         self.a[1] = y
+
+    def normal(self):
+        return self / self.length()
     
     def slide(self, p):
         '''Move to new (x+dx,y+dy).
@@ -136,5 +144,42 @@ class Vector:
         result.rotate(theta)
         result.slide(p.x, p.y)
         return result
+
+    @staticmethod
+    def projection_length(A, B, C):
+        """Return the projection of a point on this vector.
+
+        If the point is outside the vector, return the nearest end point."""
+
+        #    From http://www.codeguru.com/forum/showthread.php?t=194400:
+        #
+        #    Let the point be C (Cx,Cy) and the line be AB (Ax,Ay) to (Bx,By).
+        #    Let P be the point of perpendicular projection of C on AB.  The parameter
+        #    r, which indicates P's position along AB, is computed by the dot product 
+        #    of AC and AB divided by the square of the length of AB:
+
+        #        (1)     AC dot AB
+        #            r = ---------  
+        #                ||AB||^2
+
+        #    r has the following meaning:
+
+        #    r=0      P = A
+        #    r=1      P = B
+        #    r<0      P is on the backward extension of AB
+        #    r>1      P is on the forward extension of AB
+        #    0<r<1    P is interior to AB
+
+
+        #    The point P can then be found:
+
+        #    Px = Ax + r(Bx-Ax)
+        #    Py = Ay + r(By-Ay)
+
+        #    And the distance from A to P = r*L."""
+
+        AC = C-A
+        AB = B-A
+        return AC.dot(AB)/AB.length()
 
 Point = Vector
