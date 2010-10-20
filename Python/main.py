@@ -19,8 +19,16 @@ def main():
     actors = [
             Actor(
                 position = Point(-8.0, -8.0),
-                velocity = Vector(0.0, 0.5),
-                target = Point(5.0, 5.0))
+                velocity = Vector(-2.5, 0.0),
+                target = Point(0.0, 12.0)),
+            Actor(
+                position = Point(0.0, -8.0),
+                velocity = Vector(-2.5, 0.0),
+                target = Point(0.0, 12.0)),
+            Actor(
+                position = Point(8.0, -8.0),
+                velocity = Vector(-2.5, 0),
+                target = Point(0.0, 12.0))
             ]
     walls = [
             Wall(-10, -10, 10, -10),
@@ -33,13 +41,15 @@ def main():
 #            Wall(20, -20, 20, 20),
             ]
 
-    timestep = 0.1 # for now
+    timestep = 0.02 # for now
     canvas.clear_screen()
 
     while canvas.tick():
         
         if clear:
             canvas.clear_screen()
+
+        canvas.draw_text("t = %.2f" % actors[0].time)
 
         for w in walls:
             canvas.draw_wall(w)

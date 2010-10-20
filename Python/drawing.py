@@ -15,7 +15,7 @@ class Canvas:
         pygame.init()
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT),
                 0, 32)
-
+        self.font = pygame.font.Font(None, 16)
 
         self.clock = pygame.time.Clock()
 
@@ -24,7 +24,7 @@ class Canvas:
         self.screen.fill(BG_COLOR)
 
     def tick(self):
-        self.clock.tick(50)
+#        self.clock.tick(50)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -40,14 +40,20 @@ class Canvas:
                 Helper.screen_coords(w.end))
 
     def draw_actor(self, a):
-        print a
         pygame.draw.circle(self.screen, DRAW_COLOR, 
                 Helper.screen_coords(a.position),
                 Helper.screen_radius(a.radius))
+        pygame.draw.circle(self.screen, DRAW_COLOR, 
+                Helper.screen_coords(a.target),
+                Helper.screen_radius(0.2))
 
     def draw_proj(self, p):
         pygame.draw.circle(self.screen, DRAW_COLOR, 
                 Helper.screen_coords(p), 2)
+
+    def draw_text(self, t):
+        text = self.font.render(t, True, DRAW_COLOR, BG_COLOR)
+        self.screen.blit(text, text.get_rect())
 
 
 class Helper:
