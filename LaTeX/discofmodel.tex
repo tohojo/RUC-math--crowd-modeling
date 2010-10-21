@@ -1,9 +1,9 @@
-\section{Discussion of model}
+\subsection{Discussion of model}
 In this section we will make an analysis of the different parts and 
 parameters of the model and see what their role in the model is as well 
 as inspect their domains and limitations. 
 
-\subsection{The time steps}
+\subsubsection{The time steps}
 In this section discuss how to set the the time steps of the calculation. 
 When we do the simulations we want it be as cheap as posible. That is we want it to be done with as few calculations a posible. Because the cheaper you make the simulations the more pedrestrians you can have in your simulation without waiting to long for the results to come out. One of the way to minimize the number of calculations is by choosing the highest posible value for $\Delta t$. For instant there would be no reason to make a simulation in a time step making people move so little that they, in the same time step in real life, would'nt be able to make a reaction on the changes.  
 On the other hand there will of course be a maximum we can choose if we still want the simulations to look realistic. If all the pedestrians make big jumps in each timestep it will not be very good to compare with real life situations. So we have to make sure that people aren't able to land on top of eachother or to pass through a wall because the repulsion forces are calculated at to great a distance compared to how big jumps a pedestrian can make.
