@@ -95,29 +95,10 @@ want to get too close to the wall. So the closer \alpha get to the wall the more
 The repulsion potential is given by  $V_{B} \left( \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| \right) =
 V^0_{\alpha B} e^{- \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| / R }$
 
-Here $V^0_{\alpha B}$ is a constant and $R$ is the radii of a pedestrian.
+Here $V^0_{\alpha B}$ is a constant and $R$ is the radius of a pedestrian.
 
 The reason for this repusion force from the wall is that the pedestrians do not want to get hurt by running into the walls
-or get crushed between the panicing crowd and the wall [Helbing & Molnár, 1995]. 
-
-Unfortunately the repulsive potential isn't explained in the article. However
-in the article \emph{simulation dynamical features of escape panic} also authored
-by Helbing the force between the agent and the walls is described by:
-
-\begin{equation}
-	\vec{f_{\alpha B}} \left( \vec{r_{\alpha}} \right) =
-	A_{\alpha} exp \left[ \frac{\left( r_{\alpha} - d_{\alpha B}   \right)}{B_{\alpha}} \right] + 
-	kg \left( r_{\alpha} - d_{\alpha B} \right) \eta_{\alpha B} -
-	kg \left( r_{\alpha} - d_{\alpha B} \right) \left( \vec{V_{\alpha}} \cdot \vec{t}_{\alpha B} \right)
-	\vec{t}_{\alpha B}
-\end{equation} 
-
-We have changed the notation slightly from the original article so that it is more
-consistent with the rest of the model. Here $\eta_{\alpha B}$ is the normal vector
-from the agent to the wall and $t_{\alpha B}$ is the direction tangential to the wall.
-k is a constant that determine the obstruction effects in case of physical interaction.
-g is actually a function of x and it is zero if pedestrians do not touch the wall
-and is otherwise equal to the argument x.
+or get crushed between the panicing crowd and the wall [Helbing & Molnár, 1995].
 
 The third term on the right hand side of \eqref{model} is a summation of all the 
 force between agent $\alpha$ and agent $\beta$. It is a function of the position vector and the velocity of 
