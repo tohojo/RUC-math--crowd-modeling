@@ -24,7 +24,7 @@ class Canvas:
         self.screen.fill(BG_COLOR)
 
     def tick(self):
-#        self.clock.tick(50)
+        self.clock.tick(0)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -52,7 +52,7 @@ class Canvas:
                 Helper.screen_coords(p), 2)
 
     def draw_text(self, t):
-        text = self.font.render(t, True, DRAW_COLOR, BG_COLOR)
+        text = self.font.render("%s - %d fps" % (t, self.clock.get_fps()), True, DRAW_COLOR, BG_COLOR)
         self.screen.blit(text, text.get_rect())
 
 
@@ -71,9 +71,9 @@ class Helper:
         x += shift_w
         y += shift_h
 
-        return (x,y)
+        return (int(x),int(y))
 
     @staticmethod
     def screen_radius(r):
-        return r*PIXEL_FACTOR
+        return int(r*PIXEL_FACTOR)
 
