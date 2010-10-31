@@ -105,8 +105,6 @@ class Actor:
 
             norm_vector = (self.position-b.position).normal()
 
-            print radius_sum - distance
-
             repelling_forces.append(norm_vector * pm.constants.a_2 * \
                     numpy.exp((radius_sum-distance)/pm.constants.b_2))
 

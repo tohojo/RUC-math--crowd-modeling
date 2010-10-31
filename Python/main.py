@@ -56,6 +56,9 @@ def main():
 
         canvas.draw_text("t = %.2f" % actors[0].time)
 
+#        if actors[0].time > 10:
+#            return
+
         for w in walls:
             canvas.draw_wall(w)
 
@@ -69,12 +72,16 @@ def main():
                 continue
 
             canvas.draw_actor(a)
-            for w in walls:
-                P = w.projection(a.position)
-                canvas.draw_proj(P)
+#            for w in walls:
+#                P = w.projection(a.position)
+#                canvas.draw_proj(P)
         
         canvas.update()
 
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) > 1 and sys.argv[1] == "profile":
+        import cProfile
+        cProfile.run("main()")
+    else:
+        main()

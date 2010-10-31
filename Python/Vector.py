@@ -26,11 +26,8 @@ class Vector:
     
     def __init__(self, *args):
         if len(args) == 1:
-            if(isinstance(args[0], numpy.ndarray)):
-                self.a = numpy.copy(args[0])
-            else:
-                raise AttributeError("Only one argument should imply an array")
-        if len(args) == 2:
+            self.a = numpy.copy(args[0])
+        elif len(args) == 2:
 #            assert (type(args[0]) in (int, float) and type(args[1]) in (int,float))
             self.a = numpy.array((args[0],args[1]))
 
