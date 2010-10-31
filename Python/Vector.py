@@ -44,24 +44,25 @@ class Vector:
 
     def __add__(self, v):
         """Vector(x1+x2, y1+y2)"""
-        return Vector(self.a+v.a)
+        return self.__class__(self.a+v.a)
     
     def __sub__(self, v):
         """Vector(x1-x2, y1-y2)"""
-        return Vector(self.a-v.a)
+        return self.__class__(self.a-v.a)
     
     def __mul__( self, scalar ):
         """Vector(x1*x2, y1*y2)"""
-        if type(scalar) != float and type(scalar) != int:
+        if type(scalar) != float and type(scalar) != int \
+                and type(scalar) != numpy.float64:
             raise NotImplemented
-        return Vector(self.a*scalar)
+        return self.__class__(self.a*scalar)
 
     def __rmul__(self, scalar):
         return self.__mul__(scalar)
     
     def __div__(self, scalar):
         """Vector(x1/x2, y1/y2)"""
-        return Vector(self.a/scalar)
+        return self.__class__(self.a/scalar)
     
     def __str__(self):
         return "(%s, %s)" % (self.a[0], self.a[1])
@@ -86,7 +87,7 @@ class Vector:
     
     def clone(self):
         """Return a full copy of this point."""
-        return Vector(self.a)
+        return self.__class__(self.a)
     
     def move_to(self, x, y):
         """Reset x & y coordinates."""
@@ -130,7 +131,7 @@ class Vector:
         """
         s, c = [f(rad) for f in (math.sin, math.cos)]
         x, y = (c*self.a[0] - s*self.a[1], s*self.a[0] + c*self.a[1])
-        return Vector(x,y)
+        return self.__class__(x,y)
     
     def rotate_about(self, p, theta):
         """Rotate counter-clockwise around a point, by theta degrees.
