@@ -2,6 +2,7 @@
 
 from Vector import Vector, Point
 import numpy
+import parameters as pm
 
 EPSILON = 10e-5
 CALC_RANGE = 20
@@ -13,41 +14,41 @@ class Actor:
         if kwargs.has_key("position"):
             self.position = kwargs["position"]
         else:
-            self.position = Point(0.0, 0.0)
+            self.position = pm.actor.default_position.clone()
 
         self.initial_position = self.position
 
         if kwargs.has_key("radius"):
             self.radius = kwargs["radius"]
         else:
-            self.radius = 0.2
+            self.radius = pm.actor.default_radius
 
         if kwargs.has_key("velocity"):
             self.velocity = kwargs["velocity"]
         else:
-            self.velocity = Vector(1.0, 1.0)
+            self.velocity = pm.actor.default_velocity.clone()
 
         if kwargs.has_key("desired_velocity"):
             self.initial_desired_velocity = kwargs["desired_velocity"]
         else:
-            self.initial_desired_velocity = 0.5
+            self.initial_desired_velocity = pm.actor.default_initial_desired_velocity
 
         if kwargs.has_key("max_velocity"):
             self.max_velocity = kwargs["max_velocity"]
         else:
-            self.max_velocity = 3.0
+            self.max_velocity = pm.actor.default_max_velocity
 
         if kwargs.has_key("relax_time"):
             self.relax_time = kwargs["relax_time"]
         else:
-            self.relax_time = 1.0
+            self.relax_time = pm.actor.default_relax_time
 
         self.initial_velocity = self.velocity
 
         if kwargs.has_key("target"):
             self.target = kwargs["target"]
         else:
-            self.target = Point(0.0, 10.0)
+            self.target = pm.actor.default_target.clone()
 
         self.acceleration = Vector(0.0,0.0)
         self.time = 0.0
@@ -93,7 +94,26 @@ class Actor:
         desired_acceleration = (1.0/self.relax_time) * \
                 (desired_velocity * towards_target - self.velocity)
 
+        repelling_forces = list()
+
+        for b in actors:
+            if self == b:
+                continue
+            radius_sum = b.radius + self.radius
+            distance = self.position.distance_to(b.position)
+
+
+            norm_vector = (self.position-b.position).normal()
+
+            print radius_sum - distance
+
+            repelling_forces.append(norm_vector * pm.constants.a_2 * \
+                    numpy.exp((radius_sum-distance)/pm.constants.b_2))
+
         self.acceleration = desired_acceleration
+
+        for f in repelling_forces:
+            self.acceleration += f
 
 
     def update_position(self, timestep):
