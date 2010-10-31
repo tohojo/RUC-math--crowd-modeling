@@ -5,6 +5,7 @@ from drawing import Canvas
 from Actor import Actor
 from Wall import Wall
 from Vector import Vector, Point
+import parameters as pm
 
 import sys
 
@@ -18,17 +19,21 @@ def main():
 
     actors = [
             Actor(
+                position = Point(-8.0, 8.0),
+                velocity = Vector(-2.5, 0.0),
+                target = Point(0.0, 0.0)),
+            Actor(
+                position = Point(8.0, 8.0),
+                velocity = Vector(-2.5, 0),
+                target = Point(0.0, 0.0)),
+            Actor(
                 position = Point(-8.0, -8.0),
                 velocity = Vector(-2.5, 0.0),
-                target = Point(0.0, 12.0)),
-            Actor(
-                position = Point(0.0, -8.0),
-                velocity = Vector(-2.5, 0.0),
-                target = Point(0.0, 12.0)),
+                target = Point(0.0, 0.0)),
             Actor(
                 position = Point(8.0, -8.0),
                 velocity = Vector(-2.5, 0),
-                target = Point(0.0, 12.0))
+                target = Point(0.0, 0.0)),
             ]
     walls = [
             Wall(-10, -10, 10, -10),
@@ -41,7 +46,7 @@ def main():
 #            Wall(20, -20, 20, 20),
             ]
 
-    timestep = 0.02 # for now
+    timestep = pm.timestep
     canvas.clear_screen()
 
     while canvas.tick():
