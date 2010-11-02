@@ -5,6 +5,7 @@ from drawing import Canvas
 from Actor import Actor
 from Wall import Wall
 from Vector import Vector, Point
+import setup
 import parameters as pm
 
 import sys
@@ -17,24 +18,25 @@ def main():
     else:
         clear = True
 
-    actors = [
-            Actor(
-                position = Point(-8.0, 8.0),
-                velocity = Vector(-2.5, 0.0),
-                target = Point(0.0, 0.0)),
-            Actor(
-                position = Point(8.0, 8.0),
-                velocity = Vector(-2.5, 0),
-                target = Point(0.0, 0.0)),
-            Actor(
-                position = Point(-8.0, -8.0),
-                velocity = Vector(-2.5, 0.0),
-                target = Point(0.0, 0.0)),
-            Actor(
-                position = Point(8.0, -8.0),
-                velocity = Vector(-2.5, 0),
-                target = Point(0.0, 0.0)),
-            ]
+    actors = setup.generate_actors()
+#    [
+#            Actor(
+#                position = Point(-8.0, 8.0),
+#                velocity = Vector(-2.5, 0.0),
+#                target = Point(0.0, 0.0)),
+#            Actor(
+#                position = Point(8.0, 8.0),
+#                velocity = Vector(-2.5, 0),
+#                target = Point(0.0, 0.0)),
+#            Actor(
+#                position = Point(-8.0, -8.0),
+#                velocity = Vector(-2.5, 0.0),
+#                target = Point(0.0, 0.0)),
+#            Actor(
+#                position = Point(8.0, -8.0),
+#                velocity = Vector(-2.5, 0),
+#                target = Point(0.0, 0.0)),
+#            ]
     walls = [
             Wall(-10, -10, 10, -10),
             Wall(-10, -10, -10, 10),
@@ -55,6 +57,8 @@ def main():
             canvas.clear_screen()
 
         canvas.draw_text("t = %.2f" % actors[0].time)
+
+        canvas.draw_target(pm.actor.target)
 
 #        if actors[0].time > 10:
 #            return
