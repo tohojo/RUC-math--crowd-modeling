@@ -29,6 +29,7 @@ class Canvas:
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                pygame.image.save(self.screen, "simulation.png")
                 return False
         return True
 
