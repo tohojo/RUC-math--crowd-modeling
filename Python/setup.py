@@ -6,6 +6,9 @@ import numpy
 from Vector import Vector,Point
 from Actor import Actor
 
+if pm.random_seed is not None:
+    numpy.random.seed(pm.random_seed)
+
 def generate_actors():
     """Generates a number of actors placed randomly within the
     area specified by the parameters, with parameters as specified

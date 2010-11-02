@@ -4,6 +4,7 @@ from Vector import Vector, Point
 
 
 timestep = 0.02
+random_seed = None
 
 class constants:
     # From page 12 of the article
