@@ -7,6 +7,7 @@ SCREEN_HEIGHT=600
 PIXEL_FACTOR = 20
 BG_COLOR = (255,255,255)
 DRAW_COLOR = pygame.Color(0,0,0)
+TARGET_COLOR = pygame.Color(255,0,0)
 
 class Canvas:
     """Class to manage a canvas and draw objects on it."""
@@ -43,8 +44,10 @@ class Canvas:
         pygame.draw.circle(self.screen, DRAW_COLOR, 
                 Helper.screen_coords(a.position),
                 Helper.screen_radius(a.radius))
-        pygame.draw.circle(self.screen, DRAW_COLOR, 
-                Helper.screen_coords(a.target),
+
+    def draw_target(self, t):
+        pygame.draw.circle(self.screen, TARGET_COLOR, 
+                Helper.screen_coords(t[0], t[1]),
                 Helper.screen_radius(0.2))
 
     def draw_proj(self, p):
