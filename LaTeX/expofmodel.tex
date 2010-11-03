@@ -92,8 +92,12 @@ from agent $\alpha$ to the nearest point of the nearest wall.
 
 The repulsive potential describes the force added from the walls to pedestrian $\alpha$, since $\alpha$ does not
 want to get too close to the wall. So the closer $\alpha$ get to the wall the more the force from the wall gets.
-The repulsion potential is given by  $V_{B} \left( \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| \right) =
-V^0_{\alpha B} e^{- \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| / R }$
+The repulsion potential is given by:
+
+\begin{equation}
+V_{B} \left( \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| \right) =
+V^0_{\alpha B} e^{- \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| / R }
+\end{equation}
 
 Here $V^0_{\alpha B}$ is a constant and $R$ is the radius of a pedestrian.
 
