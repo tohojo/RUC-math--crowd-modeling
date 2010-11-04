@@ -1,41 +1,59 @@
 \subsection{Social force models}
-The idea behind social force models is that each individual in the crowd acts on his/ her own from a personal aim or goal and by behavioral reactions to
-the environment. Different forces such as other pedestrians, walls and obstacles are taken into account when pedestrian $\alpha$ walks toward his/her aim or
-goal, so that $\alpha$ does not walk into another pedestrian or wall. The forces influencing the pedestrian $\alpha$'s motion of direction are not forces
-acting on $\alpha$'s body, but has to be seen as a quantity that describes the motivation to act.
-Since pedestrian $\alpha$ is used to the situations he/she is normally confronted with, his/her reactions will be rather automatic and determined by his/her
-experience of which reaction will be that best. Since the reaction is rather automatic it is possible to put the rules of pedestrian behavior into an
-equation of motion. [Helbing and Molnár, 1995]
+%	There should be an introduction to this section.. were going to compare the 		%
+%	differnt ways of simulating crowds.. but wait then it's not only relevant for 		%
+%	social force models. This might fit better into the Crowds section if its rewitten	%
+%	correctly.																			%
 
-There are other ways to model crowd than social force models such as Rule Based models, Cellular Automata models and HiDAC. Below we will make a short
-explanation of each of the other crowd models.
-\\
+%	Some history about the social force model might serve well as an introduction here	%
+
+The idea behind social force models is that each individual in the crowd acts 
+on his/ her own from a personal aim or goal and by behavioral reactions to the environment. 
+Different forces such as other pedestrians, walls and obstacles are taken into account 
+when pedestrian $\alpha$ walks toward his/her aim or goal, so that $\alpha$ does not walk 
+into another pedestrian or wall. The forces influencing the pedestrian $\alpha$'s motion 
+of direction are not forces acting on $\alpha$'s body, but has to be seen as a quantity 
+that describes the motivation to act. Since pedestrian $\alpha$ is used to the situations 
+he/she is normally confronted with, his/her reactions will be rather automatic and 
+determined by his/her experience of which reaction will be that best. Since the reaction 
+is rather automatic it is possible to put the rules of pedestrian behavior into an equation 
+of motion. [Helbing and Molnár, 1995] %this should be made a REAL reference%
+
+There are other ways to model crowd than social force models such as Rule Based models, 
+Cellular Automata models and HiDAC. Below we will make a short explanation of each of the 
+other crowd models.\\
+
+%	I think theese should be made into a subsubsection called comparison of model		%
+%	or something like that.																%
 
 \textbf{Rule Based models}\\
-Rule Based models describe the movement of pedestrians through sets of basic rules. Each pedestrian apply collision detection and avoidance to prevent
-collision with other pedestrians. However they do not in general apply collision response, and therefore collisions and overlappping of the pedestrians
-may occur under some circumstances. Some models have applied stopping rules to prevent these situations. [Pelechano et al., 2008]
+Rule Based models describe the movement of pedestrians through sets of basic rules. Each 
+pedestrian apply collision detection and avoidance to prevent collision with other pedestrians. 
+However they do not in general apply collision response, and therefore collisions and overlappping 
+of the pedestrians may occur under some circumstances. Some models have applied stopping 
+rules to prevent these situations. [Pelechano et al., 2008] % use proper reference %
 
 \textbf{Cellular Autamata models}\\
 These models are discrete, deterministic and is made up of cells like the squares in a chessboard.
 An artificial intelligence approach is used in Celluar Automata (CA) defined as mathematical idealisation of physical systems in which time and space are
 discrete, and physical quantities take a finite set of discrete values. Pedestrian can not collide since the floor is dicretised and the pedestrians can
-only move to free adjecent cells. [Pelechano et al., 2008]
+only move to free adjecent cells. [Pelechano et al., 2008] % use proper reference %
 
 \textbf{HiDAC}\\
-The HiDAC model is made as a hybrid between social force models and rule based models. The motion of the pedestrians is caried out like the social force
-models, but is also based on the psychological and geometrical rules. It peforms collision detection and response and rules are applied depending on the
-pedestrian's personality and the state of the environment. [Pelechano et al., 2008]
-\\
+The HiDAC model is made as a hybrid between social force models and rule based models. 
+The motion of the pedestrians is caried out like the social force models, but is also based 
+on the psychological and geometrical rules. It peforms collision detection and response and rules 
+are applied depending on the pedestrian's personality and the state of the environment. 
+[Pelechano et al., 2008] % use proper reference %
 \\
 
 \textbf{Geometrical features of the models}\\
-Each of the different models have some geomatrical features relatively important and unimportant according to our simulation.
+Each of the different models have some geomatrical features relatively important and 
+unimportant according to our simulation.
 
-\textbf{Shaking} Wether pedestrians appear to shake when simulating the model.
-When simulating the social force models the pedestrians seems to shake when cloggings and queues arise. This is caused by the modification
-of each pedestrians postition in each timestep. 
-The HiDAC, CA and rule based model do not appear to shake while the simulation run.
+\textbf{Shaking} Wether pedestrians appear to shake when simulating the model. When 
+simulating the social force models the pedestrians seems to shake when cloggings and 
+queues arise. This is caused by the modification of each pedestrians postition in each 
+timestep. The HiDAC, CA and rule based model do not appear to shake while the simulation run.
 
 \textbf{Discrete and Continuous movement} Wether the space and time are discretised. In the CA model the pedestrians move between discritised adjecent
 cells in one time step, and therefore have limited direction to go. The other models do not discretise space and therefore allow the pedestrians to move
@@ -73,3 +91,5 @@ relevant for our simulaion to be as realistic as possible since we do not want o
 The feature of pushing is also important to include since in panic sitiation it has been seen that people push each. This feature will then make our
 simulation more realistic.
 The overlapping avoidance we find relevant since this enables pedestrians to walk through each other.
+
+%	Finishing off with a conclusion would be neat					%
