@@ -1,6 +1,6 @@
 % vim:ft=tex
 \section{The model}
-
+\label{sec:the-model}
 %	There should be an introduction here. What will the reader learn during the section. 	%
 
 \input{socialforcemodels}
@@ -127,6 +127,7 @@ both agents, and it is given by:
         \lambda_{\alpha} + \left(
             1 - \lambda_{\alpha}
         \right)
+		\frac{1+\cos{\phi}}{2}
     \right) +
     A_{\alpha}^{2} exp\left(
         \frac{r_{\alpha \beta} - d_{\alpha \beta}}
@@ -143,7 +144,7 @@ $r_{\alpha \beta} = r_{\alpha} + r_{\beta}$. $d_{\alpha \beta}$ is the
 distance from the center of mass of agent $\alpha$ and the center of mass of 
 agent $\beta$ and is therefore given by $d_{\alpha \beta} = 
 \|\vec{X_{\alpha}}\left( t \right) - \vec{X_{\beta}}\left( t \right) \|$. Here 
-$\vec{X_{\alpha}}\left( t \right)$ amd $\vec{X_{\beta}}\left( t \right)$ are 
+$\vec{X_{\alpha}}\left( t \right)$ and $\vec{X_{\beta}}\left( t \right)$ are 
 of course the vectors pointing to the center of mass of respectively agent 
 $\alpha$ and $\beta$ at the time t. $\eta_{\alpha \beta}$ is the normal vector 
 pointing from $\alpha$ to $\beta$ and it is given by:
@@ -180,6 +181,17 @@ sights or familiar persons the agent prefer to be close to, such as friends
 and family. The mathematical structure of this force is the same as the force 
 from other agents, however it is opposite in algebraic sign and has different 
 constants. 
+
+To get an overview of how the model is put together look a figure \ref{overview}
+with the aid of table \ref{tableofconstandvar}
+
+\begin{figure}
+    \centering
+    {\includegraphics[scale=0.45]{Figures/overview.pdf}} 
+    \caption{An overview of how the model is put together}
+    \label{overview}
+\end{figure}
+
 
 %	I think this table should be send to the appendix							%
 
@@ -247,7 +259,7 @@ $\vec{\xi}\left( t \right)$ & Stochastic element & \\
 \hline
 $\phi_{\alpha \beta} \left( t \right)$ & Angle between agent $\alpha$ and $\beta$ & \\
 \hline
-
+\label{tableofconstandvar}
 \end{tabular}
 \end{center}
 

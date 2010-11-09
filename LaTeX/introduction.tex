@@ -25,11 +25,9 @@ The social force class of models represent an agent-based approach to
 modelling crowds that we think is interesting. Since the original formulation 
 of the social force concept, it has been revised several times (e.g.  
 \cite{helbing00}). For this project we have selected the version presented in 
-\cite{self-org}, because this version has been expanded to include features 
-not available in earlier models\footnote{This should probably be expanded.}.  
-We think it will be interesting to look into what this model makes it possible 
-to say about the dynamics of a (virtual) crowd. This brings us to our problem 
-formulation:
+\cite{self-org}.  We think it will be interesting to look into what this model 
+makes it possible to say about the dynamics of a (virtual) crowd. This brings 
+us to our problem formulation:
 
 \subsection{Problem formulation}
 \begin{quote}
@@ -43,39 +41,50 @@ formulation:
     properties?
 \end{quote}
 
-\subsection{Approach to answering the problem formulation}
-We will seek to answer our problem formulation by subjecting our chosen model 
-to thorough analysis, determining which properties are used in the description 
-of the model to describe its behaviour. This analysis will include a review of 
-the model's parameters, where they come from, and what role they play in the 
-model as well as an assessment of what kind of model behaviour we expect from 
-the model.
-
-Based on this analysis, we will create a computer simulation of a virtual 
-scenario using the model. From this simulation we will illustrate the 
-properties of the model, and examine how the model parameters affect these 
-properties by varying the parameters in the simulation.
-
-%	it would be nice if we could elaborate on how we will vary the parameter%
-% 	will we be systematic in any way if so how?  %
-
-We will give an assessment of how well the model fits empirical data, by 
-examining results obtained by others in the literature, rather than by doing 
-our own empirical study. Based on this, and our simulation, we will assess how 
-well this model is suited to modelling a crowd, and what its limitations are.
-
-\subsection{Exemplarity}
-Our project is exemplary to mathematical modelling for several reasons. First 
+Our problem is exemplary to mathematical modelling for several reasons. First 
 of all, it is an example of applying mathematical theory to a field outside of 
 mathematics itself. The field we are working with (crowd simulation) is 
-relatively new, but has some established research. The model itself contains 
+relatively new, but has some established research\footnote{See the overview of 
+the field in section~\ref{sec:the-model}.}. The model itself contains 
 non-trivial mathematics and is an example of a type of model (agent-based 
 models) used in many cases to study a complex system of interacting agents by 
 describing the individual behaviour of the agents and using simulations to 
-derive meaningful properties for the whole system. These factors combined 
-makes our project exemplary.
+derive meaningful properties for the whole system\footnote{See the overview of 
+agent-based models in section~\ref{sec:the-model}.}. These factors combined 
+makes our problem exemplary.
 
-%	This section strikes me as being a little forces in. It doesn't follow	%
-%	Naturally from the last section and it doesn't lead to the next.		%
+\subsection{Approach to answering the problem formulation}
+To answer the problem formulation, it is first necessary to establish some 
+concepts for discussing the behaviour of crowds in general, in order to have a 
+basis on which we can analyse our chosen model. This, along with the cases 
+that we wish to simulate, is described in section~\ref{sec:crowds}. This 
+section also contains an overview of the work that has been done in the field 
+of crowd modelling and which approaches there has been to tackling this area, 
+as well as background information on the type of model (agent-based) we are 
+dealing with.
 
-%	At some point it would be nice with a readers guide?					%
+In order to subject the model to further analysis, we will first describe it 
+thoroughly. In section~\ref{sec:the-model}, we will go over the different 
+parts and parameters of the model, and point out interesting areas to be 
+discussed further.  Based on this description, we will go into a detailed 
+discussion of interesting areas in section~\ref{sec:discussion}.  This 
+includes discussing how the chosen areas affect the behaviour of the model and 
+how we have interpreted any ambiguities we may encounter in the model.
+
+Based on our analysis of the model, we will construct a computer simulation of 
+the model, modelling the cases we have selected. Our implementation of this 
+simulation is discussed in section~\ref{sec:simulation}, including set up of 
+parameters and initial conditions, the structure of our simulation and how we 
+obtain results from it.
+
+The actual results of the simulation is addressed in 
+section~\ref{sec:results}. Here we discuss how the simulation results relate 
+to the concepts for crowd behaviour we have chosen to focus on, and what this 
+tells us about crowd behaviour in the real world, as well as which limitations 
+these results have.  We will give an assessment of how well the model fits 
+empirical data, by examining results obtained by others in the literature, 
+rather than by doing our own empirical study.
+
+Finally, we conclude on our findings in section~\ref{sec:conclusion} and touch 
+briefly upon the perspectives for this area of study as well as further things 
+that might be investigated from our results in section~\ref{sec:perspectives}.
