@@ -1,81 +1,52 @@
 \section{Crowds}
 \label{sec:crowds}
 
-\subsection{characteristics of crowd modeling}
-In this section we try to make an outline of what characteristics one could use when
-describing a crowd.
+In this section, we establish some concepts for discussing the behaviour of 
+crowds in general, in order to have a basis on which we can analyse our chosen 
+model. We also give an overview of the work that has been done in the field of 
+crowd modelling and which approaches there has been to tackling this area, as 
+well as background information on the type of model (agent-based) we are 
+dealing with. Finally, we outline the cases we want to use in our simulations.
 
-The characteristic for the collective group can be divided in to two 
-subcategories: Universal characteristic which are the characteristics that are 
-independent of the model used to describe the situation. Then there are the 
-situation/model specific characteristic.  Where the situations specific 
-characteristic should arise from simulations of the model, while the universal 
-characteristic is used to describe the dynamics of an arbitrary group. 
+\subsection{Concepts for describing crowd behaviour}
+In order to analyse the behaviour of crowds, we need to establish some 
+concepts to describe this behaviour. It is not obvious which concepts  are 
+useful when we need to distinguish between the results we get from our 
+simulations. In this section we describe which concepts we use to describe the 
+behaviour of crowds, and why we have chosen them. This is based on the 
+literature of crowd modelling.
 
-\subsubsection{Universal characteristic}
-A universal characteristic is a characteristic that is independent of the model.
+One of the reasons for modelling crowds is to discover ways to make crowd 
+situations safer for pedestrians, e.g. when evacuating a building in event of 
+a fire. One of the main factors in this scenario is the \emph{efficiency} of 
+the crowd movement. This is especially important when clearing a room in the 
+event of a fire or other disaster: the faster everyone gets out, the lower is 
+the chance of someone dying from flames or smoke.
 
-\begin{itemize}
-    \item Flow rate (pedestrians/time): The number of pedestrians passing a 
-        given boarder during a given time.
+The obvious measure of efficiency is measuring how long it takes to empty a 
+given room. This, however, makes the results highly dependent on the specific 
+situation we are modelling (i.e. room size, number of people in the room, 
+etc.). If we wish to compare results from different cases, we need a measure 
+that is less dependent on the room configuration. Such a measure could be the 
+\emph{flow rate}, i.e. the number of pedestrians passing a specific point (or 
+line) in space per time unit.
 
-    \item Flow rate per. space: Number of pedestrians passing a given boarder 
-        during a given time, as a function of space. The "space" could be a 
-        doorway, with of a hall, specific design of a corridor etc.
-
-    \item Flow rate/average speed: The number of individuals passing a given 
-        boarder pr.  time as a function of the average speed. (Detect at what 
-        speed clocking occurs for example)
-
-    \item Density as a function of position (x,y,$\rho$)
-\end{itemize}
-
-\subsection{Model specific characteristic}
-These characteristic are characteristic which emerge from the model.
-
-\begin{itemize}
-    \item Each individual is represented by two coupled differential equations 
-        representing the position and two coupled differential equations 
-        representing the velocity.
-
-    \item The initial conditions of the system is determined bye a stochastic 
-        spread.
-
-    \item At each calculation there will arise an error. The size of this 
-        error depends on the size of the time step.
-
-    \item A time step which need to be determined optimally.
-
-    \item There could be a problem determining if a deviation arise from the 
-        error or if it arise because of the stochastic spread. (What viggo 
-        said).
-
-    \item This model takes a lot of computational power. (I think)
-\end{itemize}
-
-
-
-\subsection{Our case(s)}
+% TODO: This section needs to be expanded with more concepts, references to 
+% where we get the concepts, as well as a better arguments for why we have 
+% chosen exactly these measures.
 
 \subsection{Concepts for crowd behaviour}
-The modelling of human behavior done by the use of agent based model, is a 
-pretty new field in modelling \cite{helbing00}. Also it is a field that you 
-normally wouldn't think of as being something that one would be able to 
-predict with mathmatics. To understand the idea of these kinds of models 
-completly and why some thinks that they could work, one could start looking at 
-the origin of agent base model. Here we will make a short review of where the 
-agent based models origins from and mention some other fields that uses 
-semilar models. 
+The modelling of human behaviour using agent-based models is a 
+pretty new field in modelling \cite{helbing00}. In this section, we give an 
+overview of the use of agent-based models in other areas.
 
-To start of with, lets define what an agent base model is. An agent based 
-model is a model where you describe the behavior of the individual. So instead 
-of looking at a crowd as a combined unit you look at the individual an try to 
-describe them separately and let them interact with each other. In other words 
-an agent based model is a special version of a microscopic model.  Special in 
-the way that it is made to work on humans and doesn't apply to other fields. 
-Microscopic model covers in general alot of different fields. Microscopic 
-models takes it origin in physics where the idea of microscopic models dates 
-as far back as 1820. Back then Laplace wrote \cite{simintro}:
+An agent-based model is a model that describes the behaviour of individuals 
+and through simulations derive behaviour of the system being modelled.  
+Agent-based models are used in many different fields.  They have their origin 
+in physics where the idea of agent-based models dates as far back as 1820. 
+Back then Laplace wrote \cite{simintro}:
+
+% TODO: Language cleanup etc.
 
 \begin{quote}
     An intelligent being who, at a given moment, knows all the forces that 
@@ -87,19 +58,19 @@ as far back as 1820. Back then Laplace wrote \cite{simintro}:
     prediction will always remain infinitely far away.
 \end{quote}
 
-So the main idea of agent based models and their application has been thought 
+So the main idea of agent-based models and their application has been thought 
 of since long before the usage of computers. But it wasn't until the last half 
 of the 20th century that it was actually possible to work with agent models 
 because of the numbers of calculations needed to make use of 
-them \cite{simintro}.  Since then the application of agents based models have 
-been huge and it is now used in alot of different fields. 
+them \cite{simintro}.  Since then the application of agent-based models have 
+been huge and it is now used in many of different fields. 
 
-One of the most well-know and first established (1957 \cite{MDintro}) 
-microscopic model simulations is the moleculare dynamics (MD)-simulations 
+One of the most well-known and first established (1957 \cite{MDintro}) 
+agent-based model simulations is the molecular dynamics (MD)-simulations 
 \cite{MDintro}. The idea of MD-models is simply to describe particles moving 
 around by calculating the mechanical forces working on each of the particles.  
-These kind of models alow you too see what happens with each particle and from 
-that it is posible to calculate well known physical properties like 
+These kind of models allow you too see what happens with each particle and from 
+that it is possible to calculate well known physical properties like 
 temperature, pressure and so on . You can even see when there is a phase 
 change from liquid to solid and back again. But also you can use it for much 
 more complex behavior. In molecular biology and chemistry you can use 
@@ -107,7 +78,8 @@ MD-simulations to calculate the behavior of long-chain molecules \cite{MDbio}.
 In these models you even sometime add some stochastic elements to the models.  
 This can be used to get some theoretical idea about how reactions happens and 
 alot of other things.
-But also in fields that you noramlly would'nt connect with physics you see the 
+
+But also in fields that you normally wouldn't connect with physics you see the 
 application of microscopic models.
 One of the more exotic fields to use microscopic models is in financial 
 markets \cite{finans}.  In these kind of simulations you can describe how the 
@@ -116,20 +88,22 @@ mechanical forces that controls this kind of models, but the idea of looking
 at and calculate the effects of the individual is maintained. 
 
 Microscopic models has also been used on different types of animals like fish 
-and with good results.  One of the things that have been simmulated is fish 
+and with good results.  One of the things that have been simulated is fish 
 schools \cite{fish}. In these simulations they try to the describe how a fish 
 school moves around by calculating the positions of each fish and the effects 
-from its nearest neighbours. In these kind of models people get some realsitc 
-looking behaviors that looks like what you would see in nature. Because of 
+from its nearest neighbours. In these kind of models people get some realistic  
+looking behaviours that looks like what you would see in nature. Because of 
 this very wide application of agent based models it seems natural to assume 
-that it also could be fitted to use on human behavior. Specialy since it can 
+that it also could be fitted to use on human behaviour. Especially since it can 
 be used on other animals, even though it could be argued that you of course 
 would expect animals behavior to be more primitive than that of humans and 
-therefore more easy to model.  Since microscopic models is used in alot of 
+therefore more easy to model.  Since microscopic models is used in a lot of 
 different ways they also looks very different. That is because only the main 
-idea of looking at the inividual repeats throughout all of the models. So even 
-though microscopic models is used very widely there is still alot to of 
+idea of looking at the individual repeats throughout all of the models. So even 
+though microscopic models is used very widely there is still a lot to of 
 calculations and considerations that changes when the field changes and 
 therefore it is still non-trivial.
 
+
+\subsection{Our case(s)}
 
