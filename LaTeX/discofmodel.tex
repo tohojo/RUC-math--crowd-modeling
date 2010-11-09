@@ -3,29 +3,10 @@ In this section we will make an analysis of the different parts and
 parameters of the model and see what their role in the model is as well 
 as inspect their domains and limitations. 
 
-\subsection{The time steps}
-In this section discuss how to set the the time steps of the calculation.
-When we do the simulations we want it be as cheap as possible. That is we 
-want it to be done with as few calculations a possible. Because the cheaper 
-you make the simulations the more pedestrians you can have in your simulation 
-without waiting to long for the results to come out. One of the way to minimize 
-the number of calculations is by choosing the highest possible value for 
-$\Delta t$. For instant there would be no reason to make a simulation in a 
-time step making people move so little that they, in the same time step in 
-real life, would not be able to make a reaction on the changes. On the other 
-hand there will of course be a maximum we can choose if we still want the simulations to 
-look realistic. If all the pedestrians make big jumps in each time step it will not be very 
-good to compare with real life situations. So we have to make sure that people are not able 
-to land on top of each other or to pass through a wall because the repulsion forces are 
-calculated at to great a distance compared to how big jumps a pedestrian can make.
-So one of the big challenges when doing simulations is to choose the right value for $\Delta t$. 
-One way to get a quantitative value for $\Delta t$ is by looking at at the size of the parameters 
-added to the model to get some idea about the maximum displacement of a pedestrian as a function 
-of time and then choose a value that seems reasonable.
 
 \subsubsection{Linear approximation}
 In our simulation, we use Euler's method to approximate solutions to the equations of motion, 
-which are ordinary differential equations with initial conditions calculated from last time step, 
+which are ordinary differential equations, ODE, with initial conditions calculated from last time step, 
 and those initial value problems look like:
 
 \begin{eqnarray}
@@ -50,12 +31,40 @@ and the calculated value of $ y $ also becomes the initial value for the followi
 However, this kind of method can cause error in most situations, and there are methods trying 
 to minimize the error caused by the numerical way of solving problem.\\
 
-We can see that the error caused by the numerical approach must depends on the step size. 
-From the mathematical point of view, a smaller step size generally gives smaller error, but 
-as we use the computer to do the calculation and it only deals with rational numbers, so the 
-round off error becomes prominent. Therefore, an optimal step size could be the one that causes 
+\subsection{The time steps}
+In this section we discuss how to set the the time steps of the calculation.
+When we do the simulations we want it be as cheap as possible. That is we 
+want it to be done with as few calculations as possible. Because the cheaper 
+you make the simulations the more pedestrians you can have in your simulation 
+without waiting to long for the results to come out. One of the way to minimize 
+the number of calculations is by choosing the highest possible value for 
+$\Delta t$. For instant there would be no reason to make a simulation in a 
+time step making people move so little that they, in the same time step in 
+real life, would not be able to make a reaction on the changes. On the other 
+hand there will of course be a maximum we can choose if we still want the simulations to 
+look realistic. If all the pedestrians make big jumps in each time step it will not be very 
+good to compare with real life situations. So we have to make sure that people are not able 
+to land on top of each other or to pass through a wall because the repulsion forces are 
+calculated at to great a distance compared to how big jumps a pedestrian can make.
+One of the big challenges when doing simulations is to choose the right value for $\Delta t$. 
+One way to get a quantitative value for $\Delta t$ is by looking at at the size of the parameters 
+added to the model to get some idea about the maximum displacement of a pedestrian as a function 
+of time and then choose a value that seems reasonable.
+So the step size also has to be small enough for the simulation and the result to be realistic.
+We can see that the error caused by the numerical approach must depends on the step size.
+From the mathematical point of view, a smaller step size generally gives smaller error through
+Euler's method, since the numerical result gets closer to the actual result, but 
+as we use the computer to do the calculation and it only deals with rational numbers, the 
+round off error becomes prominent since more calculations are needed.
+The round off error from previous steps are being calculated in the next calculations, and when the rounding errors accumulate  
+the numerical result of the ODE gets unsatisfactory, since the rounding errors do not decrease at the theoredical rate \cite{RoundingError}.
+Arciniega and Allen, 2003 concludes that the rounding error is inversely proportional to the squareroot of the stepsize.
+\\
+Therefore, an optimal step size could be the one that causes 
 the sum of two sources of errors smallest. See figure \ref{timestepfigure} for a sketch of the
 idea.
+
+
 
 \begin{figure}
     \centering
@@ -188,7 +197,7 @@ In the case:
 we get the relation:
 
 \begin{equation}
-v_{\alpha}^{0}(0)\leq \frac{1}{•2}v_{\alpha}^{max}
+v_{\alpha}^{0}(0)\leq \frac{1}{ï¿½2}v_{\alpha}^{max}
 \end{equation}
 
 \subsection{The repulsive interaction force}
