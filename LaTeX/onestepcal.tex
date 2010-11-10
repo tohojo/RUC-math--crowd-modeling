@@ -1,4 +1,4 @@
-\section{One step of manual calculation}
+\subsection{One step of manual calculation}
 
 In this simplified situation, there is no wall and only one other pedestrian $\beta$ at position $(\frac{\sqrt{2}}{5}, -\frac{\sqrt{2}}{5})$ which exert expelling force to $\alpha$.  The exit is reduced to one point $E(4,4)$.  Their positions at $t=0$ is shown in the drawing below:\\
 
@@ -10,7 +10,8 @@ In this simplified situation, there is no wall and only one other pedestrian $\b
 
 In addition, to complete the initial conditions, we need to know $\alpha$'s actual velocity at $t=0$, suppose $\overrightarrow{v_{\alpha}(0)}=(\frac{\sqrt{2}}{2}, \frac{\sqrt{2}}{2})$, also the average speed into the desired direction of motion $\overline{v_{\alpha}(0)}=0$.\\
 
-\blacktriangleright Acceleration force $ \overrightarrow{f^{0}_{\alpha}}\overrightarrow{v_{\alpha}} $\\
+$\Delta$ Acceleration force  
+$\overrightarrow{f^{0}_{\alpha}}\overrightarrow{v_{\alpha}} $\\
 
 With those numbers we can calculate the impatience factor 
  \begin{equation}
@@ -35,7 +36,7 @@ where $\tau_{\alpha}=1$,
  \overrightarrow{f^{0}_{\alpha}}\overrightarrow{v_{\alpha}} = (\sqrt{2}, \sqrt{2})
  \end{equation}
 
-\blacktriangleright Repulsive force $ \overrightarrow{f_{\alpha\beta}} $\\
+$\Delta$ Repulsive force $ \overrightarrow{f_{\alpha\beta}} $\\
 
 Another part of $\alpha$'s acceleration is from the repulsive force from $\beta$, and the first term describing the tendency to keep a private sphere is relatively rather small compared with the second term which describes the physical interaction.
 To calculate the first term in equation:
@@ -44,15 +45,17 @@ To calculate the first term in equation:
  \end{equation}
 where the first term differs from the second one with different constants as well as an extra factor $ \left[ \lambda_{\alpha} +(1-\lambda_{\alpha})\frac{1+cos(\varphi_{\alpha\beta})}{2}\right] $, which has the idea that the agents are more influenced by the people standing in front than the ones in the back. Specifically, \\
 
-\bullet \lambda_{\alpha} \approx 0.75
+$\lambda_{\alpha} \approx 0.75$
 
-\bullet cos(\varphi_{\alpha\beta})(t)= -\overrightarrow{n_{\alpha \beta}}(t)\cdot\overrightarrow{e_{\alpha}}(t)\\
+$\bullet cos(\varphi_{\alpha\beta})(t)= -\overrightarrow{n_{\alpha \beta}}(t)\cdot\overrightarrow{e_{\alpha}}(t)$\\
 
 Therefore,
 \begin{equation}
+\begin{split}
 cos(\varphi_{\alpha\beta})(t)&= -\overrightarrow{n_{\alpha \beta}}(t)\cdot\overrightarrow{e_{\alpha}}(t)\\
 &=-\frac{\overrightarrow{x_{\alpha}(t)}-\overrightarrow{x_{\beta}(t)}}{d_{\alpha \beta}(t)}\cdot\frac{\overrightarrow{v_{\alpha}}(t)}{\parallel \overrightarrow{v_{\alpha}}(t)\parallel}
- \end{equation}
+\end{split}
+\end{equation}
 Then we are able to calculate the first term in $ \overrightarrow{f_{\alpha\beta}} $:
 
 Sometimes in order to speed up the calculation, especially when we are simulating crowd and the private sphere is broken down, it is fair to omit the first term which is not so important in calculating $\overrightarrow{f_{\alpha \beta}}$.
