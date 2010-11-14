@@ -43,8 +43,7 @@ and other agents. More specifically it is given by:
 
 So this is a summation of four different kinds of forces. We will go through 
 them one at a time explaining their role in the model and their mathematical 
-structure. The first term on the right hand side is a velocity dependent force 
-and it is given by:\\
+structure.\\
 
 \begin{figure}[hb]
     \centering
@@ -52,6 +51,10 @@ and it is given by:\\
     \caption{Shows a visual presentation of the mathematical notation.}
     \label{NotationOAgent}
 \end{figure}
+
+\subsubsection{The velocity dependence} %gotta figure out a better name for this part
+The first term on the right hand side is a velocity dependent force 
+and it is given by:
 
 \begin{equation}
 	\vec{f^{0}_{\alpha}}\left( \vec{V_{\alpha}} \right) =
@@ -87,7 +90,6 @@ first calculation step of the simulation. $\eta_{\alpha}$ is called the impatien
 or nervousness factor of agent $\alpha$ and we will a little time on it her because 
 it does yield some interesting dynamics. 
 
-\subsubsection{The impatience factor}
 First of all The impatience or nervousness factor is active when one calculates the 
 force action on agent $\alpha$ from the velocity of the agent.
 
@@ -116,8 +118,13 @@ stats yield strange results. That $\eta_{\alpha} \leq 0$ would imply that:
     \eta_{\alpha} \left( t \right)V_{\alpha}^{\text{max}}
 \end{equation}
 
-And this will yield a negative value for $V_{\alpha}^{0}$ if $\left[ 1 + \eta_{\alpha} \left( t \right) \right] 
-V_{\alpha}^{0} \left( 0 \right) < \eta_{\alpha} \left( t \right)V_{\alpha}^{\text{max}}$. 
+And this will yield a negative value for $V_{\alpha}^{0}$ if: 
+
+\begin{equation}
+\left[ 1 + \eta_{\alpha} \left( t \right) \right] 
+V_{\alpha}^{0} \left( 0 \right) < \eta_{\alpha} \left( t \right)V_{\alpha}^{\text{max}} 
+\end{equation}
+
 This is a problem because it is not that far fetched that an agent will be 
 forced to exceed his desired velocity.
 
@@ -133,7 +140,7 @@ relationship between $ V_{\alpha}^{0}(t) $ and $ \overline{V}_{\alpha} \left( t 
     V_{\alpha}^{0}(t) = \left[ 1 - \frac{v_{\alpha}^{max}}{v_{\alpha}^{0}(0)}\right]\overline{V}_{\alpha} \left( t \right) + v_{\alpha}^{max}
 \end{equation}
 
-\begin{figure}[hb]
+\begin{figure}[ht]
 \centering
 {\includegraphics[scale=0.35]{Figures/impatience.pdf}} 
 \caption{\small{The function about the desired velocity $ V_{\alpha}^{0}(t) $ 
@@ -142,14 +149,29 @@ and the average velocity in the desired direction of motion $ \overline{V}_{\alp
 \end{figure}
 
 Figure (\ref{impatience}) is a drawing of the graph about those two variables, and the intersection
- of the function line with both axis are $ (0, v_{\alpha}^{max}) $ and $(v_{\alpha}^{max}\frac{v_{\alpha}^{0}(0)}{v_{\alpha}^{max}-v_{\alpha}^{0}(0)}, 0) $. Now there is a 
-doubt whether the value of $ \overline{V}_{\alpha} \left( t \right) $ can reach $ v_{\alpha}^{max}\frac{v_{\alpha}^{0}(0)}{v_{\alpha}^{max}-v_{\alpha}^{0}(0)} $, if we have already 
-set $ v_{\alpha}^{max} $ a fixed number for a certain agent.\\\\
-
-In the case:
+ of the function line with both axis are:
 
 \begin{equation}
- v_{\alpha}^{max} \geq v_{\alpha}^{max}\frac{v_{\alpha}^{0}(0)}{v_{\alpha}^{max}-v_{\alpha}^{0}(0)}
+\left( 
+	0 
+		, 
+	v_{\alpha}^{max} 
+\right) 
+\text{and} 
+\left(
+	v_{\alpha}^{max} 
+		\frac{v_{\alpha}^{0} \left( 0 \right) }{v_{\alpha}^{max}-v_{\alpha}^{0} \left(0 \right)} 
+	, 0 
+\right) 
+\end{equation}
+Now there is a doubt whether the value of $ \overline{V}_{\alpha} \left( t \right) $ can reach $ v_{\alpha}^{max}\frac{v_{\alpha}^{0}(0)}{v_{\alpha}^{max}-v_{\alpha}^{0}(0)} $, if we have already 
+set $ v_{\alpha}^{max} $ a fixed number for a certain agent. In the case:
+
+\begin{equation}
+	v_{\alpha}^{max} 
+	\geq 
+	v_{\alpha}^{max} 
+	\frac{v_{\alpha}^{0}(0)}{v_{\alpha}^{max}-v_{\alpha}^{0}(0)}
 \end{equation}
 
 we get the relation:
@@ -173,19 +195,26 @@ Here $\nabla_{\vec{r_{\alpha}}}$ is the gradient and $V_B$ is a repulsive
 potential. $ \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|$ is the distance 
 from agent $\alpha$ to the nearest point of the nearest wall.
 
+\begin{figure}[ht]
+\centering
+{\includegraphics[scale=0.35]{Figures/NotationOfWall.pdf}} 
+\caption{\small{Shows the notation for the interaction with walls.}}
+\label{NotationOfWall}
+\end{figure}
+
 The repulsive potential describes the force added from the walls to pedestrian $\alpha$, since $\alpha$ does not
 want to get too close to the wall. So the closer $\alpha$ get to the wall the more the force from the wall gets.
 The repulsion potential is given by:
 
 \begin{equation}
 V_{B} \left( \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| \right) =
-V^0_{\alpha B} e^{- \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| / R }
+V^0_{\alpha B} e^{- \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| / r_{\alpha} }
 \end{equation}
 
-Here $V^0_{\alpha B}$ is a constant and $R$ is the radius of a pedestrian.
+Here $V^0_{\alpha B}$ is a constant and $r_{\alpha}$ is the radius of a pedestrian $\alpha$.
 
 The reason for this repusion force from the wall is that the pedestrians do not want to get hurt by running into the walls
-or get crushed between the panicing crowd and the wall [Helbing and Molnár, 1995].
+or get crushed between the panicing crowd and the wall [Helbing and Molnár, 1995]. %real references, please.
 
 \subsubsection{Interaction between agents}
 The third term on the right hand side of \eqref{model} is a summation of all the 
