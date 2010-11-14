@@ -52,6 +52,7 @@ def generate_actors():
             position = position,
             velocity = velocity_v,
             desired_velocity = velocity,
-            target = target))
+            target = target,
+            radius = radius))
 
     return actors
