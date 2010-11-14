@@ -42,24 +42,38 @@ class Vector:
     def __add__(self, v):
         """Vector(x1+x2, y1+y2)"""
         return self.__class__(self.a+v.a)
+
+    def __iadd__(self, v):
+        """Vector(x1+x2, y1+y2)"""
+        self.a += v.a
+        return self
     
     def __sub__(self, v):
         """Vector(x1-x2, y1-y2)"""
         return self.__class__(self.a-v.a)
+
+    def __isub__(self, v):
+        self.a -= v.a
+        return self
     
     def __mul__( self, scalar ):
         """Vector(x1*x2, y1*y2)"""
-        if type(scalar) != float and type(scalar) != int \
-                and type(scalar) != numpy.float64:
-            raise NotImplemented
         return self.__class__(self.a*scalar)
 
     def __rmul__(self, scalar):
         return self.__mul__(scalar)
+
+    def __imul__(self, scalar):
+        self.a *= scalar
+        return self
     
     def __div__(self, scalar):
         """Vector(x1/x2, y1/y2)"""
         return self.__class__(self.a/scalar)
+
+    def __idiv__(self, scalar):
+        self.a /= scalar
+        return self
     
     def __str__(self):
         return "(%s, %s)" % (self.a[0], self.a[1])
@@ -92,7 +106,19 @@ class Vector:
         self.a[1] = y
 
     def normal(self):
+        """Return a normalized version of this vector"""
         return self / self.length()
+
+    def normalize(self, l = None):
+        """Normalize this vector in-place, using an optional pre-calculated
+        length. Optimization of the normal() method. Returns self to allow
+        for drop-in replacement of normal()"""
+        if l is None:
+            l = self.length()
+        self.a[0] /= l
+        self.a[1] /= l
+
+        return self
     
     def slide(self, p):
         '''Move to new (x+dx,y+dy).

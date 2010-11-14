@@ -91,8 +91,13 @@ class Actor:
 
         towards_target = (self.target - self.position).normal()
 
-        desired_acceleration = (1.0/self.relax_time) * \
-                (desired_velocity * towards_target - self.velocity)
+        #desired_acceleration = (1.0/self.relax_time) * \
+                #(desired_velocity * towards_target - self.velocity)
+        towards_target *= desired_velocity
+        towards_target -= self.velocity
+        towards_target *= (1.0/self.relax_time)
+
+        self.acceleration = towards_target
 
         repelling_forces = list()
 
@@ -100,15 +105,16 @@ class Actor:
             if self == b:
                 continue
             radius_sum = b.radius + self.radius
-            distance = self.position.distance_to(b.position)
 
+            from_b = self.position - b.position
+            distance = from_b.length()
 
-            norm_vector = (self.position-b.position).normal()
+            from_b.normalize(distance)
+            from_b *= pm.constants.a_2 * \
+                    numpy.exp((radius_sum-distance)/pm.constants.b_2)
 
-            repelling_forces.append(norm_vector * pm.constants.a_2 * \
-                    numpy.exp((radius_sum-distance)/pm.constants.b_2))
+            repelling_forces.append(from_b)
 
-        self.acceleration = desired_acceleration
 
         for f in repelling_forces:
             self.acceleration += f
