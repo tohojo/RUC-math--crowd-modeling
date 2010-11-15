@@ -1,49 +1,40 @@
 #include "optimised.h"
 
-static double A_1, A_2, B_1, B_2;
+static double A_1, A_2, B_1, B_2, timestep;
+static Py_ssize_t use_threads;
 
-static PyObject * calculate_acceleration(PyObject * self, PyObject * args)
+static PyObject * update_actors(PyObject * self, PyObject * args)
 {
     // Python objects
-    PyObject * p_this; // Calling actor
-    PyObject * p_actors; // List of other actors
+    PyObject * p_actor_list; // List of other actors
     PyObject * p_walls; // List of walls
 
-    PyObject * p_module;
-    PyObject * p_constants;
-
     // Native objects
+    PyObject ** p_actors;
     Actor * actors;
     Wall * walls;
-    Actor a;
-
-    Vector acceleration = {0.0, 0.0};
 
     int i,j = 0;
 
-    PyArg_ParseTuple(args, "OOO:calculate_acceleration", &p_this, &p_actors, &p_walls);
+    PyArg_ParseTuple(args, "OO:update_actors", &p_actor_list, &p_walls);
 
-    p_module = PyImport_ImportModule("parameters");
-    p_constants = PyObject_GetAttrString(p_module, "constants");
-    A_2 = double_from_attribute(p_constants, "a_2");
-    B_2 = double_from_attribute(p_constants, "b_2");
 
     // The actors also contain the current actor, so we need to store one
     // less actor than the number passed
-    Py_ssize_t a_count = PyList_Size(p_actors) -1;
+    Py_ssize_t a_count = PyList_Size(p_actor_list);
     Py_ssize_t w_count = PyList_Size(p_walls);
 
-    actors = malloc(a_count * sizeof(Actor));
-    walls = malloc(w_count * sizeof(Wall));
+    actors   = malloc(a_count * sizeof(Actor));
+    walls    = malloc(w_count * sizeof(Wall));
+    p_actors = malloc(a_count * sizeof(PyObject*));
 
-    a = actor_from_pyobject(p_this);
+    for(i = 0; i < a_count; i++) {
+        PyObject * p_a = PyList_GetItem(p_actor_list, i);
+        actors[i] = actor_from_pyobject(p_a);
+        p_actors[i] = p_a;
 
-    for(i = 0, j = 0; i < a_count+1; i++) {
-        PyObject * p_a = PyList_GetItem(p_actors, i);
-
-        if(p_this != p_a) {
-            actors[j++] = actor_from_pyobject(p_a);
-        }
+        actors[i].acceleration.x = 0.0;
+        actors[i].acceleration.y = 0.0;
     }
 
     // Since we are not touching any python objects in this part, 
@@ -51,65 +42,34 @@ static PyObject * calculate_acceleration(PyObject * self, PyObject * args)
     // goodness.
     Py_BEGIN_ALLOW_THREADS
 
-    add_desired_acceleration(&a, &acceleration);
+        for(i = 0; i < a_count; i++) {
+            add_desired_acceleration(&actors[i]);
 
-    for(i = 0; i < a_count; i++) {
-        add_repulsion(&a, &actors[i], &acceleration);
-    }
+            for(j = 0; j < a_count; j++) {
+                if(i == j) continue;
+                add_repulsion(&actors[i], &actors[j]);
+            }
+        }
+
+        for(i = 0; i < a_count; i++) {
+            update_position(&actors[i]);
+        }
 
     Py_END_ALLOW_THREADS
 
-    free(actors);
+    for(i = 0; i < a_count; i++) {
+        update_python_objects(actors, p_actors, a_count);
+    }
+
     free(walls);
+    free(actors);
+    free(p_actors);
 
-    Py_DECREF(p_module);
 
-    return Py_BuildValue("dd", acceleration.x, acceleration.y);
+    Py_RETURN_NONE;
 }
 
-static Actor actor_from_pyobject(PyObject * o)
-{
-    Actor a;
-
-    a.radius = double_from_attribute(o, "radius");
-    a.time = double_from_attribute(o, "time");
-    a.initial_desired_velocity = double_from_attribute(o, "initial_desired_velocity");
-    a.max_velocity = double_from_attribute(o, "max_velocity");
-    a.relax_time = double_from_attribute(o, "relax_time");
-
-    a.position = vector_from_attribute(o, "position");
-    a.initial_position = vector_from_attribute(o, "initial_position");
-    a.target = vector_from_attribute(o, "target");
-    a.velocity = vector_from_attribute(o, "velocity");
-
-    return a;
-}
-
-static double double_from_attribute(PyObject * o, char * name)
-{
-    PyObject * o2 = PyObject_GetAttrString(o, name);
-    return PyFloat_AsDouble(o2);
-}
-
-static Vector vector_from_attribute(PyObject * o, char * name)
-{
-    PyObject * o2 = PyObject_GetAttrString(o, name);
-    return vector_from_pyobject(o2);
-}
-
-static Vector vector_from_pyobject(PyObject * o)
-{
-    Vector v;
-
-    PyObject * x = PyObject_GetAttrString(o, "x");
-    v.x = PyFloat_AsDouble(x);
-    PyObject * y = PyObject_GetAttrString(o, "y");
-    v.y = PyFloat_AsDouble(y);
-
-    return v;
-}
-
-static void add_desired_acceleration(Actor * a, Vector * acceleration)
+static void add_desired_acceleration(Actor * a)
 {
     /* Equivalent Python code:
      
@@ -164,16 +124,16 @@ static void add_desired_acceleration(Actor * a, Vector * acceleration)
     towards_target = vector_sub(a->target, a->position);
     vector_normalise(&towards_target);
 
+
     vector_imul(&towards_target, desired_velocity);
     vector_isub(&towards_target, &a->velocity);
     vector_imul(&towards_target, 1.0/a->relax_time);
 
-    acceleration->x = towards_target.x;
-    acceleration->y = towards_target.y;
+    a->acceleration = towards_target;
 
 }
 
-void add_repulsion(Actor * a, Actor * b, Vector * acceleration)
+void add_repulsion(Actor * a, Actor * b)
 {
     /* Equivalent Python code:
      
@@ -189,23 +149,139 @@ void add_repulsion(Actor * a, Actor * b, Vector * acceleration)
     */
 
     double radius_sum = a->radius + b->radius;
-    Vector from_b = vector_sub(a->position, b->position);
-    double distance = vector_length(from_b);
+    Vector from_b     = vector_sub(a->position, b->position);
+    double distance   = vector_length(from_b);
     //if(isnan(distance)) return;
 
     vector_normalise(&from_b);
     vector_imul(&from_b, A_2 * exp((radius_sum-distance)/B_2));
 
-    vector_iadd(acceleration, &from_b);
+    vector_iadd(&a->acceleration, &from_b);
+}
+
+void update_position(Actor * a)
+{
+    /* Equivalent Python code:
+        # Calculate displacement from acceleration and velocity
+        delta_p = Vector(
+                self.velocity.x * timestep + 0.5 * self.acceleration.x * timestep**2,
+                self.velocity.y * timestep + 0.5 * self.acceleration.y * timestep**2)
+
+        # Update position and velocity, and reset the acceleration
+        self.position += delta_p
+        self.velocity += self.acceleration
+        self.time += timestep
+    */
+
+    Vector delta_p;
+
+    delta_p.x = a->velocity.x * timestep + 0.5 * a->acceleration.x * pow(timestep, 2);
+    delta_p.y = a->velocity.y * timestep + 0.5 * a->acceleration.y * pow(timestep, 2);
+
+
+    vector_iadd(&a->position, &delta_p);
+    vector_iadd(&a->velocity, &a->acceleration);
+    a->time += timestep;
+}
+
+void update_python_objects(Actor * actors, PyObject ** p_actors, Py_ssize_t n)
+{
+    int i;
+    for(i = 0; i < n; i++) {
+        PyObject * update_p_res;
+        PyObject * update_v_res;
+        PyObject * update_t_res;
+
+        update_p_res = PyObject_CallMethod(p_actors[i], "set_position", "dd",
+                actors[i].position.x, actors[i].position.y);
+        update_v_res = PyObject_CallMethod(p_actors[i], "set_velocity", "dd",
+                actors[i].velocity.x, actors[i].velocity.y);
+        update_t_res = PyObject_CallMethod(p_actors[i], "set_time", "(d)",
+                actors[i].time);
+
+        Py_DECREF(update_p_res);
+        Py_DECREF(update_v_res);
+        Py_DECREF(update_t_res);
+    }
+}
+
+static Actor actor_from_pyobject(PyObject * o)
+{
+    Actor a;
+
+    a.radius                   = double_from_attribute(o, "radius");
+    a.time                     = double_from_attribute(o, "time");
+    a.initial_desired_velocity = double_from_attribute(o, "initial_desired_velocity");
+    a.max_velocity             = double_from_attribute(o, "max_velocity");
+    a.relax_time               = double_from_attribute(o, "relax_time");
+
+
+    a.position         = vector_from_attribute(o, "position");
+    a.initial_position = vector_from_attribute(o, "initial_position");
+    a.target           = vector_from_attribute(o, "target");
+    a.velocity         = vector_from_attribute(o, "velocity");
+
+    return a;
+}
+
+static Py_ssize_t ssize_t_from_attribute(PyObject * o, char * name)
+{
+    PyObject * o2 = PyObject_GetAttrString(o, name);
+    Py_ssize_t result = PyInt_AsSsize_t(o2);
+    Py_DECREF(o2);
+    return result;
+}
+
+static double double_from_attribute(PyObject * o, char * name)
+{
+    PyObject * o2 = PyObject_GetAttrString(o, name);
+    double result = PyFloat_AsDouble(o2);
+    Py_DECREF(o2);
+    return result;
+}
+
+static Vector vector_from_attribute(PyObject * o, char * name)
+{
+    PyObject * o2 = PyObject_GetAttrString(o, name);
+    Vector result = vector_from_pyobject(o2);
+    Py_DECREF(o2);
+    return result;
+}
+
+static Vector vector_from_pyobject(PyObject * o)
+{
+    Vector v;
+
+    PyObject * x = PyObject_GetAttrString(o, "x");
+    PyObject * y = PyObject_GetAttrString(o, "y");
+    v.x = PyFloat_AsDouble(x);
+    v.y = PyFloat_AsDouble(y);
+
+    Py_DECREF(x);
+    Py_DECREF(y);
+
+    return v;
 }
 
 static PyMethodDef OptimisedMethods[] = {
-    {"calculate_acceleration", calculate_acceleration, METH_VARARGS, 
+    {"update_actors", update_actors, METH_VARARGS, 
         "Calculate the acceleration of an actor"},
 };
 
 PyMODINIT_FUNC initoptimised(void)
 {
+    PyObject * p_module;
+    PyObject * p_constants;
+
     (void) Py_InitModule("optimised", OptimisedMethods);
+
+    p_module    = PyImport_ImportModule("parameters");
+    p_constants = PyObject_GetAttrString(p_module, "constants");
+    A_2         = double_from_attribute(p_constants, "a_2");
+    B_2         = double_from_attribute(p_constants, "b_2");
+    timestep    = double_from_attribute(p_module, "timestep");
+    use_threads = ssize_t_from_attribute(p_module, "use_threads");
+    Py_DECREF(p_module);
+    Py_DECREF(p_constants);
 }
 

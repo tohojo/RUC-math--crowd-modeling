@@ -9,6 +9,9 @@ import setup
 import parameters as pm
 from threadworkers import run_in_threads
 
+if pm.use_c_ext:
+    import optimised
+
 import sys
 
 def main():
@@ -67,19 +70,21 @@ def main():
         for w in walls:
             canvas.draw_wall(w)
 
-        if pm.use_threads:
-            run_in_threads(actors, "calculate_acceleration", (walls, actors))
+        if pm.use_c_ext:
+            optimised.update_actors(actors, walls)
+            for a in actors:
+                canvas.draw_actor(a)
         else:
             for a in actors:
                 a.calculate_acceleration(walls, actors)
 
-        for a in actors:
-            a.update_position(timestep)
-            #if a.has_escaped():
-                #actors.remove(a)
-                #continue
+            for a in actors:
+                a.update_position(timestep)
+                #if a.has_escaped():
+                    #actors.remove(a)
+                    #continue
 
-            canvas.draw_actor(a)
+                canvas.draw_actor(a)
 #            for w in walls:
 #                P = w.projection(a.position)
 #                canvas.draw_proj(P)
