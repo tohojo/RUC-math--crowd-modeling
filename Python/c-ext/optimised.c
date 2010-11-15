@@ -38,6 +38,7 @@ static PyObject * calculate_acceleration(PyObject * self, PyObject * args)
     }
 
 
+    add_desired_acceleration(&a, &acceleration);
 
 
     free(actors);
@@ -126,6 +127,30 @@ static void add_desired_acceleration(Actor * a, Vector * acceleration)
 
         self.acceleration = towards_target
         */
+
+    double average_velocity, impatience, desired_velocity = 0.0;
+    Vector towards_target = {0.0, 0.0};
+
+    if(a->time) {
+        double proj = vector_projection_length(
+                a->initial_position, a->target, a->position);
+        average_velocity = proj / a->time;
+    }
+
+    impatience = 1.0 - average_velocity / a->initial_desired_velocity;
+
+    desired_velocity = (1.0-impatience) * a->initial_desired_velocity + \
+                       impatience * a->max_velocity;
+    towards_target = vector_sub(a->target, a->position);
+    vector_normalise(&towards_target);
+
+    vector_imul(&towards_target, desired_velocity);
+    vector_isub(&towards_target, &a->velocity);
+    vector_imul(&towards_target, 1.0/a->relax_time);
+
+    acceleration->x = towards_target.x;
+    acceleration->y = towards_target.y;
+
 }
 
 static PyMethodDef OptimisedMethods[] = {
