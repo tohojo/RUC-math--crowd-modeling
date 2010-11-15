@@ -1,7 +1,7 @@
 from distutils.core import setup, Extension
 
 module1 = Extension('optimised',
-                    sources = ['optimised.c'])
+                    sources = ['optimised.c', 'vector.c'])
 
 setup (name = 'Optimised',
        version = '1.0',

@@ -1,9 +1,6 @@
 #include <Python.h>
+#include "vector.h"
 
-typedef struct {
-    double x;
-    double y;
-} Vector;
 
 typedef struct {
     double radius;
