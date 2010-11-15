@@ -22,6 +22,12 @@ typedef struct {
     Vector end;
 } Wall;
 
+// For dividing work in threads
+typedef struct {
+    int start;
+    int end;
+} Part;
+
 static PyObject * update_actors(PyObject * self, PyObject * args);
 static Actor actor_from_pyobject(PyObject * o);
 static Py_ssize_t ssize_t_from_attribute(PyObject * o, char * name);
@@ -35,3 +41,5 @@ static void update_python_objects(Actor * actors, PyObject ** p_actors, Py_ssize
 static void cleanup();
 static void init_threads();
 static void destroy_threads();
+static void do_calculations();
+static void do_calculation_part(Part * p);

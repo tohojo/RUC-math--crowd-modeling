@@ -49,18 +49,7 @@ static PyObject * update_actors(PyObject * self, PyObject * args)
     // goodness.
     Py_BEGIN_ALLOW_THREADS
 
-        for(i = 0; i < a_count; i++) {
-            add_desired_acceleration(&actors[i]);
-
-            for(j = 0; j < a_count; j++) {
-                if(i == j) continue;
-                add_repulsion(&actors[i], &actors[j]);
-            }
-        }
-
-        for(i = 0; i < a_count; i++) {
-            update_position(&actors[i]);
-        }
+        do_calculations();
 
     Py_END_ALLOW_THREADS
 
@@ -74,6 +63,52 @@ static PyObject * update_actors(PyObject * self, PyObject * args)
 
 
     Py_RETURN_NONE;
+}
+
+static void do_calculations()
+{
+    int i, rc;
+    void * status;
+    if(use_threads) {
+        Part * parts;
+        parts = PyMem_Malloc(use_threads * sizeof(Part));
+        int part_len = a_count / use_threads;
+        for(i = 0; i < use_threads; i++) {
+            parts[i].start = i*part_len;
+            parts[i].end = (i+1)*part_len;
+        }
+        parts[use_threads-1].end += a_count % use_threads;
+
+        for(i = 0; i < use_threads; i++) {
+            rc = pthread_create(&threads[i], NULL, 
+                    do_calculation_part, (void *) &parts[i]);
+        }
+
+        for(i = 0; i < use_threads; i++) {
+            pthread_join(threads[i], &status);
+        }
+    } else {
+        Part p = {0, a_count};
+        do_calculation_part(&p);
+    }
+
+    for(i = 0; i < a_count; i++) {
+        update_position(&actors[i]);
+    }
+}
+
+static void do_calculation_part(Part * p)
+{
+    int i,j;
+    for(i = p->start; i < p->end; i++) {
+        add_desired_acceleration(&actors[i]);
+
+        for(j = 0; j < a_count; j++) {
+            if(i == j) continue;
+            add_repulsion(&actors[i], &actors[j]);
+        }
+    }
+    if(use_threads) pthread_exit(NULL);
 }
 
 static void add_desired_acceleration(Actor * a)
@@ -303,8 +338,8 @@ static void cleanup()
 static void init_threads()
 {
     threads = PyMem_Malloc(use_threads * sizeof(pthread_t));
-    pthread_mutex_init(&start_mutex, NULL);
-    pthread_cond_init(&start_cond, NULL);
+    //pthread_mutex_init(&start_mutex, NULL);
+    //pthread_cond_init(&start_cond, NULL);
 
     pthread_attr_init(&thread_attr);
     pthread_attr_setdetachstate(&thread_attr, PTHREAD_CREATE_JOINABLE);
@@ -314,6 +349,7 @@ static void init_threads()
 static void destroy_threads()
 {
     pthread_attr_destroy(&thread_attr);
-    pthread_mutex_destroy(&start_mutex);
-    pthread_cond_destroy(&start_cond);
+    //pthread_mutex_destroy(&start_mutex);
+    //pthread_cond_destroy(&start_cond);
+    PyMem_Free(threads);
 }
