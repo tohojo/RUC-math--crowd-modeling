@@ -7,6 +7,7 @@ timestep = 0.02
 random_seed = 0
 
 use_c_ext = True
+use_threads = False
 
 class constants:
     # From page 12 of the article
