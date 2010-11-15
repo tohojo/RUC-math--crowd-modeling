@@ -41,7 +41,7 @@ static PyObject * calculate_acceleration(PyObject * self, PyObject * args)
     for(i = 0, j = 0; i < a_count+1; i++) {
         PyObject * p_a = PyList_GetItem(p_actors, i);
 
-        if(PyObject_Compare(p_this, p_a) != 0) {
+        if(p_this != p_a) {
             actors[j++] = actor_from_pyobject(p_a);
         }
     }
