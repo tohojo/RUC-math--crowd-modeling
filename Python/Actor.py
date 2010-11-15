@@ -140,4 +140,4 @@ class Actor:
         self.velocity += self.acceleration
         self.time += timestep
 
-        self.acceleration = Vector(0.0, 0.0) # Not strictly necessary
+        #self.acceleration = Vector(0.0, 0.0) # Not strictly necessary
