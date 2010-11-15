@@ -29,7 +29,7 @@ typedef struct {
 } Part;
 
 static PyObject * update_actors(PyObject * self, PyObject * args);
-static Actor actor_from_pyobject(PyObject * o);
+static Actor actor_from_pyobject(PyObject * o, Actor * a);
 static Py_ssize_t ssize_t_from_attribute(PyObject * o, char * name);
 static double double_from_attribute(PyObject * o, char * name);
 static Vector vector_from_attribute(PyObject * o, char * name);

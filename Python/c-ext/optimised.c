@@ -37,7 +37,7 @@ static PyObject * update_actors(PyObject * self, PyObject * args)
 
     for(i = 0; i < a_count; i++) {
         PyObject * p_a = PyList_GetItem(p_actor_list, i);
-        actors[i] = actor_from_pyobject(p_a);
+        actor_from_pyobject(p_a, &actors[i]);
         p_actors[i] = p_a;
 
         actors[i].acceleration.x = 0.0;
@@ -247,23 +247,19 @@ void update_python_objects(Actor * actors, PyObject ** p_actors, Py_ssize_t n)
     }
 }
 
-static Actor actor_from_pyobject(PyObject * o)
+static Actor actor_from_pyobject(PyObject * o, Actor * a)
 {
-    Actor a;
-
-    a.radius                   = double_from_attribute(o, "radius");
-    a.time                     = double_from_attribute(o, "time");
-    a.initial_desired_velocity = double_from_attribute(o, "initial_desired_velocity");
-    a.max_velocity             = double_from_attribute(o, "max_velocity");
-    a.relax_time               = double_from_attribute(o, "relax_time");
+    a->radius                   = double_from_attribute(o, "radius");
+    a->time                     = double_from_attribute(o, "time");
+    a->initial_desired_velocity = double_from_attribute(o, "initial_desired_velocity");
+    a->max_velocity             = double_from_attribute(o, "max_velocity");
+    a->relax_time               = double_from_attribute(o, "relax_time");
 
 
-    a.position         = vector_from_attribute(o, "position");
-    a.initial_position = vector_from_attribute(o, "initial_position");
-    a.target           = vector_from_attribute(o, "target");
-    a.velocity         = vector_from_attribute(o, "velocity");
-
-    return a;
+    a->position         = vector_from_attribute(o, "position");
+    a->initial_position = vector_from_attribute(o, "initial_position");
+    a->target           = vector_from_attribute(o, "target");
+    a->velocity         = vector_from_attribute(o, "velocity");
 }
 
 static Py_ssize_t ssize_t_from_attribute(PyObject * o, char * name)
