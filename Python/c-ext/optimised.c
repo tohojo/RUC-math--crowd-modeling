@@ -50,14 +50,30 @@ static Actor actor_from_pyobject(PyObject * o)
 {
     Actor a;
 
-    PyObject * radius = PyObject_GetAttr(o, Py_BuildValue("s", "radius"));
-    a.radius = PyFloat_AsDouble(radius);
+    a.radius = double_from_attribute(o, "radius");
+    a.time = double_from_attribute(o, "time");
+    a.initial_desired_velocity = double_from_attribute(o, "initial_desired_velocity");
+    a.max_velocity = double_from_attribute(o, "max_velocity");
+    a.relax_time = double_from_attribute(o, "relax_time");
 
-    PyObject * position = PyObject_GetAttr(o, Py_BuildValue("s", "position"));
-
-    a.position = vector_from_pyobject(position);
+    a.position = vector_from_attribute(o, "position");
+    a.initial_position = vector_from_attribute(o, "initial_position");
+    a.target = vector_from_attribute(o, "target");
+    a.velocity = vector_from_attribute(o, "velocity");
 
     return a;
+}
+
+static double double_from_attribute(PyObject * o, char * name)
+{
+    PyObject * o2 = PyObject_GetAttr(o, Py_BuildValue("s", name));
+    return PyFloat_AsDouble(o2);
+}
+
+static Vector vector_from_attribute(PyObject * o, char * name)
+{
+    PyObject * o2 = PyObject_GetAttr(o, Py_BuildValue("s", name));
+    return vector_from_pyobject(o2);
 }
 
 static Vector vector_from_pyobject(PyObject * o)
@@ -70,6 +86,46 @@ static Vector vector_from_pyobject(PyObject * o)
     v.y = PyFloat_AsDouble(y);
 
     return v;
+}
+
+static void add_desired_acceleration(Actor * a, Vector * acceleration)
+{
+    /* Equivalent Python code:
+     
+        # To compute the impatience factor, we need the average velocity,
+        # in the direction of desired movement.
+        #
+        # This is found by projecting the direction we have moved onto the
+        # vector from the initial position to the target and computing the
+        # distance from this projection. The distance travelled is then
+        # converted to an average velocity my dividing with the time
+        if self.time == 0.0:
+            average_velocity = 0.0
+        else:
+            proj = Vector.projection_length(
+                       self.initial_position, self.target, self.position)
+
+
+            average_velocity = proj / self.time
+
+        # The impatience factor is given by the average velocity divided
+        # by the *initial* desired velocity. (6) in the article
+        impatience = 1.0 - average_velocity / self.initial_desired_velocity
+
+        # (5) in the article
+        desired_velocity = (1.0-impatience) * self.initial_desired_velocity + \
+                impatience * self.max_velocity
+
+        towards_target = (self.target - self.position).normal()
+
+        #desired_acceleration = (1.0/self.relax_time) * \
+                #(desired_velocity * towards_target - self.velocity)
+        towards_target *= desired_velocity
+        towards_target -= self.velocity
+        towards_target *= (1.0/self.relax_time)
+
+        self.acceleration = towards_target
+        */
 }
 
 static PyMethodDef OptimisedMethods[] = {
