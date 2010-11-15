@@ -8,6 +8,7 @@ from Vector import Vector, Point
 import setup
 import parameters as pm
 from threadworkers import run_in_threads
+from time import time
 
 if pm.use_c_ext:
     import optimised
@@ -47,7 +48,9 @@ def main():
         optimised.add_actors(actors)
 
     timestep = pm.timestep
-    time = 0.0
+    timer = 0.0
+    time_start = time()
+    frames = 0
     canvas.clear_screen()
 
     while canvas.tick():
@@ -55,7 +58,7 @@ def main():
         if clear:
             canvas.clear_screen()
 
-        canvas.draw_text("t = %.2f" % time)
+        canvas.draw_text("t = %.2f" % timer)
 
         canvas.draw_target(pm.actor.target)
 
@@ -84,7 +87,11 @@ def main():
 #                canvas.draw_proj(P)
         
         canvas.update()
-        time += timestep
+        timer += timestep
+        frames += 1
+
+    elapsed = time() - time_start
+    print "%d frames in %f seconds. Avg %f fps" % (frames, elapsed, frames/elapsed)
 
 
 if __name__ == "__main__":
