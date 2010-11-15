@@ -32,6 +32,22 @@ void vector_isub(Vector * v1, Vector * v2)
     v1->y -= v2->y;
 }
 
+Vector vector_mul(Vector v, double s)
+{
+    Vector v;
+
+    v.x = v.x*s;
+    v.y = v.y*s;
+
+    return v;
+}
+
+void vector_imul(Vector * v, double s)
+{
+    v1->x *= s;
+    v1->y *= s;
+}
+
 double vector_length(Vector v)
 {
     return sqrt(v.x*v.x + v.y*v.y);
