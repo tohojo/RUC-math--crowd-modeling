@@ -7,6 +7,7 @@ from Wall import Wall
 from Vector import Vector, Point
 import setup
 import parameters as pm
+from threadworkers import run_in_threads
 
 import sys
 
@@ -66,14 +67,17 @@ def main():
         for w in walls:
             canvas.draw_wall(w)
 
-        for a in actors:
-            a.calculate_acceleration(walls, actors)
+        if pm.use_threads:
+            run_in_threads(actors, "calculate_acceleration", (walls, actors))
+        else:
+            for a in actors:
+                a.calculate_acceleration(walls, actors)
 
         for a in actors:
             a.update_position(timestep)
-            if a.has_escaped():
-                actors.remove(a)
-                continue
+            #if a.has_escaped():
+                #actors.remove(a)
+                #continue
 
             canvas.draw_actor(a)
 #            for w in walls:

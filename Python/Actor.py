@@ -3,6 +3,7 @@
 from Vector import Vector, Point
 import numpy
 import parameters as pm
+import optimised
 
 EPSILON = 10e-5
 CALC_RANGE = 20
@@ -53,6 +54,7 @@ class Actor:
         self.acceleration = Vector(0.0,0.0)
         self.time = 0.0
 
+
     def __repr__(self):
         return "Actor<C:%s,R:%r,V:%r>" % (self.position,self.radius,self.velocity)
 
@@ -65,53 +67,65 @@ class Actor:
 
     def calculate_acceleration(self, walls, actors):
 
-        # To compute the impatience factor, we need the average velocity,
-        # in the direction of desired movement.
-        #
-        # This is found by projecting the direction we have moved onto the
-        # vector from the initial position to the target and computing the
-        # distance from this projection. The distance travelled is then
-        # converted to an average velocity my dividing with the time
-        if self.time == 0.0:
-            average_velocity = 0.0
+        if pm.use_c_ext:
+            self.acceleration = Vector(
+                    optimised.calculate_acceleration(self, actors, walls))
+
         else:
-            proj = Vector.projection_length(
-                       self.initial_position, self.target, self.position)
+            # To compute the impatience factor, we need the average velocity,
+            # in the direction of desired movement.
+            #
+            # This is found by projecting the direction we have moved onto the
+            # vector from the initial position to the target and computing the
+            # distance from this projection. The distance travelled is then
+            # converted to an average velocity my dividing with the time
+            if self.time == 0.0:
+                average_velocity = 0.0
+            else:
+                proj = Vector.projection_length(
+                           self.initial_position, self.target, self.position)
 
 
-            average_velocity = proj / self.time
+                average_velocity = proj / self.time
 
-        # The impatience factor is given by the average velocity divided
-        # by the *initial* desired velocity. (6) in the article
-        impatience = 1.0 - average_velocity / self.initial_desired_velocity
+            # The impatience factor is given by the average velocity divided
+            # by the *initial* desired velocity. (6) in the article
+            impatience = 1.0 - average_velocity / self.initial_desired_velocity
 
-        # (5) in the article
-        desired_velocity = (1.0-impatience) * self.initial_desired_velocity + \
-                impatience * self.max_velocity
+            # (5) in the article
+            desired_velocity = (1.0-impatience) * self.initial_desired_velocity + \
+                    impatience * self.max_velocity
 
-        towards_target = (self.target - self.position).normal()
+            towards_target = (self.target - self.position).normal()
 
-        desired_acceleration = (1.0/self.relax_time) * \
-                (desired_velocity * towards_target - self.velocity)
+            #desired_acceleration = (1.0/self.relax_time) * \
+                    #(desired_velocity * towards_target - self.velocity)
+            towards_target *= desired_velocity
+            towards_target -= self.velocity
+            towards_target *= (1.0/self.relax_time)
 
-        repelling_forces = list()
-
-        for b in actors:
-            if self == b:
-                continue
-            radius_sum = b.radius + self.radius
-            distance = self.position.distance_to(b.position)
+            self.acceleration = towards_target
 
 
-            norm_vector = (self.position-b.position).normal()
+            repelling_forces = list()
 
-            repelling_forces.append(norm_vector * pm.constants.a_2 * \
-                    numpy.exp((radius_sum-distance)/pm.constants.b_2))
+            for b in actors:
+                if self == b:
+                    continue
+                radius_sum = b.radius + self.radius
 
-        self.acceleration = desired_acceleration
+                from_b = self.position - b.position
+                distance = from_b.length()
 
-        for f in repelling_forces:
-            self.acceleration += f
+                from_b.normalize(distance)
+                from_b *= pm.constants.a_2 * \
+                        numpy.exp((radius_sum-distance)/pm.constants.b_2)
+
+                repelling_forces.append(from_b)
+
+
+            for f in repelling_forces:
+                self.acceleration += f
 
 
     def update_position(self, timestep):
@@ -126,4 +140,4 @@ class Actor:
         self.velocity += self.acceleration
         self.time += timestep
 
-        self.acceleration = Vector(0.0, 0.0) # Not strictly necessary
+        #self.acceleration = Vector(0.0, 0.0) # Not strictly necessary
