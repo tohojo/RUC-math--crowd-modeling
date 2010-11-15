@@ -4,7 +4,6 @@ static double A_1, A_2, B_1, B_2, timestep;
 static Py_ssize_t use_threads;
 
 // Global objects to allow access from different threads
-static PyObject ** p_actors;
 static Actor * actors;
 static Wall * walls;
 static Py_ssize_t a_count;
@@ -18,31 +17,6 @@ static pthread_attr_t thread_attr;
 
 static PyObject * update_actors(PyObject * self, PyObject * args)
 {
-    // Python objects
-    PyObject * p_actor_list; // List of other actors
-    PyObject * p_walls; // List of walls
-
-
-    int i,j = 0;
-
-    PyArg_ParseTuple(args, "OO:update_actors", &p_actor_list, &p_walls);
-
-
-    a_count = PyList_Size(p_actor_list);
-    w_count = PyList_Size(p_walls);
-
-    actors   = PyMem_Malloc(a_count * sizeof(Actor));
-    walls    = PyMem_Malloc(w_count * sizeof(Wall));
-    p_actors = PyMem_Malloc(a_count * sizeof(PyObject*));
-
-    for(i = 0; i < a_count; i++) {
-        PyObject * p_a = PyList_GetItem(p_actor_list, i);
-        actor_from_pyobject(p_a, &actors[i]);
-        p_actors[i] = p_a;
-
-        actors[i].acceleration.x = 0.0;
-        actors[i].acceleration.y = 0.0;
-    }
 
     // Since we are not touching any python objects in this part, 
     // we can release the global interpreter lock, to allow for multithreaded
@@ -53,16 +27,31 @@ static PyObject * update_actors(PyObject * self, PyObject * args)
 
     Py_END_ALLOW_THREADS
 
-    for(i = 0; i < a_count; i++) {
-        update_python_objects(actors, p_actors, a_count);
-    }
-
-    PyMem_Free(walls);
-    PyMem_Free(actors);
-    PyMem_Free(p_actors);
-
-
     Py_RETURN_NONE;
+}
+
+static PyObject * add_actors(PyObject * self, PyObject * args)
+{
+    PyObject * p_actor_list;
+    int i;
+
+    PyArg_ParseTuple(args, "O:add_actors", &p_actor_list);
+
+    for(i = 0; i < a_count; i++) {
+        PyObject * p_a = PyList_GetItem(p_actor_list, i);
+        actor_from_pyobject(p_a, &actors[i]);
+    }
+    Py_RETURN_NONE;
+}
+
+static PyObject * get_actor(PyObject * self, PyObject * args)
+{
+    Py_ssize_t i;
+
+    PyArg_ParseTuple(args, "i:get_actor", &i);
+
+    return Py_BuildValue("ddd", 
+            actors[i].position.x, actors[i].position.y, actors[i].radius);
 }
 
 static void do_calculations()
@@ -260,6 +249,7 @@ static Actor actor_from_pyobject(PyObject * o, Actor * a)
     a->initial_position = vector_from_attribute(o, "initial_position");
     a->target           = vector_from_attribute(o, "target");
     a->velocity         = vector_from_attribute(o, "velocity");
+    a->acceleration     = vector_from_attribute(o, "acceleration");
 }
 
 static Py_ssize_t ssize_t_from_attribute(PyObject * o, char * name)
@@ -304,26 +294,56 @@ static Vector vector_from_pyobject(PyObject * o)
 static PyMethodDef OptimisedMethods[] = {
     {"update_actors", update_actors, METH_VARARGS, 
         "Calculate the acceleration of an actor"},
+    {"add_actors", add_actors, METH_VARARGS, 
+        "Add actors to the list"},
+    {"get_actor", get_actor, METH_VARARGS, 
+        "Get an actor's position and radius"},
 };
 
 PyMODINIT_FUNC initoptimised(void)
 {
     PyObject * p_module;
     PyObject * p_constants;
+    PyObject * p_actors;
+    PyObject * p_walls;
 
     (void) Py_InitModule("optimised", OptimisedMethods);
     Py_AtExit(cleanup);
 
     p_module    = PyImport_ImportModule("parameters");
     p_constants = PyObject_GetAttrString(p_module, "constants");
+    p_actors    = PyObject_GetAttrString(p_module, "actor");
+    p_walls     = PyObject_GetAttrString(p_module, "walls");
     A_2         = double_from_attribute(p_constants, "a_2");
     B_2         = double_from_attribute(p_constants, "b_2");
     timestep    = double_from_attribute(p_module, "timestep");
     use_threads = ssize_t_from_attribute(p_module, "use_threads");
+    a_count     = ssize_t_from_attribute(p_actors, "initial_number");
+
+    actors   = PyMem_Malloc(a_count * sizeof(Actor));
+
+    init_walls(p_walls);
+
     Py_DECREF(p_module);
     Py_DECREF(p_constants);
+    Py_DECREF(p_actors);
+    Py_DECREF(p_walls);
 
     if(use_threads) init_threads();
+}
+
+static void init_walls(PyObject * p_walls)
+{
+    int i;
+    w_count = PyList_Size(p_walls);
+    walls    = PyMem_Malloc(w_count * sizeof(Wall));
+    for(i = 0; i < w_count; i++) {
+        PyObject * p_w   = PyList_GetItem(p_walls, i);
+        walls[i].start.x = PyFloat_AsDouble(PyTuple_GetItem(p_w, 0));
+        walls[i].start.y = PyFloat_AsDouble(PyTuple_GetItem(p_w, 1));
+        walls[i].end.x   = PyFloat_AsDouble(PyTuple_GetItem(p_w, 2));
+        walls[i].end.y   = PyFloat_AsDouble(PyTuple_GetItem(p_w, 3));
+    }
 }
 
 static void cleanup()

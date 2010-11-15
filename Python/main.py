@@ -41,18 +41,13 @@ def main():
 #                velocity = Vector(-2.5, 0),
 #                target = Point(0.0, 0.0)),
 #            ]
-    walls = [
-            Wall(-10, -10, 10, -10),
-            Wall(-10, -10, -10, 10),
-            Wall(-10, 10, 10, 10),
-            Wall(10, -10, 10, 10),
-#            Wall(-20, -20, 20, -20),
-#            Wall(-20, -20, -20, 20),
-#            Wall(-20, 20, 20, 20),
-#            Wall(20, -20, 20, 20),
-            ]
+    walls = [Wall(*i) for i in pm.walls]
+
+    if pm.use_c_ext:
+        optimised.add_actors(actors)
 
     timestep = pm.timestep
+    time = 0.0
     canvas.clear_screen()
 
     while canvas.tick():
@@ -60,7 +55,7 @@ def main():
         if clear:
             canvas.clear_screen()
 
-        canvas.draw_text("t = %.2f" % actors[0].time)
+        canvas.draw_text("t = %.2f" % time)
 
         canvas.draw_target(pm.actor.target)
 
@@ -71,9 +66,8 @@ def main():
             canvas.draw_wall(w)
 
         if pm.use_c_ext:
-            optimised.update_actors(actors, walls)
-            for a in actors:
-                canvas.draw_actor(a)
+            optimised.update_actors()
+            canvas.draw_actors()
         else:
             for a in actors:
                 a.calculate_acceleration(walls, actors)
@@ -90,6 +84,7 @@ def main():
 #                canvas.draw_proj(P)
         
         canvas.update()
+        time += timestep
 
 
 if __name__ == "__main__":

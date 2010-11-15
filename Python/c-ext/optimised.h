@@ -29,6 +29,8 @@ typedef struct {
 } Part;
 
 static PyObject * update_actors(PyObject * self, PyObject * args);
+static PyObject * add_actors(PyObject * self, PyObject * args);
+static PyObject * get_actor(PyObject * self, PyObject * args);
 static Actor actor_from_pyobject(PyObject * o, Actor * a);
 static Py_ssize_t ssize_t_from_attribute(PyObject * o, char * name);
 static double double_from_attribute(PyObject * o, char * name);
@@ -40,6 +42,7 @@ static void update_position(Actor * a);
 static void update_python_objects(Actor * actors, PyObject ** p_actors, Py_ssize_t n);
 static void cleanup();
 static void init_threads();
+static void init_walls(PyObject * p_walls);
 static void destroy_threads();
 static void do_calculations();
 static void do_calculation_part(Part * p);
