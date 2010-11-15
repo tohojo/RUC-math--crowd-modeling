@@ -38,7 +38,7 @@ static PyObject * calculate_acceleration(PyObject * self, PyObject * args)
 
     a = actor_from_pyobject(p_this);
 
-    for(i = 0, j = 0; i < a_count; i++) {
+    for(i = 0, j = 0; i < a_count+1; i++) {
         PyObject * p_a = PyList_GetItem(p_actors, i);
 
         if(PyObject_Compare(p_this, p_a) != 0) {
@@ -191,7 +191,7 @@ void add_repulsion(Actor * a, Actor * b, Vector * acceleration)
     double radius_sum = a->radius + b->radius;
     Vector from_b = vector_sub(a->position, b->position);
     double distance = vector_length(from_b);
-    if(isnan(distance)) return;
+    //if(isnan(distance)) return;
 
     vector_normalise(&from_b);
     vector_imul(&from_b, A_2 * exp((radius_sum-distance)/B_2));
