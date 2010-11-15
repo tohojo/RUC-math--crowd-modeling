@@ -10,8 +10,6 @@ static Py_ssize_t a_count;
 static Py_ssize_t w_count;
 
 // Threading variables
-static pthread_mutex_t start_mutex;
-static pthread_cond_t start_cond;
 static pthread_t * threads;
 static pthread_attr_t thread_attr;
 
@@ -354,9 +352,6 @@ static void cleanup()
 static void init_threads()
 {
     threads = PyMem_Malloc(use_threads * sizeof(pthread_t));
-    //pthread_mutex_init(&start_mutex, NULL);
-    //pthread_cond_init(&start_cond, NULL);
-
     pthread_attr_init(&thread_attr);
     pthread_attr_setdetachstate(&thread_attr, PTHREAD_CREATE_JOINABLE);
 
@@ -365,7 +360,5 @@ static void init_threads()
 static void destroy_threads()
 {
     pthread_attr_destroy(&thread_attr);
-    //pthread_mutex_destroy(&start_mutex);
-    //pthread_cond_destroy(&start_cond);
     PyMem_Free(threads);
 }
