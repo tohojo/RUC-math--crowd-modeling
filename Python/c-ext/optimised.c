@@ -3,30 +3,37 @@
 static double A_1, A_2, B_1, B_2, timestep;
 static Py_ssize_t use_threads;
 
+// Global objects to allow access from different threads
+static PyObject ** p_actors;
+static Actor * actors;
+static Wall * walls;
+static Py_ssize_t a_count;
+static Py_ssize_t w_count;
+
+// Threading variables
+static pthread_mutex_t start_mutex;
+static pthread_cond_t start_cond;
+static pthread_t * threads;
+static pthread_attr_t thread_attr;
+
 static PyObject * update_actors(PyObject * self, PyObject * args)
 {
     // Python objects
     PyObject * p_actor_list; // List of other actors
     PyObject * p_walls; // List of walls
 
-    // Native objects
-    PyObject ** p_actors;
-    Actor * actors;
-    Wall * walls;
 
     int i,j = 0;
 
     PyArg_ParseTuple(args, "OO:update_actors", &p_actor_list, &p_walls);
 
 
-    // The actors also contain the current actor, so we need to store one
-    // less actor than the number passed
-    Py_ssize_t a_count = PyList_Size(p_actor_list);
-    Py_ssize_t w_count = PyList_Size(p_walls);
+    a_count = PyList_Size(p_actor_list);
+    w_count = PyList_Size(p_walls);
 
-    actors   = malloc(a_count * sizeof(Actor));
-    walls    = malloc(w_count * sizeof(Wall));
-    p_actors = malloc(a_count * sizeof(PyObject*));
+    actors   = PyMem_Malloc(a_count * sizeof(Actor));
+    walls    = PyMem_Malloc(w_count * sizeof(Wall));
+    p_actors = PyMem_Malloc(a_count * sizeof(PyObject*));
 
     for(i = 0; i < a_count; i++) {
         PyObject * p_a = PyList_GetItem(p_actor_list, i);
@@ -61,9 +68,9 @@ static PyObject * update_actors(PyObject * self, PyObject * args)
         update_python_objects(actors, p_actors, a_count);
     }
 
-    free(walls);
-    free(actors);
-    free(p_actors);
+    PyMem_Free(walls);
+    PyMem_Free(actors);
+    PyMem_Free(p_actors);
 
 
     Py_RETURN_NONE;
@@ -274,6 +281,7 @@ PyMODINIT_FUNC initoptimised(void)
     PyObject * p_constants;
 
     (void) Py_InitModule("optimised", OptimisedMethods);
+    Py_AtExit(cleanup);
 
     p_module    = PyImport_ImportModule("parameters");
     p_constants = PyObject_GetAttrString(p_module, "constants");
@@ -283,5 +291,29 @@ PyMODINIT_FUNC initoptimised(void)
     use_threads = ssize_t_from_attribute(p_module, "use_threads");
     Py_DECREF(p_module);
     Py_DECREF(p_constants);
+
+    if(use_threads) init_threads();
 }
 
+static void cleanup()
+{
+    if(use_threads) destroy_threads();
+}
+
+static void init_threads()
+{
+    threads = PyMem_Malloc(use_threads * sizeof(pthread_t));
+    pthread_mutex_init(&start_mutex, NULL);
+    pthread_cond_init(&start_cond, NULL);
+
+    pthread_attr_init(&thread_attr);
+    pthread_attr_setdetachstate(&thread_attr, PTHREAD_CREATE_JOINABLE);
+
+}
+
+static void destroy_threads()
+{
+    pthread_attr_destroy(&thread_attr);
+    pthread_mutex_destroy(&start_mutex);
+    pthread_cond_destroy(&start_cond);
+}

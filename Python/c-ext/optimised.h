@@ -1,5 +1,6 @@
 #include <Python.h>
 #include <math.h>
+#include <pthread.h>
 #include "vector.h"
 
 
@@ -31,3 +32,6 @@ static void add_desired_acceleration(Actor * a);
 static void add_repulsion(Actor * a, Actor * b);
 static void update_position(Actor * a);
 static void update_python_objects(Actor * actors, PyObject ** p_actors, Py_ssize_t n);
+static void cleanup();
+static void init_threads();
+static void destroy_threads();
