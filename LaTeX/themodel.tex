@@ -8,11 +8,19 @@
 In this section we will go through the model from the article \cite{self-org} in great detail. 
 First of all,  as stated briefly earlier this model is an agent based social force model. 
 This means that the model uses individual entities to say something about the crowd as a whole. 
-Each entity or agent is acted on by a collection of different forces. These forces can be
-either repulsive or attractive. The general approach of the model is fairly simple. An agent
-$\alpha$ wants to go in a desired direction with a desired speed. However the environment 
-and other agents might force agent $\alpha$ to stray from the desired direction or have speeds 
-different from the desired one. The change in position of agent $\alpha$ is given by:
+
+Each entity or agent is acted on by a collection of different forces, and the agent cannot escape 
+from Newton's three laws about the motion of any object, which mainly says that when there is a 
+force it results a corresponding acceleration.  However, our agent is not a ball being kicked around, 
+it has a willingness to go to some destine place.  The way that agent implement the will is by 
+generating a statistic frictional force from the ground, and that force is here what we called 
+the social force.
+
+These forces can be either repulsive or attractive. The general approach of the model 
+is fairly simple. An agent $\alpha$ wants to go in a desired direction with a desired speed. 
+However the environment and other agents might force agent $\alpha$ to stray from the desired 
+direction or have speeds different from the desired one. The change in position of 
+agent $\alpha$ is given by:
 
 \begin{equation}
 		\frac{d \vec{r_{\alpha}}}{dt} = \vec{V_{\alpha}} \left( t \right)
