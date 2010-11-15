@@ -1,5 +1,6 @@
 #include "optimised.h"
 
+static double A_1, A_2, B_1, B_2;
 
 static PyObject * calculate_acceleration(PyObject * self, PyObject * args)
 {
@@ -8,6 +9,9 @@ static PyObject * calculate_acceleration(PyObject * self, PyObject * args)
     PyObject * p_actors; // List of other actors
     PyObject * p_walls; // List of walls
 
+    PyObject * p_module;
+    PyObject * p_constants;
+
     // Native objects
     Actor * actors;
     Wall * walls;
@@ -15,9 +19,14 @@ static PyObject * calculate_acceleration(PyObject * self, PyObject * args)
 
     Vector acceleration = {0.0, 0.0};
 
-    int i;
+    int i,j = 0;
 
     PyArg_ParseTuple(args, "OOO:calculate_acceleration", &p_this, &p_actors, &p_walls);
+
+    p_module = PyImport_ImportModule("parameters");
+    p_constants = PyObject_GetAttrString(p_module, "constants");
+    A_2 = double_from_attribute(p_constants, "a_2");
+    B_2 = double_from_attribute(p_constants, "b_2");
 
     // The actors also contain the current actor, so we need to store one
     // less actor than the number passed
@@ -29,20 +38,31 @@ static PyObject * calculate_acceleration(PyObject * self, PyObject * args)
 
     a = actor_from_pyobject(p_this);
 
-    for(i = 0; i < a_count; i++) {
+    for(i = 0, j = 0; i < a_count; i++) {
         PyObject * p_a = PyList_GetItem(p_actors, i);
 
         if(PyObject_Compare(p_this, p_a) != 0) {
-            actors[i] = actor_from_pyobject(p_a);
+            actors[j++] = actor_from_pyobject(p_a);
         }
     }
 
+    // Since we are not touching any python objects in this part, 
+    // we can release the global interpreter lock, to allow for multithreaded
+    // goodness.
+    Py_BEGIN_ALLOW_THREADS
 
     add_desired_acceleration(&a, &acceleration);
 
+    for(i = 0; i < a_count; i++) {
+        add_repulsion(&a, &actors[i], &acceleration);
+    }
+
+    Py_END_ALLOW_THREADS
 
     free(actors);
     free(walls);
+
+    Py_DECREF(p_module);
 
     return Py_BuildValue("dd", acceleration.x, acceleration.y);
 }
@@ -67,13 +87,13 @@ static Actor actor_from_pyobject(PyObject * o)
 
 static double double_from_attribute(PyObject * o, char * name)
 {
-    PyObject * o2 = PyObject_GetAttr(o, Py_BuildValue("s", name));
+    PyObject * o2 = PyObject_GetAttrString(o, name);
     return PyFloat_AsDouble(o2);
 }
 
 static Vector vector_from_attribute(PyObject * o, char * name)
 {
-    PyObject * o2 = PyObject_GetAttr(o, Py_BuildValue("s", name));
+    PyObject * o2 = PyObject_GetAttrString(o, name);
     return vector_from_pyobject(o2);
 }
 
@@ -81,9 +101,9 @@ static Vector vector_from_pyobject(PyObject * o)
 {
     Vector v;
 
-    PyObject * x = PyObject_GetAttr(o, Py_BuildValue("s", "x"));
+    PyObject * x = PyObject_GetAttrString(o, "x");
     v.x = PyFloat_AsDouble(x);
-    PyObject * y = PyObject_GetAttr(o, Py_BuildValue("s", "y"));
+    PyObject * y = PyObject_GetAttrString(o, "y");
     v.y = PyFloat_AsDouble(y);
 
     return v;
@@ -151,6 +171,32 @@ static void add_desired_acceleration(Actor * a, Vector * acceleration)
     acceleration->x = towards_target.x;
     acceleration->y = towards_target.y;
 
+}
+
+void add_repulsion(Actor * a, Actor * b, Vector * acceleration)
+{
+    /* Equivalent Python code:
+     
+            radius_sum = b.radius + self.radius
+
+            from_b = self.position - b.position
+            distance = from_b.length()
+
+            from_b.normalize(distance)
+            from_b *= pm.constants.a_2 * \
+                    numpy.exp((radius_sum-distance)/pm.constants.b_2)
+
+    */
+
+    double radius_sum = a->radius + b->radius;
+    Vector from_b = vector_sub(a->position, b->position);
+    double distance = vector_length(from_b);
+    if(isnan(distance)) return;
+
+    vector_normalise(&from_b);
+    vector_imul(&from_b, A_2 * exp((radius_sum-distance)/B_2));
+
+    vector_iadd(acceleration, &from_b);
 }
 
 static PyMethodDef OptimisedMethods[] = {

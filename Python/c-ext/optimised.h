@@ -1,4 +1,5 @@
 #include <Python.h>
+#include <math.h>
 #include "vector.h"
 
 
@@ -25,3 +26,4 @@ static double double_from_attribute(PyObject * o, char * name);
 static Vector vector_from_attribute(PyObject * o, char * name);
 static Vector vector_from_pyobject(PyObject * o);
 static void add_desired_acceleration(Actor * a, Vector * acceleration);
+static void add_repulsion(Actor * a, Actor * b, Vector * acceleration);

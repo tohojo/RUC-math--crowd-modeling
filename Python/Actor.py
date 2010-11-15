@@ -107,25 +107,25 @@ class Actor:
             self.acceleration = towards_target
 
 
-        repelling_forces = list()
+            repelling_forces = list()
 
-        for b in actors:
-            if self == b:
-                continue
-            radius_sum = b.radius + self.radius
+            for b in actors:
+                if self == b:
+                    continue
+                radius_sum = b.radius + self.radius
 
-            from_b = self.position - b.position
-            distance = from_b.length()
+                from_b = self.position - b.position
+                distance = from_b.length()
 
-            from_b.normalize(distance)
-            from_b *= pm.constants.a_2 * \
-                    numpy.exp((radius_sum-distance)/pm.constants.b_2)
+                from_b.normalize(distance)
+                from_b *= pm.constants.a_2 * \
+                        numpy.exp((radius_sum-distance)/pm.constants.b_2)
 
-            repelling_forces.append(from_b)
+                repelling_forces.append(from_b)
 
 
-        for f in repelling_forces:
-            self.acceleration += f
+            for f in repelling_forces:
+                self.acceleration += f
 
 
     def update_position(self, timestep):
