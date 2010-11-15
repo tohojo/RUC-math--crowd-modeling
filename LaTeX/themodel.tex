@@ -270,9 +270,17 @@ pointing from $\alpha$ to $\beta$ and it is given by:
 
 the angle $\phi$ in \eqref{agentinteraction} is the angle between the normal 
 vector pointing from agent $\beta$ to $\alpha$ and the direction in which 
-agent $\alpha$ is moving. Cosine to the angle is $\cos \left( \phi 
-\right)\left( t \right) = - \vec{\eta_{\alpha \beta}}\left( t \right) \cdot 
-\vec{e_{\alpha}}\left( t \right)$.
+agent $\alpha$ is moving. Cosine to the angle is 
+
+\begin{equation}
+\cos \left( \phi \right)
+	\left( t \right) 
+		= 
+	- \vec{\eta_{\alpha \beta}}
+		\left( t \right) 
+	\cdot 
+\vec{e_{\alpha}}\left( t \right)
+\end{equation}
 
 Equation \eqref{agentinteraction} is divided into two terms. The first term on 
 the right hand side reflects the agents tendency to stay at a certain distance 
@@ -283,11 +291,54 @@ $A_{\alpha}^{1}$, $B_{\alpha}^{1}$ and $\lambda_{\alpha}$ control the nature
 of the private sphere $A_{\alpha}^1$ and $B_{\alpha}^1$ control the strength 
 and range of the interaction respectively. $\lambda_{\alpha}$ is there to take 
 into account a persons tendency to focus on things happening in front of him 
-rather than behind him.
+rather than behind him.	% we should make a drawing of this.
 
-%	Here we should probably add something about the 2. term on the right hand	%
-%	side of eqation "agentinteraction" since we haven't yet!					%
+The second term of equation \eqref{agentinteraction} deals with physical interaction.
+In the situation where the density of the crowd is high the agents will have be closer
+to each other and the social sphere is undermined. % go more into detail here 
+So if we look away from the social sphere for a minute and concentrate on the physical
+interaction we will see that if we omit the social sphere the calculation will be reduced to
+to:
 
+\begin{equation}\label{re}
+\overrightarrow{f_{\alpha\beta}}(t) = A_{\alpha}^{2} exp\left[ \frac{r_{\alpha\beta} - d_{\alpha}\beta}{B_{\alpha}^{2}}\right]  \overrightarrow{n_{\alpha\beta}}
+\end{equation}
+
+Taking the norms of both sides of Equation (\ref{re}), we can draw the relation between the value of $\overrightarrow{f_{\alpha\beta}}(t)$ and $ d_{\alpha\beta} $, as shown in Figure 
+(\ref{physicalinteraction}).\\
+
+\begin{figure}
+    \centering
+    {\includegraphics[scale=0.45]{Figures/physicalinteraction.pdf}} 
+    \caption{The function about the interaction force 
+        $f_{\alpha\beta}(t)$ and the distance between two agents
+        $d_{\alpha \beta}$ }
+    \label{physicalinteraction}
+\end{figure}
+
+There is one intersection of the graph and the axis 
+
+\begin{equation}
+\left( 0 , A_{\alpha}^{2} exp\left( \frac{r_{\alpha\beta} }{B_{\alpha}^{2}}\right)  \right) 
+\end{equation}
+
+If put into the constants, we will be able to get a maximum value of $ f_{\alpha\beta}(t) $, 
+since the distance between agents cannot be negative. Here we set $ A_{\alpha}^{2} = 3 m/s^{2} $, 
+$ r_{\alpha\beta} = 0.6 m $, and $ B_{\alpha}^{2} = 0.2 m $, so 
+$ f_{\alpha\beta}(t)^{max} \doteq 60 m/s^{2} $, which is about six times the gravitational 
+acceleration and represents a rather large force between agents (as large as six person's weight).
+
+However, we notice that the effective part of the force calculated above is only the horizontal 
+component that enables the agent to move horizontally in the plane where we do the simulation, 
+but the reality is that the agents sometimes are also able to move vertically, for example, 
+by stepping upon other people when they cannot take the pushing force from the surrounding agents. 
+When that happens, the horizontal component of the repulsive force becomes smaller even if $ d_{\alpha\beta} $ 
+is kept the same.	%may need a graph to illustrate that
+
+Therefore, a qualitative modification of dependence between $ f_{\alpha\beta}(t) $ and $ d_{\alpha\beta} $ could be:
+% remember to finish this section
+
+\subsubsection{The attraction forces}
 The fourth and last term in \eqref{model} represents the force from attraction 
 in the room. Attractions can be either be either interesting sculptures or 
 sights or familiar persons the agent prefer to be close to, such as friends 
