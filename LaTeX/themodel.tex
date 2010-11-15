@@ -53,7 +53,7 @@ structure.\\
 \end{figure}
 
 \subsubsection{The velocity dependence} %gotta figure out a better name for this part
-The first term on the right hand side is a velocity dependent force 
+The first term on the right hand side of equation \eqref{model} is a velocity dependent force 
 and it is given by:
 
 \begin{equation}
@@ -62,9 +62,10 @@ and it is given by:
     \left( V_{\alpha}^{0} \vec{e_{\alpha}} - \vec{V_{\alpha}} \right)
 \end{equation}
 
-Here $\tau$ is the relaxation time. $\vec{V_{\alpha}}$ is the 
-current velocity of the agent and $V_{\alpha}^{0}$ is the initial speed, that is 
-the speed of the agent at the end of the last simulation step. $V_{\alpha}^{0}$ is given by:
+Here $\tau$ is the relaxation time. % lets go a little more into detail about this relaxation time. We discussed it with viggo last time
+$\vec{V_{\alpha}}$ is the  current velocity of the agent and $V_{\alpha}^{0}$ 
+is the initial speed, that is the speed of the agent at the end of the last 
+simulation step. $V_{\alpha}^{0}$ is given by:
 
 \begin{equation}\label{v0}
     V_{\alpha}^{0} = \left[ 1 - \eta_{\alpha} \left( t \right) \right] 
@@ -153,6 +154,10 @@ Figure (\ref{impatience}) is a drawing of the graph about those two variables, a
 
 \begin{equation}
 \left( 
+	\overline{V_{\alpha}} , V_{\alpha}^{0} \left( t \right)
+\right)
+=
+\left( 
 	0 
 		, 
 	v_{\alpha}^{max} 
@@ -180,6 +185,8 @@ we get the relation:
 v_{\alpha}^{0}(0)\leq \frac{1}{�2}v_{\alpha}^{max}
 \end{equation}
 
+% Lets have a little summation here. What have we learned about the inpatience factor and
+% the velocity dependant force. What kind of dynamics does this force yield
 
 \subsubsection{Interaction with the walls}
 Now the second term on the right hand side of \eqref{model} is the forces acting on agent 
@@ -316,10 +323,12 @@ Taking the norms of both sides of Equation (\ref{re}), we can draw the relation 
     \label{physicalinteraction}
 \end{figure}
 
-There is one intersection of the graph and the axis 
+There is one intersection of the graph and the axis at:
 
 \begin{equation}
-\left( 0 , A_{\alpha}^{2} exp\left( \frac{r_{\alpha\beta} }{B_{\alpha}^{2}}\right)  \right) 
+	\left( d_{\alpha \beta} , \| \vec{f_{\alpha \beta}} \left( t \right) \| \right)
+ =
+	\left( 0 , A_{\alpha}^{2} exp\left( \frac{r_{\alpha\beta} }{B_{\alpha}^{2}}\right)  \right) 
 \end{equation}
 
 If put into the constants, we will be able to get a maximum value of $ f_{\alpha\beta}(t) $, 
@@ -338,6 +347,9 @@ is kept the same.	%may need a graph to illustrate that
 Therefore, a qualitative modification of dependence between $ f_{\alpha\beta}(t) $ and $ d_{\alpha\beta} $ could be:
 % remember to finish this section
 
+% again lets  have a little summation here. What kinds of dynamics does the
+% social interaction part of the model yield.
+
 \subsubsection{The attraction forces}
 The fourth and last term in \eqref{model} represents the force from attraction 
 in the room. Attractions can be either be either interesting sculptures or 
@@ -349,7 +361,7 @@ constants.
 To get an overview of how the model is put together look a figure \ref{overview}
 with the aid of table \ref{tableofconstandvar}
 
-\begin{figure}[hb]
+\begin{figure}[hb] %with some more comments i think that this figure could serve as a summation of the entire section
     \centering
     {\includegraphics[scale=0.45]{Figures/overview.pdf}} 
     \caption{An overview of how the model is put together}
