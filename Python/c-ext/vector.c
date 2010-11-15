@@ -34,18 +34,18 @@ void vector_isub(Vector * v1, Vector * v2)
 
 Vector vector_mul(Vector v, double s)
 {
-    Vector v;
+    Vector v2;
 
-    v.x = v.x*s;
-    v.y = v.y*s;
+    v2.x = v.x*s;
+    v2.y = v.y*s;
 
-    return v;
+    return v2;
 }
 
 void vector_imul(Vector * v, double s)
 {
-    v1->x *= s;
-    v1->y *= s;
+    v->x *= s;
+    v->y *= s;
 }
 
 double vector_length(Vector v)
