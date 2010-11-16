@@ -1,6 +1,10 @@
 # vim:fileencoding=utf8
 
 import pygame
+import parameters as pm
+
+if pm.use_c_ext:
+    import optimised
 
 SCREEN_WIDTH=600
 SCREEN_HEIGHT=600
@@ -45,6 +49,15 @@ class Canvas:
         pygame.draw.circle(self.screen, DRAW_COLOR, 
                 Helper.screen_coords(a.position),
                 Helper.screen_radius(a.radius))
+
+    def draw_actors(self):
+        if pm.use_c_ext:
+            for i in xrange(pm.actor.initial_number):
+                (x,y,r) = optimised.get_actor(i)
+                pygame.draw.circle(self.screen, DRAW_COLOR,
+                        Helper.screen_coords(x,y),
+                        Helper.screen_radius(r))
+
 
     def draw_target(self, t):
         pygame.draw.circle(self.screen, TARGET_COLOR, 

@@ -7,6 +7,11 @@ from Wall import Wall
 from Vector import Vector, Point
 import setup
 import parameters as pm
+from threadworkers import run_in_threads
+from time import time
+
+if pm.use_c_ext:
+    import optimised
 
 import sys
 
@@ -37,18 +42,15 @@ def main():
 #                velocity = Vector(-2.5, 0),
 #                target = Point(0.0, 0.0)),
 #            ]
-    walls = [
-            Wall(-10, -10, 10, -10),
-            Wall(-10, -10, -10, 10),
-            Wall(-10, 10, 10, 10),
-            Wall(10, -10, 10, 10),
-#            Wall(-20, -20, 20, -20),
-#            Wall(-20, -20, -20, 20),
-#            Wall(-20, 20, 20, 20),
-#            Wall(20, -20, 20, 20),
-            ]
+    walls = [Wall(*i) for i in pm.walls]
+
+    if pm.use_c_ext:
+        optimised.add_actors(actors)
 
     timestep = pm.timestep
+    timer = 0.0
+    time_start = time()
+    frames = 0
     canvas.clear_screen()
 
     while canvas.tick():
@@ -56,7 +58,7 @@ def main():
         if clear:
             canvas.clear_screen()
 
-        canvas.draw_text("t = %.2f" % actors[0].time)
+        canvas.draw_text("t = %.2f" % timer)
 
         canvas.draw_target(pm.actor.target)
 
@@ -66,21 +68,30 @@ def main():
         for w in walls:
             canvas.draw_wall(w)
 
-        for a in actors:
-            a.calculate_acceleration(walls, actors)
+        if pm.use_c_ext:
+            optimised.update_actors()
+            canvas.draw_actors()
+        else:
+            for a in actors:
+                a.calculate_acceleration(walls, actors)
 
-        for a in actors:
-            a.update_position(timestep)
-            if a.has_escaped():
-                actors.remove(a)
-                continue
+            for a in actors:
+                a.update_position(timestep)
+                #if a.has_escaped():
+                    #actors.remove(a)
+                    #continue
 
-            canvas.draw_actor(a)
+                canvas.draw_actor(a)
 #            for w in walls:
 #                P = w.projection(a.position)
 #                canvas.draw_proj(P)
         
         canvas.update()
+        timer += timestep
+        frames += 1
+
+    elapsed = time() - time_start
+    print "%d frames in %f seconds. Avg %f fps" % (frames, elapsed, frames/elapsed)
 
 
 if __name__ == "__main__":

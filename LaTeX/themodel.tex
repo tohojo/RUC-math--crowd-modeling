@@ -5,37 +5,43 @@
 
 
 \subsection{Explanation of our model}
-
-%	I think we should add that this section is meerly a walk through the model and that		%
-%	the different parts of the model will be discussed in a later section so the reader		%
-%	wont feel that we leave out a lot of detail.											% 
-
 In this section we will go through the model from the article \cite{self-org} in great detail. 
 First of all,  as stated briefly earlier this model is an agent based social force model. 
 This means that the model uses individual entities to say something about the crowd as a whole. 
-Each entity or agent is acted on by a collection of different forces. These forces can be
-either repulsive or attractive. The general approach of the model is fairly simple. An agent
-$\alpha$ wants to go in a desired direction with a desired speed. However the environment 
-and other agents might force agent $\alpha$ to stray from the desired direction or have speeds 
-different from the desired one. The change in position of agent $\alpha$ is given by:
 
-	\begin{equation}
+Each entity or agent is acted on by a collection of different forces, and the agent cannot escape 
+from Newton's three laws about the motion of any object, which mainly says that when there is a 
+force it results a corresponding acceleration.  However, our agent is not a ball being kicked around, 
+it has a willingness to go to some destine place.  The way that agent implement the will is by 
+generating a statistic frictional force from the ground, and that force is here what we called 
+the social force.
+
+\begin{figure}[hb]
+    \centering
+    {\includegraphics[scale=0.45]{Figures/ForceModel.pdf}} 
+    \caption{}
+    \label{ForceModel}
+\end{figure}
+
+These forces can be either repulsive or attractive. The general approach of the model 
+is fairly simple. An agent $\alpha$ wants to go in a desired direction with a desired speed. 
+However the environment and other agents might force agent $\alpha$ to stray from the desired 
+direction or have speeds different from the desired one. The change in position of 
+agent $\alpha$ is given by:
+
+\begin{equation}
 		\frac{d \vec{r_{\alpha}}}{dt} = \vec{V_{\alpha}} \left( t \right)
-	\end{equation}
+\end{equation}
 
 And, as we know from newtonian physics, the acceleration of agent $\alpha$ is 
 then given by the summation of all the forces acting on the agent:
 
 \begin{equation}
-    \frac{d \vec{V_{\alpha}}}{dt} = \vec{f_{\alpha}} \left( t \right) + 
-    \vec{\xi_{\alpha}}\left( t \right)
+    \frac{d \vec{V_{\alpha}}}{dt} = \vec{f_{\alpha}} \left( t \right) 
 \end{equation}
 
-here $\vec{\xi_{\alpha}} \left( t \right)$ is a random fluctuation of agent $\alpha$. This
-force is there to incorporate the fact that fact the identical initial condition
-generally will not lead to the same series of events. $\vec{f_{\alpha}} \left( t \right)$ 
-is a summation of all the forces action in agent $\alpha$ from the environment 
-and other agents. More specifically it is given by:
+$\vec{f_{\alpha}} \left( t \right)$ is a summation of all the forces action in 
+agent $\alpha$ from the environment and other agents. More specifically it is given by:
 
 \begin{equation}\label{model}
     \vec{f_{\alpha}} = \vec{f^{0}_{\alpha}}\left( \vec{V_{\alpha}} \right) + 
@@ -48,7 +54,17 @@ and other agents. More specifically it is given by:
 
 So this is a summation of four different kinds of forces. We will go through 
 them one at a time explaining their role in the model and their mathematical 
-structure. The first term on the right hand side is a velocity dependent force 
+structure.\\
+
+\begin{figure}[hb]
+    \centering
+    {\includegraphics[scale=0.35]{Figures/NotationOAgent.pdf}} 
+    \caption{Shows a visual presentation of the mathematical notation.}
+    \label{NotationOAgent}
+\end{figure}
+
+\subsubsection{The velocity dependence} %gotta figure out a better name for this part
+The first term on the right hand side of equation \eqref{model} is a velocity dependent force 
 and it is given by:
 
 \begin{equation}
@@ -57,11 +73,12 @@ and it is given by:
     \left( V_{\alpha}^{0} \vec{e_{\alpha}} - \vec{V_{\alpha}} \right)
 \end{equation}
 
-Here $\tau$ is the relaxation time. $\vec{V_{\alpha}}$ is the 
-current velocity of the agent and $V_{\alpha}^{0}$ is the initial speed, that is 
-the speed of the agent at the end of the last simulation step. $V_{\alpha}^{0}$ is given by:
+Here $\tau$ is the relaxation time. % lets go a little more into detail about this relaxation time. We discussed it with viggo last time
+$\vec{V_{\alpha}}$ is the  current velocity of the agent and $V_{\alpha}^{0}$ 
+is the initial speed, that is the speed of the agent at the end of the last 
+simulation step. $V_{\alpha}^{0}$ is given by:
 
-\begin{equation}
+\begin{equation}\label{v0}
     V_{\alpha}^{0} = \left[ 1 - \eta_{\alpha} \left( t \right) \right] 
     V_{\alpha}^{0} \left( 0 \right) +
     \eta_{\alpha} \left( t \right)V_{\alpha}^{\text{max}}
@@ -81,8 +98,108 @@ is called the impatience or nervousness of the agent and is given by:
 
 Here $\overline{V}$ is the average speed in the desired direction and as 
 earlier $V_{\alpha}^{0} \left( 0 \right)$ is the speed at the beginning of the 
-first calculation step of the simulation.
+first calculation step of the simulation. $\eta_{\alpha}$ is called the impatience 
+or nervousness factor of agent $\alpha$ and we will a little time on it her because 
+it does yield some interesting dynamics. 
 
+First of all The impatience or nervousness factor is active when one calculates the 
+force action on agent $\alpha$ from the velocity of the agent.
+
+In the case where $0 \leq \eta_{\alpha} \leq 1$ the expression for 
+$V_{\alpha}^{0} \left( t \right)$  makes sense. Here we can see why this term 
+is called the impatience of the agent. If the fraction  between the average 
+speed in the desired direction and the initial speed is low then $\eta_{\alpha} \approx 1$. 
+When the impatience term is close to one $V_{\alpha}^{0} \left( t \right)$ 
+is dominated by $V_{\alpha}^{\text{max}}$. That is, if the agent have not 
+moved very far in the desired direction compared to the initial speed the 
+impatience of the agent will cause the agent's future velocity to be dominated by 
+the desired velocity of the agent.
+
+If the agent has been moving in the desired direction with his initial 
+speed the entire time then $\eta_{\alpha} = 0$  and 
+$V_{\alpha}^{0} \left( t \right)$ will continue to be $V_{\alpha}^{0} \left( 0 \right)$.
+
+In the case where $\eta_{\alpha} \leq 0$ that is the agent has moved further 
+in the desired direction then he would have had he been walking with his 
+initial speed. The expression for $V_{\alpha}^{0} \left( t \right)$
+stats yield strange results. That $\eta_{\alpha} \leq 0$ would imply that:
+
+\begin{equation}\label{n}
+    V_{\alpha}^{0} = \left[ 1 + \eta_{\alpha} \left( t \right) \right] 
+    V_{\alpha}^{0} \left( 0 \right) -
+    \eta_{\alpha} \left( t \right)V_{\alpha}^{\text{max}}
+\end{equation}
+
+And this will yield a negative value for $V_{\alpha}^{0}$ if: 
+
+\begin{equation}
+\left[ 1 + \eta_{\alpha} \left( t \right) \right] 
+V_{\alpha}^{0} \left( 0 \right) < \eta_{\alpha} \left( t \right)V_{\alpha}^{\text{max}} 
+\end{equation}
+
+This is a problem because it is not that far fetched that an agent will be 
+forced to exceed his desired velocity.
+
+In the case where $1 \leq \eta_{\alpha}$ it would mean that the agent has moved 
+further in the opposite direction than the desired one and this can only happen very 
+weird situations.
+
+Equation (\ref{n}) and Equation (\ref{v0}) contains an intermediate variable $ n_{\alpha} \left( t \right) $, 
+so in principle we are allowed to eliminate $ n_{\alpha} \left( t \right) $ and only show the 
+relationship between $ V_{\alpha}^{0}(t) $ and $ \overline{V}_{\alpha} \left( t \right) $. Thus we get:
+
+\begin{equation}\label{vv}
+    V_{\alpha}^{0}(t) = \left[ 1 - \frac{v_{\alpha}^{max}}{v_{\alpha}^{0}(0)}\right]\overline{V}_{\alpha} \left( t \right) + v_{\alpha}^{max}
+\end{equation}
+
+\begin{figure}[ht]
+\centering
+{\includegraphics[scale=0.35]{Figures/impatience.pdf}} 
+\caption{\small{The function about the desired velocity $ V_{\alpha}^{0}(t) $ 
+and the average velocity in the desired direction of motion $ \overline{V}_{\alpha} \left( t \right) $}}
+\label{impatience}
+\end{figure}
+
+Figure (\ref{impatience}) is a drawing of the graph about those two variables, and the intersection
+ of the function line with both axis are:
+
+\begin{equation}
+\left( 
+	\overline{V_{\alpha}} , V_{\alpha}^{0} \left( t \right)
+\right)
+=
+\left( 
+	0 
+		, 
+	v_{\alpha}^{max} 
+\right) 
+\text{and} 
+\left(
+	v_{\alpha}^{max} 
+		\frac{v_{\alpha}^{0} \left( 0 \right) }{v_{\alpha}^{max}-v_{\alpha}^{0} \left(0 \right)} 
+	, 0 
+\right) 
+\end{equation}
+Now there is a doubt whether the value of $ \overline{V}_{\alpha} \left( t \right) $ can reach $ v_{\alpha}^{max}\frac{v_{\alpha}^{0}(0)}{v_{\alpha}^{max}-v_{\alpha}^{0}(0)} $, if we have already 
+set $ v_{\alpha}^{max} $ a fixed number for a certain agent. In the case:
+
+\begin{equation}
+	v_{\alpha}^{max} 
+	\geq 
+	v_{\alpha}^{max} 
+	\frac{v_{\alpha}^{0}(0)}{v_{\alpha}^{max}-v_{\alpha}^{0}(0)}
+\end{equation}
+
+we get the relation:
+
+\begin{equation}
+v_{\alpha}^{0}(0)\leq \frac{1}{�2}v_{\alpha}^{max}
+\end{equation}
+
+% Lets have a little summation here. What have we learned about the inpatience factor and
+% the velocity dependant force. What kind of dynamics does this force yield
+
+\subsubsection{Interaction with the walls}
 Now the second term on the right hand side of \eqref{model} is the forces acting on agent 
 $\alpha$ from the walls of the room. The force is given by:
 
@@ -96,20 +213,28 @@ Here $\nabla_{\vec{r_{\alpha}}}$ is the gradient and $V_B$ is a repulsive
 potential. $ \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|$ is the distance 
 from agent $\alpha$ to the nearest point of the nearest wall.
 
+\begin{figure}[ht]
+\centering
+{\includegraphics[scale=0.35]{Figures/NotationOfWall.pdf}} 
+\caption{\small{Shows the notation for the interaction with walls.}}
+\label{NotationOfWall}
+\end{figure}
+
 The repulsive potential describes the force added from the walls to pedestrian $\alpha$, since $\alpha$ does not
 want to get too close to the wall. So the closer $\alpha$ get to the wall the more the force from the wall gets.
 The repulsion potential is given by:
 
 \begin{equation}
 V_{B} \left( \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| \right) =
-V^0_{\alpha B} e^{- \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| / R }
+V^0_{\alpha B} e^{- \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| / r_{\alpha} }
 \end{equation}
 
-Here $V^0_{\alpha B}$ is a constant and $R$ is the radius of a pedestrian.
+Here $V^0_{\alpha B}$ is a constant and $r_{\alpha}$ is the radius of a pedestrian $\alpha$.
 
 The reason for this repusion force from the wall is that the pedestrians do not want to get hurt by running into the walls
-or get crushed between the panicing crowd and the wall [Helbing and Molnár, 1995].
+or get crushed between the panicing crowd and the wall [Helbing and Molnár, 1995]. %real references, please.
 
+\subsubsection{Interaction between agents}
 The third term on the right hand side of \eqref{model} is a summation of all the 
 force between agent $\alpha$ and agent $\beta$. It is a function of the position vector and the velocity of 
 both agents, and it is given by:
@@ -136,9 +261,9 @@ both agents, and it is given by:
     \label{agentinteraction}
 \end{equation}
 
-\begin{figure}
+\begin{figure}[ht]
     \centering
-    {\includegraphics[scale=0.45]{Figures/NotationOfInteraction.pdf}} 
+    {\includegraphics[scale=0.35]{Figures/NotationOfInteraction.pdf}} 
     \caption{Shows the notation for the interaction between agents.}
     \label{NotationOfInteraction}
 \end{figure}
@@ -149,23 +274,29 @@ $r_{\alpha \beta}$ is the sum of the radii of $\alpha$ and $\beta$ that is
 $r_{\alpha \beta} = r_{\alpha} + r_{\beta}$. $d_{\alpha \beta}$ is the 
 distance from the center of mass of agent $\alpha$ and the center of mass of 
 agent $\beta$ and is therefore given by $d_{\alpha \beta} = 
-\|\vec{X_{\alpha}}\left( t \right) - \vec{X_{\beta}}\left( t \right) \|$. Here 
-$\vec{X_{\alpha}}\left( t \right)$ and $\vec{X_{\beta}}\left( t \right)$ are 
-of course the vectors pointing to the center of mass of respectively agent 
-$\alpha$ and $\beta$ at the time t. $\eta_{\alpha \beta}$ is the normal vector 
-pointing from $\alpha$ to $\beta$ and it is given by:
+\|\vec{r_{\alpha}}\left( t \right) - \vec{r_{\beta}}\left( t \right) \|$.
+$\eta_{\alpha \beta}$ is the normal vector pointing from $\alpha$ to $\beta$ 
+and it is given by:
 
 \begin{equation}
     \eta_{\alpha \beta} =
-        \frac{\vec{X_{\alpha}}(t) - \vec{X_{\beta}}(t)}
-             {\|\vec{X_{\alpha}}(t) - \vec{X_{\beta}}(t) \|}
+        \frac{\vec{r_{\alpha}}(t) - \vec{r_{\beta}}(t)}
+             {\|\vec{r_{\alpha}}(t) - \vec{r_{\beta}}(t) \|}
 \end{equation}
 
 the angle $\phi$ in \eqref{agentinteraction} is the angle between the normal 
 vector pointing from agent $\beta$ to $\alpha$ and the direction in which 
-agent $\alpha$ is moving. Cosine to the angle is $\cos \left( \phi 
-\right)\left( t \right) = - \vec{\eta_{\alpha \beta}}\left( t \right) \cdot 
-\vec{e_{\alpha}}\left( t \right)$.
+agent $\alpha$ is moving. Cosine to the angle is 
+
+\begin{equation}
+\cos \left( \phi \right)
+	\left( t \right) 
+		= 
+	- \vec{\eta_{\alpha \beta}}
+		\left( t \right) 
+	\cdot 
+\vec{e_{\alpha}}\left( t \right)
+\end{equation}
 
 Equation \eqref{agentinteraction} is divided into two terms. The first term on 
 the right hand side reflects the agents tendency to stay at a certain distance 
@@ -176,11 +307,66 @@ $A_{\alpha}^{1}$, $B_{\alpha}^{1}$ and $\lambda_{\alpha}$ control the nature
 of the private sphere $A_{\alpha}^1$ and $B_{\alpha}^1$ control the strength 
 and range of the interaction respectively. $\lambda_{\alpha}$ is there to take 
 into account a persons tendency to focus on things happening in front of him 
-rather than behind him.
+rather than behind him.	% we should make a drawing of this.
 
-%	Here we should probably add something about the 2. term on the right hand	%
-%	side of eqation "agentinteraction" since we haven't yet!					%
+The second term of equation \eqref{agentinteraction} deals with physical interaction.
+In the situation where the density of the crowd is high the agents will have be closer
+to each other and the social sphere is undermined. % go more into detail here 
+So if we look away from the social sphere for a minute and concentrate on the physical
+interaction we will see that if we omit the social sphere the calculation will be reduced to
+to:
 
+\begin{equation}\label{re}
+\overrightarrow{f_{\alpha\beta}}(t) = A_{\alpha}^{2} exp\left[ \frac{r_{\alpha\beta} - d_{\alpha}\beta}{B_{\alpha}^{2}}\right]  \overrightarrow{n_{\alpha\beta}}
+\end{equation}
+
+Taking the norms of both sides of Equation (\ref{re}), we can draw the relation between the value of $\overrightarrow{f_{\alpha\beta}}(t)$ and $ d_{\alpha\beta} $, as shown in Figure 
+(\ref{physicalinteraction}).\\
+
+\begin{figure}
+    \centering
+    {\includegraphics[scale=0.45]{Figures/physicalinteraction.pdf}} 
+    \caption{The function about the interaction force 
+        $f_{\alpha\beta}(t)$ and the distance between two agents
+        $d_{\alpha \beta}$ }
+    \label{physicalinteraction}
+\end{figure}
+
+There is one intersection of the graph and the  axis at:
+
+\begin{equation}
+	\left( d_{\alpha \beta} , \| \vec{f_{\alpha \beta}} \left( t \right) \| \right)
+ =
+	\left( 0 , A_{\alpha}^{2} exp\left( \frac{r_{\alpha\beta} }{B_{\alpha}^{2}}\right)  \right) 
+\end{equation}
+
+If put into the constants, we will be able to get a maximum value of $ f_{\alpha\beta}(t) $, 
+since the distance between agents cannot be negative. Here we set $ A_{\alpha}^{2} = 3 m/s^{2} $, 
+$ r_{\alpha\beta} = 0.6 m $, and $ B_{\alpha}^{2} = 0.2 m $, so 
+$ f_{\alpha\beta}(t)^{max} \doteq 60 m/s^{2} $, which is about six times the gravitational 
+acceleration and represents a rather large force between agents (as large as six person's weight).
+
+However, we notice that the effective part of the force calculated above is only the horizontal 
+component that enables the agent to move horizontally in the plane where we do the simulation, 
+but the reality is that the agents sometimes are also able to move vertically, for example, 
+by stepping upon other people when they cannot take the pushing force from the surrounding agents. 
+When that happens, the horizontal component of the repulsive force becomes smaller even if $ d_{\alpha\beta} $ 
+is kept the same.	
+
+\begin{figure}[ht]   
+\centering
+    {\includegraphics[scale=0.35]{Figures/ForceOverlapping.pdf}} 
+    \caption{}
+    \label{forceoverlapping}
+\end{figure}
+
+Therefore, a qualitative modification of dependence between $ f_{\alpha\beta}(t) $ and $ d_{\alpha\beta} $ could be:
+% remember to finish this section
+
+% again lets  have a little summation here. What kinds of dynamics does the
+% social interaction part of the model yield.
+
+\subsubsection{The attraction forces}
 The fourth and last term in \eqref{model} represents the force from attraction 
 in the room. Attractions can be either be either interesting sculptures or 
 sights or familiar persons the agent prefer to be close to, such as friends 
@@ -191,83 +377,12 @@ constants.
 To get an overview of how the model is put together look a figure \ref{overview}
 with the aid of table \ref{tableofconstandvar}
 
-\begin{figure}
+\begin{figure}[hb] %with some more comments i think that this figure could serve as a summation of the entire section
     \centering
     {\includegraphics[scale=0.45]{Figures/overview.pdf}} 
     \caption{An overview of how the model is put together}
     \label{overview}
 \end{figure}
-
-
-%	I think this table should be send to the appendix							%
-
-%	It would be nice with a figure similar to the one I (mikkel) made when i	%
-%	first tried to understand the model.										%
- 
-\begin{center}
-\begin{tabular}{lll}
-\hline
-\multicolumn{3}{|c|}{\emph{List of constants and variables}}\\
-\hline
-\small{\textbf{Symbol}} & \small{\textbf{Description}} & \small{\textbf{Unit}}\\
-\hline
-$A_{\alpha}^{1}$ & \small{Controls the strength of the personal space force}\\
-\hline
-$A_{\alpha}^{2}$ & \small{Controls the strength of physical collisions}  & \\
-\hline
-$B_{\alpha}^{1}$ & \small{Controls the range of the personal space force} & \\
-\hline
-$B_{\alpha}^{2}$ & \small{Controls the range of physical collisions} & \\
-\hline
-$\lambda_{\alpha}$ & The anisotropic character of pedestrian interaction & \\
-\hline
-$\vec{f_{\alpha}} \left( t \right)$ & All forces acting on agent $\alpha$  & \\
-\hline
-$\vec{f_{\alpha B}} \left( \vec{r_{\alpha}} \right)$ & Force on agent $\alpha$ from walls & \\
-\hline
-$\vec{f_{\alpha \beta}} \left( \vec{r_{\alpha}}, \vec{r_{\beta}}, \vec{V_{\alpha}}, \vec{V_{\beta}} \right)$ & Force on agent $\alpha$ from agent $\beta$ & \\
-\hline
-$\vec{f_{\alpha i}} \left( \vec{r_{\alpha}}, \vec{r_{i}}, t \right)$ & Force on agent $\alpha$ from attractions & \\
-\hline
-$V_{\alpha}^{0}$ & Initial speed of agent $\alpha$ & \\
-\hline
-$V_{\alpha}^{\text{max}}$ & Maximum speed of agent $\alpha$ & \\
-\hline
-$\vec{V_{\alpha}^{\text{0}}}$ & Desired velocity of agent $\alpha$ & \\
-\hline
-$\overline{V}_{\alpha}$ & Average speed in desired direction & \\
-\hline
-$\vec{e}_{\alpha}$ & Vector pointing in desired direction of agent $\alpha$ & \\
-\hline
-$\vec{r}_{\alpha}\left( t \right) $ & Vector pointing to position of agent $\alpha$ at time t & \\
-\hline
-$\vec{r}_{B}$ & Vector pointing to nearest point of wall & \\
-\hline
-$r_{\alpha}$ & Radius of agent $\alpha$ & \\
-\hline
-$r_{\beta}$ & Radius of agent $\beta$ & \\
-\hline
-$r_{\alpha \beta}$ & The sum of the radii of agent $\alpha$ and $\beta$ & \\
-\hline
-$\vec{X}_{\alpha}$ & Vector pointing to center of mass of agent $\alpha$ & \\
-\hline
-$\vec{X}_{\beta}$ & Vector pointing to center of mass of agent $\beta$ & \\
-\hline
-$d_{\alpha \beta}$ & Distance between center of mass of agent $\alpha$ and $\beta$ & \\
-\hline
-$\tau_{\alpha}$ & Relaxation time $\alpha$ and $\beta$ & \\
-\hline
-$\eta_{\alpha}$ & Impatience of agent $\alpha$ at time t & \\
-\hline
-$\vec{\eta}_{\alpha \beta}\left( t \right)$ & Normal vector pointing from $\alpha$ to $\beta$ at time t & \\
-\hline
-$\vec{\xi}\left( t \right)$ & Stochastic element & \\
-\hline
-$\phi_{\alpha \beta} \left( t \right)$ & Angle between agent $\alpha$ and $\beta$ & \\
-\hline
-\label{tableofconstandvar}
-\end{tabular}
-\end{center}
 
 \clearpage
 \input{discofmodel}

@@ -26,53 +26,64 @@ class Vector:
     
     def __init__(self, *args):
         if len(args) == 1:
-            self.a = numpy.copy(args[0])
+            (self.x, self.y) = args[0]
         elif len(args) == 2:
 #            assert (type(args[0]) in (int, float) and type(args[1]) in (int,float))
-            self.a = numpy.array((args[0],args[1]))
-
-    @property
-    def x(self):
-        return self.a[0]
-
-    @property
-    def y(self):
-        return self.a[1]
+            self.x = args[0]
+            self.y = args[1]
 
     def __add__(self, v):
         """Vector(x1+x2, y1+y2)"""
-        return self.__class__(self.a+v.a)
+        return self.__class__(self.x+v.x, self.y+v.y)
+
+    def __iadd__(self, v):
+        """Vector(x1+x2, y1+y2)"""
+        self.x += v.x
+        self.y += v.y
+        return self
     
     def __sub__(self, v):
         """Vector(x1-x2, y1-y2)"""
-        return self.__class__(self.a-v.a)
+        return self.__class__(self.x-v.x, self.y-v.y)
+
+    def __isub__(self, v):
+        self.x -= v.x
+        self.y -= v.y
+        return self
     
     def __mul__( self, scalar ):
         """Vector(x1*x2, y1*y2)"""
-        if type(scalar) != float and type(scalar) != int \
-                and type(scalar) != numpy.float64:
-            raise NotImplemented
-        return self.__class__(self.a*scalar)
+        return self.__class__(self.x*scalar, self.y*scalar)
 
     def __rmul__(self, scalar):
         return self.__mul__(scalar)
+
+    def __imul__(self, scalar):
+        self.x *= scalar
+        self.y *= scalar
+        return self
     
     def __div__(self, scalar):
         """Vector(x1/x2, y1/y2)"""
-        return self.__class__(self.a/scalar)
+        return self.__class__(self.x/scalar, self.y/scalar)
+
+    def __idiv__(self, scalar):
+        self.x /= scalar
+        self.y /= scalar
+        return self
     
     def __str__(self):
-        return "(%s, %s)" % (self.a[0], self.a[1])
+        return "(%s, %s)" % (self.x, self.y)
     
     def __repr__(self):
-        return "%s(%r, %r)" % (self.__class__.__name__, self.a[0], self.a[1])
+        return "%s(%r, %r)" % (self.__class__.__name__, self.x, self.y)
 
     def dot(self, p):
         "Dot product between this and another point"
-        return numpy.vdot(self.a, p.a)
+        return numpy.vdot((self.x, self.y), (p.x, p.y))
     
     def length(self):
-        return numpy.sqrt(numpy.sum(numpy.square(self.a)))
+        return numpy.sqrt(self.x**2 + self.y**2)
     
     def distance_to(self, p):
         """Calculate the distance between two points."""
@@ -80,19 +91,31 @@ class Vector:
     
     def as_tuple(self):
         """(x, y)"""
-        return (self.a[0], self.a[1])
+        return (self.x, self.y)
     
     def clone(self):
         """Return a full copy of this point."""
-        return self.__class__(self.a)
+        return self.__class__(self.x, self.y)
     
     def move_to(self, x, y):
         """Reset x & y coordinates."""
-        self.a[0] = x
-        self.a[1] = y
+        self.x = x
+        self.y = y
 
     def normal(self):
+        """Return a normalized version of this vector"""
         return self / self.length()
+
+    def normalize(self, l = None):
+        """Normalize this vector in-place, using an optional pre-calculated
+        length. Optimization of the normal() method. Returns self to allow
+        for drop-in replacement of normal()"""
+        if l is None:
+            l = self.length()
+        self.x /= l
+        self.y /= l
+
+        return self
     
     def slide(self, p):
         '''Move to new (x+dx,y+dy).
@@ -100,7 +123,8 @@ class Vector:
         Can anyone think up a better name for this function?
         slide? shift? delta? move_by?
         '''
-        self.a += p.a
+        self.x += p.x
+        self.y += p.y
     
     def slide_xy(self, dx, dy):
         '''Move to new (x+dx,y+dy).
@@ -108,8 +132,8 @@ class Vector:
         Can anyone think up a better name for this function?
         slide? shift? delta? move_by?
         '''
-        self.a[0] += dx
-        self.a[1] += dy
+        self.x += dx
+        self.y += dy
 
     def angle(self, v):
         return numpy.arccos(self.dot(v)/(self.length()*v.length()))
@@ -127,7 +151,7 @@ class Vector:
         The new position is returned as a new Vector.
         """
         s, c = [f(rad) for f in (math.sin, math.cos)]
-        x, y = (c*self.a[0] - s*self.a[1], s*self.a[0] + c*self.a[1])
+        x, y = (c*self.x - s*self.y, s*self.x + c*self.y)
         return self.__class__(x,y)
     
     def rotate_about(self, p, theta):
