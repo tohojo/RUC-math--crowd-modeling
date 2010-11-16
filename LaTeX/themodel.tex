@@ -30,15 +30,11 @@ And, as we know from newtonian physics, the acceleration of agent $\alpha$ is
 then given by the summation of all the forces acting on the agent:
 
 \begin{equation}
-    \frac{d \vec{V_{\alpha}}}{dt} = \vec{f_{\alpha}} \left( t \right) + 
-    \vec{\xi_{\alpha}}\left( t \right)
+    \frac{d \vec{V_{\alpha}}}{dt} = \vec{f_{\alpha}} \left( t \right) 
 \end{equation}
 
-here $\vec{\xi_{\alpha}} \left( t \right)$ is a random fluctuation of agent $\alpha$. This
-force is there to incorporate the fact that fact the identical initial condition
-generally will not lead to the same series of events. $\vec{f_{\alpha}} \left( t \right)$ 
-is a summation of all the forces action in agent $\alpha$ from the environment 
-and other agents. More specifically it is given by:
+$\vec{f_{\alpha}} \left( t \right)$ is a summation of all the forces action in 
+agent $\alpha$ from the environment and other agents. More specifically it is given by:
 
 \begin{equation}\label{model}
     \vec{f_{\alpha}} = \vec{f^{0}_{\alpha}}\left( \vec{V_{\alpha}} \right) + 
@@ -271,16 +267,14 @@ $r_{\alpha \beta}$ is the sum of the radii of $\alpha$ and $\beta$ that is
 $r_{\alpha \beta} = r_{\alpha} + r_{\beta}$. $d_{\alpha \beta}$ is the 
 distance from the center of mass of agent $\alpha$ and the center of mass of 
 agent $\beta$ and is therefore given by $d_{\alpha \beta} = 
-\|\vec{X_{\alpha}}\left( t \right) - \vec{X_{\beta}}\left( t \right) \|$. Here 
-$\vec{X_{\alpha}}\left( t \right)$ and $\vec{X_{\beta}}\left( t \right)$ are 
-of course the vectors pointing to the center of mass of respectively agent 
-$\alpha$ and $\beta$ at the time t. $\eta_{\alpha \beta}$ is the normal vector 
-pointing from $\alpha$ to $\beta$ and it is given by:
+\|\vec{r_{\alpha}}\left( t \right) - \vec{r_{\beta}}\left( t \right) \|$.
+$\eta_{\alpha \beta}$ is the normal vector pointing from $\alpha$ to $\beta$ 
+and it is given by:
 
 \begin{equation}
     \eta_{\alpha \beta} =
-        \frac{\vec{X_{\alpha}}(t) - \vec{X_{\beta}}(t)}
-             {\|\vec{X_{\alpha}}(t) - \vec{X_{\beta}}(t) \|}
+        \frac{\vec{r_{\alpha}}(t) - \vec{r_{\beta}}(t)}
+             {\|\vec{r_{\alpha}}(t) - \vec{r_{\beta}}(t) \|}
 \end{equation}
 
 the angle $\phi$ in \eqref{agentinteraction} is the angle between the normal 
@@ -331,7 +325,7 @@ Taking the norms of both sides of Equation (\ref{re}), we can draw the relation 
     \label{physicalinteraction}
 \end{figure}
 
-There is one intersection of the graph and the axis at:
+There is one intersection of the graph and the  axis at:
 
 \begin{equation}
 	\left( d_{\alpha \beta} , \| \vec{f_{\alpha \beta}} \left( t \right) \| \right)
@@ -350,7 +344,14 @@ component that enables the agent to move horizontally in the plane where we do t
 but the reality is that the agents sometimes are also able to move vertically, for example, 
 by stepping upon other people when they cannot take the pushing force from the surrounding agents. 
 When that happens, the horizontal component of the repulsive force becomes smaller even if $ d_{\alpha\beta} $ 
-is kept the same.	%may need a graph to illustrate that
+is kept the same.	
+
+\begin{figure}[ht]   
+\centering
+    {\includegraphics[scale=0.35]{Figures/ForceOverlapping.pdf}} 
+    \caption{}
+    \label{forceoverlapping}
+\end{figure}
 
 Therefore, a qualitative modification of dependence between $ f_{\alpha\beta}(t) $ and $ d_{\alpha\beta} $ could be:
 % remember to finish this section
