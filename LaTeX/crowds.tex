@@ -171,7 +171,7 @@ Pushing               & + & - & - & +\\
 Communication         & - & * & - & +
 \end{tabular}
 \end{center}
-Here ``+`` indicates that the feature is possible, ``-`` indicates it is not, and ''*'' that the model has been adjusted such that the feature have
+Here + indicates that the feature is possible, - indicates it is not, and * that the model has been adjusted such that the feature have
 become possible. \cite{Comparison}
 
 The features we are interested in and find relevant in our simulation are continuous space, pushing and overlapping avoidance. The continuous space is
@@ -213,11 +213,23 @@ line) in space per time unit.
 
 \subsection{Our case(s)}
 
-Here we will shorty describe our case of the simulation of the model and the environment which the simulation is runned within.
-We have chosen to simulate the model in a 10 m. x 10 m. room with one exit, and consisting of 10 pedestrian evenly distribited in the room.
-When the simulation starts the pedestrians begin to moves toward the room's exit.
-\\
-The simple environment has been chosen because we just want to get the simulation up and working, and because we want as cheap a calculation as possible.
-Therefore it is not needed to have a complex environment, since this would make the programming more difficult and would use more computation to run
-the simulation.
-We have only selected 10 pedestrians also due to the fact that we want cheap calculation and the model does not recuire a high density crowd.
+%Here we will shorty describe our case of the simulation of the model and the environment which the simulation is runned within.
+%We have chosen to simulate the model in a 10 m. x 10 m. room with one exit, and consisting of 10 pedestrian evenly distribited in the room.
+%When the simulation starts the pedestrians begin to moves toward the room's exit.
+%The simple environment has been chosen because we just want to get the simulation up and working, and because we want as cheap a calculation as possible.
+%Therefore it is not needed to have a complex environment, since this would make the programming more difficult and would use more computation to run
+%the simulation.
+%We have only selected 10 pedestrians also due to the fact that we want cheap calculation and the model does not recuire a high density crowd.
+
+\subsection{Our case(s)}
+We will by ourself, as already explained, simmulate the model to try to get a full understanding of it and to see where it's limits/weaknesses lies. For this we have thought about different scenarios. Since we are not doing any experimental work and have no emperic data to compare with there where no reason to try to simmulate any complex scenarios, i.e. people fleeing a certain known place in the real world of people going down a pedestrian way or anything like that. Insteed we choose an approach that could seem more simpel, the simmulation of a squared room. More precise we want to examin how long time it will take for a group of pedestrians to leave a room and how they do it. While doing this we will vary different parameters and see what effects this have. We want to look a paramaters contained within the model, like the desired velocity, repulsion constants, and the numbers of pedestrian within the room. 
+
+Also we want to try to vary the time step that is choosen for the simmulations. How big a timestep can we choose while having the model acting the way it is intended to work?
+
+The first things we will look at, in the simmulations, is if it basic rules are obyed. By basic rules we mean that people can't go through walls    or a pedestrian, $\alpha$, jumps through/over a pedestrian, $\beta$. We want to have to see if there is some precise limits for the parameters where the model breaks down and describe this and see how far the values of the parameters are from what is presented in the litterature.   
+
+Second we want to see how much the parameters will affect the time it will take for the pedestrians to leave a room. As we have no emperic data to compare with we will not be determening whether a time $\tau_1$ is more realistic than another time $\tau_2$ when we have N pedestrians in the room. Instead we want to try and see wich parameteres will have the greatest influence on the exit time. By that we want to some qualitative idea about wich changes of different parameteres are having the biggest change in the exit time. This we will compare with the parameter values given by the litterature and also compare with the uncertenties in these values.
+
+Thirdly we will see if there are some generel abnormalities in the model that can not be explained by the ajustments of different parameters.
+
+All this should give a thorough idea about how this model should be handeled and what parts of it that could be improved.
