@@ -5,14 +5,14 @@
 
 
 \subsection{Explanation of our model}
-In this section we will go through the model from the article \cite{self-org} in great detail. 
-First of all,  as stated briefly earlier this model is an agent based social force model. 
-This means that the model uses individual entities to say something about the crowd as a whole. 
+In this section we will elaborate on the construction of the model from the article \cite{self-org} in great detail. 
+First of all, as stated briefly earlier this model is an agent based social force model. 
+This means that the model uses individual entities to say something about the collective behaviour of the crowd. 
 
 Each entity or agent is acted on by a collection of different forces, and the agent cannot escape 
 from Newton's three laws about the motion of any object, which mainly says that when there is a 
-force it results a corresponding acceleration.  However, our agent is not a ball being kicked around, 
-it has a willingness to go to some destine place.  The way that agent implement the will is by 
+force it results in a corresponding acceleration.  However, our agent is not a ball being kicked around, 
+it has a willingness to go to some destine place.  The way that the will is implement in an agent is by 
 generating a statistic frictional force from the ground, and that force is here what we called 
 the social force.
 
@@ -33,14 +33,14 @@ agent $\alpha$ is given by:
 		\frac{d \vec{r_{\alpha}}}{dt} = \vec{V_{\alpha}} \left( t \right)
 \end{equation}
 
-And, as we know from newtonian physics, the acceleration of agent $\alpha$ is 
-then given by the summation of all the forces acting on the agent:
+Where $\vec{V_{\alpha}} \left( t \right)$ is the velocity of agent $\alpha$ at time t.
+And, as we know from newtonian physics that, the acceleration of agent $\alpha$ is given by the summation of all the forces acting on the agent:
 
 \begin{equation}
     \frac{d \vec{V_{\alpha}}}{dt} = \vec{f_{\alpha}} \left( t \right) 
 \end{equation}
 
-$\vec{f_{\alpha}} \left( t \right)$ is a summation of all the forces action in 
+$\vec{f_{\alpha}} \left( t \right)$ is a summation of all the forces acting on 
 agent $\alpha$ from the environment and other agents. More specifically it is given by:
 
 \begin{equation}\label{model}
@@ -52,7 +52,8 @@ agent $\alpha$ from the environment and other agents. More specifically it is gi
     \right)
 \end{equation}
 
-So this is a summation of four different kinds of forces. We will go through 
+$\vec{f^{0}_{\alpha}}\left( \vec{V_{\alpha}} \right)$ is an acceleration force. $\vec{f_{\alpha B}} \left( \vec{r_{\alpha}} \right)$ is a repulsive force arising from boundaries. $\sum_{\beta \neq \alpha} \vec{f_{\alpha \beta}} \left(\vec{r_{\alpha}}, \vec{V_{\alpha}}, \vec{r_{\beta}}, \vec{V_{\beta}} \right)$ is a repulsive force due to other agents obstruction agent $\alpha$.
+This is a summation of four different kinds of forces. We will go through 
 them one at a time explaining their role in the model and their mathematical 
 structure.\\
 
@@ -84,11 +85,7 @@ simulation step. $V_{\alpha}^{0}$ is given by:
     \eta_{\alpha} \left( t \right)V_{\alpha}^{\text{max}}
 \end{equation}
 
-Here $V_{\alpha}^{0} \left( 0 \right)$ is the velocity at the beginning of the 
-first simulation step and $V_{\alpha}^{\text{max}}$ is the desired speed of agent
-$\alpha$, that is the speed that agent $\alpha$ will try to get if it is allowed by the 
-environment and other agents. $V_{\alpha}^{\text{max}}$ can be exceeded. $\eta_{\alpha}$ 
-is called the impatience or nervousness of the agent and is given by:
+Here $V_{\alpha}^{0} \left( 0 \right)$ is the velocity at time $t=0$ and $V_{\alpha}^{\text{max}}$ is the maximum desired speed of agent $\alpha$, the agent can desire a lower speed but the value of the desired speed can at most be $V_{\alpha}^{\text{max}}$. The agent can have a higer speed than $V_{\alpha}^{\text{max}}$ but then the agent will attempt to slow down to reach his desired speed. $\eta_{\alpha}$ is called the impatience or nervousness of the agent and is given by:
 
 \begin{equation}
 	\eta_{\alpha} \left( t \right) =
@@ -97,8 +94,7 @@ is called the impatience or nervousness of the agent and is given by:
 \end{equation}
 
 Here $\overline{V}$ is the average speed in the desired direction and as 
-earlier $V_{\alpha}^{0} \left( 0 \right)$ is the speed at the beginning of the 
-first calculation step of the simulation. $\eta_{\alpha}$ is called the impatience 
+earlier $V_{\alpha}^{0} \left( 0 \right)$ is the initial speed. $\eta_{\alpha}$ is called the impatience 
 or nervousness factor of agent $\alpha$ and we will a little time on it her because 
 it does yield some interesting dynamics. 
 
@@ -209,8 +205,8 @@ $\alpha$ from the walls of the room. The force is given by:
     \left( \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| \right)
 \end{equation}
 
-Here $\nabla_{\vec{r_{\alpha}}}$ is the gradient and $V_B$ is a repulsive 
-potential. $ \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|$ is the distance 
+Here $\nabla_{\vec{r_{\alpha}}}$ is the gradient of $V_B$, which is a repulsive 
+potential. $V_B$ is only dependent on $ \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|$ which is the distance 
 from agent $\alpha$ to the nearest point of the nearest wall.
 
 \begin{figure}[ht]
