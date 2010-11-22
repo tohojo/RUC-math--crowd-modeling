@@ -52,8 +52,7 @@ class Canvas:
 
     def draw_actors(self):
         if pm.use_c_ext:
-            for i in xrange(pm.actor.initial_number):
-                (x,y,r) = optimised.get_actor(i)
+            for (x,y,r) in optimised.get_actors():
                 pygame.draw.circle(self.screen, DRAW_COLOR,
                         Helper.screen_coords(x,y),
                         Helper.screen_radius(r))
