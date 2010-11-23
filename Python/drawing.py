@@ -37,8 +37,10 @@ class Canvas:
                 return False
         return True
 
-    def update(self):
+    def update(self, frames):
         pygame.display.flip()
+        if pm.create_images:
+            pygame.image.save(self.screen, "%s%05d.png" % (pm.image_prefix, frames))
 
     def draw_wall(self, w):
         pygame.draw.line(self.screen, DRAW_COLOR, 
