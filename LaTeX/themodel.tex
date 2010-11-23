@@ -273,8 +273,7 @@ weird situations.
 % the velocity dependant force. What kind of dynamics does this force yield
 
 \subsubsection{Interaction with the walls}
-Now the second term on the right hand side of \eqref{model} is the forces acting on agent 
-$\alpha$ from the walls of the room. The force is given by:
+Now the second term on the right hand side of \eqref{model} is a force which arise from interactions with the walls or other obstacles. The forces, caused by the wall or obstacles, is given by:
 
 \begin{equation}
     \vec{f_{\alpha B}} \left( \vec{r_{\alpha}} \right) =
@@ -282,8 +281,8 @@ $\alpha$ from the walls of the room. The force is given by:
     \left( \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| \right)
 \end{equation}
 
-$V_B$ is a repulsive potential, $ \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|$ is the distance 
-from agent $\alpha$ to the nearest point of the nearest wall. $V_B$ only depends on the distance $ \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|$, sow the gradient of $V_B$ tells us in which direction does this distance change the most. It is obvious that the changes is largest if the agent takes a step directly towards the wall.
+$V_B$ is a repulsive potential and $ \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|$ is the distance 
+from agent $\alpha$ to the nearest point of the nearest wall and shown in figure \ref{NotationOfWall}. $V_B$ only depends on the distance $ \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|$, sow the gradient of $V_B$ tells us in which direction does this distance change the most. It is obvious that the changes is largest if the agent takes a step directly towards or away from the wall, which means that the agent will always be pushed directly away from the wall.
 
 \begin{figure}[ht]
 \centering
@@ -292,20 +291,22 @@ from agent $\alpha$ to the nearest point of the nearest wall. $V_B$ only depends
 \label{NotationOfWall}
 \end{figure}
 
-The repulsive potential describes the force acting on pedestrian $\alpha$ coming from the wall, since $\alpha$ does not want to get too close to the wall. So as $\alpha$ gets closer to the wall the force increases.
-The repulsive potential is given by:
+The repulsive potential is given by the following:
 
 \begin{equation}
 V_{B} \left( \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| \right) =
 V^0_{\alpha B} e^{- \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| / r_{\alpha} }
 \end{equation}
-
-Here $V^0_{\alpha B}$ is a constant and $r_{\alpha}$ is the radius of a pedestrian $\alpha$.\\
-We can make the following conclusions about the force coming from the walls.
+Here $V^0_{\alpha B}$ is a constant and $r_{\alpha}$ is the radius of a pedestrian $\alpha$. The exponential function will always lay between 0 and 1:
+\begin{equation}
+0 < e^{ -\| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| /r_\alpha} < 1
+\end{equation}
+Which leads to
 \begin{equation}
 0< \vec{f_{\alpha B}} < V^0_{\alpha B}
 \end{equation}
-$\vec{f_{\alpha B}}$ tends to 0 as the distance $ \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|$ gets large, meaning that a pedestrian which is in reasonably distance from the wall will not feel a diminishing force. $\vec{f_{\alpha B}}$ tends to $V^0_{\alpha B}$ as the distance $ \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|$ tends to $0$ meaning that the pedestrian will be pushed, with some force depending on $V^0_{\alpha B}$, away from the wall. Sow $V^0_{\alpha B}$ should have a value such that this behaviour occur.
+We can see that this force act in the following way:\\
+$\vec{f_{\alpha B}}$ tends to 0 as the distance $ \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|$ gets large, meaning that a pedestrian in a reasonably distance from the wall will feel a diminishing force. $\vec{f_{\alpha B}}$ tends to $V^0_{\alpha B}$ as the distance $ \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|$ tends to $0$ the pedestrian will be pushed, with some force depending on $V^0_{\alpha B}$, away from the wall. 
  [Helbing and Molnár, 1995]. %real references, please.
 
 
