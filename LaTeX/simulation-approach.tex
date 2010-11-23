@@ -81,26 +81,52 @@ are:
         $0,26$. The initial velocity vectors are created by multiplying the 
         scalar velocity with a normalised vector pointing from the actor's 
         initial position to the target.
-        % TODO: Where to the mean and deviation come from?
+        % TODO: Where do the mean and deviation come from?
 
     \item \textbf{Max speed:} TODO.
 
-    \item \textbf{Desired velocity:} TODO.
+    \item \textbf{Desired velocity:} The desired velocity is the velocity the 
+        actor wants to move at (see the explanation in 
+        section~\ref{sec:the-model}). This is set equal to the initial velocity 
+        under the assumption that when people start to leave a room they will 
+        initially (try to) move at their desired velocity, and then be 
+        affected by the model parameters once they start moving.
 
-    \item \textbf{Relaxation time:} TODO.
+    \item \textbf{Relaxation time:} The relaxation time is the time it would 
+        take an unhindered actor to return to their desired velocity after 
+        having been hindered by something blocking their path. This is set to 
+        one second for all actors.
+        % TODO: Why one second, and is this explanation correct?
 
     \item \textbf{$\lambda$:} TODO.
 \end{itemize}
 
 \subsubsection{Constants}
-The model includes a number of constants. They are:
+The model includes a number of constants. These are parameters that do not 
+vary between the agents, but are fixed for the whole simulation. They are:
 
 \begin{itemize}
-    \item \textbf{Timestep:} $0.2$ seconds. (TODO).
+    \item \textbf{Timestep:} The timestep is the $\Delta T$ that passes for 
+        each step of the simulation. As discussed in 
+        section~\ref{sec:timestep}, there are various trade-offs in making 
+        this parameter larger or smaller. We have experimented with different 
+        values, and have found that a value of $0,01$ seconds make for a 
+        simulation without errors such as jitter that results from larger 
+        timestep values. Since setting the timestep corresponds to setting a 
+        delta value for an Euler integration, there are various methods that 
+        originate from this integration method, that might be used to vary the 
+        timestep dynamically during the simulation. However, we have found 
+        that with a fixed value of $0,01$ seconds, we get reasonable 
+        performance of our simulation, so we have not found the need to 
+        complicate our program by applying such methods.
+        % TODO: Reference for dynamic timestep adjustment
 
     \item \textbf{$A_1$, $B_1$:} TODO.
 
-    \item \textbf{$A_2$, $B_2$:} TODO.
+    \item \textbf{$A_2$, $B_2$:} These values are given in \cite{helbing00}. 
+        Although the model allows for them to vary between agents, we have 
+        (just as is done in the article) set them to a fixed value for the 
+        whole simulation. The values given are $A_2=3,0$ and $B_2 = 0,2$.
 \end{itemize}
 
 %The potential between pedestrian $\alpha$ and the wall $B$ is given by 
