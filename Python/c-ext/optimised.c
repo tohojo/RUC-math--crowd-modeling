@@ -48,8 +48,23 @@ static PyObject * get_actor(PyObject * self, PyObject * args)
 
     PyArg_ParseTuple(args, "i:get_actor", &i);
 
+	if(i > a_count) Py_RETURN_NONE;
+
     return Py_BuildValue("ddd", 
             actors[i].position.x, actors[i].position.y, actors[i].radius);
+}
+
+static PyObject * get_actors(PyObject * self, PyObject * args)
+{
+	PyObject * list = PyList_New(a_count);
+	int i;
+
+	for(i = 0; i < a_count; i++) {
+		PyList_SetItem(list, i, Py_BuildValue("ddd", 
+            actors[i].position.x, actors[i].position.y, actors[i].radius));
+	}
+
+    return list;
 }
 
 static void do_calculations()
@@ -82,6 +97,8 @@ static void do_calculations()
     for(i = 0; i < a_count; i++) {
         update_position(&actors[i]);
     }
+
+	check_escapes();
 }
 
 static void do_calculation_part(Part * p)
@@ -213,6 +230,46 @@ void update_position(Actor * a)
     a->time += timestep;
 }
 
+static int is_escaped(Actor * a)
+{
+	double l = vector_length(vector_sub(a->target, a->position));
+	return (l <= 0.05);
+}
+
+static void check_escapes()
+{
+	int escaped_count = 0;
+	int * escaped = malloc(a_count * sizeof(int));
+	Actor * old_actors = actors;
+	Actor * new_actors;
+	int i, j, k;
+
+	for(i = 0; i < a_count; i++) {
+		if(is_escaped(&actors[i])) {
+			escaped[escaped_count++] = i;
+		}
+	}
+
+	if(escaped_count == 0) {
+		free(escaped);
+		return;
+	}
+
+	new_actors = malloc((a_count - escaped_count) * sizeof(Actor));
+	for(i = 0, j = 0; i < a_count; i++) {
+		int e = 0;
+		for(k = 0; k < escaped_count; k++) {
+			if(escaped[k] == i) e = 1;
+		}
+		if(e) continue;
+		new_actors[j++] = actors[i];
+	}
+	actors = new_actors;
+	a_count -= escaped_count;
+	free(old_actors);
+	free(escaped);
+}
+
 void update_python_objects(Actor * actors, PyObject ** p_actors, Py_ssize_t n)
 {
     int i;
@@ -296,6 +353,8 @@ static PyMethodDef OptimisedMethods[] = {
         "Add actors to the list"},
     {"get_actor", get_actor, METH_VARARGS, 
         "Get an actor's position and radius"},
+    {"get_actors", get_actors, METH_VARARGS, 
+        "Get all actor's position and radius"},
 };
 
 PyMODINIT_FUNC initoptimised(void)

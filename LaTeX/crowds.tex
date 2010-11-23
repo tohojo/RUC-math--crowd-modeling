@@ -121,8 +121,8 @@ only move to free adjecent cells.\cite{Comparison}
 
 \textbf{Hybrid models}\\
 The Hybrid models has been made from social force models and rule based models. 
-The motion of the pedestrians is caried out like the social force models, but is also based 
-on the psychological and geometrical rules. It peforms collision detection and response and rules 
+The motion of the pedestrians is carried out like the social force models, but is also based 
+on the psychological and geometrical rules. It preforms collision detection and response and rules 
 are applied depending on the pedestrian's personality and the state of the environment. 
 \cite{Comparison}
 \\
@@ -132,19 +132,23 @@ Each of the different models have some geomatrical features relatively important
 unimportant according to our simulation.
 
 \textbf{Shaking} Wether pedestrians appear to shake when simulating the model. When 
-simulating the social force models the pedestrians seems to shake when cloggings and 
-queues arise. This is caused by the modification of each pedestrians postition in each 
-timestep. The Hybrid, CA and Rule Based model do not appear to shake while the simulation run.
+simulating the social force models the pedestrians seems to shake when clogging and 
+queues arise. This is caused by the modification of each pedestrians position in each 
+time step. The Hybrid, CA and Rule Based model do not appear to shake while the simulation run.
 
-\textbf{Discrete and Continuous movement} Wether the space and time are discretised. In the CA model the pedestrians move between discritised adjecent
-cells in one time step, and therefore have limited direction to go. The other models do not discretise space and therefore allow the pedestrians to move
-within continuous space.
+\textbf{Discrete and Continuous movement} Wether the space and time are discretized. 
+In the CA model the pedestrians move between discretized adjacent cells in one time step, 
+and therefore have limited direction to go. The other models do not discretize space and 
+therefore allow the pedestrians to move within continuous space.
  
-\textbf{Overlapping} Wether overlapping of the pedestrians is possible. The rule based models and the CA models do have collision detection but not
-all have collision responce. The CA models have rules so that a pedestrian can not walk into an occupied cell, but if two pedestrians want to pass each
-other they step into the cell diagonal to their own cell, and in their way cross the other pedestrian in the intersection between the four cells.
-Newer models of the rule based and CA have made a stopping rule so that overlapping can not accour. The Hybrid and social force models do collision responce
-to minize the risk of overlapping. \cite{Comparison}
+\textbf{Overlapping} Wether overlapping of the pedestrians is possible. The rule 
+based models and the CA models do have collision detection but not all have collision 
+responce. The CA models have rules so that a pedestrian can not walk into an occupied 
+cell, but if two pedestrians want to pass each other they step into the cell diagonal 
+to their own cell, and in their way cross the other pedestrian in the intersection 
+between the four cells. Newer models of the rule based and CA have made a stopping 
+rule so that overlapping can not occur. The Hybrid and social force models do collision 
+response to minimize the risk of overlapping. \cite{Comparison}
 
 \begin{figure}
     \centering
@@ -153,14 +157,20 @@ to minize the risk of overlapping. \cite{Comparison}
     \label{Overlapping}
 \end{figure}
 
-\textbf{Pushing} Wether pedestrians can have physical contact. If the pedestrians can have physical contact they will be able to push each other in some
-direction. This ability is possible when using the Hybrid and the social force model. When simulating evacuations and chaotic events it has been observed
-that people do have physical contact and push each other \cite{self-org}.
+\textbf{Pushing} Wether pedestrians can have physical contact. If the pedestrians 
+can have physical contact they will be able to push each other in some direction. 
+This ability is possible when using the Hybrid and the social force model. When 
+simulating evacuations and chaotic events it has been observed that people do have 
+physical contact and push each other \cite{self-org}.
 
-\textbf{Communication} Wether the pedestrians can share information about he environment. The HiDAC and som newer rule based models allows the pedestrians
-to share information about the environment and to give orders. This feature is not included in social force models and CA. \cite{Comparison}
+\textbf{Communication} Wether the pedestrians can share information about the 
+environment. The HiDAC and som newer rule based models allows the pedestrians 
+to share information about the environment and to give orders. This feature is 
+not included in social force models and CA. \cite{Comparison}
 
-To illustrate different features of the different models the table below sums up the above mentioned.
+To illustrate different features of the different models the table below sums 
+up the above mentioned.
+
 \begin{center}
 \begin{tabular}{lllll}
  & Social Forces & Rule Based & CA & Hybrid\\
@@ -171,66 +181,94 @@ Pushing               & + & - & - & +\\
 Communication         & - & * & - & +
 \end{tabular}
 \end{center}
-Here + indicates that the feature is possible, - indicates it is not, and * that the model has been adjusted such that the feature have
-become possible. \cite{Comparison}
 
-The features we are interested in and find relevant in our simulation are continuous space, pushing and overlapping avoidance. The continuous space is
-relevant for our simulaion to be as realistic as possible since we do not want our pedestrians to have at most nine directions to go each timestep.
-The feature of pushing is also important to include since in panic sitiation it has been seen that people push each. This feature will then make our
-simulation more realistic.
-The overlapping avoidance we find relevant since this enables pedestrians to walk through each other.
-\\
-Therefore we find that modelling a crowd by using a social force model is most oppropriate in our project. 
+Here + indicates that the feature is possible, - indicates it is not, and * that 
+the model has been adjusted such that the feature have become possible. \cite{Comparison}
+
+The features we are interested in and find relevant in our simulation are 
+continuous space, pushing and overlapping avoidance. The continuous space is 
+relevant for our simulaion to be as realistic as possible since we do not want 
+our pedestrians to have at most nine directions to go each time step.
+The feature of pushing is also important to include since in panic situation it 
+has been seen that people push each. This feature will then make our simulation 
+more realistic. The overlapping avoidance we find relevant since this enables 
+pedestrians to walk through each other.
+
+Therefore we find that modelling a crowd by using a social force model is most 
+appropriate in our project. 
 %	Finishing off with a conclusion would be neat					%
 
 
 \subsection{Concepts for describing crowd behaviour}
-In order to analyse the behaviour of crowds, we need to establish some 
-concepts to describe this behaviour. It is not obvious which concepts  are 
+In order to analyse the behavior of crowds, we need to establish some 
+concepts to describe this behavior. It is not obvious which concepts  are 
 useful when we need to distinguish between the results we get from our 
 simulations. In this section we describe which concepts we use to describe the 
-behaviour of crowds, and why we have chosen them. This is based on the 
-literature of crowd modelling.
+behavior of crowds, and why we have chosen them. This is based on the 
+literature of crowd modeling.
 
-One of the reasons for modelling crowds is to discover ways to make crowd 
+One of the reasons for modeling crowds is to discover ways to make crowd 
 situations safer for pedestrians, e.g. when evacuating a building in event of 
 a fire. One of the main factors in this scenario is the \emph{efficiency} of 
 the crowd movement. This is especially important when clearing a room in the 
 event of a fire or other disaster: the faster everyone gets out, the lower is 
 the chance of someone dying from flames or smoke.
 
+Therefore it is important to know how the environment affects the efficiency 
+of the crowd when it leaves the room. However we should specify how we intend 
+measures the efficiency of a crowd.
+
 The obvious measure of efficiency is measuring how long it takes to empty a 
 given room. This, however, makes the results highly dependent on the specific 
 situation we are modelling (i.e. room size, number of people in the room, 
-etc.). If we wish to compare results from different cases, we need a measure 
-that is less dependent on the room configuration. Such a measure could be the 
-\emph{flow rate}, i.e. the number of pedestrians passing a specific point (or 
-line) in space per time unit.
+etc.). Since it takes longer to empty a room of 10 people than it takes to
+empty the very same room with 5 people. If we wish to compare results from 
+different cases, we need a measure that is less dependent on the precise setup
+of the simulation. Such a measure could be the average speed of a pedestrian 
+compared to the desired one \cite{self-org}. Together with the \emph{flow rate}, 
+i.e. the number of pedestrians passing a specific point (or line) in space per 
+time unit. These measures will tell us something about the efficiency of the crowd.
 
 % TODO: This section needs to be expanded with more concepts, references to 
 % where we get the concepts, as well as a better arguments for why we have 
 % chosen exactly these measures.
 
-%\subsection{Our case(s)}
-
-%Here we will shorty describe our case of the simulation of the model and the environment which the simulation is runned within.
-%We have chosen to simulate the model in a 10 m. x 10 m. room with one exit, and consisting of 10 pedestrian evenly distribited in the room.
-%When the simulation starts the pedestrians begin to moves toward the room's exit.
-%The simple environment has been chosen because we just want to get the simulation up and working, and because we want as cheap a calculation as possible.
-%Therefore it is not needed to have a complex environment, since this would make the programming more difficult and would use more computation to run
-%the simulation.
-%We have only selected 10 pedestrians also due to the fact that we want cheap calculation and the model does not recuire a high density crowd.
-
 \subsection{Our case(s)}
-We will by ourself, as already explained, simulate the model to try to get a full understanding of it and to see where it's limits/weaknesses lies. For this we have thought about different scenarios. Since we are not doing any experimental work and have no empiric data to compare with there where no reason to try to simulate any complex scenarios, i.e. people fleeing a certain known place in the real world or just people going down a pedestrian way or anything like that. Instead we choose an approach that could seem more simple, the simulation of a squared room. More precise we want to examine how long time it will take for a group of pedestrians to leave a room and how they do it. The room will have the dimensions 10 m. x 10 m. with an exit in the middle of one of the walls. The number of pedestrians we have selected to 10. This will give an amount of data that we should be able to handle. Also we should be able to see both the interactions between pedestrians them self and between pedestrians and the wall surrounding them.  While doing this we will vary different parameters and see what effects this have. We want to look a parameters contained within the model, like the desired velocity, repulsion constants, and the numbers of pedestrian within the room. 
+%introduction
+In this section we outline which cases we want to simulate and why.
+One of the main reasons for doing simulations is that we want to try to get 
+a full understanding of the model. Doing simulations is a way to achieve this
+understanding. Secondly we want to find any limitations and weaknesses of the 
+model.
 
-Also we want to try to vary the time step that is chosen for the simulations. How big a time step can we choose while having the model acting the way it is intended to work?
+For this purpose we have thought about different scenarios that should make such 
+limitations and weaknesses clear. We start by making a series of simple simulations
+ where we can test isolated parts of the model and slowly increase the complexity 
+of the simulations.
 
+Basically there are three levels of the model we want to simulate. First we want to 
+model a square room with an exit in the middle of one of the walls. In this 
+room there will be a modest amount of people and no obstacles. The purpose of this 
+simulation is to catch any early mistakes or misunderstandings in our implementation 
+of the model.
 
-When doing the simulations the first things we will look at, in the simulations, is if basic rules are obeyed. By basic rules we mean that people can't go through walls or a pedestrian, $\alpha$, jumps through/over a pedestrian, $\beta$. We want to see if there is some precise limits for the parameters where the model breaks down, describe this and see how far the values of the parameters are from what is presented in the literature.   
+From this we move on to varying the parameters of the model too see how the changes in 
+in the these affect the behavior of the crowd in simple situations. This will
+be done in the same simple simulation in order for us to have a transparent look 
+at precisely what is going on. The results of these simulations will be compared 
+with the value of the parameters presented in the literature.
 
-Secondly we want to see how much the parameters will affect the time it will take for the pedestrians to leave the room. As we have no empiric data to compare with, we will not be determining whether a time $\tau_1$ is more realistic than another time $\tau_2$, when we have the ten pedestrians in the room. Instead we want to try and see which parameters will have the greatest influence on the exit time. By that we want to some qualitative idea about which changes of different parameters are having the biggest change in the exit time. This we will compare with the parameter values given by the literature and also compare with the uncertainties in these values.
+After this we will test how the model handles different geometries of the environment. 
+That is we will try to vary the shape of the room and make obstacles to see if the 
+model starts producing unnatural crowd behavior as the complexity of the environment 
+increases. 
 
-Thirdly we will see if there are some general abnormalities in the model that can not be explained by the adjustments of different parameters.
+In the end we will try so simulate more complicated situations to see if we can observe 
+a range of self-organization phenomena that have been reported in the literature. 
+These include clogging in bottlenecks, lane formation in bidirectional pedestrian 
+flow and a faster-is-slower phenomena where some pedestrians end up moving slower than 
+average because they are to impatient.
 
-All this should give a thorough idea about how this model should be handled and what parts of it that could be improved. or were you should be careful when using the model.
+All this should give a thorough idea about how this model should be handled and what parts 
+of it that could be improved. or were you should be careful when using the model.
+

@@ -3,7 +3,6 @@
 #include <pthread.h>
 #include "vector.h"
 
-
 typedef struct {
     double radius;
     double time;
@@ -31,6 +30,7 @@ typedef struct {
 static PyObject * update_actors(PyObject * self, PyObject * args);
 static PyObject * add_actors(PyObject * self, PyObject * args);
 static PyObject * get_actor(PyObject * self, PyObject * args);
+static PyObject * get_actors(PyObject * self, PyObject * args);
 static Actor actor_from_pyobject(PyObject * o, Actor * a);
 static Py_ssize_t ssize_t_from_attribute(PyObject * o, char * name);
 static double double_from_attribute(PyObject * o, char * name);
@@ -46,3 +46,5 @@ static void init_walls(PyObject * p_walls);
 static void destroy_threads();
 static void do_calculations();
 static void do_calculation_part(Part * p);
+static void check_escapes();
+static int is_escaped(Actor * a);

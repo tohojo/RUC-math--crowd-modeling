@@ -86,9 +86,12 @@ def main():
 #                P = w.projection(a.position)
 #                canvas.draw_proj(P)
         
-        canvas.update()
         timer += timestep
         frames += 1
+        canvas.update(frames)
+
+        if pm.stop_at is not None and timer >= pm.stop_at:
+            break
 
     elapsed = time() - time_start
     print "%d frames in %f seconds. Avg %f fps" % (frames, elapsed, frames/elapsed)

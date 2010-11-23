@@ -3,8 +3,13 @@
 from Vector import Vector, Point
 
 
-timestep = 0.02
+timestep = 0.01
 random_seed = 0
+
+stop_at = None
+
+create_images = False
+image_prefix = "images/test-"
 
 use_c_ext = True
 use_threads = False
