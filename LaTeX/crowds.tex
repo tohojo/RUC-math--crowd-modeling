@@ -200,10 +200,10 @@ concepts to describe this behavior. It is not obvious which concepts  are
 useful when we need to distinguish between the results we get from our 
 simulations. In this section we describe which concepts we use to describe the 
 behavior of crowds, and why we have chosen them. This is based on the 
-literature of crowd modeling.
+literature of crowd modelling.
 
 
-One of the reasons for modeling crowds is to discover ways to make crowd 
+One of the reasons for modelling crowds is to discover ways to make crowd 
 situations safer for pedestrians, e.g. when evacuating a building in event of 
 a fire. One of the main factors in this scenario is the \emph{efficiency} of 
 the crowd movement. This is especially important when clearing a room in the 
@@ -225,8 +225,9 @@ concept \emph{flow rate}. The flow rate is a measure of \emph{how many pedestria
 that pass a point or line i space per unit of time}.
 
 Furthermore we introduce the concept \emph{density}. The density is the \emph{number 
-of people in a area of space}. The density is useful when comparing results from 
+of people in an area of space}. The density is useful when comparing results from 
 different simulations. 
+% TODO: Why is it useful?
 
 The last concept we want to introduce is the \emph{geometry} of the environment 
 by geometry we mean \emph{the shape of the room or corridor} in which the simulation 
@@ -236,10 +237,12 @@ the shape of the environment affects the behavior of the crowd.
 These four concepts \emph{efficiency}, \emph{flow rate}, \emph{density} and 
 \emph{geometry} will allow us to compare the results from our different simulations 
 in some detail. For example if we change the geometry of the environment how does 
-this change the the efficiency of the crowd? If two rooms have the same geometry 
+this change the efficiency of the crowd? If two rooms have the same geometry 
 how does the density affect the flow rate through a door opening? If the efficiency 
 is low does that imply a low flow rate? These are all questing that can be answered 
 through simulations in the framework of the concepts we have just defined.    
+% TODO: It is not the concepts that affect each other, it is the parameters 
+% that affect the concepts.
 
 \subsection{Our case(s)}
 In this section we outline which cases we want to simulate and why.
