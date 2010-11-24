@@ -21,8 +21,7 @@ Some other major forces acting on the agent are the repulsive force from other a
 \begin{figure}[hb]
     \centering
     {\includegraphics[scale=0.45]{Figures/ForceModel.pdf}} 
-    \caption[Notation of forces acting on an agent]{Illustration of the forces acting on an agent $ \alpha $. $ \beta $ is another agent and the grey bar on the top represents a wall. $ \vec{f_{\alpha\beta}} $ is the repulsive force from agent $ \beta $, and $ \vec{f_{\alpha B}} $ is the repulsive force from the wall. $ \vec{f^{0}_{\alpha}} $ is a force that represents agent $ \alpha $'s desire to reach the exit.
-    The x and y axes are defined by the Cartesian coordinate system.}
+    \caption[Notation of forces acting on an agent]{Illustration of the forces acting on an agent $ \alpha $. $ \beta $ is another agent and the grey bar on the top represents a wall. $ \vec{f_{\alpha\beta}} $ is the repulsive force from agent $ \beta $, and $ \vec{f_{\alpha B}} $ is the repulsive force from the wall. $ \vec{f^{0}_{\alpha}} $ is a force that represents agent $ \alpha $'s desire to reach the exit.  The x and y axes are defined by the Cartesian coordinate system.}
     \label{ForceModel}
 \end{figure}
 
@@ -161,14 +160,10 @@ relationship between $ V_{\alpha}^{0}(t) $ and $ \overline{V}_{\alpha} \left( t 
 \begin{figure}[ht]
 \centering
 {\includegraphics[scale=0.35]{Figures/impatience.pdf}} 
-\caption[The impatience factor]{\small{Illustration on the correlation between the function about the desired speed $ V_{\alpha}^{0}(t) $ 
+\caption[The impatience factor]{Illustration on the correlation between the function about the desired speed $ V_{\alpha}^{0}(t) $ 
 and the average speed in the desired direction of motion $ \overline{V}_{\alpha} \left( t \right) $, and the graph of
-$ V_{\alpha}^{0}(t) = \left[ 1 - \frac{V_{\alpha}^{max}}{V_{\alpha}^{0}(0)}\right]\overline{V}_{\alpha} \left( t \right) + V_{\alpha}^{max} $
-intersects with the axis at $ \left( 0 , V_{\alpha}^{max} 
-\right)  $ and $ \left(V_{\alpha}^{max} 
-		\frac{V_{\alpha}^{0} \left( 0 \right) }{V_{\alpha}^{max}-V_{\alpha}^{0} \left(0 \right)} , 0 
-\right)  $.
-When $\alpha$'s velocity is at maximum the impatience gets low, and vice versa.}
+$ V_{\alpha}^{0}(t) = \left[ 1 - \frac{V_{\alpha}^{max}}{V_{\alpha}^{0}(0)} \right]\overline{V}_{\alpha} \left( t \right) + V_{\alpha}^{max} $
+intersects with the axis at $ \left( 0 , V_{\alpha}^{max} \right)  $ and $ \left(V_{\alpha}^{max} \frac{V_{\alpha}^{0} \left( 0 \right) }{V_{\alpha}^{max}-V_{\alpha}^{0} \left(0 \right)} , 0 \right)  $.  When $\alpha$'s velocity is at maximum the impatience gets low, and vice versa.}
 \label{fig:impatience}
 \end{figure}
 
@@ -299,11 +294,11 @@ from agent $\alpha$ to the nearest point of the nearest wall and shown in figure
 \begin{figure}[ht]
 \centering
 {\includegraphics[scale=0.35]{Figures/NotationOfWall.pdf}} 
-\caption[Notation of the interaction between an agent and a wall]{\small{The illustration shows the mathematical notation for the interaction with walls used.
+\caption[Notation of the interaction between an agent and a wall]{The illustration shows the mathematical notation for the interaction with walls used.
 The circle is pedestrian $\alpha$ with radius $r_{\alpha}$, $\vec{r_{\alpha}}$ is the position vector for $\alpha$, the grey box on the top is the wall,
 $\vec{r_{B}^{\alpha}}$ is the position vector for the closest
-part of the wall to $\alpha$, $\left( \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| \right$ is the smallest distance from $\alpha$ to the wall and
-$\vector{V_{\alpha}}$ is the velocity vector for $\alpha$.}}
+part of the wall to $\alpha$, $\left( \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| \right )$ is the smallest distance from $\alpha$ to the wall and
+$\vec{V_{\alpha}}$ is the velocity vector for $\alpha$.}
 \label{NotationOfWall}
 \end{figure}
 
