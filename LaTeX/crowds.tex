@@ -194,13 +194,14 @@ appropriate in our project.
 %	Finishing off with a conclusion would be neat					%
 
 
-\subsection{Concepts for describing crowd behaviour}
+\subsection{Concepts for describing crowd behaviour}\label{concepts}
 In order to analyse the behavior of crowds, we need to establish some 
 concepts to describe this behavior. It is not obvious which concepts  are 
 useful when we need to distinguish between the results we get from our 
 simulations. In this section we describe which concepts we use to describe the 
 behavior of crowds, and why we have chosen them. This is based on the 
 literature of crowd modeling.
+
 
 One of the reasons for modeling crowds is to discover ways to make crowd 
 situations safer for pedestrians, e.g. when evacuating a building in event of 
@@ -241,44 +242,42 @@ is low does that imply a low flow rate? These are all questing that can be answe
 through simulations in the framework of the concepts we have just defined.    
 
 \subsection{Our case(s)}
-%TODO:
-% Devide different simulations into subsection.
-% Write the arguments for doing the different simulations.
-% Remove "try". It seems so insecure.
 In this section we outline which cases we want to simulate and why.
-One of the main reasons for doing simulations is that we want to try to get 
+One of the main reasons for doing simulations is that we want to to get 
 a full understanding of the model. Doing simulations is a way to achieve this
 understanding. Secondly we want to find any limitations and weaknesses of the 
-model.
+model. Furthermore we want to simulate scenarios that have been experimentally 
+tested in \citep{self-org}.
 
-For this purpose we have thought about different scenarios that should make such 
-limitations and weaknesses clear. We start by making a series of simple simulations
- where we can test isolated parts of the model and slowly increase the complexity 
-of the simulations.
+We start by making a series of simple simulations  where we can test isolated parts 
+of the model and slowly increase the complexity of the simulations. Basically there 
+are three levels of the model we want to simulate. 
 
-Basically there are three levels of the model we want to simulate. First we want to 
-model a square room with an exit in the middle of one of the walls. In this 
-room there will be a modest amount of people and no obstacles. The purpose of this 
-simulation is to catch any early mistakes or misunderstandings in our implementation 
-of the model.
+First we want to model a square room with an exit in the middle of one of the walls. 
+In this room there will be a modest amount of people and no obstacles. The purpose of 
+this simulation is not to compare the results with real life but rather to catch any 
+early mistakes or misunderstandings in our implementation of the model.
 
 From this we move on to varying the parameters of the model too see how the changes in 
-in the these affect the behavior of the crowd in simple situations. This will
-be done in the same simple simulation in order for us to have a transparent look 
-at precisely what is going on. The results of these simulations will be compared 
-with the value of the parameters presented in the literature.
+in the these affect the concepts of crowd behavior we defined in section \ref{concepts}. 
+This will be done in the same simple simulation in order for us to have a transparent look 
+at precisely how the parameters affect the concepts. The results of these simulations 
+will be compared with the value of the parameters presented in the literature.
 
-After this we will test how the model handles different geometries of the environment. 
-That is we will try to vary the shape of the room to see if the model starts producing 
-unnatural crowd behavior as the complexity of the environment increases. 
+After this we will test how the model handles different geometries of the environment 
+to see if the model starts producing unnatural crowd behavior as the complexity of the 
+environment increases. 
 
 In the end we will try so simulate more complicated situations to see if we can observe 
-a range of self-organization phenomena that have been reported in the literature. 
-These include clogging in bottlenecks, lane formation in bidirectional pedestrian 
+a range of self-organization phenomena that have been reported in the literature. As 
+stated earlier there have been preformed experiments in these scenarios so we can 
+compare our results with the results presented in the literature. These phenomena 
+include clogging in bottlenecks, lane formation in bidirectional pedestrian 
 flow and a faster-is-slower phenomena where some pedestrians end up moving slower than 
-average because they are to impatient \cite{self-org}. Furthermore we want to test some phenomena 
-that according to the literature should make the model break down. An example of this 
-could be to model a situation of a room filled with smoke.   
+average because they are to impatient and try to overtake other pedestrians\cite{self-org}. 
+Furthermore we want to test some phenomena  that according to the literature should make 
+the model break down. An example of this could be to model a situation of a room filled 
+with smoke.   
 
 All this should give a thorough idea about how this model should be handled and what parts 
 of it that could be improved. or were you should be careful when using the model.
