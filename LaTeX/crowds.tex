@@ -227,7 +227,8 @@ different cases, we need a measure that is less dependent on the precise setup
 of the simulation. Such a measure could be the average speed of a pedestrian 
 compared to the desired one \cite{self-org}. Together with the \emph{flow rate}, 
 i.e. the number of pedestrians passing a specific point (or line) in space per 
-time unit. These measures will tell us something about the efficiency of the crowd.
+time unit. Further more we measure the density of the pedestrians in a certain 
+area. These measures will tell us something about the efficiency of the crowd.
 
 % TODO: This section needs to be expanded with more concepts, references to 
 % where we get the concepts, as well as a better arguments for why we have 
@@ -259,15 +260,16 @@ at precisely what is going on. The results of these simulations will be compared
 with the value of the parameters presented in the literature.
 
 After this we will test how the model handles different geometries of the environment. 
-That is we will try to vary the shape of the room and make obstacles to see if the 
-model starts producing unnatural crowd behavior as the complexity of the environment 
-increases. 
+That is we will try to vary the shape of the room to see if the model starts producing 
+unnatural crowd behavior as the complexity of the environment increases. 
 
 In the end we will try so simulate more complicated situations to see if we can observe 
 a range of self-organization phenomena that have been reported in the literature. 
 These include clogging in bottlenecks, lane formation in bidirectional pedestrian 
 flow and a faster-is-slower phenomena where some pedestrians end up moving slower than 
-average because they are to impatient.
+average because they are to impatient \cite{self-org}. Furthermore we want to test some phenomena 
+that according to the literature should make the model break down. An example of this 
+could be to model a situation of a room filled with smoke.   
 
 All this should give a thorough idea about how this model should be handled and what parts 
 of it that could be improved. or were you should be careful when using the model.

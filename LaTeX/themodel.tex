@@ -29,13 +29,13 @@ So far in the model it only mentioned the forces on the horizontal level, the gr
 \underline{The equation of motion for agent $ \alpha $:}\\
 
 The general approach of the model to get the equation of motion follows the standard way. Summing up the forces acting on $ \alpha $ gives the acceleration, which builds the equation of motion. It comes in steps as the following.\\
-First of all, the equation of motion deals with the agent $ \alpha $'s position $ \vec{r_{\alpha}} $, velocity $ \vec{V_{\alpha}} $, and acceleration $ \vec{f_{\alpha}} $. As the agent is not just a mass point, it has a radius $ r_{\alpha} $. The position and velocity vectors and the radius are shown in Figure \ref{NotationOAgent}.
+First of all, the equation of motion deals with the agent $ \alpha $'s position $ \vec{r_{\alpha}} $, velocity $ \vec{V_{\alpha}} $, and acceleration $ \vec{f_{\alpha}} $. As the agent is not just a mass point, it has a radius $ r_{\alpha} $. The position and velocity vectors and the radius are shown in Figure \ref{NotationOfAgent}.
 
 \begin{figure}[hb]
     \centering
-    {\includegraphics[scale=0.35]{Figures/NotationOAgent.pdf}} 
+    {\includegraphics[scale=0.35]{Figures/NotationOfAgent.pdf}} 
     \caption{Shows a visual presentation of the mathematical notations for position and velocity. As for agent $ \alpha $, it has position vector $ \vec{r_{\alpha}} $, velocity vector $ \vec{V_{\alpha}} $, and radius of its body $ r_{\alpha} $.}
-    \label{NotationOAgent}
+    \label{NotationOfAgent}
 \end{figure}
 
 The change in position $ \vec{r_{\alpha}} $ per time of 
@@ -104,7 +104,12 @@ environment and other agents.
 \item The desired speed $V_{\alpha}^{0} \left( t \right)$ Changes with time, and especially varies with the impatience factor which is also a function of time $ t $.
 \item The average speed $\overline{V}_{\alpha} \left( t \right)$ along the desired direction is not specified in the original article, and our understanding of that concept is as in Figure , where the projection of $ \vec{r_{\alpha}} $ onto the desired direction of motion is used to calculate $\overline{V}_{\alpha} \left( t \right)$
 
-A picture maybe
+\begin{figure}[ht]
+\centering
+{\includegraphics[scale=0.35]{Figures/NotationOfAgent2.pdf}} 
+\caption{}
+\label{impatience}
+\end{figure}
 
 Therefore, we want to calculate $\overline{V}_{\alpha} \left( t \right)$ in the following way:
 \begin{equation}\label{averagespeed}
@@ -152,15 +157,15 @@ relationship between $ V_{\alpha}^{0}(t) $ and $ \overline{V}_{\alpha} \left( t 
 \begin{figure}[ht]
 \centering
 {\includegraphics[scale=0.35]{Figures/impatience.pdf}} 
-\caption{\small{The function about the desired speed $ V_{\alpha}^{0}(t) $ 
+\caption{The function about the desired speed $ V_{\alpha}^{0}(t) $ 
 and the average speed in the desired direction of motion $ \overline{V}_{\alpha} \left( t \right) $, and the graph of $ V_{\alpha}^{0}(t) = \left[ 1 - \frac{V_{\alpha}^{max}}{V_{\alpha}^{0}(0)}\right]\overline{V}_{\alpha} \left( t \right) + V_{\alpha}^{max} $ intersects with the axis at $ \left( 0 , V_{\alpha}^{max} 
 \right)  $ and $ \left(V_{\alpha}^{max} 
 		\frac{V_{\alpha}^{0} \left( 0 \right) }{V_{\alpha}^{max}-V_{\alpha}^{0} \left(0 \right)} , 0 
-\right)  $.}}
-\label{impatience}
+\right)  $.}
+\label{fig:impatience}
 \end{figure}
 
-Figure (\ref{impatience}) is a drawing of the graph about those two variables, and the intersection
+Figure (\ref{fig:impatience}) is a drawing of the graph about those two variables, and the intersection
  of the function line with both axis are:
 
 \begin{equation}
@@ -463,7 +468,6 @@ with the aid of table \ref{tableofconstandvar}
 \clearpage
 \input{discofmodel}
 
-\end{document}
 
 
 
