@@ -77,12 +77,6 @@ calculations and considerations that changes when the field changes and
 therefore it is still non-trivial.
 
 \subsection{Social Force models}
-%	There should be an introduction to this section.. were going to compare the 		%
-%	differnt ways of simulating crowds.. but wait then it's not only relevant for 		%
-%	social force models. This might fit better into the Crowds section if its rewitten	%
-%	correctly.																			%
-
-%	Some history about the social force model might serve well as an introduction here	%
 In this section we will first give a short presentation on Social Force models and their history,
 and then compare the features of Social Force models with the features of other models that describes
 the behavior of crowds.
@@ -103,7 +97,7 @@ of motion.\cite{social-force}
 \subsection{Comparison with other crowd models}
 There are other ways to model crowds than social force models such as Rule Based models, 
 Cellular Automata models and Hybrid models. Below we will make a short explanation of each of the 
-other crowd models, and then compare the features of the models.\\												%
+other crowd models, and then compare the features of the models.\\												
 
 \textbf{Rule Based models}\\
 Rule Based models describe the movement of pedestrians through sets of basic rules. Each 
@@ -215,28 +209,42 @@ the crowd movement. This is especially important when clearing a room in the
 event of a fire or other disaster: the faster everyone gets out, the lower is 
 the chance of someone dying from flames or smoke.
 
-Therefore it is important to know how the environment affects the efficiency 
-of the crowd when it leaves the room. However we should specify how we intend 
-measures the efficiency of a crowd.
+The efficiency of the crowd it measured by \emph{how close the average speed 
+of a pedestrians is to the desired speed of the pedestrian}. This is done for 
+every pedestrian in the simulation and this gives us a measure of how unaffected 
+the crowd moves through the environment. If the every pedestrian moves at his 
+desired speed throughout the entire simulation the efficiency will be at its 
+maximum.
 
-The obvious measure of efficiency is measuring how long it takes to empty a 
-given room. This, however, makes the results highly dependent on the specific 
-situation we are modelling (i.e. room size, number of people in the room, 
-etc.). Since it takes longer to empty a room of 10 people than it takes to
-empty the very same room with 5 people. If we wish to compare results from 
-different cases, we need a measure that is less dependent on the precise setup
-of the simulation. Such a measure could be the average speed of a pedestrian 
-compared to the desired one \cite{self-org}. Together with the \emph{flow rate}, 
-i.e. the number of pedestrians passing a specific point (or line) in space per 
-time unit. Further more we measure the density of the pedestrians in a certain 
-area. These measures will tell us something about the efficiency of the crowd.
+However the measurement of efficiency alone is not sufficient to describe all 
+the aspects of the crowds behavior. We want to be able to say something about 
+how the crowds move a specific parts of the environment for instance in a 
+narrow passage or through a door opening. For this purpose we introduce the 
+concept \emph{flow rate}. The flow rate is a measure of \emph{how many pedestrians 
+that pass a point or line i space per unit of time}.
 
-% TODO: This section needs to be expanded with more concepts, references to 
-% where we get the concepts, as well as a better arguments for why we have 
-% chosen exactly these measures.
+Furthermore we introduce the concept \emph{density}. The density is the \emph{number 
+of people in a area of space}. The density is useful when comparing results from 
+different simulations. 
+
+The last concept we want to introduce is the \emph{geometry} of the environment 
+by geometry we mean \emph{the shape of the room or corridor} in which the simulation 
+is taking place. We introduce this because we are interested in examining how 
+the shape of the environment affects the behavior of the crowd.
+
+These four concepts \emph{efficiency}, \emph{flow rate}, \emph{density} and 
+\emph{geometry} will allow us to compare the results from our different simulations 
+in some detail. For example if we change the geometry of the environment how does 
+this change the the efficiency of the crowd? If two rooms have the same geometry 
+how does the density affect the flow rate through a door opening? If the efficiency 
+is low does that imply a low flow rate? These are all questing that can be answered 
+through simulations in the framework of the concepts we have just defined.    
 
 \subsection{Our case(s)}
-%introduction
+%TODO:
+% Devide different simulations into subsection.
+% Write the arguments for doing the different simulations.
+% Remove "try". It seems so insecure.
 In this section we outline which cases we want to simulate and why.
 One of the main reasons for doing simulations is that we want to try to get 
 a full understanding of the model. Doing simulations is a way to achieve this
