@@ -238,36 +238,18 @@ static int is_escaped(Actor * a)
 
 static void check_escapes()
 {
-	int escaped_count = 0;
-	int * escaped = malloc(a_count * sizeof(int));
-	Actor * old_actors = actors;
-	Actor * new_actors;
-	int i, j, k;
+	int i, j;
 
-	for(i = 0; i < a_count; i++) {
-		if(is_escaped(&actors[i])) {
-			escaped[escaped_count++] = i;
-		}
-	}
-
-	if(escaped_count == 0) {
-		free(escaped);
-		return;
-	}
-
-	new_actors = malloc((a_count - escaped_count) * sizeof(Actor));
 	for(i = 0, j = 0; i < a_count; i++) {
-		int e = 0;
-		for(k = 0; k < escaped_count; k++) {
-			if(escaped[k] == i) e = 1;
+		if(!is_escaped(&actors[i])) {
+			actors[j++] = actors[i];
 		}
-		if(e) continue;
-		new_actors[j++] = actors[i];
 	}
-	actors = new_actors;
-	a_count -= escaped_count;
-	free(old_actors);
-	free(escaped);
+
+    if(i != j) {
+        a_count -= i-j;
+        realloc(actors, a_count * sizeof(Actor));
+    }
 }
 
 void update_python_objects(Actor * actors, PyObject ** p_actors, Py_ssize_t n)
