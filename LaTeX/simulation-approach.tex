@@ -181,6 +181,39 @@ The acceleration vectors for each actor, $\alpha$, is calculated as follows:
 
 Steps one to three correspond to the three parts of the model.
 
+\subsubsection{Calculating the repulsion from walls}
+The calculation of repulsion from the walls is split in two parts for each 
+actor: First all the points on the walls that will affect the actor is 
+identified, then the repulsion from each point is calculated. As explained in 
+section~\ref{sec:the-model}, the repulsion from the wall is measured from the 
+nearest point of the wall to the actor. Identifying these points is done using 
+the following algorithm:
+
+\begin{enumerate}
+    \item For each wall, calculate the projection of the vector pointing from 
+        the wall's starting point to the actor, unto the vector pointing from 
+        the wall's starting point to its endpoint.
+        \begin{enumerate}
+            \item If this point is part of the wall, save it to the list of points 
+                repulsion should be calculated from, and add the wall's two endpoints 
+                to the list of already used endpoints.
+
+            \item If the projected point is not part of the wall, the endpoint closest 
+                to the actor is used instead. This endpoint is saved to a 
+                third list of endpoints repulsion should be calculated from.
+        \end{enumerate}
+
+    \item After having gone through all walls, for each point in the third 
+        list, check if this point is already in the list of used endpoints. If 
+        so, discard it. Otherwise, add it to the list of points repulsion 
+        should be calculated from, and to the list of used endpoints.
+\end{enumerate}
+
+The algorithm starts out with the list of walls, and produces a list of points 
+to calculate this repulsion from, ensuring that no wall endpoint is used 
+twice. The points are then used as a basis for calculating the repulsion, as 
+described in section~\ref{sec:the-model}.
+
 \subsection{Updating position and velocity}
 After every actor has been updated with a resulting acceleration vector from 
 the current simulation step, all actors update their position and velocity.  
