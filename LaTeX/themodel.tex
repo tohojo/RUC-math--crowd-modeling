@@ -1,19 +1,30 @@
 \section{The model}
 \label{sec:the-model}
-%	There should be an introduction here. What will the reader learn during the section. 	%
 
 \subsection{Explanation of our model}
-In this section we will go through the model from the article \cite{self-org} in great detail, in the way that we understand the mathematical expressions and also see how those expressions represent the reality. \\\\
+In this section we will go through the model from the article \cite{self-org} in 
+great detail, in the way that we understand the mathematical expressions and also 
+see how those expressions represent the reality.\\
+
 \underline{Force analysis:} \\
+As the social force model is an agent based model, it focuses on looking at the 
+quantities about an individual agent, at last get the motion of the crowd. In order 
+to get the equation of motion we always start by analysing the forces acting on the object.\\\\
 
-As the social force model is an agent based model, it focuses on looking at the quantities about an individual agent, at last get the motion of the crowd. In order to get the equation of motion we always start by analysing the forces acting on the object.\\\\
-Here in this model, the agents cannot escape 
-from Newton's three laws of motion, which mainly says that when there is a force it results a corresponding acceleration.  Therefore, it is necessary to look at the forces.  However, our agent is not a ball being kicked around, 
-it has a willingness to go to some destine place, and the "willingness" to go somewhere is hard to measure, but we know that the way an agent implement the will normally is by 
-generating a static frictional force from the ground, and that force is here what we called 
-a kind of "social force", which is $ \vec{f^{0}_{\alpha}} $ in Figure \ref{ForceModel}. 
+Here in this model, the agents cannot escape from Newton's three laws of motion, 
+which mainly says that when there is a force it results a corresponding acceleration.  
+Therefore, it is necessary to look at the forces.  However, our agent is not a ball 
+being kicked around, it has a willingness to go to some destine place, and the 
+"willingness" to go somewhere is hard to measure, but we know that the way an agent 
+implement the will normally is by generating a static frictional force from the ground, 
+and that force is here what we called a kind of "social force", which is 
+$\vec{f^{0}_{\alpha}}$ in Figure \ref{ForceModel}. 
 
-Some other major forces acting on the agent are the repulsive force from other agents namely $ \beta $ - the force called $ \vec{f_{\alpha\beta}} $ in Figure \ref{ForceModel}, and repulsive force from an obstacle (a wall for example) - the force called $ \vec{f_{\alpha B}} $ in Figure \ref{ForceModel}.  As these two repulsive forces are a kind of normal force, the direction should be perpendicular to the surface.
+Some other major forces acting on the agent are the repulsive force from other agents 
+namely $ \beta $ - the force called $ \vec{f_{\alpha\beta}} $ in Figure \ref{ForceModel}, 
+and repulsive force from an obstacle (a wall for example) - the force called $ \vec{f_{\alpha B}} $ 
+in Figure \ref{ForceModel}.  As these two repulsive forces are a kind of normal force, the direction 
+should be perpendicular to the surface.
 
 \begin{figure}[hb]
     \centering
@@ -158,7 +169,7 @@ relationship between $ V_{\alpha}^{0}(t) $ and $ \overline{V}_{\alpha} \left( t 
 \begin{figure}[ht]
 \centering
 {\includegraphics[scale=0.35]{Figures/impatience.pdf}} 
-\caption[The impatience factor]{\small{Illustration on the correlation between the function about the desired speed $ V_{\alpha}^{0}(t) $ 
+\caption[The impatience factor]{Illustration on the correlation between the function about the desired speed $ V_{\alpha}^{0}(t) $ 
 and the average speed in the desired direction of motion $ \overline{V}_{\alpha} \left( t \right) $, and the graph of
 $ V_{\alpha}^{0}(t) = \left[ 1 - \frac{V_{\alpha}^{max}}{V_{\alpha}^{0}(0)}\right]\overline{V}_{\alpha} \left( t \right) + V_{\alpha}^{max} $
 intersects with the axis at $ \left( 0 , V_{\alpha}^{max} 
@@ -295,11 +306,7 @@ from the position of agent $\alpha$ to the nearest point $ \vec{r_{B}^{\alpha}} 
 \begin{figure}[ht]
 \centering
 {\includegraphics[scale=0.35]{Figures/NotationOfWall.pdf}} 
-\caption[Notation of the interaction between an agent and a wall]{\small{The illustration shows the mathematical notation for the interaction with walls used.
-The circle is pedestrian $\alpha$ with radius $r_{\alpha}$, $\vec{r_{\alpha}}$ is the position vector for $\alpha$, the grey box on the top is the wall,
-$\vec{r_{B}^{\alpha}}$ is the position vector for the closest
-part of the wall to $\alpha$, $\left( \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| \right$ is the smallest distance from $\alpha$ to the wall and
-$\vector{V_{\alpha}}$ is the velocity vector for $\alpha$.}}
+\caption[Notation of the interaction between an agent and a wall]{The illustration shows the mathematical notation for the interaction with walls used. The circle is pedestrian $\alpha$ with radius $r_{\alpha}$, $\vec{r_{\alpha}}$ is the position vector for $\alpha$, the grey box on the top is the wall, $\vec{r_{B}^{\alpha}}$ is the position vector for the closest part of the wall to $\alpha$, $\left( \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| \right)$ is the smallest distance from $\alpha$ to the wall and $\vec{V_{\alpha}}$ is the velocity vector for $\alpha$.}
 \label{NotationOfWall}
 \end{figure}
 
@@ -365,12 +372,47 @@ From Equation \ref{rho}, we get
 
 where $ a $, $ b $ and $ c $ are constants describing the wall.
 Therefore,  
-\begin{align}
-    \vec{f_{\alpha B}} \left( \vec{r_{\alpha}} \right) =&-\left( \frac{\partial \rho}{\partial x_{\alpha}}\frac{\partial}{\partial \rho}U^0_{\alpha B} e^{- \rho / r_{\alpha} }, \frac{\partial \rho}{\partial y_{\alpha}}\frac{\partial}{\partial \rho}U^0_{\alpha B} e^{- \rho / r_{\alpha} }\right) \\
-=&\left( \dfrac{a^{2}x_{\alpha}+aby_{\alpha}+ac}{\sqrt{\left( a^{2}x_{\alpha}+aby_{\alpha}+ac \right) ^{2} + \left( b^{2}y_{\alpha}+abx_{\alpha}+bc\right) ^{2}}}   \frac{U^0_{\alpha B}}{r_{\alpha}} e^{- \rho / r_{\alpha} }, \\
-& \dfrac{b^{2}y_{\alpha}+abx_{\alpha}+bc}{\sqrt{\left( a^{2}x_{\alpha}+aby_{\alpha}+ac \right) ^{2} + \left( b^{2}y_{\alpha}+abx_{\alpha}+bc\right) ^{2}}}   \frac{U^0_{\alpha B}}{r_{\alpha}} e^{- \rho / r_{\alpha} } \right)    
-\end{align}\left\lbrace 
-
+\begin{equation}
+\begin{split}
+    \vec{f_{\alpha B}}
+	\left( \vec{r_{\alpha}} \right) =&
+	-\left( 
+		\frac{\partial \rho}{\partial x_{\alpha}}
+		\frac{\partial}{\partial \rho}
+		U^0_{\alpha B} e^{- \rho / r_{\alpha} }, 
+		\frac{\partial \rho}{\partial y_{\alpha}}
+		\frac{\partial}{\partial \rho}
+		U^0_{\alpha B} e^{- \rho / r_{\alpha}}
+	\right) \\
+	=&
+	( 
+		\dfrac{a^{2}x_{\alpha}+aby_{\alpha}+ac}{
+			\sqrt{
+				\left(
+					a^{2}x_{\alpha}+aby_{\alpha}+ac 
+				\right) ^{2} + 
+				\left( 
+					b^{2}y_{\alpha}+abx_{\alpha}+bc
+				\right) ^{2}
+			}
+		}
+		\frac{U^0_{\alpha B}}{r_{\alpha}}
+		e^{- \rho / r_{\alpha} },\\
+		&\dfrac{b^{2}y_{\alpha}+abx_{\alpha}+bc}{
+			\sqrt{
+				\left(
+					a^{2}x_{\alpha}+aby_{\alpha}+ac
+				\right) ^{2} + 
+				\left(
+					b^{2}y_{\alpha}+abx_{\alpha}+bc
+				\right) ^{2}
+			}
+		}
+		\frac{U^0_{\alpha B}}{r_{\alpha}}
+		e^{- \rho / r_{\alpha} }
+	)    
+\end{split}
+\end{equation} 
 \item The exponential function will always lay between 0 and 1:
 \begin{equation}
 0 < e^{ -\| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| /r_\alpha} < 1
@@ -538,6 +580,5 @@ with the aid of table \ref{tableofconstandvar}
 	     reader an overview of how the model looks like.}
     \label{overview}
 \end{figure}
-
 \clearpage
 \input{discofmodel}
