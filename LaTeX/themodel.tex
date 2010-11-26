@@ -292,6 +292,10 @@ weird situations.
 % Lets have a little summation here. What have we learned about the inpatience factor and
 % the velocity dependant force. What kind of dynamics does this force yield
 
+
+
+
+
 \subsubsection{Repulsion from the walls}
 Now the second term on the right hand side of \eqref{model} is a force which arise from interactions with the walls or other obstacles. The forces, caused by the wall or obstacles, is given by:
 
@@ -313,42 +317,19 @@ from the position of agent $\alpha$ to the nearest point $ \vec{r_{B}^{\alpha}} 
 \begin{itemize}
 \item  $U_B$ only depends on the distance $ \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|$, so the gradient of $V_B$ tells us in which direction does this distance change the most. It is obvious that the changes is largest if the agent takes a step directly towards or away from the wall, which means that the agent will always be pushed directly away from the wall.
 
-\item The next job is to find an explicit expression for $ \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|$, for simplicity, $ \rho = \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| $.\\
-Assume we know the wall is quite long and the has the expression:
+\item The next job is to find an explicit expression for $ \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|$\\
+To start of with we need to find point on the wall that is perpendicular to $\alpha$ as it will be the nearest.  
+If we define the wall as a vector, $\vec{W}$ going from a point in space $w_1$ to another point $w_2$, then we can find the projection of $\alpha$ onto the wall and this projection will be $\vec{r_{B}^{\alpha}}$.
+The equation for the projection is
 \begin{equation}\label{wall}
-ax_{B}+by_{B}+c=0
+\vec{r_{B}^{\alpha}}=\frac{\vec{r_{\alpha}}\cdot \vec{W}}{\| \vec{W} \|^2}\vec{W}
 \end{equation}
-where the constants $ a $, $ b $ and $ c $ are already known, and $\left(  x_{B} , y_{B} \right) $ represents all the points along the wall.\\
-For some position of agent $ \alpha $, namely $ \left(  x_{\alpha} , y_{\alpha} \right) $, we make a line passing through $ \left(  x_{\alpha} , y_{\alpha} \right) $ and perpendicular to the wall. The expression for that perpendicular line is:
-\begin{equation}\label{perpen}
--bx+ay+c^{'}=0
-\end{equation}
-where $ c^{'} = bx_{\alpha}-ay_{\alpha}$, so as to make the line passing through $ \alpha $.\\
+With this we now have the two points we need to calculate $ \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|$.
 
-Now we can put Equation \ref{wall} and \ref{perpen} together, make $ x_{B}=x = x^{\alpha}_{B}$, $ y_{B}=y = y^{\alpha}_{B}$, and find the intersection point, which is 
-\begin{equation}
-\left( 
-x^{\alpha}_{B},
-y^{\alpha}_{B}
-\right)
-=
-\left( 
-\frac{bc'-ac}{a^{2}+b^{2}},
-\frac{-ac'-bc}{a^{2}+b^{2}}
-\right) 
-\end{equation}
-Therefore, the distance between $ \alpha $ and the closest point from the wall is 
-\begin{align}
-\rho &= \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| \\
-\rho&=\sqrt{\left( x_{\alpha} - x^{\alpha}_{B}\right) ^{2} + \left( y_{\alpha} - y^{\alpha}_{B}\right) ^{2}}\\
-\rho&=\sqrt{\left[ x_{\alpha} - \frac{b\left( bx_{\alpha}-ay_{\alpha}\right) -ac}{a^{2}+b^{2}}\right] ^{2} + \left[ y_{\alpha} - \frac{-a\left( bx_{\alpha}-ay_{\alpha}\right) -bc}{a^{2}+b^{2}}\right] ^{2}}\\ \label{rho}
-\rho&=\dfrac{\sqrt{\left( a^{2}x_{\alpha}+aby_{\alpha}+ac \right) ^{2} + \left( b^{2}y_{\alpha}+abx_{\alpha}+bc\right) ^{2}}}
-{a^{2}+b^{2}}
-\end{align}
 
-\item With the explicit expression for $ \rho = \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| $, we are able to calculate $ \vec{f_{\alpha B}} \left( \vec{r_{\alpha}} \right) $ from Equation \ref{wallpotential}, if the expression for the potential function $ V_{B}
+\item With the explicit expression for $ \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| $, we are able to calculate $ \vec{f_{\alpha B}} \left( \vec{r_{\alpha}} \right) $ from Equation \ref{wallpotential}, if the expression for the potential function $ V_{B}
     \left( \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| \right) $ is given.\\
-In some earlier article [ ] from Helbing, he gives the wall repulsive potential as
+In some of the other articles [ ] made by the same outhers as the article which makes the basis for the model in this repport, the repulsive potential from the wall is given as
 \begin{equation}
 U_{B} \left( \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| \right) =
 U^0_{\alpha B} e^{- \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| / r_{\alpha} }
@@ -357,78 +338,33 @@ where $U^0_{\alpha B}$ is a constant and $r_{\alpha}$ is the radius of a pedestr
 
 In that case, the wall repulsive force on agent $ \alpha $ is:
 % TODO: make \begin{equation} and \begin{slpit}. This is a general thing for all \begin{allign}
-\begin{align}
-    \vec{f_{\alpha B}} \left( \vec{r_{\alpha}} \right) &=
+\begin{equation}
+    \vec{f_{\alpha B}} \left( \vec{r_{\alpha}} \right) =
     - \nabla_{\vec{r_{\alpha}}} U_{B}
     \left( \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| \right)\\
-&=-\left( \frac{\partial}{\partial x_{\alpha}}U_{B}(\rho), \frac{\partial}{\partial y_{\alpha}}U_{B}(\rho)\right) \\
-&=-\left( \frac{\partial \rho}{\partial x_{\alpha}}\frac{\partial}{\partial \rho}U^0_{\alpha B} e^{- \rho / r_{\alpha} }, \frac{\partial \rho}{\partial y_{\alpha}}\frac{\partial}{\partial \rho}U^0_{\alpha B} e^{- \rho / r_{\alpha} }\right) 
-\end{align}
-From Equation \ref{rho}, we get
-\begin{align}
-\frac{\partial \rho}{\partial x_{\alpha}} &=\dfrac{a^{2}x_{\alpha}+aby_{\alpha}+ac}{\sqrt{\left( a^{2}x_{\alpha}+aby_{\alpha}+ac \right) ^{2} + \left( b^{2}y_{\alpha}+abx_{\alpha}+bc\right) ^{2}}}\\
-\frac{\partial \rho}{\partial y_{\alpha}}&=
-\dfrac{b^{2}y_{\alpha}+abx_{\alpha}+bc}{\sqrt{\left( a^{2}x_{\alpha}+aby_{\alpha}+ac \right) ^{2} + \left( b^{2}y_{\alpha}+abx_{\alpha}+bc\right) ^{2}}}
-\end{align}
-
-where $ a $, $ b $ and $ c $ are constants describing the wall.
-Therefore,  
-% TODO: we need to figure out how to slip the equation in the middle of a parantheses
+=-\left( \frac{\partial}{\partial x_{\alpha}}U_{B}( \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|), \frac{\partial}{\partial y_{\alpha}}U_{B}( \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|)\right) \\
+\end{equation}
+Calculating the derivatives we get 
 \begin{equation}
-\begin{split}
-    \vec{f_{\alpha B}}
-	\left( \vec{r_{\alpha}} \right) &=
-	-\left( 
-		\frac{\partial \rho}{\partial x_{\alpha}}
-		\frac{\partial}{\partial \rho}
-		U^0_{\alpha B} e^{- \rho / r_{\alpha} }, 
-		\frac{\partial \rho}{\partial y_{\alpha}}
-		\frac{\partial}{\partial \rho}
-		U^0_{\alpha B} e^{- \rho / r_{\alpha}}
-	\right) \\
-	&=
-	\left( 
-		\dfrac{a^{2}x_{\alpha}+aby_{\alpha}+ac}{
-			\sqrt{
-				\left(
-					a^{2}x_{\alpha}+aby_{\alpha}+ac 
-				\right) ^{2} + 
-				\left( 
-					b^{2}y_{\alpha}+abx_{\alpha}+bc
-				\right) ^{2}
-			}
-		}
-		\frac{U^0_{\alpha B}}{r_{\alpha}}
-		e^{- \rho / r_{\alpha} }, \right.\\
-		&{} \left. \dfrac{b^{2}y_{\alpha}+abx_{\alpha}+bc}{
-			\sqrt{
-				\left(
-					a^{2}x_{\alpha}+aby_{\alpha}+ac
-				\right) ^{2} + 
-				\left(
-					b^{2}y_{\alpha}+abx_{\alpha}+bc
-				\right) ^{2}
-			}
-		}
-		\frac{U^0_{\alpha B}}{r_{\alpha}}
-		e^{- \rho / r_{\alpha} }
-	\right)    
-\end{split}
-\end{equation} 
+    \vec{f_{\alpha B}} \left( \vec{r_{\alpha}} \right) 
+=-\left(\left(U^0_{\alpha B}\frac{1}{r_{\alpha}}\frac{e^{- \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| / r_{\alpha} } (x_{\alpha}-x_B^{\alpha})}{\| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| }\right),\left(U^0_{\alpha B}\frac{1}{r_{\alpha}}\frac{e^{- \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| / r_{\alpha} } (y_{\alpha}-y_B^{\alpha})}{\| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| }\right)\right) \\
+\end{equation}
+
 \item The exponential function will always lay between 0 and 1:
 \begin{equation}
 0 < e^{ -\| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| /r_\alpha} < 1
 \end{equation}
 Which leads to
 \begin{equation}
-0< \vec{f_{\alpha B}} < U^0_{\alpha B}
+0< U_{B} \left( \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| \right) < U^0_{\alpha B}
 \end{equation}
 We can see that this force act in the following way:\\
 $\vec{f_{\alpha B}}$ tends to 0 as the distance $ \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|$ gets large, meaning that a pedestrian in a reasonably distance from the wall will feel a diminishing force. $\vec{f_{\alpha B}}$ tends to $V^0_{\alpha B}$ as the distance $ \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|$ tends to $0$ the pedestrian will be pushed, with some force depending on $V^0_{\alpha B}$, away from the wall. 
+The negative of the force means that when the potential between wall and pedestrian rises so will the force, but in the opposite direction meaning that the pedestrian will be pushed away. This can be understood as if the pedestrian is trying to avoid the wall as it is expected from real life situations.
  [Helbing and Molnár, 1995]. %real references, please.
 \end{itemize}
- 
 
+ 
 \subsubsection{Repulsion from other agents}
 The third term on the right hand side of \eqref{model} is a summation of all the 
 force between agent $\alpha$ and agent $\beta$. It is a function of the position vector and the velocity of 
