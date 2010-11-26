@@ -29,6 +29,9 @@ Back then Laplace wrote \cite{simintro}:
     steadily approaches the abilities of this intelligent being, complete 
     prediction will always remain infinitely far away.
 \end{quote}
+% TODO: This quote has more to do with whether or not it is possible to 
+% formulate a "theory of everything" and not so much agent-based models. What 
+% is it doing here? Also, it is not used for anything.
 
 So the main idea of agent-based models and their application has been thought 
 of since long before the usage of computers. But it wasn't until the last half 
@@ -37,7 +40,7 @@ because of the numbers of calculations needed to make use of
 them \cite{simintro}.  Since then the application of agent-based models have 
 been huge and it is now used in many of different fields. 
 
-One of the most well-known and first established (1957 \cite{MDintro}) 
+One of the most well-known and first established (1957) 
 agent-based model simulations is the molecular dynamics (MD)-simulations 
 \cite{MDintro}. The idea of MD-models is simply to describe particles moving 
 around by calculating the mechanical forces working on each of the particles.  
@@ -46,10 +49,11 @@ that it is possible to calculate well known physical properties like
 temperature, pressure and so on . You can even see when there is a phase 
 change from liquid to solid and back again. But also you can use it for much 
 more complex behavior. In molecular biology and chemistry you can use 
-MD-simulations to calculate the behavior of long-chain molecules \cite{MDbio}.  
+MD-simulations to calculate the behaviour of long-chain molecules \cite{MDbio}.  
 In these models you even sometime add some stochastic elements to the models.  
 This can be used to get some theoretical idea about how reactions happens and 
 alot of other things.
+% TODO: Language: Do not use 'you can'. The last sentence does not make sense
 
 But also in fields that you normally wouldn't connect with physics you see the 
 application of microscopic models.
@@ -58,6 +62,10 @@ markets \cite{finans}.  In these kind of simulations you can describe how the
 behavior of individuals affects market dynamics.  It is of course not 
 mechanical forces that controls this kind of models, but the idea of looking 
 at and calculate the effects of the individual is maintained. 
+% TODO: Terminology: Agent-based models, not microscopic models. It seems 
+% there is an implicit premise that agent-based models are *only* used in 
+% physics, though we have said no such thing. So why the comment about 
+% mechanical forces?
 
 Microscopic models has also been used on different types of animals like fish 
 and with good results.  One of the things that have been simulated is fish 
@@ -75,6 +83,10 @@ idea of looking at the individual repeats throughout all of the models. So even
 though microscopic models is used very widely there is still a lot to of 
 calculations and considerations that changes when the field changes and 
 therefore it is still non-trivial.
+% TODO: Why are we speculating about whether or not it would be natural to 
+% apply agent-based models to humans? The whole point of the project is 
+% answering in which circumstances this makes sense. Scrap the last half of 
+% the paragraph, and add a new one summing up.
 
 \subsection{Social Force models}
 In this section we will first give a short presentation on Social Force models and their history,
@@ -93,25 +105,38 @@ she is normally confronted with, her reactions will be rather automatic and
 determined by her experience of which reaction will be that best. Since the reaction 
 is rather automatic it is possible to put the rules of pedestrian behavior into an equation 
 of motion.\cite{social-force}
+% TODO: This paragraph is on a way too low level of abstraction. Do not 
+% explain the specific parts of how forces interact on pedestrians, describe 
+% what the concept means. And make clear that we are not talking about forces 
+% in the physical sense of the word, but that the concept borrows from physics 
+% to represent what is actually inclinations of the human pedestrians' 
+% behaviour. We should probably mention the issue of path finding somewhere 
+% around here. I.e. that the models themselves do not include path finding, 
+% but that this can be added as another layer.
 
 \subsection{Comparison with other crowd models}
 There are other ways to model crowds than social force models such as Rule Based models, 
 Cellular Automata models and Hybrid models. Below we will make a short explanation of each of the 
 other crowd models, and then compare the features of the models.\\												
 
+
 \textbf{Rule Based models}\\
 Rule Based models describe the movement of pedestrians through sets of basic rules. Each 
 pedestrian apply collision detection and avoidance to prevent collision with other pedestrians. 
-However they do not in general apply collision response, and therefore collisions and overlappping 
+However they do not in general apply collision response, and therefore collisions and overlapping 
 of the pedestrians may occur under some circumstances. Some models have applied stopping 
 rules to prevent these situations.\cite{Comparison}
+% TODO: Describe how this is different from the social force models.
 
-\textbf{Cellular Autamata models}\\
+\textbf{Cellular Automata models}\\
 These models are discrete, deterministic and is made up of cells like the squares in a chessboard.
 An artificial intelligence approach is used in Celluar Automata (CA) defined as mathematical idealisation 
 of physical systems in which time and space are discrete, and physical quantities take a finite set of 
 discrete values. Pedestrian can not collide since the floor is dicretised and the pedestrians can
 only move to free adjecent cells.\cite{Comparison}
+% TODO: What has the artificial intelligence thing got to do with anything? 
+% The relevant difference is that cellular automata models do not use a 
+% continuous space with a coordinate system, but instead uses a grid.
 
 \textbf{Hybrid models}\\
 The Hybrid models has been made from social force models and rule based models. 
@@ -119,21 +144,28 @@ The motion of the pedestrians is carried out like the social force models, but i
 on the psychological and geometrical rules. It preforms collision detection and response and rules 
 are applied depending on the pedestrian's personality and the state of the environment. 
 \cite{Comparison}
-\\
+% TODO: Generalise: Hybrid models are social force models with added features 
+% to solve specific problems (at least the HiDAC model is). Also, path 
+% finding.
 
 \subsubsection{Geometrical features of the models}
 Each of the different models have some geomatrical features relatively important and 
 unimportant according to our simulation.
+% TODO: If some are unimportant why are they here? Also, are these really 
+% geometrical features? Aren't they just some more or less randomly chosen 
+% properties?
 
 \textbf{Shaking} Wether pedestrians appear to shake when simulating the model. When 
 simulating the social force models the pedestrians seems to shake when clogging and 
 queues arise. This is caused by the modification of each pedestrians position in each 
 time step. The Hybrid, CA and Rule Based model do not appear to shake while the simulation run.
 
-\textbf{Discrete and Continuous movement} Wether the space and time are discretized. 
-In the CA model the pedestrians move between discretized adjacent cells in one time step, 
-and therefore have limited direction to go. The other models do not discretize space and 
-therefore allow the pedestrians to move within continuous space.
+\textbf{Discrete and Continuous movement} Whether the space and time are 
+discrete.  In the CA model the pedestrians move between discrete adjacent 
+cells in one time step, and therefore have limited direction to go. The other 
+models use continuous space and therefore allow the pedestrians to move 
+in any direction and at any pace.
+% TODO: This explanation could be better.
  
 \textbf{Overlapping} Wether overlapping of the pedestrians is possible. The rule 
 based models and the CA models do have collision detection but not all have collision 
@@ -143,6 +175,8 @@ to their own cell, and in their way cross the other pedestrian in the intersecti
 between the four cells. Newer models of the rule based and CA have made a stopping 
 rule so that overlapping can not occur. The Hybrid and social force models do collision 
 response to minimize the risk of overlapping. \cite{Comparison}
+% TODO: It is not collision response that is done per se, but the way the 
+% models work, pedestrians cannot overlap.
 
 \begin{figure}
     \centering
@@ -157,11 +191,14 @@ can have physical contact they will be able to push each other in some direction
 This ability is possible when using the Hybrid and the social force model. When 
 simulating evacuations and chaotic events it has been observed that people do have 
 physical contact and push each other \cite{self-org}.
+% TODO: Language.
 
 \textbf{Communication} Wether the pedestrians can share information about the 
 environment. The HiDAC and som newer rule based models allows the pedestrians 
 to share information about the environment and to give orders. This feature is 
 not included in social force models and CA. \cite{Comparison}
+% TODO: This is related to path finding, and is somewhat of a different 
+% character than the other properties.
 
 To illustrate different features of the different models the table below sums 
 up the above mentioned.
@@ -188,10 +225,12 @@ The feature of pushing is also important to include since in panic situation it
 has been seen that people push each. This feature will then make our simulation 
 more realistic. The overlapping avoidance we find relevant since this enables 
 pedestrians to walk through each other.
+% TODO: This argument seems like a half-baked attempt to justify the use of 
+% social force models from these properties. That is not the objective of this 
+% section; we are just giving the reader an overview of what other approaches 
+% there are to this subject.
 
-Therefore we find that modelling a crowd by using a social force model is most 
-appropriate in our project. 
-%	Finishing off with a conclusion would be neat					%
+% TODO: Summary / ending
 
 
 \subsection{Concepts for describing crowd behaviour}\label{concepts}
@@ -243,6 +282,7 @@ is low does that imply a low flow rate? These are all questing that can be answe
 through simulations in the framework of the concepts we have just defined.    
 % TODO: It is not the concepts that affect each other, it is the parameters 
 % that affect the concepts.
+% TODO: Move the explanation of geometry somewhere else.
 
 \subsection{Our case(s)}
 In this section we outline which cases we want to simulate and why.
