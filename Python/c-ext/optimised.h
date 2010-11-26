@@ -3,6 +3,8 @@
 #include <pthread.h>
 #include "vector.h"
 
+/*** Calculation part begin ***/
+
 typedef struct {
     double radius;
     double time;
@@ -21,6 +23,15 @@ typedef struct {
     Vector end;
 } Wall;
 
+static void calculate_forces(Py_ssize_t i);
+static void add_desired_acceleration(Actor * a);
+static void add_repulsion(Actor * a, Actor * b);
+static void update_position(Actor * a);
+static int is_escaped(Actor * a);
+
+/*** Calculation part end ***/
+
+
 // For dividing work in threads
 typedef struct {
     int start;
@@ -36,10 +47,6 @@ static Py_ssize_t ssize_t_from_attribute(PyObject * o, char * name);
 static double double_from_attribute(PyObject * o, char * name);
 static Vector vector_from_attribute(PyObject * o, char * name);
 static Vector vector_from_pyobject(PyObject * o);
-static void add_desired_acceleration(Actor * a);
-static void add_repulsion(Actor * a, Actor * b);
-static void update_position(Actor * a);
-static void update_python_objects(Actor * actors, PyObject ** p_actors, Py_ssize_t n);
 static void cleanup();
 static void init_threads();
 static void init_walls(PyObject * p_walls);
@@ -47,4 +54,3 @@ static void destroy_threads();
 static void do_calculations();
 static void do_calculation_part(Part * p);
 static void check_escapes();
-static int is_escaped(Actor * a);

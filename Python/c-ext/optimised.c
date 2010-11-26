@@ -1,7 +1,8 @@
 #include "optimised.h"
 
+/*** Calculation part begin ***/
+
 static double A_1, A_2, B_1, B_2, timestep;
-static Py_ssize_t use_threads;
 
 // Global objects to allow access from different threads
 static Actor * actors;
@@ -9,110 +10,15 @@ static Wall * walls;
 static Py_ssize_t a_count;
 static Py_ssize_t w_count;
 
-// Threading variables
-static pthread_t * threads;
-static pthread_attr_t thread_attr;
-
-static PyObject * update_actors(PyObject * self, PyObject * args)
+void calculate_forces(Py_ssize_t i)
 {
+    int j;
+    add_desired_acceleration(&actors[i]);
 
-    // Since we are not touching any python objects in this part, 
-    // we can release the global interpreter lock, to allow for multithreaded
-    // goodness.
-    Py_BEGIN_ALLOW_THREADS
-
-        do_calculations();
-
-    Py_END_ALLOW_THREADS
-
-    Py_RETURN_NONE;
-}
-
-static PyObject * add_actors(PyObject * self, PyObject * args)
-{
-    PyObject * p_actor_list;
-    int i;
-
-    PyArg_ParseTuple(args, "O:add_actors", &p_actor_list);
-
-    for(i = 0; i < a_count; i++) {
-        PyObject * p_a = PyList_GetItem(p_actor_list, i);
-        actor_from_pyobject(p_a, &actors[i]);
+    for(j = 0; j < a_count; j++) {
+        if(i == j) continue;
+        add_repulsion(&actors[i], &actors[j]);
     }
-    Py_RETURN_NONE;
-}
-
-static PyObject * get_actor(PyObject * self, PyObject * args)
-{
-    Py_ssize_t i;
-
-    PyArg_ParseTuple(args, "i:get_actor", &i);
-
-	if(i > a_count) Py_RETURN_NONE;
-
-    return Py_BuildValue("ddd", 
-            actors[i].position.x, actors[i].position.y, actors[i].radius);
-}
-
-static PyObject * get_actors(PyObject * self, PyObject * args)
-{
-	PyObject * list = PyList_New(a_count);
-	int i;
-
-	for(i = 0; i < a_count; i++) {
-		PyList_SetItem(list, i, Py_BuildValue("ddd", 
-            actors[i].position.x, actors[i].position.y, actors[i].radius));
-	}
-
-    return list;
-}
-
-static void do_calculations()
-{
-    int i, rc;
-    void * status;
-    if(use_threads) {
-        Part * parts;
-        parts = PyMem_Malloc(use_threads * sizeof(Part));
-        int part_len = a_count / use_threads;
-        for(i = 0; i < use_threads; i++) {
-            parts[i].start = i*part_len;
-            parts[i].end = (i+1)*part_len;
-        }
-        parts[use_threads-1].end += a_count % use_threads;
-
-        for(i = 0; i < use_threads; i++) {
-            rc = pthread_create(&threads[i], NULL, 
-                    do_calculation_part, (void *) &parts[i]);
-        }
-
-        for(i = 0; i < use_threads; i++) {
-            pthread_join(threads[i], &status);
-        }
-    } else {
-        Part p = {0, a_count};
-        do_calculation_part(&p);
-    }
-
-    for(i = 0; i < a_count; i++) {
-        update_position(&actors[i]);
-    }
-
-	check_escapes();
-}
-
-static void do_calculation_part(Part * p)
-{
-    int i,j;
-    for(i = p->start; i < p->end; i++) {
-        add_desired_acceleration(&actors[i]);
-
-        for(j = 0; j < a_count; j++) {
-            if(i == j) continue;
-            add_repulsion(&actors[i], &actors[j]);
-        }
-    }
-    if(use_threads) pthread_exit(NULL);
 }
 
 static void add_desired_acceleration(Actor * a)
@@ -236,58 +142,128 @@ static int is_escaped(Actor * a)
 	return (l <= 0.05);
 }
 
-static void check_escapes()
+
+/*** Calculation part end ***/
+
+
+
+// Threading variables
+static Py_ssize_t use_threads;
+static pthread_t * threads;
+static pthread_attr_t thread_attr;
+
+static PyObject * update_actors(PyObject * self, PyObject * args)
 {
-	int escaped_count = 0;
-	int * escaped = malloc(a_count * sizeof(int));
-	Actor * old_actors = actors;
-	Actor * new_actors;
-	int i, j, k;
 
-	for(i = 0; i < a_count; i++) {
-		if(is_escaped(&actors[i])) {
-			escaped[escaped_count++] = i;
-		}
-	}
+    // Since we are not touching any python objects in this part, 
+    // we can release the global interpreter lock, to allow for multithreaded
+    // goodness.
+    Py_BEGIN_ALLOW_THREADS
 
-	if(escaped_count == 0) {
-		free(escaped);
-		return;
-	}
+        do_calculations();
 
-	new_actors = malloc((a_count - escaped_count) * sizeof(Actor));
-	for(i = 0, j = 0; i < a_count; i++) {
-		int e = 0;
-		for(k = 0; k < escaped_count; k++) {
-			if(escaped[k] == i) e = 1;
-		}
-		if(e) continue;
-		new_actors[j++] = actors[i];
-	}
-	actors = new_actors;
-	a_count -= escaped_count;
-	free(old_actors);
-	free(escaped);
+    Py_END_ALLOW_THREADS
+
+    Py_RETURN_NONE;
 }
 
-void update_python_objects(Actor * actors, PyObject ** p_actors, Py_ssize_t n)
+static PyObject * add_actors(PyObject * self, PyObject * args)
 {
+    PyObject * p_actor_list;
     int i;
-    for(i = 0; i < n; i++) {
-        PyObject * update_p_res;
-        PyObject * update_v_res;
-        PyObject * update_t_res;
 
-        update_p_res = PyObject_CallMethod(p_actors[i], "set_position", "dd",
-                actors[i].position.x, actors[i].position.y);
-        update_v_res = PyObject_CallMethod(p_actors[i], "set_velocity", "dd",
-                actors[i].velocity.x, actors[i].velocity.y);
-        update_t_res = PyObject_CallMethod(p_actors[i], "set_time", "(d)",
-                actors[i].time);
+    PyArg_ParseTuple(args, "O:add_actors", &p_actor_list);
+    a_count = PyList_Size(p_actor_list);
+    actors   = PyMem_Realloc(actors, a_count * sizeof(Actor));
 
-        Py_DECREF(update_p_res);
-        Py_DECREF(update_v_res);
-        Py_DECREF(update_t_res);
+    for(i = 0; i < a_count; i++) {
+        PyObject * p_a = PyList_GetItem(p_actor_list, i);
+        actor_from_pyobject(p_a, &actors[i]);
+    }
+    Py_RETURN_NONE;
+}
+
+static PyObject * get_actor(PyObject * self, PyObject * args)
+{
+    Py_ssize_t i;
+
+    PyArg_ParseTuple(args, "i:get_actor", &i);
+
+	if(i > a_count) Py_RETURN_NONE;
+
+    return Py_BuildValue("ddd", 
+            actors[i].position.x, actors[i].position.y, actors[i].radius);
+}
+
+static PyObject * get_actors(PyObject * self, PyObject * args)
+{
+	PyObject * list = PyList_New(a_count);
+	int i;
+
+	for(i = 0; i < a_count; i++) {
+		PyList_SetItem(list, i, Py_BuildValue("ddd", 
+            actors[i].position.x, actors[i].position.y, actors[i].radius));
+	}
+
+    return list;
+}
+
+static void do_calculations()
+{
+    int i, rc;
+    void * status;
+    if(use_threads) {
+        Part * parts;
+        parts = PyMem_Malloc(use_threads * sizeof(Part));
+        int part_len = a_count / use_threads;
+        for(i = 0; i < use_threads; i++) {
+            parts[i].start = i*part_len;
+            parts[i].end = (i+1)*part_len;
+        }
+        parts[use_threads-1].end += a_count % use_threads;
+
+        for(i = 0; i < use_threads; i++) {
+            rc = pthread_create(&threads[i], NULL, 
+                    do_calculation_part, (void *) &parts[i]);
+        }
+
+        for(i = 0; i < use_threads; i++) {
+            pthread_join(threads[i], &status);
+        }
+    } else {
+        Part p = {0, a_count};
+        do_calculation_part(&p);
+    }
+
+    for(i = 0; i < a_count; i++) {
+        update_position(&actors[i]);
+    }
+
+	check_escapes();
+}
+
+static void do_calculation_part(Part * p)
+{
+    int i,j;
+    for(i = p->start; i < p->end; i++) {
+        calculate_forces(i);
+    }
+    if(use_threads) pthread_exit(NULL);
+}
+
+static void check_escapes()
+{
+	int i, j;
+
+	for(i = 0, j = 0; i < a_count; i++) {
+		if(!is_escaped(&actors[i])) {
+			actors[j++] = actors[i];
+		}
+	}
+
+    if(i != j) {
+        a_count -= i-j;
+        actors = PyMem_Realloc(actors, a_count * sizeof(Actor));
     }
 }
 
@@ -375,9 +351,8 @@ PyMODINIT_FUNC initoptimised(void)
     B_2         = double_from_attribute(p_constants, "b_2");
     timestep    = double_from_attribute(p_module, "timestep");
     use_threads = ssize_t_from_attribute(p_module, "use_threads");
-    a_count     = ssize_t_from_attribute(p_actors, "initial_number");
-
-    actors   = PyMem_Malloc(a_count * sizeof(Actor));
+    a_count     = 0;
+    actors      = NULL;
 
     init_walls(p_walls);
 
