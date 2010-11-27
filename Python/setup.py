@@ -46,11 +46,9 @@ def generate_actors():
         if abs(y_coord - y_range[1]) < radius:
             y_coord = y_range[1] - radius
         position = Point(x_coord, y_coord)
-        velocity_v = (target - position).normal() * velocity
 
         actors.append(Actor(
             position = position,
-            velocity = velocity_v,
             desired_velocity = velocity,
             target = target,
             radius = radius))
