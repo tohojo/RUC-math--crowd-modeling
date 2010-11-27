@@ -185,8 +185,12 @@ Vector calculate_wall_repulsion(Actor * a, Vector repulsion_point)
     Vector repulsion_vector = vector_sub(repulsion_point, a->position);
     double repulsion_length = vector_length(repulsion_vector);
 
-    repulsion.x = U * (1/a->radius) * (exp(-repulsion_length/a->radius)*(a->position.x-repulsion_point.x))/repulsion_length;
-    repulsion.y = U * (1/a->radius) * (exp(-repulsion_length/a->radius)*(a->position.y-repulsion_point.y))/repulsion_length;
+    repulsion.x = U * (1/a->radius) * \
+                  (exp(-repulsion_length/a->radius)*\
+                   (a->position.x-repulsion_point.x))/repulsion_length;
+    repulsion.y = U * (1/a->radius) * \
+                  (exp(-repulsion_length/a->radius)*\
+                   (a->position.y-repulsion_point.y))/repulsion_length;
 
     return repulsion;
 }
