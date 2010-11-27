@@ -1,3 +1,4 @@
+#!/usr/bin/python2
 # vim:fileencoding=utf8
 
 
@@ -52,6 +53,13 @@ def main():
     time_start = time()
     frames = 0
     canvas.clear_screen()
+
+    if pm.create_images:
+        import pprint
+        pfile = open("%sparameters" % pm.image_prefix, "w")
+        pfile.write(pprint.pformat(pm.params))
+        pfile.write("\n")
+        pfile.close()
 
     while canvas.tick():
         

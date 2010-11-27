@@ -50,3 +50,25 @@ walls = [   (-5, -5,  5, -5),
             (-5,  5,  -0.5,  5),
             (0.5,  5,  5,  5),
         ]
+
+
+# Bookkeeping for saving parameters
+
+from datetime import datetime
+run_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+del Vector, Point, datetime
+
+params = dict()
+
+for k in globals().keys():
+    if not k.startswith("__") and k != "params":
+        class x: pass
+        if type(globals()[k]) == type(x):
+            params[k] = dict()
+            for i in dir(globals()[k]):
+                if not i.startswith("__"):
+                    params[k][i] = getattr(globals()[k], i)
+        else:
+            params[k] = globals()[k]
+
+del k,i

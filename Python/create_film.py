@@ -1,6 +1,6 @@
 #!/usr/bin/python2
 # vim:fileencoding=utf8
-import subprocess, parameters
+import subprocess, parameters, shutil, os
 
 from optparse import OptionParser
 from datetime import datetime
@@ -15,9 +15,19 @@ parser.add_option("-p", "--prefix", dest="prefix", help="Image prefix (default f
 
 if options.prefix is None:
     options.prefix = parameters.image_prefix
+
+parameters_file = "%sparameters" % options.prefix
+pfile = open(parameters_file)
+s = [i for i in pfile if i.startswith(" 'run_time'")][0]
+d = eval("{%s}" % s)
+run_time = datetime.strptime(d['run_time'], "%Y-%m-%d %H:%M:%S")
+
 if options.output is None:
-    options.output = "films/%s-%sfps.avi" % \
-    (datetime.now().strftime("%Y%m%d%H%M"), options.fps)
+    (dirpart, filepart) = os.path.split(options.prefix)
+    options.output = "films/%s%s-%sfps.avi" % \
+    (filepart, run_time.strftime("%Y%m%d_%H%M"), options.fps)
+
+shutil.copy(parameters_file, "%s.parameters" % options.output)
 
 
 args = [
