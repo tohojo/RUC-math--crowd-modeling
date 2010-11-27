@@ -18,7 +18,7 @@ class constants:
     # From page 12 of the article
     a_2 = 3.0
     b_2 = 0.2
-    u = 1.0
+    u = 2.0
 
 class actor:
     "Parameters related to actors"
