@@ -74,9 +74,13 @@ class Canvas:
                 Helper.screen_coords(p), 2)
 
     def draw_text(self, t):
-        text = self.font.render("%s - %d fps" % (t, self.clock.get_fps()), 
+        if pm.create_images:
+            text = t
+        else:
+            text = "%s - %d fps" % (t, self.clock.get_fps())
+        texture = self.font.render(text, 
                 True, DRAW_COLOUR, BG_COLOUR)
-        self.screen.blit(text, text.get_rect())
+        self.screen.blit(texture, texture.get_rect())
 
 
 class Helper:
