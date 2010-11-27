@@ -18,6 +18,7 @@ class constants:
     # From page 12 of the article
     a_2 = 3.0
     b_2 = 0.2
+    u = 1.0
 
 class actor:
     "Parameters related to actors"
@@ -30,8 +31,8 @@ class actor:
     default_target = Point(0.0, 10.0)
 
     initial_number = 100
-    initial_x_range = (-10, 10)
-    initial_y_range = (-10, 10)
+    initial_x_range = (-5, 5)
+    initial_y_range = (-5, 5)
 
     velocity_mean = 1.34
     velocity_deviation = 0.26
@@ -41,9 +42,11 @@ class actor:
     radius_mean = 0.2
     radius_deviation = 0.01
 
-    target = (0,0)
+    target = (0,12)
 
-walls = [   (-10, -10,  10, -10),
-            (-10, -10, -10,  10),
-            (-10,  10,  10,  10),
-            ( 10, -10,  10,  10),]
+walls = [   (-5, -5,  5, -5),
+            (-5, -5, -5,  5),
+            ( 5, -5,  5,  5),
+            (-5,  5,  -0.5,  5),
+            (0.5,  5,  5,  5),
+        ]
