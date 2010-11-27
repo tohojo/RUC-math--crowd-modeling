@@ -21,11 +21,15 @@ typedef struct {
 typedef struct {
     Vector start;
     Vector end;
+    double length;
 } Wall;
 
 static void calculate_forces(Py_ssize_t i);
 static void add_desired_acceleration(Actor * a);
 static void add_repulsion(Actor * a, Actor * b);
+static void add_wall_repulsion(Actor * a);
+static int find_repultion_points(Actor * a, Vector repulsion_points[]);
+static Vector calculate_wall_repulsion(Actor * a, Vector repulsion_point);
 static void update_position(Actor * a);
 static int is_escaped(Actor * a);
 

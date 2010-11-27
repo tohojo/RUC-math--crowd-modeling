@@ -2,7 +2,7 @@
 
 /*** Calculation part begin ***/
 
-static double A_1, A_2, B_1, B_2, timestep;
+static double A_1, A_2, B_1, B_2, U, timestep;
 
 // Global objects to allow access from different threads
 static Actor * actors;
@@ -19,6 +19,8 @@ void calculate_forces(Py_ssize_t i)
         if(i == j) continue;
         add_repulsion(&actors[i], &actors[j]);
     }
+
+    add_wall_repulsion(&actors[i]);
 }
 
 static void add_desired_acceleration(Actor * a)
@@ -111,6 +113,84 @@ void add_repulsion(Actor * a, Actor * b)
     vector_iadd(&a->acceleration, &from_b);
 }
 
+void add_wall_repulsion(Actor * a)
+{
+    int i;
+    Vector * repulsion_points  = PyMem_Malloc(w_count * sizeof(Vector));
+    int rep_p_c = 0;
+    Vector repulsion;
+
+    rep_p_c = find_repultion_points(a, repulsion_points);
+
+    for(i = 0; i < rep_p_c; i++) {
+        repulsion = calculate_wall_repulsion(a, repulsion_points[i]);
+        //printf("(%f,%f)\n", repulsion.x, repulsion.y);
+        vector_iadd(&a->acceleration, &repulsion);
+    }
+
+
+    PyMem_Free(repulsion_points);
+}
+
+int find_repultion_points(Actor * a, Vector repulsion_points[])
+{
+    int i,j;
+    double projection_length;
+    Vector * used_endpoints    = PyMem_Malloc(2*w_count * sizeof(Vector));
+    Vector * possible_endpoints = PyMem_Malloc(w_count * sizeof(Vector));
+    int rep_p_c = 0, use_e_c = 0, pos_e_c = 0;
+
+    for(i = 0; i < w_count; i++) {
+        Wall w = walls[i];
+        projection_length = vector_projection_length(w.start, w.end, a->position);
+        if(projection_length < 0)  {
+            possible_endpoints[pos_e_c++] = w.start;
+        } else if(projection_length > w.length) {
+            possible_endpoints[pos_e_c++] = w.end;
+        } else {
+            // We have the length, L, of how far along AB the projection point is.
+            // To turn this into a point, we multiply AB with L/|AB| and add
+            // this vector to the starting point A.
+            repulsion_points[rep_p_c++] = vector_add(w.start, 
+                    vector_mul(vector_sub(w.end, w.start), 
+                        projection_length/w.length));
+            used_endpoints[use_e_c++] = w.start;
+            used_endpoints[use_e_c++] = w.end;
+        }
+    }
+
+    for(i = 0; i < pos_e_c; i++) {
+        int use_e = 1;
+        for(j = 0; j < use_e_c; j++) {
+            if(possible_endpoints[i].x == used_endpoints[j].x && 
+                    possible_endpoints[i].y == used_endpoints[j].y) {
+                use_e = 0;
+            }
+        }
+        if(use_e) {
+            repulsion_points[rep_p_c++] = possible_endpoints[i];
+            used_endpoints[use_e_c++] = possible_endpoints[i];
+        }
+    }
+
+    PyMem_Free(used_endpoints);
+    PyMem_Free(possible_endpoints);
+
+    return rep_p_c;
+}
+
+Vector calculate_wall_repulsion(Actor * a, Vector repulsion_point)
+{
+    Vector repulsion = {0,0};
+    Vector repulsion_vector = vector_sub(repulsion_point, a->position);
+    double repulsion_length = vector_length(repulsion_vector);
+
+    repulsion.x = U * (1/a->radius) * (exp(-repulsion_length/a->radius)*(a->position.x-repulsion_point.x))/repulsion_length;
+    repulsion.y = U * (1/a->radius) * (exp(-repulsion_length/a->radius)*(a->position.y-repulsion_point.y))/repulsion_length;
+
+    return repulsion;
+}
+
 void update_position(Actor * a)
 {
     /* Equivalent Python code:
@@ -139,7 +219,7 @@ void update_position(Actor * a)
 static int is_escaped(Actor * a)
 {
 	double l = vector_length(vector_sub(a->target, a->position));
-	return (l <= 0.05);
+	return (l <= a->radius*2);
 }
 
 
@@ -349,6 +429,7 @@ PyMODINIT_FUNC initoptimised(void)
     p_walls     = PyObject_GetAttrString(p_module, "walls");
     A_2         = double_from_attribute(p_constants, "a_2");
     B_2         = double_from_attribute(p_constants, "b_2");
+    U           = double_from_attribute(p_constants, "u");
     timestep    = double_from_attribute(p_module, "timestep");
     use_threads = ssize_t_from_attribute(p_module, "use_threads");
     a_count     = 0;
@@ -375,6 +456,7 @@ static void init_walls(PyObject * p_walls)
         walls[i].start.y = PyFloat_AsDouble(PyTuple_GetItem(p_w, 1));
         walls[i].end.x   = PyFloat_AsDouble(PyTuple_GetItem(p_w, 2));
         walls[i].end.y   = PyFloat_AsDouble(PyTuple_GetItem(p_w, 3));
+        walls[i].length  = vector_length(vector_sub(walls[i].end, walls[i].start));
     }
 }
 
