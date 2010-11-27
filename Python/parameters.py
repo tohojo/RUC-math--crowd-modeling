@@ -18,7 +18,7 @@ class constants:
     # From page 12 of the article
     a_2 = 3.0
     b_2 = 0.2
-    u = 2.0
+    u = 3.0
 
 class actor:
     "Parameters related to actors"
@@ -42,7 +42,7 @@ class actor:
     radius_mean = 0.2
     radius_deviation = 0.01
 
-    target = (0,12)
+    target = (0,7)
 
 walls = [   (-5, -5,  5, -5),
             (-5, -5, -5,  5),
