@@ -1,6 +1,7 @@
 # vim:fileencoding=utf8
 
 import pygame
+from pygame import gfxdraw
 import parameters as pm
 
 if pm.use_c_ext:
@@ -8,10 +9,10 @@ if pm.use_c_ext:
 
 SCREEN_WIDTH=600
 SCREEN_HEIGHT=600
-PIXEL_FACTOR = 20
-BG_COLOR = (255,255,255)
-DRAW_COLOR = pygame.Color(0,0,0)
-TARGET_COLOR = pygame.Color(255,0,0)
+PIXEL_FACTOR = 30
+BG_COLOUR = (255,255,255)
+DRAW_COLOUR = pygame.Color(0,0,0)
+TARGET_COLOUR = pygame.Color(255,0,0)
 
 class Canvas:
     """Class to manage a canvas and draw objects on it."""
@@ -26,7 +27,7 @@ class Canvas:
 
 
     def clear_screen(self):
-        self.screen.fill(BG_COLOR)
+        self.screen.fill(BG_COLOUR)
 
     def tick(self):
         self.clock.tick(0)
@@ -43,34 +44,38 @@ class Canvas:
             pygame.image.save(self.screen, "%s%05d.png" % (pm.image_prefix, frames))
 
     def draw_wall(self, w):
-        pygame.draw.line(self.screen, DRAW_COLOR, 
-                Helper.screen_coords(w.start), 
-                Helper.screen_coords(w.end))
+        (x1,y1) = Helper.screen_coords(w.start)
+        (x2,y2) = Helper.screen_coords(w.end)
+        gfxdraw.line(self.screen, x1, y1, x2, y2, DRAW_COLOUR)
 
     def draw_actor(self, a):
-        pygame.draw.circle(self.screen, DRAW_COLOR, 
+        pygame.draw.circle(self.screen, DRAW_COLOUR, 
                 Helper.screen_coords(a.position),
                 Helper.screen_radius(a.radius))
 
     def draw_actors(self):
         if pm.use_c_ext:
             for (x,y,r) in optimised.get_actors():
-                pygame.draw.circle(self.screen, DRAW_COLOR,
-                        Helper.screen_coords(x,y),
-                        Helper.screen_radius(r))
+                (x,y) = Helper.screen_coords(x,y)
+                gfxdraw.aacircle(self.screen,
+                        x,y,
+                        Helper.screen_radius(r),
+                        DRAW_COLOUR)
 
 
     def draw_target(self, t):
-        pygame.draw.circle(self.screen, TARGET_COLOR, 
-                Helper.screen_coords(t[0], t[1]),
-                Helper.screen_radius(0.2))
+        (x,y) = Helper.screen_coords(t[0], t[1])
+        gfxdraw.aacircle(self.screen, x, y,
+                Helper.screen_radius(0.2),
+                TARGET_COLOUR)
 
     def draw_proj(self, p):
-        pygame.draw.circle(self.screen, DRAW_COLOR, 
+        pygame.draw.circle(self.screen, DRAW_COLOUR, 
                 Helper.screen_coords(p), 2)
 
     def draw_text(self, t):
-        text = self.font.render("%s - %d fps" % (t, self.clock.get_fps()), True, DRAW_COLOR, BG_COLOR)
+        text = self.font.render("%s - %d fps" % (t, self.clock.get_fps()), 
+                True, DRAW_COLOUR, BG_COLOUR)
         self.screen.blit(text, text.get_rect())
 
 
