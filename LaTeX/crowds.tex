@@ -2,39 +2,34 @@
 \label{sec:crowds}
 During the last two decades agent based models have been successfully  used to 
 describe the behavior of crowds of pedestrians, however agent based model have their 
-origin elsewhere and a short overview of this is given in section \ref{subsec:ABM}. We explain 
-two different agent-based approaches, \emph{cellular automaton} and \emph{social force}, 
-there have been to modeling a crowd of pedestrians. The social force model is chosen 
-as a subject to be studied further. This allows us to establish some meaningful concepts 
-for discussing the behavior of crowds in general, in order to have a basis on which 
-we can analyse our chosen model. Finally we outline the different situations we 
-want to simulate.
+origin elsewhere and a short overview of this is given in section \ref{subsec:ABM}. We 
+then move on to explain two different agent-based approaches there have been to modeling 
+a crowd of pedestrians, namely \emph{cellular automaton} and \emph{social force}. 
+The social force model is chosen as a subject to be studied further. This allows us 
+to establish some meaningful concepts for discussing the behavior of crowds in general, 
+in order to have a basis on which we can analyse our chosen model. Finally we outline 
+the different situations we want to simulate.
 
 \subsection{Agent-based models and their origin}\label{subsec:ABM}
 An agent based model is a model that describes the behavior of each individual 
 object in the system. The individual behavior of each object then give rise to 
-a collective behavior of the entire system.
+a collective behavior of the entire system. The idea of agent based model is not 
+a new one. They have their origin in physics where the idea dates back as far as 1820, 
+ however because of the sheer number of calculations need to be done in order to get 
+meaningful information out of the system it hasn't been used much until the last half 
+century\cite{simintro}. Now it is used in many different fields such molecular biology 
+and economics\cite{MDbio}. Further more agent based models have been successfully used 
+to describe the behavior of packs of animals such as fish schools and groups of ladybugs. 
+In these models a set a simple rules give rise to a collective behavior that resembles the 
+behavior observed in the nature. 
 
-The idea of agent based model is not a new one. They have their origin in physics 
-where the idea dates back as far as 1820, however because of the sheer number of 
-calculations need to be done in order to get meaningful information out of 
-the system it hasn't been used much until the last half century\cite{simintro}. Now it is 
-used in many different fields such molecular biology and economics\cite{MDbio} Agent based 
-model are no longer just used in the "hard sciences" but have successfully been 
-used to describe the behavior of packs of animals such as fish schools and 
-groups of ladybugs. In these models a set a simple rules give rise to a collective 
-behavior that resembles the behavior observed in the nature. 
-
-The modeling of human behavior using agent-based models is a 
-relatively new field in modeling \cite{helbing00}. 
-
-During the last two decades model for pedestrian behavior have grown in 
-interest for several reasons. First of all the model seems to have some 
-striking analogies to gases and fluids. Secondly, it is possible to measure 
-the quantities of the models and therefore they can be empirically tested. 
-This has led to a series of different approaches to modeling crowds. We have 
-chosen to concentrate on the agent based approaches´which will be the subject 
-of the next section.
+The modeling of human behavior using agent-based models is a relatively new field in 
+modeling \cite{helbing00}. During the last two decades model for pedestrian behavior 
+have grown in interest for several reasons. First of all the model seems to have some 
+striking analogies to gases and fluids. Secondly, it is possible to measure the quantities 
+of the models and therefore they can be empirically tested. This has led to a series of 
+different approaches to modeling crowds. We have chosen to concentrate on the agent based 
+approaches´which will be the subject of the next section.
 
 \subsection{Agent-based approaches to crowd modeling}\label{subsec:ABapproach}
 There have been developed a series of different agent based models to tackle the 
@@ -55,9 +50,12 @@ leaving a room, jamming in narrow passages and lane formation.
 \emph{Social Force models} suggests that pedestrians are subject to social forces. These 
 forces are not real physical forces, they do not follow newtons three laws. They are a 
 measure of the pedestrians motivation to preform certain action. The forces arise from 
-the environment and ofter pedestrians and can be both attractive and repulsive.
+the environment and ofter pedestrians and can be both attractive and repulsive. 
+Social force models have successfully described self-organizing phenomena such 
+as lane formation in the case of bi-direction pedestrian flow, crowd impatience 
+where pedestrian who walk slower than they would like to starts to speed up and clogging. 
 
-% We should probably mention the issue of path finding somewhere 
+% TODO: We should probably mention the issue of path finding somewhere 
 % around here. I.e. that the models themselves do not include path finding, 
 % but that this can be added as another layer.
 
