@@ -33,7 +33,8 @@ borrowed from physics, we are not working with real physical forces here.
 
 Each induvidual agent is has a series of parameters describing the features of the agent. An agent is 
 represented by a circle with radius $r_{\alpha}$. The agent has a position $\vec{r_{\alpha}}$ and a 
-velocity $\vec{V_{\alpha}}$ at all times t.
+velocity $\vec{V_{\alpha}}$ at all times t. Furthermore each agent has a desired direction $\vec{e_{\alpha}}$ 
+in which it would like to go. An illustration of the notation can be seen in figure \ref{fig:NotationOfAgent}
 
 \begin{figure}[hb]
     \centering
@@ -42,11 +43,11 @@ velocity $\vec{V_{\alpha}}$ at all times t.
 	    it has position vector $ \vec{r_{\alpha}} $, velocity vector $ \vec{V_{\alpha}} $, $\vec{e_{\alpha}}$ or $\vec{e_{\beta}}$ the normal vector pointing
 	    to the exit and  $ r_{\alpha} $ or  $ r_{\beta} $ the radius of its body.
 	    The x and y axes are defined by the Cartesian coordinate system.}
-    \label{NotationOfAgent}
+    \label{fig:NotationOfAgent}
 \end{figure}
 
-The change in position $ \vec{r_{\alpha}} $ per time of 
-agent $\alpha$ is actually the velocity $ \vec{V_{\alpha}} $:
+The change in position $ \vec{r_{\alpha}} $ per time of agent $\alpha$ is actually 
+the velocity $ \vec{V_{\alpha}} $:
 
 \begin{equation}
 		\frac{d \vec{r_{\alpha}}}{dt} = \vec{V_{\alpha}} \left( t \right)
