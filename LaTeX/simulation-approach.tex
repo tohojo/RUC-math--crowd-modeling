@@ -271,3 +271,39 @@ acceleration vector, to be used for the next simulation step.
 %
 % constants:
 %   Where do they come from?
+
+\subsection{Measurement of the concepts flow rate, density and efficiency}
+As mentioned in section \ref{concepts}, we want to have some concepts we can use to compare
+the simulations and to see if the simulations make sence.
+In this section we will describe how we want to measure the concepts efficiency,
+flow rate and density.
+
+\begin{itemize}
+    \item \textbf{Efficiency} The efficiency differs through the simulation since the
+	    agents efficiency is high if the agents have no obstacles or pedestrians in front of them,
+	    and drops when cloggings appear, because the agents actual velocity
+	    drops due to the clogging in front of them.
+	    Therefor we find it more interesting to measure the efficience when it is the lowest,
+	    since that will say most about the simulation and the situation simulated.
+	    Further more we want to measure the average efficiency of all the agents,
+	    since we that will say more about the simulation than a single agent's efficiency.
+	    To make the calculation as cheap as possible, we take the timestep with the lowest	
+	    measured efficiency, and calculate the average efficiancy of all the pedestrians
+	    and use that to compare with other simulations.
+
+    \item \textbf{Flow rate} We want to measure the flow rate of leaving pedestrians at the exit of a room as agents
+	    per second. We want to measure the maximum flow rate of the simulation and the average flow rate.
+	    Part of the model geometry was made as a line seqment as the exit, where we will measure the flow rate.
+	    When the simulation starts there will possibly be no flow rate since the agents first have to move to the exit
+	    before they can run out, hence the lowest flow rate, 0 agents per second, would not give us any useful information,
+	    where as the highest flow rate tells us how many can exit the room per second.
+
+    \item \textbf{Density} As part of the model geometry we made a square in front of the exit, with the size $1 m^2$,
+	    where we meaure the density as agent in that square. We want to measure the highest density of all timesteps
+	    in a simulation, since this gives the most information of how dense the crowd was when exiting the room.
+	    For saving calculations we only take the timestep with the highest density.
+	    As with the flow rate, the lowest density does not give us any useful information, since the all agents initial
+	    positions possibly can be outside that sguare meter, in all simulations, then the density would in all our
+	    simulations be 0 agents in that sguare meter.
+\end{itemize}
+
