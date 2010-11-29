@@ -73,7 +73,7 @@ Referring to the part for force analysis, we need to add the driving force, repu
 
 Naturally the work next is to show explicit expression for each force, and we will go through them one at a time explaining their mathematical structure and their role in the model.\\
 
-\subsubsection{The driving force} %gotta figure out a better name for this part
+\subsection{The desired force} %gotta figure out a better name for this part
 The first term on the right hand side of equation \eqref{model} describes the implement of agent $ \alpha $'s "willingness" to reach the exit. In this model it is a velocity dependent force 
 and is given by:
 
@@ -296,7 +296,7 @@ weird situations.
 
 
 
-\subsubsection{Repulsion from the walls}
+\subsection{Repulsion from the walls}
 Now the second term on the right hand side of \eqref{model} is a force which arise from interactions with the walls or other obstacles. The forces, caused by the wall or obstacles, is given by:
 
 \begin{equation}\label{wallpotential}
@@ -336,15 +336,34 @@ U^0_{\alpha B} e^{- \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| / r_{\alpha} }
 \end{equation}
 where $U^0_{\alpha B}$ is a constant and $r_{\alpha}$ is the radius of a pedestrian $\alpha$. \\
 
-In that case, the wall repulsive force on agent $ \alpha $ is:
-% TODO: make \begin{equation} and \begin{slpit}. This is a general thing for all \begin{allign}
+In that case, the repulsive force on agent $ \alpha $ from the wall is:
 \begin{equation}
     \vec{f_{\alpha B}} \left( \vec{r_{\alpha}} \right) =
     - \nabla_{\vec{r_{\alpha}}} U_{B}
     \left( \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| \right)\\
 =-\left( \frac{\partial}{\partial x_{\alpha}}U_{B}( \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|), \frac{\partial}{\partial y_{\alpha}}U_{B}( \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|)\right) \\
 \end{equation}
-Calculating the derivatives we get 
+Calculating the derivatives we use that $\| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|= \sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2}$
+So if we insert the expression for $U_{B}$ and for $\| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|$ we get
+
+\begin{equation}
+    \vec{f_{\alpha B}} \left( \vec{r_{\alpha}} \right) 
+=-\left( \frac{\partial}{\partial x_{\alpha}}U^0_{\alpha B} e^{-\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / r_{\alpha} }, \frac{\partial}{\partial y_{\alpha}}U^0_{\alpha B} e^{- \sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / r_{\alpha} } \right)
+\end{equation}
+When we differentiate this, we will put $u=-\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / r_{\alpha} $ and then use the well known result, from use of the chain rule when using differentation on an exponential function:
+\begin{equation}
+\frac{\partial d}{\partial x}Ae^{u}=\frac{\partial u}{\partial x}Ae^{u}
+\end{equation}
+This gives
+\begin{equation}
+    \vec{f_{\alpha B}} \left( \vec{r_{\alpha}} \right) 
+=-\left( \frac{\partial -\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / r_{\alpha}}{\partial x_{\alpha}}U^0_{\alpha B} e^{-\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / r_{\alpha} }, \frac{\partial -\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / r_{\alpha}}{\partial y_{\alpha}}U^0_{\alpha B} e^{- \sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / r_{\alpha} } \right)
+\end{equation}
+Differentation the square root we get 
+\begin{equation}
+ \frac{\partial -\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / r_{\alpha}}{\partial x_{\alpha}} =-\frac{1}{r_{\alpha}}\frac{(x_{\alpha}-x_{B}^{\alpha})}{\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} }
+\end{equation}
+If we do this and afterwards substitute bakc with $\| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|= \sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2}$ we get the final result:
 \begin{equation}
     \vec{f_{\alpha B}} \left( \vec{r_{\alpha}} \right) 
 =-\left(\left(U^0_{\alpha B}\frac{1}{r_{\alpha}}\frac{e^{- \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| / r_{\alpha} } (x_{\alpha}-x_B^{\alpha})}{\| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| }\right),\left(U^0_{\alpha B}\frac{1}{r_{\alpha}}\frac{e^{- \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| / r_{\alpha} } (y_{\alpha}-y_B^{\alpha})}{\| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| }\right)\right) \\
@@ -364,8 +383,8 @@ The negative of the force means that when the potential between wall and pedestr
  [Helbing and Molnár, 1995]. %real references, please.
 \end{itemize}
 
- 
-\subsubsection{Repulsion from other agents}
+
+\subsection{Repulsion from other agents}
 The third term on the right hand side of \eqref{model} is a summation of all the 
 force between agent $\alpha$ and agent $\beta$. It is a function of the position vector and the velocity of 
 both agents, and it is given by:
@@ -450,12 +469,12 @@ So if we look away from the social sphere for a minute and concentrate on the ph
 interaction we will see that if we omit the social sphere the calculation will be reduced to
 to:
 
-\begin{equation}\label{re}
+\begin{equation}\label{re2}
 \overrightarrow{f_{\alpha\beta}}(t) = A_{\alpha}^{2} exp\left[ \frac{r_{\alpha\beta} - d_{\alpha}\beta}{B_{\alpha}^{2}}\right]  \overrightarrow{n_{\alpha\beta}}
 \end{equation}
 
-Taking the norms of both sides of Equation (\ref{re}), we can draw the relation between the value of $\overrightarrow{f_{\alpha\beta}}(t)$ and $ d_{\alpha\beta} $, as shown in Figure 
-(\ref{physicalinteraction}).\\
+Taking the norms of both sides of Equation (\ref{re2}), we can draw the relation between the value of $\overrightarrow{f_{\alpha\beta}}(t)$ and $ d_{\alpha\beta} $, as shown in Figure 
+(\ref{fig:physicalinteraction1}).\\
 
 \begin{figure}
     \centering
@@ -463,7 +482,7 @@ Taking the norms of both sides of Equation (\ref{re}), we can draw the relation 
     \caption[Psysical interaction]{Illustration of the function about the interaction force 
         $f_{\alpha\beta}(t)$ and the distance between two agents
         $d_{\alpha \beta}$. It follows that the smaller the distance between two agents, the greater the interaction force is. }
-    \label{physicalinteraction}
+    \label{fig:physicalinteraction1}
 \end{figure}
 
 There is one intersection of the graph and the  axis at:
@@ -480,15 +499,141 @@ $ r_{\alpha\beta} = 0.6 m $, and $ B_{\alpha}^{2} = 0.2 m $, so
 $ f_{\alpha\beta}(t)^{max} \doteq 60 m/s^{2} $, which is about six times the gravitational 
 acceleration and represents a rather large force between agents (as large as six person's weight).
 
-
-
-
 %TODO: remember to finish this section
 
 % TODO: again lets  have a little summation here. What kinds of dynamics does the
+% social interaction part of the model yield. 
+
+
+\subsection{Repulsion from other agents}
+The third term on the right hand side of \eqref{model} is a summation of all the 
+force between agent $\alpha$ and agent $\beta$. The equation we use is taken from a newer article \cite{ABconstant}. We did this because the original article contains two constants that is not given in the articel and in a mail we were adviced, by the authors, to use the values and equation from the new article. 
+
+The function for the repulsion between pedestrians depends on the position vector and the velocity of 
+both agents, and it is given by:
+
+\begin{equation}
+        \vec{f_{\alpha \beta }}\left( t \right) = w\left(\phi_{\alpha \beta}\right)\vec{g}\left(d_{\alpha \beta}(t)\right)
+    \label{eq:agentinteraction}
+\end{equation}
+
+\begin{itemize}
+\item $w\left(\phi_{\alpha \beta}\right)$ is a function of the angle between two pedestrians. It is given as: 
+
+\begin{equation}
+    w\left(\phi_{\alpha \beta}\right)=
+    \vec{\eta_{\alpha \beta}} \cdot
+    \left(
+        \lambda_{\alpha} + \left(
+            1 - \lambda_{\alpha}
+        \right)
+		\frac{1+\cos{\phi}}{2}
+    \right) 
+    \label{angleAB}
+\end{equation}
+
+the angle $\phi_{\alpha \beta}$ is the angle between the normal 
+vector pointing from agent $\beta$ to $\alpha$ and the direction in which 
+agent $\alpha$ is moving. Cosine to the angle is 
+
+\begin{equation}
+\cos \left( \phi \right)
+	\left( t \right) 
+		= 
+	- \vec{\eta_{\alpha \beta}}
+		\left( t \right) 
+	\cdot 
+\vec{e_{\alpha}}\left( t \right)
+\end{equation}
+
+$\lambda_{\alpha}$ is governing a persons tendency to focus on things happening in front of him 
+rather than behind him. It will have a value  $0\leq \lambda_{\alpha}\leq 1$
+
+\item A value of $\lambda_{\alpha}=1$ means that the force won't depent on the angle. Thus $\alpha$ will react the same to $\beta$ no matter if $\beta$ is in the front or comes from the side or back. A value of $0$ will on the other hand give the maximum angle depence. We find that $0\leq w\left(\phi_{\alpha \beta}\right)\leq1$ when $-1 \leq \cos \left( \phi \right) \left( t \right) \leq 1$. From this we see that $\alpha$ wont be affected at all if $\beta$ is coming from behind and the force will be maximum when $\beta$ comes directly in the front. It should be noted that in general one will find that the maximum of $w\left(\phi_{\alpha \beta}\right)$ always will be $1$ and the minimum will be equal to $\lambda_{\alpha}$.   
+
+	% we should make a drawing of this.
+
+\item The force, without the effect of $w\left(\phi_{\alpha \beta}\right)$, is given as the second term, in the right hand side of equation \ref{agentinteraction}. The function is:  
+\begin{equation}
+	\vec{g} 
+	\left(
+	d_{\alpha \beta}
+	\right)
+	=
+	 A_{\alpha} e^{ \left(\frac{ r_{\alpha \beta} - d_{\alpha \beta}}{B_{\alpha}}\right)}
+	\vec{n}_{\alpha \beta}
+	        \label{re}	
+\end{equation}
+
+Here $A_{\alpha}$ and $B_{\alpha}$ are constants that can differ for each agent. 
+$r_{\alpha \beta}$ is the sum of the radii of $\alpha$ and $\beta$ that is 
+$r_{\alpha \beta} = r_{\alpha} + r_{\beta}$. $d_{\alpha \beta}$ is the 
+distance from the center of mass of agent $\alpha$ and the center of mass of 
+agent $\beta$ and is therefore given by $d_{\alpha \beta} = 
+\|\vec{r_{\alpha}}\left( t \right) - \vec{r_{\beta}}\left( t \right) \|$.
+$\eta_{\alpha \beta}$ is the normal vector pointing from $\alpha$ to $\beta$ 
+and it is given by:
+
+\begin{equation}
+    \eta_{\alpha \beta} =
+        \frac{\vec{r_{\alpha}}(t) - \vec{r_{\beta}}(t)}
+             {\|\vec{r_{\alpha}}(t) - \vec{r_{\beta}}(t) \|}
+\end{equation}
+
+\begin{figure}[ht]
+    \centering
+    {\includegraphics[scale=0.35]{Figures/NotationOfInteraction.pdf}} 
+    \caption[Notation of the interaction between two agents]{Illustration of the notation for the interaction between agents.
+	     An addition and difference to \ref{NotationOfWall} is that the wall has been replaced by pedestrian $\beta$.
+	     $\eta_{\alpha \beta}$ is the normal vector pointing from $\alpha$ to $\beta$, and $\phi$ is the angle between $\alpha$'s 
+	     velocity vector and $\beta$'s center of mass.}
+    \label{fig:NotationOfInteraction}
+\end{figure}
+
+
+%Equation \ref{agentinteraction} is given by two terms. 
+%The first term determines how much the the angle between the agents is and how much this angle should affect the force. 
+%The constant $\lambda$ is the one controling the importance of the angle.
+%The second term reflects the pedestrians tendency to stay at a certain distance 
+%from other agents. The constants $A_{\alpha}$, $B_{\alpha}$ is the strength 
+%and range of the interaction respectively and controls how big the force will be at a certain distance.  
+
+
+
+
+\item Taking the norms of both sides of Equation (\ref{re}), we can draw the relation between the value of $\overrightarrow{f_{\alpha\beta}}(t)$ and $ d_{\alpha\beta} $, as shown in Figure 
+(\ref{fig:physicalinteraction2}).\\
+
+\begin{figure}
+    \centering
+    {\includegraphics[scale=0.45]{Figures/physicalinteraction.pdf}} 
+    \caption[Psysical interaction]{Illustration of the function about the interaction force 
+        $f_{\alpha\beta}(t)$ and the distance between two agents
+        $d_{\alpha \beta}$. It follows that the smaller the distance between two agents, the greater the interaction force is. }
+    \label{fig:physicalinteraction2}
+\end{figure}
+
+There is one intersection of the graph and the  axis at:
+
+\begin{equation}
+	\left( d_{\alpha \beta} , \| \vec{f_{\alpha \beta}} \left( t \right) \| \right)
+ =
+	\left( 0 , A_{\alpha} exp\left( \frac{r_{\alpha\beta} }{B_{\alpha}}\right)  \right) 
+\end{equation}
+
+\item If we put in values for the constants, we will be able to get a maximum value of $ f_{\alpha\beta}(t) $, 
+since the distance between agents cannot be negative. Here we take values from \cite{ABconstant} $ A_{\alpha} = 0.42 m/s^{2} $, 
+$ r_{\alpha\beta} = 0.6 m $, and $ B_{\alpha} = 1.65 m $, so 
+$ f_{\alpha\beta}(t)^{max} \doteq 0.64 m/s^{2} $.
+
+\end{itemize}
+
+%TODO: remember to finish this section
+
+%TODO: again lets  have a little summation here. What kinds of dynamics does the
 % social interaction part of the model yield.
 
-\subsubsection{The attractive forces between some agents}
+\subsection{The attractive forces between some agents}
 The fourth and last term in \eqref{model} represents the force from attraction 
 in the room. Attractions can be either be either interesting sculptures or 
 sights or familiar persons the agent prefer to be close to, such as friends 
