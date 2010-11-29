@@ -9,11 +9,14 @@ Summing up all the repulsive forces from each particle on the bar will give the 
 \item Applying the idea above to analyse our wall repulsion, as a simple start we place the agent $\alpha$ a distance $ d $ away from the wall which as a length $L$, and by symmetry we know the resulting force must point vertically downwards, see Figure.\\
 
 Integrating the forces can be written as:
+
 \begin{equation}\label{integ}
 \vec{f_{\alpha B}} = 
 \int_0^L \! \vec{f_{\alpha\beta}} \, \mathrm{d}l
 \end{equation}
+
 \item When the repulsive force is known, the expression for the wall potential can be calculated, which can be done by integrating the force along a path. Normally the potential at some position is defined as the work done on the particle by that potential field when the particle is moved from that position to infinitely far away.
+
 \begin{equation}\label{pot}
 	U_{B}= \int_{\vec{r_{\alpha}}•}^{text{f}\infty} \! \vec{f_{\alpha B}} \cdot \, \text{d}\vec{r_{\alpha}} 
 \end{equation}
@@ -67,9 +70,20 @@ $d_{\alpha\beta}$ }\label{fig:physicalinteraction}
 \end{figure}
 
 There is one intersection of the graph and the axis $ \left( 0, A_{\alpha}^{2} exp\left( \frac{r_{\alpha\beta} }{B_{\alpha}^{2}}\right)  \right)  $. If put into the constants, we will be able to get a maximum value of $ f_{\alpha\beta}(t) $, since the distance between agents cannot be negative. Here we set $ A_{\alpha}^{2} = 3 m/s^{2} $, $ r_{\alpha\beta} = 0.6 m $, and $ B_{\alpha}^{2} = 0.2 m $, so $ f_{\alpha\beta}(t)^{max} \doteq 60 m/s^{2} $, which is about six times the gravitational acceleration and represents a rather large force between agents (as large as six person's weight). \\\\
-However, we notice that the effective part of the force calculated above is only the horizontal component that enables the agent to move horizontally in the plane where we do the simulation, but the reality is that the agents sometimes are also able to move vertically, for example, by stepping upon other people when they cannot take the pushing force from the surrounding agents. When that happens, the horizontal component of the repulsive force becomes smaller even if $ d_{\alpha\beta} $ is kept the same(may need a graph to illustrate that)\\
-
-Therefore, a qualitative modification of dependence between $ f_{\alpha\beta}(t) $ and $ d_{\alpha\beta} $ could be:\\
+However, we notice that the effective part of the force calculated above is only the horizontal 
+component that enables the agent to move horizontally in the plane where we do the simulation, 
+but the reality is that the agents sometimes are also able to move vertically, for example, 
+by stepping upon other people when they cannot take the pushing force from the surrounding agents. 
+When that happens, the horizontal component of the repulsive force becomes smaller even if 
+$d_{\alpha\beta}$ is kept the same.	
+Therefore, a qualitative modification of dependence between $ f_{\alpha\beta}(t) $ and $ d_{\alpha\beta} $ could be:
+\begin{figure}[ht]   
+\centering
+    {\includegraphics[scale=0.35]{Figures/ForceOverlapping.pdf}} 
+    \caption{}
+    \label{forceoverlapping}
+\end{figure}
+\\
 \subsection{Use social force in further calculation}
 use the value of forces to predict, as they are partly not real forces, the measurement does not reflect the reality in some range.
 Pressure
