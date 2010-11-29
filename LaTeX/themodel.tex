@@ -1,12 +1,12 @@
 \section{The model}
 \label{sec:the-model}
 
-\subsection{Explanation of our model}
+
 In this section we will go through the model from the article \cite{self-org} in 
 great detail, in the way that we understand the mathematical expressions and also 
 see how those expressions represent the reality.\\
 
-\underline{Force analysis:} \\
+\subsection{Force analysis:} 
 As the social force model is an agent based model, it focuses on looking at the 
 quantities about an individual agent, at last get the motion of the crowd. In order 
 to get the equation of motion we always start by analysing the forces acting on the object.\\\\
@@ -35,7 +35,7 @@ should be perpendicular to the surface.
 \end{figure}
 
 So far in the model it only mentioned the forces on the horizontal level, the gravitational force and normal force from the ground which works vertically are not mentioned at all.  The reason is that in this model they only consider the motion on the horizontal plane.  Since there is no motion vertically, the gravitational force and the normal force from the ground cancel each other.\\\\
-\underline{The equation of motion for agent $ \alpha $:}\\
+\subsection{The equation of motion for agent $ \alpha $:}
 
 The general approach of the model to get the equation of motion follows the standard way. Summing up the forces acting on $ \alpha $ gives the acceleration, which builds the equation of motion. It comes in steps as the following.\\
 First of all, the equation of motion deals with the agent $ \alpha $'s position $ \vec{r_{\alpha}} $, velocity $ \vec{V_{\alpha}} $, and acceleration $ \vec{f_{\alpha}} $. As the agent is not just a mass point, it has a radius $ r_{\alpha} $. The position and velocity vectors and the radius are shown in Figure \ref{NotationOfAgent}.
@@ -350,23 +350,26 @@ So if we insert the expression for $U_{B}$ and for $\| \vec{r_{\alpha}} - \vec{r
     \vec{f_{\alpha B}} \left( \vec{r_{\alpha}} \right) 
 =-\left( \frac{\partial}{\partial x_{\alpha}}U^0_{\alpha B} e^{-\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / r_{\alpha} }, \frac{\partial}{\partial y_{\alpha}}U^0_{\alpha B} e^{- \sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / r_{\alpha} } \right)
 \end{equation}
-When we differentiate this, we will put $u=-\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / r_{\alpha} $ and then use the well known result, from use of the chain rule when using differentation on an exponential function:
+When we differentiate this, we will put $u=-\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / r_{\alpha} $ and then use the well known result, from use of the chain rule when using differentiation on an exponential function:
 \begin{equation}
-\frac{\partial d}{\partial x}Ae^{u}=\frac{\partial u}{\partial x}Ae^{u}
+\frac{\partial }{\partial x}Ae^{u(x)}=\frac{\partial u(x)}{\partial x}Ae^{u}
 \end{equation}
 This gives
 \begin{equation}
+\begin{split}
     \vec{f_{\alpha B}} \left( \vec{r_{\alpha}} \right) 
-=-\left( \frac{\partial -\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / r_{\alpha}}{\partial x_{\alpha}}U^0_{\alpha B} e^{-\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / r_{\alpha} }, \frac{\partial -\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / r_{\alpha}}{\partial y_{\alpha}}U^0_{\alpha B} e^{- \sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / r_{\alpha} } \right)
+ & =-\left( \frac{\partial -\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / r_{\alpha}}{\partial  x_{\alpha}}U^0_{\alpha B} e^{-\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / r_{\alpha} } \right. , \\
+& \left. \frac{\partial -\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / r_{\alpha}}{\partial y_{\alpha}}U^0_{\alpha B} e^{- \sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / r_{\alpha} } \right)
+\end{split}
 \end{equation}
-Differentation the square root we get 
+Differentation of the square root gives 
 \begin{equation}
  \frac{\partial -\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / r_{\alpha}}{\partial x_{\alpha}} =-\frac{1}{r_{\alpha}}\frac{(x_{\alpha}-x_{B}^{\alpha})}{\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} }
 \end{equation}
-If we do this and afterwards substitute bakc with $\| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|= \sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2}$ we get the final result:
+If we do this differentiation and substitute back with $\| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|= \sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2}$, we get the final result:
 \begin{equation}
     \vec{f_{\alpha B}} \left( \vec{r_{\alpha}} \right) 
-=-\left(\left(U^0_{\alpha B}\frac{1}{r_{\alpha}}\frac{e^{- \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| / r_{\alpha} } (x_{\alpha}-x_B^{\alpha})}{\| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| }\right),\left(U^0_{\alpha B}\frac{1}{r_{\alpha}}\frac{e^{- \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| / r_{\alpha} } (y_{\alpha}-y_B^{\alpha})}{\| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| }\right)\right) \\
+=-\left(U^0_{\alpha B}\frac{1}{r_{\alpha}}\frac{e^{- \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| / r_{\alpha} } (x_{\alpha}-x_B^{\alpha})}{\| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| },U^0_{\alpha B}\frac{1}{r_{\alpha}}\frac{e^{- \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| / r_{\alpha} } (y_{\alpha}-y_B^{\alpha})}{\| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| }\right) \\
 \end{equation}
 
 \item The exponential function will always lay between 0 and 1:
@@ -385,7 +388,7 @@ The negative of the force means that when the potential between wall and pedestr
 
 
 \subsection{Repulsion from other agents}
-The third term on the right hand side of \eqref{model} is a summation of all the 
+The third term on the right hand side of equation \eqref{model} is a summation of all the 
 force between agent $\alpha$ and agent $\beta$. It is a function of the position vector and the velocity of 
 both agents, and it is given by:
 
@@ -506,7 +509,7 @@ acceleration and represents a rather large force between agents (as large as six
 
 
 \subsection{Repulsion from other agents}
-The third term on the right hand side of \eqref{model} is a summation of all the 
+The third term on the right hand side of equation \eqref{model} is a summation of all the 
 force between agent $\alpha$ and agent $\beta$. The equation we use is taken from a newer article \cite{ABconstant}. We did this because the original article contains two constants that is not given in the articel and in a mail we were adviced, by the authors, to use the values and equation from the new article. 
 
 The function for the repulsion between pedestrians depends on the position vector and the velocity of 
