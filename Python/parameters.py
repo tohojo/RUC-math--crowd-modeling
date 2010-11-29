@@ -14,11 +14,16 @@ image_prefix = "images/test-"
 use_c_ext = True
 use_threads = False
 
+framerate_limit = 1
+
 class constants:
     # From page 12 of the article
-    a_2 = 3.0
+    a_1 = 1.0
+    b_1 = 0.2
+    a_2 = 1.0
     b_2 = 0.2
     u = 3.0
+    lmbda = 0.1
 
 class actor:
     "Parameters related to actors"

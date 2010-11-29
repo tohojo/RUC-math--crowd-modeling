@@ -30,7 +30,7 @@ class Canvas:
         self.screen.fill(BG_COLOUR)
 
     def tick(self):
-        self.clock.tick(0)
+        self.clock.tick(pm.framerate_limit)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
