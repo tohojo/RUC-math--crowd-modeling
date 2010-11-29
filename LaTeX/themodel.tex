@@ -1,28 +1,20 @@
 \section{The model}
 \label{sec:the-model}
 In this section we will go through the model from the article \cite{self-org} in 
-great detail, in the way that we understand the mathematical expressions and also 
-see how those expressions represent the reality.\\
-
-\subsection{Force analysis:} 
-As the social force model is an agent based model, it focuses on looking at the 
-quantities about an individual agent, at last get the motion of the crowd. In order 
-to get the equation of motion we always start by analysing the forces acting on the object.
-
-Here in this model, the agents cannot escape from Newton's three laws of motion, 
-which mainly says that when there is a force it results a corresponding acceleration.  
-Therefore, it is necessary to look at the forces.  However, our agent is not a ball 
-being kicked around, it has a willingness to go to some destine place, and the 
-"willingness" to go somewhere is hard to measure, but we know that the way an agent 
-implement the will normally is by generating a static frictional force from the ground, 
-and that force is here what we called a kind of "social force", which is 
-$\vec{f^{0}_{\alpha}}$ in Figure \ref{ForceModel}. 
-
-Some other major forces acting on the agent are the repulsive force from other agents 
-namely $ \beta $ - the force called $ \vec{f_{\alpha\beta}} $ in Figure \ref{ForceModel}, 
-and repulsive force from an obstacle (a wall for example) - the force called $ \vec{f_{\alpha B}} $ 
-in Figure \ref{ForceModel}.  As these two repulsive forces are a kind of normal force, the direction 
-should be perpendicular to the surface.
+great detail. 
+ 
+As mentioned earlier in section \ref{subsec:ABapproach} the social force model is an
+agent based model, this means that we describe the system by loking at each individual 
+object of the system. In this case each object in the system is subject to a series of 
+social forces. These forces are not real physical forces in the sence that they follow 
+newtons laws of motion but rather a measure of the agents motivation for acting in 
+specific ways. However that name \emph{social forces} is not accidential, we borrow both 
+notation and to some extent the interpretation from physics. In the model we are studying 
+there are four different forces. They are \emph{the desired force}, \emph{the repulsive 
+force from walls}, \emph{the interaction force} and \emph{the attractive force}. All the 
+forces work in the horizontal plane, the vertical plane is not of interest. The forces 
+are illustrated in figure \ref{ForceModel}.  They will all be studied closely in turn in 
+the following sections.
 
 \begin{figure}[hb]
     \centering
@@ -31,12 +23,6 @@ should be perpendicular to the surface.
     The x and y axes are defined by the Cartesian coordinate system.}
     \label{ForceModel}
 \end{figure}
-
-So far in the model it only mentioned the forces on the horizontal level, the gravitational 
-force and normal force from the ground which works vertically are not mentioned at all. The 
-reason is that in this model they only consider the motion on the horizontal plane. 
-Since there is no motion vertically, the gravitational force and the normal force 
-from the ground cancel each other.
 
 \subsection{The equation of motion for agent $ \alpha $:}
 The general approach of the model to get the equation of motion follows the standard way. S
