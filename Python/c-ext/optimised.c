@@ -2,7 +2,7 @@
 
 /*** Calculation part begin ***/
 
-static double A_1, A_2, B_1, B_2, U, timestep;
+static double A_1, A_2, B_1, B_2, U, lambda, timestep;
 
 // Global objects to allow access from different threads
 static Actor * actors;
@@ -431,9 +431,12 @@ PyMODINIT_FUNC initoptimised(void)
     p_constants = PyObject_GetAttrString(p_module, "constants");
     p_actors    = PyObject_GetAttrString(p_module, "actor");
     p_walls     = PyObject_GetAttrString(p_module, "walls");
+    A_1         = double_from_attribute(p_constants, "a_1");
+    B_1         = double_from_attribute(p_constants, "b_1");
     A_2         = double_from_attribute(p_constants, "a_2");
     B_2         = double_from_attribute(p_constants, "b_2");
     U           = double_from_attribute(p_constants, "u");
+    lambda      = double_from_attribute(p_constants, "lmbda");
     timestep    = double_from_attribute(p_module, "timestep");
     use_threads = ssize_t_from_attribute(p_module, "use_threads");
     a_count     = 0;
