@@ -34,7 +34,7 @@ borrowed from physics, we are not working with real physical forces here.
 Each induvidual agent is has a series of parameters describing the features of the agent. An agent is 
 represented by a circle with radius $r_{\alpha}$. The agent has a position $\vec{r_{\alpha}}$ and a 
 velocity $\vec{V_{\alpha}}$ at all times t. Furthermore each agent has a desired direction $\vec{e_{\alpha}}$ 
-in which it would like to go. An illustration of the notation can be seen in figure \ref{fig:NotationOfAgent}
+in which it would like to go. An illustration of the notation can be seen in figure \ref{fig:NotationOfAgent}.
 
 \begin{figure}[hb]
     \centering
@@ -46,24 +46,22 @@ in which it would like to go. An illustration of the notation can be seen in fig
     \label{fig:NotationOfAgent}
 \end{figure}
 
-The change in position $ \vec{r_{\alpha}} $ per time of agent $\alpha$ is actually 
-the velocity $ \vec{V_{\alpha}} $:
+The change in position $ \vec{r_{\alpha}} $ per time of agent $\alpha$ is the velocity $ \vec{V_{\alpha}} $:
 
 \begin{equation}
 		\frac{d \vec{r_{\alpha}}}{dt} = \vec{V_{\alpha}} \left( t \right)
 \end{equation}
 
-Also known from Newtonian physics, the change of velocity per time is the acceleration of agent 
-$\alpha$, which is the result of a summation of all the forces acting on the agent, namely 
-$\vec{f_{\alpha}} \left( t \right)$:
+The change of velocity per time is the acceleration of agent $\alpha$, which is due to 
+all the forces acting on the agent. The summation of all the forces is called $\vec{f_{\alpha}} \left( t \right)$ 
+and it is given by:
 
 \begin{equation}
     \frac{d \vec{V_{\alpha}}}{dt} = \vec{f_{\alpha}} \left( t \right) 
 \end{equation}
 
-Referring to the part for force analysis, we need to add the driving force, repulsive force from 
-the wall and repulsive force from other agents, also there is attractive force $\vec{f_{\alpha i}}$ 
-if the agent $ \alpha $ has some relatives or friends in the crowd.
+The summation of all the forces can be devided into four terms as stated in the introduction 
+to this section.
 
 \begin{equation}\label{model}
     \vec{f_{\alpha}} = \vec{f^{0}_{\alpha}} + \vec{f_{\alpha B}} +
@@ -71,10 +69,14 @@ if the agent $ \alpha $ has some relatives or friends in the crowd.
     \sum_{i} \vec{f_{\alpha i}} 
 \end{equation}
 
-Naturally the work next is to show explicit expression for each force, and we will go 
+Here $\vec{f_{\alpha}^{0}}$ is the \emph{desired force}, $\vec{f_{\alpha \text{B}}}$ is the repulsive 
+force from walls. $\sum_{\beta \neq \alpha} \vec{\alpha\beta}$ is a repulsive force from other agents 
+and $\vec{f_{\alpha i}}$ is a attractive force.
+
+We will now move on to show the explicit expression for each force. We will go 
 through them one at a time explaining their mathematical structure and their role in the model.
 
-\subsection{The desired force} %gotta figure out a better name for this part
+\subsection{The desired force}
 The first term on the right hand side of equation \eqref{model} describes the implement of agent 
 $ \alpha $'s "willingness" to reach the exit. In this model it is a velocity dependent force 
 and is given by:
