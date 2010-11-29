@@ -394,16 +394,20 @@ In that case, the repulsive force on agent $ \alpha $ from the wall is:
     \left( \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| \right)\\
 =-\left( \frac{\partial}{\partial x_{\alpha}}U_{B}( \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|), \frac{\partial}{\partial y_{\alpha}}U_{B}( \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|)\right) \\
 \end{equation}
-Calculating the derivatives we use that $\| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|= \sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2}$
-So if we insert the expression for $U_{B}$ and for $\| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|$ we get
+Calculating the derivatives we use that $\| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|= \sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2}$.
+Inserting this and the expression for $U_{B}$ we get:
 
 \begin{equation}
-    \vec{f_{\alpha B}} \left( \vec{r_{\alpha}} \right) 
-=-\left( \frac{\partial}{\partial x_{\alpha}}U^0_{\alpha B} e^{-\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / r_{\alpha} }, \frac{\partial}{\partial y_{\alpha}}U^0_{\alpha B} e^{- \sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / r_{\alpha} } \right)
+\begin{split}
+\vec{f_{\alpha B}} \left( \vec{r_{\alpha}} \right) 
+& =-\left( \frac{\partial}{\partial x_{\alpha}}U^0_{\alpha B} e^{-\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2}/r_{\alpha} }\right. , \\
+& \left. \frac{\partial}{\partial y_{\alpha}}U^0_{\alpha B} e^{-\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2}/r_{\alpha} } \right)
+\end{split}
 \end{equation}
+
 When we differentiate this, we will put $u=-\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / r_{\alpha} $ and then use the well known result, from use of the chain rule when using differentiation on an exponential function:
 \begin{equation}
-\frac{\partial }{\partial x}Ae^{u(x)}=\frac{\partial u(x)}{\partial x}Ae^{u}
+\frac{\partial }{\partial x}Ae^{u(x)}=\frac{\partial u(x)}{\partial x}Ae^{u(x)}
 \end{equation}
 This gives
 \begin{equation}
@@ -444,8 +448,9 @@ force between agent $\alpha$ and agent $\beta$. It is a function of the position
 both agents, and it is given by:
 
 \begin{equation}
+	\begin{split}
     \sum_{\beta \left( \neq \alpha \right)}
-        \vec{f_{\alpha \beta }}\left( t \right) =
+        \vec{f_{\alpha \beta }}\left( t \right) = &
         A_{\alpha}^{1} exp \left(
             \frac{ r_{\alpha \beta} - d_{\alpha \beta }}
                  {B_{\alpha}^1}
@@ -456,13 +461,14 @@ both agents, and it is given by:
             1 - \lambda_{\alpha}
         \right)
 		\frac{1+\cos{\phi}}{2}
-    \right) +
-    A_{\alpha}^{2} exp\left(
+    \right) \\
+& +A_{\alpha}^{2} exp\left(
         \frac{r_{\alpha \beta} - d_{\alpha \beta}}
              {B_{\alpha}^{2}}
     \right)
     \vec{\eta_{\alpha \beta}}
     \label{agentinteraction}
+\end{split}
 \end{equation}
 
 \begin{figure}[ht]
@@ -576,7 +582,6 @@ both agents, and it is given by:
 
 \begin{equation}
     w\left(\phi_{\alpha \beta}\right)=
-    \vec{\eta_{\alpha \beta}} \cdot
     \left(
         \lambda_{\alpha} + \left(
             1 - \lambda_{\alpha}
@@ -678,7 +683,7 @@ There is one intersection of the graph and the  axis at:
 \item If we put in values for the constants, we will be able to get a maximum value of $ f_{\alpha\beta}(t) $, 
 since the distance between agents cannot be negative. Here we take values from \cite{ABconstant} $ A_{\alpha} = 0.42 m/s^{2} $, 
 $ r_{\alpha\beta} = 0.6 m $, and $ B_{\alpha} = 1.65 m $, so 
-$ f_{\alpha\beta}(t)^{max} \doteq 0.64 m/s^{2} $.
+$ f_{\alpha\beta}(t)^{max} < 0.64 m/s^{2} $. It can never be exactly $0.64m/s^2$ since the normal vector will be undefined when two pedestrians are in the exact same spot.
 
 \end{itemize}
 
