@@ -14,7 +14,7 @@ image_prefix = "images/test-"
 use_c_ext = True
 use_threads = False
 
-framerate_limit = 1
+framerate_limit = 0
 
 class constants:
     # From page 12 of the article
@@ -36,13 +36,13 @@ class actor:
     default_target = Point(0.0, 10.0)
 
     initial_number = 100
-    initial_x_range = (-5, 5)
-    initial_y_range = (-5, 5)
+    initial_rectangles = ((-5,-5,5,5),)
 
     velocity_mean = 1.34
     velocity_deviation = 0.26
 
-    max_speed = 1.3
+    # max velocity is set from desired velocity * this factor
+    max_velocity_factor = 1.3
 
     radius_mean = 0.2
     radius_deviation = 0.01
