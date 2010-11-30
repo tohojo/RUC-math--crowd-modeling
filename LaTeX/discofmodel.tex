@@ -1,113 +1,89 @@
-\section{Discussion of model}
-\label{sec:discussion}
-In this section we will make an analysis of the different parts and 
-parameters of the model and see what their role in the model is as well 
-as inspect their domains and limitations. 
+\section{sec:discussion}\label{sec:discussion}
+\subsection{Repulsive force}
+In chapter 3 we have seen the formulas for calculating the repulsive forces from the wall and other agents are very similar, both are exponential functions decreasing with some distance, which makes us wonder if both come from the same origin.\\
 
+\begin{itemize}
+\item The difference between those two repulsive forces is basically one is from a single point and the other is from an object that has a dimension much larger than a single agent. If we imagine our agents are particles with negative charge, then there is a pair of repulsive forces which has direction along the line connecting the two particles and magnitude depending on the distance between them. Further we can put lots of particles along a bar, see Figure
+Summing up all the repulsive forces from each particle on the bar will give the repulsive force that the charged bar on the single particle $\alpha$.
 
-\subsection{Linear approximation}
-In our simulation, we use Euler's method to approximate solutions to the equations of motion, 
-which are ordinary differential equations, ODE, with initial conditions calculated from last time step, 
-and those initial value problems look like:
+\item Applying the idea above to analyse our wall repulsion, as a simple start we place the agent $\alpha$ a distance $ d $ away from the wall which as a length $L$, and by symmetry we know the resulting force must point vertically downwards, see Figure.\\
 
-\begin{eqnarray}
-\frac{dy}{dt} &=& f(y),\\
-y(t_{0}) &=& y_{0}
-\end{eqnarray}
+Integrating the forces can be written as:
 
-Within some small time interval from $t_{0}$ to $t_{0}+\bigtriangleup t$, the function of $ y(t) $ 
-can be approximately represented by a straight line:
-
-\begin{equation}
-l(t) = y_{0} + f(y_{0}) (t-t_{0})
+\begin{equation}\label{integ}
+\vec{f_{\alpha B}} = 
+\int_0^L \! \vec{f_{\alpha\beta}} \, \mathrm{d}l
 \end{equation}
 
-then after a small step size, the function value $ y $ becomes
+\item When the repulsive force is known, the expression for the wall potential can be calculated, which can be done by integrating the force along a path. Normally the potential at some position is defined as the work done on the particle by that potential field when the particle is moved from that position to infinitely far away.
 
-\begin{equation}
-y = y_{0} + f(y_{0}) \bigtriangleup t
+\begin{equation}\label{pot}
+	U_{B}= \int_{\vec{r_{\alpha}}•}^{text{f}\infty} \! \vec{f_{\alpha B}} \cdot \, \text{d}\vec{r_{\alpha}} 
 \end{equation}
 
-and the calculated value of $ y $ also becomes the initial value for the following step. 
-However, this kind of method can cause error in most situations, and there are methods trying 
-to minimize the error caused by the numerical way of solving problem.\\
+\item In some article [Helbing 2000], the repulsive force from the wall is given by:
+\begin{equation}\label{helbing2000}
+\vec{f_{\alpha B}} = 
+	\left( 
+			\left[ 
+	A exp 
+				\left[ 
+						\left(  
+							r_{\alpha}-d_{\alpha B}
+						\right)  / B
+				\right] +kg 
+					\left( 
+						r_{\alpha}-d_{\alpha B} 
+					\right) 
+			\right] 
+		\right)
+	\vec{n_{B}^{\alpha}}-\kappa g 
+	\left(
+		r_{\alpha}-d_{\alpha B}
+	\right) 
+	\left(
+			\vec{V_{\alpha}}\cdot \vec{t_{iw}}
+	\right) 
+\vec{t_{iw}}
+\end{equation}
 
-\subsection{The time steps}
-\label{sec:timestep}
-In this section we discuss how to set the the time steps of the calculation.
-When we do the simulations we want it be as cheap as possible. That is we 
-want it to be done with as few calculations as possible. Because the cheaper 
-you make the simulations the more pedestrians you can have in your simulation 
-without waiting to long for the results to come out. One of the way to minimize 
-the number of calculations is by choosing the highest possible value for 
-$\Delta t$. For instant there would be no reason to make a simulation in a 
-time step making people move so little that they, in the same time step in 
-real life, would not be able to make a reaction on the changes. On the other 
-hand there will of course be a maximum we can choose if we still want the simulations to 
-look realistic. If all the pedestrians make big jumps in each time step it will not be very 
-good to compare with real life situations. So we have to make sure that people are not able 
-to land on top of each other or to pass through a wall because the repulsion forces are 
-calculated at to great a distance compared to how big jumps a pedestrian can make.
-One of the big challenges when doing simulations is to choose the right value for $\Delta t$. 
-One way to get a quantitative value for $\Delta t$ is by looking at at the size of the parameters 
-added to the model to get some idea about the maximum displacement of a pedestrian as a function 
-of time and then choose a value that seems reasonable.
-So the step size also has to be small enough for the simulation and the result to be realistic.
-We can see that the error caused by the numerical approach must depends on the step size.
-From the mathematical point of view, a smaller step size generally gives smaller error through
-Euler's method, since the numerical result gets closer to the actual result, but 
-as we use the computer to do the calculation and it only deals with rational numbers, the 
-round off error becomes prominent since more calculations are needed.
-The round off error from previous steps are being calculated in the next calculations, and when the rounding errors accumulate  
-the numerical result of the ODE gets unsatisfactory, since the rounding errors do not decrease at the theoredical rate \cite{RoundingError}.
-Arciniega and Allen, 2003 concludes that the rounding error is inversely proportional to the squareroot of the stepsize.
+where $ r_{\alpha} $,  $ \vec{V_{\alpha}} $ are the radius and velocity of agent $ \alpha $ as we noted before, $ A $, $ B $, $ k $, $ \kappa $ are constants, $ d_{\alpha B} $ is the distance from the agent to the wall, $ \vec{n_{B}^{\alpha}} $ is a normal vector from the wall, $ \vec{t_{iw}} $ is a tangent vector to the wall. $ g $ is a function of some variable.\\
+In this expression, the wall repulsion force to agent $ \alpha $ is not always perpendicular to the wall, but the force has two components, one perpendicular to the wall and the other tangent to the wall. Particularly the tangent component depends on the velocity of $ \alpha $. However, in Helbing's latest articles he does not show the expression of Equation \ref{helbing2000}, but use the gradient of potential instead. 
+\end{itemize}
+
+
+\subsection{The repulsive force between agents in $ \Re ^{3}$}
+From the given formula for calculating the repulsive force between agents in the description of the model, the part calculating the force to keep the personal space can be omitted when the agents are rather close to each other, then the calculation can be reduced as Equation (\ref{eq:re}).
+
+\begin{equation}\label{eq:re}
+\overrightarrow{f_{\alpha\beta}}(t) = A_{\alpha}^{2} exp\left[ \frac{r_{\alpha\beta} - d_{\alpha}\beta}{B_{\alpha}^{2}}\right]  \overrightarrow{n_{\alpha\beta}}
+\end{equation}
+
+Taking the norms of both sides of Equation (\ref{eq:re}), we can draw the relation between the value of 
+$\overrightarrow{f_{\alpha\beta}}(t)$ and $d_{\alpha \beta}$, as in Figure (\ref{fig:physicalinteraction})
 \\
-Therefore, an optimal step size could be the one that causes 
-the sum of two sources of errors smallest. See figure \ref{timestepfigure} for a sketch of the
-idea.
-
-
-
 \begin{figure}
-    \centering
-    {\includegraphics[scale=0.45]{Figures/timestepfigure.pdf}} 
-    \caption[Errors from timestep size and Euler's method]{\small{Illustration of how size of the timestep and the round off error interact.
-	     The bigger the step size are the greater errors from Eulers method are, but the round off error will get smaller.
-	     In contrast the smaller step size are the smaller the errors from Eulers method will be, but the greater the round off
-	     errors will get. It follows that there will be a point, step size, where the combined error from Eulers method and round off error
-	     will be minimum.}}
-    \label{timestepfigure}
+\centering
+\includegraphics[scale=0.45]{Figures/physicalinteraction.pdf} 
+\caption{The function about the interaction force $\vec{f_{\alpha\beta}}(t)$ and the distance between two agents
+$d_{\alpha\beta}$ }\label{fig:physicalinteraction}
 \end{figure}
 
-\subsection{The fluctuation term}
-In addition to all the forces action on the agent the change in velocity of agent 
-$\alpha$ is controlled by fluctuation term. The role and nature of this term will 
-be discussed in this subsection.
-
-For the acceleration of pedestrian $\alpha$ we have following equation to add up the forces
-
-\begin{equation}
-\frac{d\vec{v}_{\alpha}}{dt}=\vec{f}_{\alpha}(t)+\vec{\xi}_{\alpha}(t)
-\end{equation}
-
-In this equation, $\vec{f}_{\alpha}(t)$ is the forces acting on pedestrian $\alpha$. 
-The term $\vec{\xi}_{\alpha}(t)$ is called a fluctuation term and is added to the equation 
-to reflect random behaviour of a pedestrian, in this case $\alpha$. In other words, $\vec{\xi}$ 
-adds a stochastic behaviour to the model for each person and because of this, one can't expect 
-the same simulation to give the completely same result as a previous simulation with the same 
-initial conditions. The reason this term is added is that you would'nt expect every person to 
-act with optimal behaviour in all situations. In some way you could also say that $\xi$ is a 
-personality factor, taking into account the little differences in the behaviour of different 
-persons.
-
-When we choose a value for $\xi$ for each pedestrians, it is of course important that the 
-pedestrians in the model will still behave in a way that are realistic. Therefore we do not 
-want the fluctuation term to be the dominant factor that makes a person jump 5 meter for no reason. 
-Instead it should be the little difference that in some cases makes a pedestrian, $\alpha$, go left 
-instead of going right when passing another pedestrian, $\beta$, or something similar.  
-
-When a reasonable mean value for $\xi$ have been chosen a good way to make a value for each 
-pedestrian would be with the Gaussian distribution function. This would make the main part of 
-the pedestrians have almost the same value but of certain percentage of the pedestrians would 
-have greater or lower value representing different personalities like old people or children, 
-or people in panic or people that in some other ways have disabilities. 
+There is one intersection of the graph and the axis $ \left( 0, A_{\alpha}^{2} exp\left( \frac{r_{\alpha\beta} }{B_{\alpha}^{2}}\right)  \right)  $. If put into the constants, we will be able to get a maximum value of $ f_{\alpha\beta}(t) $, since the distance between agents cannot be negative. Here we set $ A_{\alpha}^{2} = 3 m/s^{2} $, $ r_{\alpha\beta} = 0.6 m $, and $ B_{\alpha}^{2} = 0.2 m $, so $ f_{\alpha\beta}(t)^{max} \doteq 60 m/s^{2} $, which is about six times the gravitational acceleration and represents a rather large force between agents (as large as six person's weight). \\\\
+However, we notice that the effective part of the force calculated above is only the horizontal 
+component that enables the agent to move horizontally in the plane where we do the simulation, 
+but the reality is that the agents sometimes are also able to move vertically, for example, 
+by stepping upon other people when they cannot take the pushing force from the surrounding agents. 
+When that happens, the horizontal component of the repulsive force becomes smaller even if 
+$d_{\alpha\beta}$ is kept the same.	
+Therefore, a qualitative modification of dependence between $ f_{\alpha\beta}(t) $ and $ d_{\alpha\beta} $ could be:
+\begin{figure}[hb]   
+\centering
+    {\includegraphics[scale=0.35]{Figures/ForceOverlapping.pdf}} 
+    \caption{}
+    \label{forceoverlapping}
+\end{figure}
+\\
+\subsection{Use social force in further calculation}
+use the value of forces to predict, as they are partly not real forces, the measurement does not reflect the reality in some range.
+Pressure
