@@ -70,51 +70,33 @@ to this section.
 \end{equation}
 
 Here $\vec{f_{\alpha}^{0}}$ is the \emph{desired force}, $\vec{f_{\alpha \text{B}}}$ is the repulsive 
-force from walls. $\sum_{\beta \neq \alpha} \vec{\alpha\beta}$ is a repulsive force from other agents 
+force from walls. $\vec{f_{\beta \neq \alpha}}$ is a repulsive force from other agents 
 and $\vec{f_{\alpha i}}$ is a attractive force.
 
 We will now move on to show the explicit expression for each force. We will go 
 through them one at a time explaining their mathematical structure and their role in the model.
 
 \subsection{The desired force}
-The first term on the right hand side of equation \eqref{model} describes the implement of agent 
-$ \alpha $'s "willingness" to reach the exit. In this model it is a velocity dependent force 
-and is given by:
+The first term on the right hand side of equation \eqref{model} describes the \emph{willingness} of 
+agent $\alpha$'s to reach the exit. It is a velocity dependent force and is given by:
 
 \begin{equation}\label{relaxtime}
 	\vec{f^{0}_{\alpha}}\left( \vec{V_{\alpha}} \right) =
     \frac{1}{\tau}
     \left( V_{\alpha}^{0} \vec{e_{\alpha}} - \vec{V_{\alpha}} \right)
 \end{equation}
-where $V_{\alpha}^{0}$ is the desired speed, $ \vec{e_{\alpha}} $ is the normal vector pointing 
-to the exit, $\vec{V_{\alpha}}$ is the actual velocity of the agent, and $\tau$ is the relaxation time.
 
-From Equation \ref{relaxtime} we get the ideas that:
-\begin{itemize}
-\item About the notation, any quantity with a "$ ^{0} $ " on the upper right corner is a "desired" quantity.
+Where $V_{\alpha}^{0}$ is the desired speed, $ \vec{e_{\alpha}} $ is the unit vector pointing 
+in the desired direction of the agent which in most cases will be the exit, but it can in principle be anywhere. 
+$\vec{V_{\alpha}}$ is the actual velocity of the agent, and $\tau$ is the \emph{relaxation time}.
+The relaxtion time determines how reactive a agent is. In principle the relaxation time can vary for 
+each agent but from the article \cite{self-org} we get that $ \tau_{\alpha}\approx 1s $, which means that 
+it takes the agent $ 1s $ to change its velocity. $V_{\alpha}^{0} \vec{e_{\alpha}}$ is the desired velocity 
+of the agent. The desired speed at some time $V_{\alpha}^{0}\left( t \right)$ is given by:
 
-\item Although $ \vec{f^{0}_{\alpha}} $ is a kind of desired force, it actually exists, because it appears 
-in Equation \ref{model} for calculating the actual acceleration. However, the original article has not pointed 
-out what is the source of  $ \vec{f^{0}_{\alpha}} $.  As the calculation of that force is closely related with 
-the desired velocity $V_{\alpha}^{0}$, then we can think of the desired velocity as a imaginary source if 
-we are not so interested in the physical source. We have considered the static frictional force as a most likely 
-way of achieving the $ \vec{f^{0}_{\alpha}} $, and there are various other ways to fulfil that purpose, for 
-example, by pulling.
+%TODO: Write a section about the notation
+%About the notation, any quantity with a "$ ^{0} $ " on the upper right corner is a "desired" quantity.
 
-\item $ V_{\alpha}^{0} \vec{e_{\alpha}} $ represent the desired velocity, which is needed to calculated in two steps, 
-first to get the magnitude and then the direction. $ \vec{e_{\alpha}} $ is a normal vector pointing to the exit.
-
-\item In Equation \ref{relaxtime}, $\tau$ is used to divide the difference between the desired velocity and the 
-actual velocity. Equation \ref{relaxtime} fits dimensional analysis, because the quantity get from the division 
-is some form of acceleration. 
-
-\item Normally the relaxation time means the time needed to get from one state to another. The article 
-\cite{self-org} suggests $ \tau_{\alpha}\approx 1s $, which shows that it usually takes the agent $ 1s $ to 
-change its velocity.
-
-\end{itemize}
-
-The desired speed at some time $V_{\alpha}^{0}\left( t \right)$ is given by:
 
 \begin{equation}\label{v0eta}
     V_{\alpha}^{0}\left( t \right) = \left[ 1 - \eta_{\alpha} \left( t \right) \right] 
@@ -123,8 +105,15 @@ The desired speed at some time $V_{\alpha}^{0}\left( t \right)$ is given by:
 \end{equation}
 
 where $V_{\alpha}^{0} \left( 0 \right)$ is the desired speed at $ t=0 $, and $V_{\alpha}^{\text{max}}$ 
-is the maximum desired speed of agent $\alpha$. $\eta_{\alpha}$ is called the impatience or nervousness 
-of the agent and is given by:
+is the maximum desired speed of agent $\alpha$. The maximum desired speed is the speed that agent $\alpha$ 
+will try to get if it is allowed by the environment and other agents. It is not a physical limit to 
+how fast the agent can move but rather a parameter that determines the speed that the agent is 
+comfortable walking with. 
+
+The desired speed $V_{\alpha}^{0} \left( t \right)$ Changes with time, and especially varies 
+with the impatience factor which is also a function of time $t$.
+
+$\eta_{\alpha}$ is called the impatience or nervousness of the agent and is given by:
 
 \begin{equation}\label{eta}
 	\eta_{\alpha} \left( t \right) =
@@ -133,19 +122,11 @@ of the agent and is given by:
 \end{equation}
 
 where $\overline{V}_{\alpha}\left( t \right)$ is the average speed in the desired direction.
-As for Equation \ref{v0eta} and Equation \ref{eta}, we have the following considerations:
 
-\begin{itemize}
-\item The maximum desired speed $V_{\alpha}^{\text{max}}$ is the speed that agent $\alpha$ will try 
-to get if it is allowed by the environment and other agents. 
+excately how one measures the average speed in the desired direction on not properly explained in the 
+article. We define it to be the projection of the position vector $ \vec{r_{\alpha}} $ onto the desired 
+direction of motion $e_{\alpha}$. A illustration of this can be seen i figure \ref{impatience}.
 
-\item The desired speed $V_{\alpha}^{0} \left( t \right)$ Changes with time, and especially varies 
-with the impatience factor which is also a function of time $ t $.
-
-\item The average speed $\overline{V}_{\alpha} \left( t \right)$ along the desired direction is not specified 
-in the original article, and our understanding of that concept is as in Figure \ref{impatience}, where the 
-projection( the projected vector is called $ \vec{r_{\alpha}^{E}}$ ) of $ \vec{r_{\alpha}} $ onto the desired 
-direction of motion is used to calculate $\overline{V}_{\alpha} \left( t \right)$.
 
 \begin{figure}[ht]
 \centering
@@ -160,7 +141,7 @@ Therefore, we want to calculate $\overline{V}_{\alpha} \left( t \right)$ in the 
    \overline{V}_{\alpha} \left( t \right) = \frac{1}{t} \vec{r_{\alpha}}\cdot \vec{e_{\alpha}} 
 \end{equation}
 
-\item From Equation \ref{v0eta} the initial desired speed $V_{\alpha}^{0} \left( 0 \right)$ is used 
+From Equation \ref{v0eta} the initial desired speed $V_{\alpha}^{0} \left( 0 \right)$ is used 
 to calculated desired speed at any time $ t $, and if we put $ t=0 $ into the equation, we have
 
 \begin{equation}
@@ -200,7 +181,7 @@ which makes sense, as when the emergency suddenly happens our agent should feel 
 &=& V_{\alpha}^{\text{max}}
 \end{eqnarray}
 
-\item Equation (\ref{v0eta}) and Equation (\ref{eta}) contains an intermediate variable $ \eta_{\alpha} \left( t \right) $, 
+Equation (\ref{v0eta}) and Equation (\ref{eta}) contains an intermediate variable $ \eta_{\alpha} \left( t \right) $, 
 so in principle we are allowed to eliminate $ \eta_{\alpha} \left( t \right) $ and only show the 
 relationship between $ V_{\alpha}^{0}(t) $ and $ \overline{V}_{\alpha} \left( t \right) $. Thus we get:
 
@@ -242,53 +223,79 @@ Figure (\ref{fig:impatience}) is a drawing of the graph about those two variable
 	, 0 
 \right) 
 \end{equation}
-Normally, the values of the two speeds should have positive values, so the graph is part of a straight line.
-Now there is a doubt the range of the value of $ \overline{V}_{\alpha} \left( t \right) $, compared with $ V_{\alpha}^{max} $, 
-if we have already 
-set $ V_{\alpha}^{max} $ a fixed number for a certain agent. In the case:
+
+Normally, the values of the two speeds should have positive values, so the graph is part of 
+a straight line.Now there is a doubt the range of the value of $ \overline{V}_{\alpha} \left( t \right) $, 
+compared with $ V_{\alpha}^{max} $, if we have already set $ V_{\alpha}^{max} $ a fixed number 
+for a certain agent. In the case:
+
 \begin{equation}
 	V_{\alpha}^{max} 
 	\geq 
 	V_{\alpha}^{max} 
 	\frac{V_{\alpha}^{0}(0)}{V_{\alpha}^{max}-V_{\alpha}^{0}(0)}
 \end{equation}
+
 we get the relation:
+
 \begin{equation}
 V_{\alpha}^{0}(0)\leq \frac{1}{2} V_{\alpha}^{\text{max}}
 \end{equation}
+
 Which contradicts with our earlier conclusion that
+
 \begin{equation}
     V_{\alpha}^{0}\left( 0 \right) = V_{\alpha}^{\text{max}}
 \end{equation}
-Therefore, the graph should not intersect with $ \overline{V_{\alpha}} $ axis under normal circumstances when the maximum desired velocity is not exceeded.
-\item However, from Equation \ref{vv}  and Figure \ref{impatience} we think that $V_{\alpha}^{\text{max}}$ can be exceeded, but only under rare situations. For example, at $ t=0 $, if agent $ \alpha $ moves opposite to the exit because of some extreme large repulsive force, then from Equation \ref{vv} $ V_{\alpha}^{0} \left( 0 \right)  $ is larger than $V_{\alpha}^{\text{max}}$.
-\item If there are no repulsive forces at all, the only source of acceleration is from the desired velocity, which modifies the actual velocity to the desired direction and value.  After some time, the actual velocity should reach some constant, which resembles the so called terminal velocity in physics when the acceleration is zero.  When the agent reaches the terminal velocity the actual velocity does not change and it equals the average velocity, so we can write the acceleration from Equation \ref{relaxtime} as
+
+Therefore, the graph should not intersect with $ \overline{V_{\alpha}} $ axis under 
+normal circumstances when the maximum desired velocity is not exceeded.
+However, from Equation \ref{vv}  and Figure \ref{impatience} we think that 
+$V_{\alpha}^{\text{max}}$ can be exceeded, but only under rare situations. For example, 
+at $ t=0 $, if agent $ \alpha $ moves opposite to the exit because of some extreme large 
+repulsive force, then from Equation \ref{vv} $ V_{\alpha}^{0} \left( 0 \right)  $ is larger 
+than $V_{\alpha}^{\text{max}}$.
+
+If there are no repulsive forces at all, the only source of acceleration is from the 
+desired velocity, which modifies the actual velocity to the desired direction and value.  
+After some time, the actual velocity should reach some constant, which resembles the so 
+called terminal velocity in physics when the acceleration is zero.  When the agent reaches 
+the terminal velocity the actual velocity does not change and it equals the average velocity, 
+so we can write the acceleration from Equation \ref{relaxtime} as
 
 \begin{equation}
 \vec{f}_{\alpha} = \vec{f^{0}_{\alpha}}\left( \vec{V_{\alpha}} \right)
 \end{equation}
+
 \begin{equation}
 \frac{1}{\tau}\left( V_{\alpha}^{0} \vec{e_{\alpha}} - \overline{V}_{\alpha} \left( t\right) \vec{e_{\alpha}}  \right)  = 0
 \end{equation}
-As $ \tau $ is a constant, despite the direction of the velocity vector we have
+
+As $ \tau $ is a constant, despite the direction of the velocity vector we have:
+
 \begin{equation}\label{terminal}
 	 V_{\alpha}^{0} - \overline{V}_{\alpha} \left( t\right) 
     = 0
 \end{equation}
 
-Also we take Equation \ref{vv}, and insert the value of $ V_{\alpha}^{0}(t) $ from Equation \ref{vv} to Equation \ref{terminal}:
+Also we take Equation \ref{vv}, and insert the value of $ V_{\alpha}^{0}(t) $ from 
+Equation \ref{vv} to Equation \ref{terminal}:
 
 \begin{equation}
 	\left[ \left( 1 - \frac{V_{\alpha}^{max}}{V_{\alpha}^{0}(0)}\right)\overline{V}_{\alpha} \left( t \right) + V_{\alpha}^{max} \right] - \overline{V}_{\alpha} \left( t\right) 
     = 0
 \end{equation}
+
 Solve for $ \overline{V}_{\alpha} \left( t\right) $ we get:
+
 \begin{equation}
 \overline{V}_{\alpha} \left( t\right) = V_{\alpha}^{0}(0)
 \end{equation}
-Which makes a lot of sense because the terminal velocity is the initial desired velocity and equals the maximum desired velocity.
 
-\item The impatience or nervousness factor is active when one calculates the 
+Which makes a lot of sense because the terminal velocity is the initial desired velocity 
+and equals the maximum desired velocity.
+
+The impatience or nervousness factor is active when one calculates the 
 force action on agent $\alpha$ from the velocity of the agent.
 
 In the case where $0 \leq \eta_{\alpha} \leq 1$ the expression for 
@@ -329,14 +336,9 @@ forced to exceed his desired velocity.
 In the case where $1 \leq \eta_{\alpha}$ it would mean that the agent has moved 
 further in the opposite direction than the desired one and this can only happen very 
 weird situations.
-\end{itemize}
 
 % Lets have a little summation here. What have we learned about the inpatience factor and
 % the velocity dependant force. What kind of dynamics does this force yield
-
-
-
-
 
 \subsection{Repulsion from the walls}
 The second term on the right hand side of equation \eqref{model} is a force which arise from interactions with the walls or other obstacles. The forces, caused by the wall or obstacles, is given by:
