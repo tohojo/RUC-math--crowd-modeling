@@ -311,8 +311,9 @@ static PyObject * get_actors(PyObject * self, PyObject * args)
 	int i;
 
 	for(i = 0; i < a_count; i++) {
-		PyList_SetItem(list, i, Py_BuildValue("ddd", 
-            actors[i].position.x, actors[i].position.y, actors[i].radius));
+		PyList_SetItem(list, i, Py_BuildValue("dddd", 
+            actors[i].position.x, actors[i].position.y, actors[i].radius,
+			vector_length(actors[i].velocity)));
 	}
 
     return list;
