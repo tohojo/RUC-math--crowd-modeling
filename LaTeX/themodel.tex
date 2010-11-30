@@ -148,12 +148,12 @@ given by:
 \end{equation}
 
 where $\overline{V}_{\alpha}\left( t \right)$ is the average speed in the 
-desired direction.
-
-excately how one measures the average speed in the desired direction on not 
-properly explained in the article. We define it to be the projection of the 
-position vector $ \vec{r_{\alpha}} $ onto the desired direction of motion 
-$e_{\alpha}$. A illustration of this can be seen i figure \ref{impatience}.
+desired direction.Excately how one measures the average speed in the desired 
+direction is not properly explained in the article. We define it to be the 
+projection of the position vector $ \vec{r_{\alpha}} $ onto the desired direction 
+of motion $e_{\alpha}$ devided by the time that the simulation has run. A 
+illustration of this can be seen i figure \ref{impatience}. The mathematical 
+expression becomes:
 
 
 \begin{figure}[ht]
@@ -164,37 +164,14 @@ $e_{\alpha}$. A illustration of this can be seen i figure \ref{impatience}.
     \label{impatience}
 \end{figure}
 
-Therefore, we want to calculate $\overline{V}_{\alpha} \left( t \right)$ in 
-the following way:
-
 \begin{equation}\label{averagespeed}
    \overline{V}_{\alpha} \left( t \right) =
    \frac{1}{t} \vec{r_{\alpha}}\cdot \vec{e_{\alpha}} 
 \end{equation}
 
-From Equation \ref{v0eta} the initial desired speed $V_{\alpha}^{0} \left( 0 
-\right)$ is used to calculated desired speed at any time $ t $, and if we put 
-$ t=0 $ into the equation, we have
-
-\begin{equation}
-    V_{\alpha}^{0}\left( 0 \right) = 
-    \left[ 1 - \eta_{\alpha} \left( 0 \right) \right] 
-    V_{\alpha}^{0} \left( 0 \right) +
-    \eta_{\alpha} \left( 0 \right)V_{\alpha}^{\text{max}}
-\end{equation}
-
-where $ \eta_{\alpha} \left( 0 \right) $ is not known.Also for Equation 
-\ref{eta}, put $ t=0 $ and we get:
-
-\begin{equation}
-    \eta_{\alpha} \left( 0 \right) =
-    1 - \frac{\overline{V}_{\alpha} \left( 0 \right)}
-             {V_{\alpha}^{0} \left( 0 \right)}
-\end{equation}
-
-although the initial average speed $ \overline{V}_{\alpha} \left( 0 \right) $ 
-is not defined in the original article, we decide to put $ 
-\overline{V}_{\alpha} \left( 0 \right)=0 $, because in that case 
+$\overline{V}_{\alpha}$ is undefined at $t=0$ beacause that would mean 
+that you should devide by zero, which is undefined. We define it as 
+$\overline{V}_{\alpha} \left( 0 \right)=0 $, because in that case:
 
 \begin{eqnarray}
     \eta_{\alpha} \left( 0 \right) &=&
