@@ -122,7 +122,8 @@ void add_repulsion(Actor * a, Actor * b)
 
 void add_social_sphere(Actor * a, Actor * b)
 {
-    if(A_1 == 0 || B_1 == 0) return;
+    if(A_1 == 0 || B_1 == 0 || 
+			(!a->velocity.x && !a->velocity.y)) return;
     Vector repulsion = calculate_repulsion(a, b, A_1, B_1);
     Vector from_b = vector_sub(a->position, b->position);
 
