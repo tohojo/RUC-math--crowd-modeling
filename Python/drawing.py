@@ -40,8 +40,9 @@ class Canvas:
 
     def update(self, frames):
         pygame.display.flip()
-        if pm.create_images:
-            pygame.image.save(self.screen, "%s%05d.png" % (pm.image_prefix, frames))
+
+    def create_image(self):
+        pygame.image.save(self.screen, "%s%05d.png" % (pm.image_prefix, frames))
 
     def draw_wall(self, w):
         (x1,y1) = Helper.screen_coords(w.start)
@@ -53,14 +54,13 @@ class Canvas:
                 Helper.screen_coords(a.position),
                 Helper.screen_radius(a.radius))
 
-    def draw_actors(self):
-        if pm.use_c_ext:
-            for (x,y,r) in optimised.get_actors():
-                (x,y) = Helper.screen_coords(x,y)
-                gfxdraw.aacircle(self.screen,
-                        x,y,
-                        Helper.screen_radius(r),
-                        DRAW_COLOUR)
+    def draw_actors(self, actors):
+        for (x,y,r,v) in actors:
+            (x,y) = Helper.screen_coords(x,y)
+            gfxdraw.aacircle(self.screen,
+                    x,y,
+                    Helper.screen_radius(r),
+                    DRAW_COLOUR)
 
 
     def draw_target(self, t):
@@ -73,8 +73,8 @@ class Canvas:
         pygame.draw.circle(self.screen, DRAW_COLOUR, 
                 Helper.screen_coords(p), 2)
 
-    def draw_text(self, t):
-        if pm.create_images:
+    def draw_text(self, t, create_images):
+        if create_images:
             text = t
         else:
             text = "%s - %d fps" % (t, self.clock.get_fps())

@@ -6,7 +6,10 @@ from Vector import Vector, Point
 timestep = 0.01
 random_seed = 0
 
-stop_at = None
+stop_at = 60.0
+
+show_simulation = True
+create_plots = False
 
 create_images = False
 image_prefix = "images/test-"

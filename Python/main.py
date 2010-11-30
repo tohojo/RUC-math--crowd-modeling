@@ -15,34 +15,48 @@ if pm.use_c_ext:
     import optimised
 
 import sys
+from optparse import OptionParser
 
-def main():
-    canvas = Canvas()
+parser = OptionParser()
+parser.add_option("-s", "--show-simulation", 
+        default=pm.show_simulation, action="store_true", dest="show_simulation",
+        help="show the simulation while running")
+parser.add_option("-S", "--hide-simulation", 
+        action="store_false", dest="show_simulation",
+        help="hide the simulation while running")
+parser.add_option("-i", "--create-images",
+        default=pm.create_images, action="store_true", dest="create_images",
+        help="store images of each frame")
+parser.add_option("-I", "--no-create-images",
+        action="store_false", dest="create_images",
+        help="do not store images of each frame")
+parser.add_option("-p", "--create-plots",
+        default=pm.create_plots, action="store_true", dest="create_plots",
+        help="create plots")
+parser.add_option("-P", "--no-create-plots",
+        action="store_false", dest="create_plots",
+        help="do not create plots")
+parser.add_option("", "--trace",
+        action="store_true", dest="trace", default=False,
+        help="enable trace when drawing")
+parser.add_option("", "--profile",
+        action="store_true", dest="profile", default=False,
+        help="enable profiling of code")
 
-    if len(sys.argv) > 1 and sys.argv[1] == "trace":
-        clear = False
-    else:
-        clear = True
+
+def main(options):
+
+    drawing = options.create_images or options.show_simulation
+
+    def tick():
+        return True
+
+    if drawing:
+        canvas = Canvas()
+        canvas.clear_screen()
+        tick = canvas.tick
 
     actors = setup.generate_actors()
-#    [
-#            Actor(
-#                position = Point(-8.0, 8.0),
-#                velocity = Vector(-2.5, 0.0),
-#                target = Point(0.0, 0.0)),
-#            Actor(
-#                position = Point(8.0, 8.0),
-#                velocity = Vector(-2.5, 0),
-#                target = Point(0.0, 0.0)),
-#            Actor(
-#                position = Point(-8.0, -8.0),
-#                velocity = Vector(-2.5, 0.0),
-#                target = Point(0.0, 0.0)),
-#            Actor(
-#                position = Point(8.0, -8.0),
-#                velocity = Vector(-2.5, 0),
-#                target = Point(0.0, 0.0)),
-#            ]
     walls = [Wall(*i) for i in pm.walls]
 
     if pm.use_c_ext:
@@ -52,62 +66,72 @@ def main():
     timer = 0.0
     time_start = time()
     frames = 0
-    canvas.clear_screen()
 
-    if pm.create_images:
+    if options.create_images:
         import pprint
         pfile = open("%sparameters" % pm.image_prefix, "w")
         pfile.write(pprint.pformat(pm.params))
         pfile.write("\n")
         pfile.close()
 
-    while canvas.tick():
-        
-        if clear:
-            canvas.clear_screen()
+    try:
+        while tick():
+            
+            if drawing and not options.trace:
+                canvas.clear_screen()
 
-        canvas.draw_text("t = %.2f" % timer)
+            if pm.use_c_ext:
+                optimised.update_actors()
+                actor_coords = optimised.get_actors()
+                if drawing:
+                    canvas.draw_actors(actor_coords)
+            else:
+                actor_coords = list()
+                for a in actors:
+                    a.calculate_acceleration(walls, actors)
 
-        canvas.draw_target(pm.actor.target)
+                for a in actors:
+                    a.update_position(timestep)
+                    if a.has_escaped():
+                        actors.remove(a)
+                        continue
+                    
+                    actor_coords.append((a.position.x, a.position.y, a.radius,
+                        a.velocity.length()))
 
-#        if actors[0].time > 10:
-#            return
+                    if drawing:
+                        canvas.draw_actor(a)
 
-        for w in walls:
-            canvas.draw_wall(w)
+            
+            timer += timestep
+            frames += 1
 
-        if pm.use_c_ext:
-            optimised.update_actors()
-            canvas.draw_actors()
-        else:
-            for a in actors:
-                a.calculate_acceleration(walls, actors)
+            if drawing:
+                canvas.draw_text("t = %.2f" % timer, options.create_images)
+                canvas.draw_target(pm.actor.target)
+                for w in walls:
+                    canvas.draw_wall(w)
+                if options.show_simulation:
+                    canvas.update(frames)
+                if options.create_images:
+                    canvas.create_image()
+            else:
+                output = "\r%d frames, t=%.2f" % (frames, timer)
+                print output,
 
-            for a in actors:
-                a.update_position(timestep)
-                #if a.has_escaped():
-                    #actors.remove(a)
-                    #continue
-
-                canvas.draw_actor(a)
-#            for w in walls:
-#                P = w.projection(a.position)
-#                canvas.draw_proj(P)
-        
-        timer += timestep
-        frames += 1
-        canvas.update(frames)
-
-        if pm.stop_at is not None and timer >= pm.stop_at:
-            break
+            if pm.stop_at is not None and timer >= pm.stop_at:
+                break
+    except KeyboardInterrupt:
+        print
 
     elapsed = time() - time_start
     print "%d frames in %f seconds. Avg %f fps" % (frames, elapsed, frames/elapsed)
 
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1 and sys.argv[1] == "profile":
+    (options, args) = parser.parse_args()
+    if options.profile:
         import cProfile
-        cProfile.run("main()")
+        cProfile.run("main(options)")
     else:
-        main()
+        main(options)
