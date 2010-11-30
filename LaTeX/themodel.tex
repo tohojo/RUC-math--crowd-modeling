@@ -365,36 +365,17 @@ the entire time then $\eta_{\alpha} = 0$  and $V_{\alpha}^{0} \left( t
 
 However in the case where $\eta_{\alpha} < 0$, that is the agent has moved 
 further in the desired direction than he would have had he been walking with his 
-initial speed the expression
+initial speed. This can happen in situations where then agent is being pushed 
+forward forward by the crowd.
 
-% stats to yield strange results. This would mean that 
-% $\eta_{\alpha} < 0$ which in turn means that:
-% 
-% \begin{equation}\label{n}
-%     V_{\alpha}^{0} \left( t\right) = 
-%     \left[ 1 + \eta_{\alpha} \left( t \right) \right] 
-%     V_{\alpha}^{0} \left( 0 \right) -
-%     \eta_{\alpha} \left( t \right)V_{\alpha}^{\text{max}}
-% \end{equation}
-% 
-% And this will yield a negative value for $V_{\alpha}^{0}$ if: 
-% 
-% \begin{equation}
-%     \left[ 1 + \eta_{\alpha} \left( t \right) \right] 
-%     V_{\alpha}^{0} \left( 0 \right) < \eta_{\alpha}
-%     \left( t \right)V_{\alpha}^{\text{max}} 
-% \end{equation}
-% 
-% This is a problem because it is not that far fetched that an agent will be 
-% forced to exceed his desired velocity.
+In the case where $1 < \eta_{\alpha}$ that is the agent has moved further 
+in the opposite direction than the desired one. Then can happen if the agent 
+starts out by being very close to another agent. However this is not something 
+that we think will happen very often. In any circumstances it will only have an 
+effect very early in the simulation. 
 
-In the case where $1 < \eta_{\alpha}$ it would mean that the agent has 
-moved further in the opposite direction than the desired one and this can only 
-happen very weird situations.
-
-% Lets have a little summation here. What have we learned about the inpatience 
-% factor and the velocity dependant force. What kind of dynamics does this 
-% force yield
+This concludes the explanation of the first of the four physical forces. The next 
+force in the equation is the repulsive force from the walls.
 
 \subsection{Repulsion from the walls}
 The second term on the right hand side of equation \eqref{model} is a force which arise from interactions with the walls or other obstacles. The forces, caused by the wall or obstacles, is given by:
