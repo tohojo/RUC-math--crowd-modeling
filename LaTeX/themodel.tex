@@ -170,209 +170,225 @@ expression becomes:
 \end{equation}
 
 $\overline{V}_{\alpha}$ is undefined at $t=0$ beacause that would mean 
-that you should devide by zero, which is undefined. We define it as 
-$\overline{V}_{\alpha} \left( 0 \right)=0 $, because in that case:
+that you should devide by zero, which is undefined. This in turn means 
+that $\eta_{\alpha}(0)$ is undefined. We therefore define 
+$V_{\alpha}^{0}(t)$ for $t=0$ and $t>0$ to be the following:
 
-\begin{eqnarray}
-    \eta_{\alpha} \left( 0 \right) &=&
-    1 - \frac{\overline{V}_{\alpha} \left( 0 \right)}
-    {V_{\alpha}^{0} \left( 0 \right)}\\
-    &=& 1 - \frac{0}{V_{\alpha}^{0} \left( 0 \right)}
-    = 1
-\end{eqnarray}
+\[
+  V_{\alpha}^{0} (t) = \left\{ 
+  \begin{array}{l l}
+    V_{\alpha}^{0}(0) \quad \text{if $t=0$}\\
+    \left[ 1 - \eta_{\alpha} \left( t \right) \right] 
+    V_{\alpha}^{0} \left( 0 \right) +
+    \eta_{\alpha} \left( t \right)V_{\alpha}^{\text{max}} \quad \text{if $t>0$}\\
+  \end{array} \right.
+\]
 
-which makes sense, as when the emergency suddenly happens our agent should 
-feel extremely anxious ($ \eta_{\alpha} \left( 0 \right)=1 $). Then we know 
-the initial desired speed $ V_{\alpha}^{0}\left( 0 \right) $ is
+%\begin{eqnarray}
+%    \eta_{\alpha} \left( 0 \right) &=&
+%    1 - \frac{\overline{V}_{\alpha} \left( 0 \right)}
+%    {V_{\alpha}^{0} \left( 0 \right)}\\
+%    &=& 1 - \frac{0}{V_{\alpha}^{0} \left( 0 \right)}
+%    = 1
+%\end{eqnarray}
+%
+%which makes sense, as when the emergency suddenly happens our agent should 
+%feel extremely anxious ($ \eta_{\alpha} \left( 0 \right)=1 $). Then we know 
+%the initial desired speed $ V_{\alpha}^{0}\left( 0 \right) $ is
+%
+% \begin{equation}
+%     \begin{split}
+%         V_{\alpha}^{0}\left( 0 \right) &= 
+%             \left[ 1 - \eta_{\alpha} \left( 0 \right) \right] 
+%             V_{\alpha}^{0} \left( 0 \right) +
+%             \eta_{\alpha} \left( 0 \right)V_{\alpha}^{\text{max}}\\
+%         &= \left( 1 - 1 \right)  
+%             V_{\alpha}^{0} \left( 0 \right) +
+%             1 V_{\alpha}^{\text{max}}\\
+%         &= V_{\alpha}^{\text{max}}
+%     \end{split}
+% \end{equation}
+% 
+% Equation (\ref{v0eta}) and Equation (\ref{eta}) contains an intermediate 
+% variable $ \eta_{\alpha} \left( t \right) $, so in principle we are allowed to 
+% eliminate $ \eta_{\alpha} \left( t \right) $ and only show the relationship 
+% between $ V_{\alpha}^{0}(t) $ and $ \overline{V}_{\alpha} \left( t \right) $. 
+% Thus we get:
+% 
+% \begin{equation}\label{vv}
+%     V_{\alpha}^{0}(t) =
+%         \left[ 
+%             1 - \frac{V_{\alpha}^{max}}{V_{\alpha}^{0}(0)}
+%         \right] \overline{V}_{\alpha} \left( t \right) +
+%         V_{\alpha}^{max}
+% \end{equation}
+% 
+% \begin{figure}[ht]
+%     \centering
+%     {\includegraphics[scale=0.35]{Figures/impatience.pdf}} \caption[The 
+%     impatience factor]{Illustration on the correlation between the function 
+%     about the desired speed $ V_{\alpha}^{0}(t) $ and the average speed in the 
+%     desired direction of motion $ \overline{V}_{\alpha} \left( t \right) $, 
+%     and the graph of $ V_{\alpha}^{0}(t) = \left[ 1 -  
+%     \frac{V_{\alpha}^{max}}{V_{\alpha}^{0}(0)}\right] \overline{V}_{\alpha} 
+%     \left( t \right) + V_{\alpha}^{max} $ intersects with the axis at $ \left( 
+%     0 , V_{\alpha}^{max} \right)  $ and $ \left(V_{\alpha}^{max} 
+%     \frac{V_{\alpha}^{0} \left( 0 \right) }{V_{\alpha}^{max}-V_{\alpha}^{0} 
+%     \left(0 \right)} , 0 \right)  $.  When $\alpha$'s velocity is at maximum 
+%     the impatience gets low, and vice versa.}
+%     \label{fig:impatience}
+% \end{figure}
+% 
+% Figure (\ref{fig:impatience}) is a drawing of the graph about those two 
+% variables, and the intersection of the function line with both axis are:
+% 
+% \begin{equation}
+%     \left( 
+%         \overline{V_{\alpha}} , V_{\alpha}^{0} \left( t \right)
+%     \right)
+%     =
+%     \left( 
+%         0 , V_{\alpha}^{max} 
+%     \right) 
+%     \text{and} 
+%     \left(
+%         V_{\alpha}^{max} 
+%         \frac
+%             {V_{\alpha}^{0} \left( 0 \right) }
+%             {V_{\alpha}^{max}-V_{\alpha}^{0} \left(0 \right)} 
+%         , 0 
+%     \right) 
+% \end{equation}
+% 
+% Normally, the values of the two speeds should have positive values, so the 
+% graph is part of a straight line.Now there is a doubt the range of the value 
+% of $ \overline{V}_{\alpha} \left( t \right) $, compared with $ 
+% V_{\alpha}^{max} $, if we have already set $ V_{\alpha}^{max} $ a fixed number 
+% for a certain agent. In the case:
+% 
+% \begin{equation}
+% 	V_{\alpha}^{max} 
+% 	\geq 
+% 	V_{\alpha}^{max} 
+% 	\frac{V_{\alpha}^{0}(0)}{V_{\alpha}^{max}-V_{\alpha}^{0}(0)}
+% \end{equation}
+% 
+% we get the relation:
+% 
+% \begin{equation}
+%     V_{\alpha}^{0}(0)\leq \frac{1}{2} V_{\alpha}^{\text{max}}
+% \end{equation}
+% 
+% Which contradicts with our earlier conclusion that
+% 
+% \begin{equation}
+%     V_{\alpha}^{0}\left( 0 \right) = V_{\alpha}^{\text{max}}
+% \end{equation}
+% 
+% Therefore, the graph should not intersect with $ \overline{V_{\alpha}} $ axis 
+% under normal circumstances when the maximum desired velocity is not exceeded.
+% However, from Equation \ref{vv}  and Figure \ref{impatience} we think that 
+% $V_{\alpha}^{\text{max}}$ can be exceeded, but only under rare situations. For 
+% example, at $ t=0 $, if agent $ \alpha $ moves opposite to the exit because of 
+% some extreme large repulsive force, then from Equation \ref{vv} $ 
+% V_{\alpha}^{0} \left( 0 \right)  $ is larger than $V_{\alpha}^{\text{max}}$.
+% 
+% If there are no repulsive forces at all, the only source of acceleration is 
+% from the desired velocity, which modifies the actual velocity to the desired 
+% direction and value.  After some time, the actual velocity should reach some 
+% constant, which resembles the so called terminal velocity in physics when the 
+% acceleration is zero.  When the agent reaches the terminal velocity the actual 
+% velocity does not change and it equals the average velocity, so we can write 
+% the acceleration from Equation \ref{relaxtime} as
+% 
+% \begin{equation}
+%     \vec{f}_{\alpha} = \vec{f^{0}_{\alpha}}\left( \vec{V_{\alpha}} \right)
+% \end{equation}
+% 
+% \begin{equation}
+%     \frac{1}{\tau}
+%     \left( 
+%         V_{\alpha}^{0} \vec{e_{\alpha}} - 
+%         \overline{V}_{\alpha} \left( t \right) \vec{e_{\alpha}}  
+%     \right)  = 0
+% \end{equation}
+% 
+% As $ \tau $ is a constant, despite the direction of the velocity vector we have:
+% 
+% \begin{equation}\label{terminal}
+% 	 V_{\alpha}^{0} - \overline{V}_{\alpha} \left( t\right) = 0
+% \end{equation}
+% 
+% Also we take Equation \ref{vv}, and insert the value of $ V_{\alpha}^{0}(t) $ 
+% from Equation \ref{vv} to Equation \ref{terminal}:
+% 
+% \begin{equation}
+% 	\left[ 
+%         \left(
+%             1 - \frac{V_{\alpha}^{max}}{V_{\alpha}^{0}(0)}
+%         \right)
+%         \overline{V}_{\alpha} \left( t \right) + V_{\alpha}^{max} 
+%     \right] - \overline{V}_{\alpha} \left( t\right) 
+%     = 0
+% \end{equation}
+% 
+% Solve for $ \overline{V}_{\alpha} \left( t\right) $ we get:
+% 
+% \begin{equation}
+%     \overline{V}_{\alpha} \left( t\right) = V_{\alpha}^{0}(0)
+% \end{equation}
+% 
+% Which makes a lot of sense because the terminal velocity is the initial 
+% desired velocity and equals the maximum desired velocity.
+% 
+% The impatience or nervousness factor is active when one calculates the force 
+% action on agent $\alpha$ from the velocity of the agent.
 
-\begin{equation}
-    \begin{split}
-        V_{\alpha}^{0}\left( 0 \right) &= 
-            \left[ 1 - \eta_{\alpha} \left( 0 \right) \right] 
-            V_{\alpha}^{0} \left( 0 \right) +
-            \eta_{\alpha} \left( 0 \right)V_{\alpha}^{\text{max}}\\
-        &= \left( 1 - 1 \right)  
-            V_{\alpha}^{0} \left( 0 \right) +
-            1 V_{\alpha}^{\text{max}}\\
-        &= V_{\alpha}^{\text{max}}
-    \end{split}
-\end{equation}
-
-Equation (\ref{v0eta}) and Equation (\ref{eta}) contains an intermediate 
-variable $ \eta_{\alpha} \left( t \right) $, so in principle we are allowed to 
-eliminate $ \eta_{\alpha} \left( t \right) $ and only show the relationship 
-between $ V_{\alpha}^{0}(t) $ and $ \overline{V}_{\alpha} \left( t \right) $. 
-Thus we get:
-
-\begin{equation}\label{vv}
-    V_{\alpha}^{0}(t) =
-        \left[ 
-            1 - \frac{V_{\alpha}^{max}}{V_{\alpha}^{0}(0)}
-        \right] \overline{V}_{\alpha} \left( t \right) +
-        V_{\alpha}^{max}
-\end{equation}
-
-\begin{figure}[ht]
-    \centering
-    {\includegraphics[scale=0.35]{Figures/impatience.pdf}} \caption[The 
-    impatience factor]{Illustration on the correlation between the function 
-    about the desired speed $ V_{\alpha}^{0}(t) $ and the average speed in the 
-    desired direction of motion $ \overline{V}_{\alpha} \left( t \right) $, 
-    and the graph of $ V_{\alpha}^{0}(t) = \left[ 1 -  
-    \frac{V_{\alpha}^{max}}{V_{\alpha}^{0}(0)}\right] \overline{V}_{\alpha} 
-    \left( t \right) + V_{\alpha}^{max} $ intersects with the axis at $ \left( 
-    0 , V_{\alpha}^{max} \right)  $ and $ \left(V_{\alpha}^{max} 
-    \frac{V_{\alpha}^{0} \left( 0 \right) }{V_{\alpha}^{max}-V_{\alpha}^{0} 
-    \left(0 \right)} , 0 \right)  $.  When $\alpha$'s velocity is at maximum 
-    the impatience gets low, and vice versa.}
-    \label{fig:impatience}
-\end{figure}
-
-Figure (\ref{fig:impatience}) is a drawing of the graph about those two 
-variables, and the intersection of the function line with both axis are:
-
-\begin{equation}
-    \left( 
-        \overline{V_{\alpha}} , V_{\alpha}^{0} \left( t \right)
-    \right)
-    =
-    \left( 
-        0 , V_{\alpha}^{max} 
-    \right) 
-    \text{and} 
-    \left(
-        V_{\alpha}^{max} 
-        \frac
-            {V_{\alpha}^{0} \left( 0 \right) }
-            {V_{\alpha}^{max}-V_{\alpha}^{0} \left(0 \right)} 
-        , 0 
-    \right) 
-\end{equation}
-
-Normally, the values of the two speeds should have positive values, so the 
-graph is part of a straight line.Now there is a doubt the range of the value 
-of $ \overline{V}_{\alpha} \left( t \right) $, compared with $ 
-V_{\alpha}^{max} $, if we have already set $ V_{\alpha}^{max} $ a fixed number 
-for a certain agent. In the case:
-
-\begin{equation}
-	V_{\alpha}^{max} 
-	\geq 
-	V_{\alpha}^{max} 
-	\frac{V_{\alpha}^{0}(0)}{V_{\alpha}^{max}-V_{\alpha}^{0}(0)}
-\end{equation}
-
-we get the relation:
-
-\begin{equation}
-    V_{\alpha}^{0}(0)\leq \frac{1}{2} V_{\alpha}^{\text{max}}
-\end{equation}
-
-Which contradicts with our earlier conclusion that
-
-\begin{equation}
-    V_{\alpha}^{0}\left( 0 \right) = V_{\alpha}^{\text{max}}
-\end{equation}
-
-Therefore, the graph should not intersect with $ \overline{V_{\alpha}} $ axis 
-under normal circumstances when the maximum desired velocity is not exceeded.
-However, from Equation \ref{vv}  and Figure \ref{impatience} we think that 
-$V_{\alpha}^{\text{max}}$ can be exceeded, but only under rare situations. For 
-example, at $ t=0 $, if agent $ \alpha $ moves opposite to the exit because of 
-some extreme large repulsive force, then from Equation \ref{vv} $ 
-V_{\alpha}^{0} \left( 0 \right)  $ is larger than $V_{\alpha}^{\text{max}}$.
-
-If there are no repulsive forces at all, the only source of acceleration is 
-from the desired velocity, which modifies the actual velocity to the desired 
-direction and value.  After some time, the actual velocity should reach some 
-constant, which resembles the so called terminal velocity in physics when the 
-acceleration is zero.  When the agent reaches the terminal velocity the actual 
-velocity does not change and it equals the average velocity, so we can write 
-the acceleration from Equation \ref{relaxtime} as
-
-\begin{equation}
-    \vec{f}_{\alpha} = \vec{f^{0}_{\alpha}}\left( \vec{V_{\alpha}} \right)
-\end{equation}
-
-\begin{equation}
-    \frac{1}{\tau}
-    \left( 
-        V_{\alpha}^{0} \vec{e_{\alpha}} - 
-        \overline{V}_{\alpha} \left( t \right) \vec{e_{\alpha}}  
-    \right)  = 0
-\end{equation}
-
-As $ \tau $ is a constant, despite the direction of the velocity vector we have:
-
-\begin{equation}\label{terminal}
-	 V_{\alpha}^{0} - \overline{V}_{\alpha} \left( t\right) = 0
-\end{equation}
-
-Also we take Equation \ref{vv}, and insert the value of $ V_{\alpha}^{0}(t) $ 
-from Equation \ref{vv} to Equation \ref{terminal}:
-
-\begin{equation}
-	\left[ 
-        \left(
-            1 - \frac{V_{\alpha}^{max}}{V_{\alpha}^{0}(0)}
-        \right)
-        \overline{V}_{\alpha} \left( t \right) + V_{\alpha}^{max} 
-    \right] - \overline{V}_{\alpha} \left( t\right) 
-    = 0
-\end{equation}
-
-Solve for $ \overline{V}_{\alpha} \left( t\right) $ we get:
-
-\begin{equation}
-    \overline{V}_{\alpha} \left( t\right) = V_{\alpha}^{0}(0)
-\end{equation}
-
-Which makes a lot of sense because the terminal velocity is the initial 
-desired velocity and equals the maximum desired velocity.
-
-The impatience or nervousness factor is active when one calculates the force 
-action on agent $\alpha$ from the velocity of the agent.
+If we look at the expression for $V_{\alpha}^{0}$ for $t>0$ we can 
+start to analyse how this affects the behavior of the agent. There 
+are three cases that is of interestes, namely $0 < \eta_{\alpha} < 1$, 
+$\eta_{\alpha} < 0$ and $1 < \eta_{\alpha} $.
 
 In the case where $0 \leq \eta_{\alpha} \leq 1$ the expression for 
-$V_{\alpha}^{0} \left( t \right)$  makes sense. Here we can see why this term 
+$V_{\alpha}^{0} \left( t \right)$ makes sense. Here we can see why this term 
 is called the impatience of the agent. If the fraction  between the average 
-speed in the desired direction and the initial speed is low then 
+speed in the desired direction and the initial desired speed is low then 
 $\eta_{\alpha} \approx 1$. 
-
 When the impatience term is close to one $V_{\alpha}^{0} \left( t \right)$ is 
 dominated by $V_{\alpha}^{\text{max}}$. That is, if the agent have not moved 
 very far in the desired direction compared to the initial speed the impatience 
 of the agent will cause the agent's future velocity to be dominated by the 
-desired velocity of the agent.
-
+desired velocity of the agent. 
 If the agent has been moving in the desired direction with his initial speed 
 the entire time then $\eta_{\alpha} = 0$  and $V_{\alpha}^{0} \left( t 
-\right)$ will continue to be $V_{\alpha}^{0} \left( 0 \right)$.
+\right)$ will continue to be $V_{\alpha}^{0} \left( 0 \right)$. 
 
-In the case where $\eta_{\alpha} \leq 0$ that is the agent has moved further 
-in the desired direction then he would have had he been walking with his 
-initial speed. The expression for $V_{\alpha}^{0} \left( t \right)$
-stats yield strange results. That $\eta_{\alpha} \leq 0$ would imply that:
+However in the case where $\eta_{\alpha} < 0$, that is the agent has moved 
+further in the desired direction than he would have had he been walking with his 
+initial speed the expression
 
-\begin{equation}\label{n}
-    V_{\alpha}^{0} \left( t\right) = 
-    \left[ 1 + \eta_{\alpha} \left( t \right) \right] 
-    V_{\alpha}^{0} \left( 0 \right) -
-    \eta_{\alpha} \left( t \right)V_{\alpha}^{\text{max}}
-\end{equation}
+% stats to yield strange results. This would mean that 
+% $\eta_{\alpha} < 0$ which in turn means that:
+% 
+% \begin{equation}\label{n}
+%     V_{\alpha}^{0} \left( t\right) = 
+%     \left[ 1 + \eta_{\alpha} \left( t \right) \right] 
+%     V_{\alpha}^{0} \left( 0 \right) -
+%     \eta_{\alpha} \left( t \right)V_{\alpha}^{\text{max}}
+% \end{equation}
+% 
+% And this will yield a negative value for $V_{\alpha}^{0}$ if: 
+% 
+% \begin{equation}
+%     \left[ 1 + \eta_{\alpha} \left( t \right) \right] 
+%     V_{\alpha}^{0} \left( 0 \right) < \eta_{\alpha}
+%     \left( t \right)V_{\alpha}^{\text{max}} 
+% \end{equation}
+% 
+% This is a problem because it is not that far fetched that an agent will be 
+% forced to exceed his desired velocity.
 
-And this will yield a negative value for $V_{\alpha}^{0}$ if: 
-
-\begin{equation}
-    \left[ 1 + \eta_{\alpha} \left( t \right) \right] 
-    V_{\alpha}^{0} \left( 0 \right) < \eta_{\alpha}
-    \left( t \right)V_{\alpha}^{\text{max}} 
-\end{equation}
-
-This is a problem because it is not that far fetched that an agent will be 
-forced to exceed his desired velocity.
-
-In the case where $1 \leq \eta_{\alpha}$ it would mean that the agent has 
+In the case where $1 < \eta_{\alpha}$ it would mean that the agent has 
 moved further in the opposite direction than the desired one and this can only 
 happen very weird situations.
 
