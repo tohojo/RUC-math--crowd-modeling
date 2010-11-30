@@ -71,12 +71,15 @@ static void add_desired_acceleration(Actor * a)
         double proj = vector_projection_length(
                 a->initial_position, a->target, a->position);
         average_velocity = proj / a->time;
-    }
 
-    impatience = 1.0 - average_velocity / a->initial_desired_velocity;
+		impatience = 1.0 - average_velocity / a->initial_desired_velocity;
 
-    desired_velocity = (1.0-impatience) * a->initial_desired_velocity + \
-                       impatience * a->max_velocity;
+		desired_velocity = (1.0-impatience) * a->initial_desired_velocity + \
+						   impatience * a->max_velocity;
+
+    } else {
+		desired_velocity = a->initial_desired_velocity;
+	}
     desired_direction = vector_sub(a->target, a->position);
     vector_normalise(&desired_direction);
 
