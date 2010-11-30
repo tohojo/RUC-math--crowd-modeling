@@ -18,6 +18,7 @@ void calculate_forces(Py_ssize_t i)
     for(j = 0; j < a_count; j++) {
         if(i == j) continue;
         add_repulsion(&actors[i], &actors[j]);
+        add_social_sphere(&actors[i], &actors[j]);
     }
 
     add_wall_repulsion(&actors[i]);
@@ -87,7 +88,7 @@ static void add_desired_acceleration(Actor * a)
 
 }
 
-void add_repulsion(Actor * a, Actor * b)
+Vector calculate_repulsion(Actor * a, Actor * b, double A, double B)
 {
     /* Equivalent Python code:
      
@@ -108,9 +109,30 @@ void add_repulsion(Actor * a, Actor * b)
     //if(isnan(distance)) return;
 
     vector_normalise(&from_b);
-    vector_imul(&from_b, A_2 * exp((radius_sum-distance)/B_2));
+    vector_imul(&from_b, A * exp((radius_sum-distance)/B));
 
-    vector_iadd(&a->acceleration, &from_b);
+    return from_b;
+
+}
+
+void add_repulsion(Actor * a, Actor * b)
+{
+    if(A_2 == 0 || B_2 == 0) return;
+    Vector repulsion = calculate_repulsion(a, b, A_2, B_2);
+    vector_iadd(&a->acceleration, &repulsion);
+}
+
+void add_social_sphere(Actor * a, Actor * b)
+{
+    if(A_1 == 0 || B_1 == 0) return;
+    Vector repulsion = calculate_repulsion(a, b, A_1, B_1);
+    Vector from_b = vector_sub(a->position, b->position);
+
+    double cosine = vector_dot(a->velocity, from_b)/(
+            vector_length(a->velocity) * vector_length(from_b));
+
+    vector_imul(&repulsion, (lambda + (1-lambda)*((1+cosine)/2)));
+    vector_iadd(&a->acceleration, &repulsion);
 }
 
 void add_wall_repulsion(Actor * a)
