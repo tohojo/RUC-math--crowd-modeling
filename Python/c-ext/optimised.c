@@ -63,28 +63,29 @@ static void add_desired_acceleration(Actor * a)
         self.acceleration = towards_target
         */
 
-    double average_velocity, impatience, desired_velocity = 0.0;
-    Vector towards_target = {0.0, 0.0};
+    double average_velocity = 0.0, impatience = 0.0, 
+		   desired_velocity = 0.0;
+    Vector desired_direction = {0.0, 0.0};
 
     if(a->time) {
         double proj = vector_projection_length(
                 a->initial_position, a->target, a->position);
         average_velocity = proj / a->time;
-    }
 
-    impatience = 1.0 - average_velocity / a->initial_desired_velocity;
+		impatience = 1.0 - average_velocity / a->initial_desired_velocity;
 
-    desired_velocity = (1.0-impatience) * a->initial_desired_velocity + \
-                       impatience * a->max_velocity;
-    towards_target = vector_sub(a->target, a->position);
-    vector_normalise(&towards_target);
+		desired_velocity = (1.0-impatience) * a->initial_desired_velocity + \
+						   impatience * a->max_velocity;
 
+    } else {
+		desired_velocity = a->initial_desired_velocity;
+	}
+    desired_direction = vector_sub(a->target, a->position);
+    vector_normalise(&desired_direction);
 
-    vector_imul(&towards_target, desired_velocity);
-    vector_isub(&towards_target, &a->velocity);
-    vector_imul(&towards_target, 1.0/a->relax_time);
-
-    a->acceleration = towards_target;
+	a->acceleration = vector_mul(desired_direction, desired_velocity);
+    vector_isub(&a->acceleration, &a->velocity);
+    vector_imul(&a->acceleration, 1.0/a->relax_time);
 
 }
 
@@ -124,7 +125,8 @@ void add_repulsion(Actor * a, Actor * b)
 
 void add_social_sphere(Actor * a, Actor * b)
 {
-    if(A_1 == 0 || B_1 == 0) return;
+    if(A_1 == 0 || B_1 == 0 || 
+			(!a->velocity.x && !a->velocity.y)) return;
     Vector repulsion = calculate_repulsion(a, b, A_1, B_1);
     Vector from_b = vector_sub(a->position, b->position);
 
@@ -173,6 +175,7 @@ int find_repultion_points(Actor * a, Vector repulsion_points[])
             // We have the length, L, of how far along AB the projection point is.
             // To turn this into a point, we multiply AB with L/|AB| and add
             // this vector to the starting point A.
+			// P = A + AB*L/|AB|
             repulsion_points[rep_p_c++] = vector_add(w.start, 
                     vector_mul(vector_sub(w.end, w.start), 
                         projection_length/w.length));
@@ -238,7 +241,8 @@ void update_position(Actor * a)
 
 
     vector_iadd(&a->position, &delta_p);
-    vector_iadd(&a->velocity, &a->acceleration);
+	a->velocity = vector_add(a->velocity,
+			vector_mul(a->acceleration, timestep));
     a->time += timestep;
 }
 
@@ -307,8 +311,9 @@ static PyObject * get_actors(PyObject * self, PyObject * args)
 	int i;
 
 	for(i = 0; i < a_count; i++) {
-		PyList_SetItem(list, i, Py_BuildValue("ddd", 
-            actors[i].position.x, actors[i].position.y, actors[i].radius));
+		PyList_SetItem(list, i, Py_BuildValue("dddd", 
+            actors[i].position.x, actors[i].position.y, actors[i].radius,
+			vector_length(actors[i].velocity)));
 	}
 
     return list;

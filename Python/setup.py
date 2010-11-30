@@ -61,7 +61,6 @@ def generate_actors():
         actors.append(Actor(
             position = position,
             desired_velocity = velocity,
-            velocity = velocity_v,
             max_velocity = velocity * pm.actor.max_velocity_factor,
             target = target,
             radius = radius))

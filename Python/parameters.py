@@ -6,7 +6,10 @@ from Vector import Vector, Point
 timestep = 0.01
 random_seed = 0
 
-stop_at = None
+stop_at = 60.0
+
+show_simulation = True
+create_plots = False
 
 create_images = False
 image_prefix = "images/test-"
@@ -18,12 +21,12 @@ framerate_limit = 0
 
 class constants:
     # From page 12 of the article
-    a_1 = 1.0
+    a_1 = 4.0
     b_1 = 0.2
-    a_2 = 1.0
+    a_2 = 4.0
     b_2 = 0.2
-    u = 3.0
-    lmbda = 0.1
+    u = 5.0
+    lmbda = 0.75
 
 class actor:
     "Parameters related to actors"
@@ -48,6 +51,12 @@ class actor:
     radius_deviation = 0.01
 
     target = (0,7)
+
+class plot:
+    sample_frequency = 0.05
+
+    density_rectangle = (-1,3,1,5)
+    flowrate_line = (-1, 5.1, 1, 5.1)
 
 walls = [   (-5, -5,  5, -5),
             (-5, -5, -5,  5),
