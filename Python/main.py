@@ -74,6 +74,10 @@ def main(options):
         pfile.write("\n")
         pfile.close()
 
+    if options.create_plots:
+        sample_frequency = int(pm.plot.sample_frequency/timestep)
+        densities = list()
+
     try:
         while tick():
             
@@ -103,6 +107,15 @@ def main(options):
                         canvas.draw_actor(a)
 
             
+
+            if options.create_plots and not frames % sample_frequency:
+                (x1, y1, x2, y2) = pm.plot.density_rectangle
+                density = 0.0
+                for (x,y,r,v) in actor_coords:
+                    if x+r >= x1 and x-r <= x2 and y+r >= y1 and y-r <= y2:
+                        density += 1
+                densities.append(density)
+
             timer += timestep
             frames += 1
 
@@ -123,6 +136,16 @@ def main(options):
                 break
     except KeyboardInterrupt:
         print
+
+    if options.create_plots:
+        import matplotlib.pyplot as plt
+        import numpy as np
+        t = np.arange(0.0, timer, pm.plot.sample_frequency)
+        plt.plot(t, densities)
+        plt.xlabel("t")
+        plt.ylabel("actors in area")
+        plt.title("Density")
+        plt.show()
 
     elapsed = time() - time_start
     print "%d frames in %f seconds. Avg %f fps" % (frames, elapsed, frames/elapsed)

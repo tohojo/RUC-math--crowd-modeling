@@ -6,7 +6,7 @@ from Vector import Vector, Point
 timestep = 0.01
 random_seed = 0
 
-stop_at = 60.0
+stop_at = 10.0
 
 show_simulation = True
 create_plots = False
@@ -51,6 +51,10 @@ class actor:
     radius_deviation = 0.01
 
     target = (0,7)
+
+class plot:
+    density_rectangle = (-1,3,1,5)
+    sample_frequency = 0.05
 
 walls = [   (-5, -5,  5, -5),
             (-5, -5, -5,  5),
