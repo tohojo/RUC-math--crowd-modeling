@@ -6,7 +6,7 @@ from Vector import Vector, Point
 timestep = 0.01
 random_seed = 0
 
-stop_at = 10.0
+stop_at = 60.0
 
 show_simulation = True
 create_plots = False
@@ -53,8 +53,10 @@ class actor:
     target = (0,7)
 
 class plot:
-    density_rectangle = (-1,3,1,5)
     sample_frequency = 0.05
+
+    density_rectangle = (-1,3,1,5)
+    flowrate_line = (-1, 5.1, 1, 5.1)
 
 walls = [   (-5, -5,  5, -5),
             (-5, -5, -5,  5),

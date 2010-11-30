@@ -10,9 +10,11 @@ import setup
 import parameters as pm
 from threadworkers import run_in_threads
 from time import time
+import numpy as np
 
 if pm.use_c_ext:
     import optimised
+
 
 import sys
 from optparse import OptionParser
@@ -77,6 +79,7 @@ def main(options):
     if options.create_plots:
         sample_frequency = int(pm.plot.sample_frequency/timestep)
         densities = list()
+        avg_velocities = list()
 
     try:
         while tick():
@@ -111,6 +114,7 @@ def main(options):
             if options.create_plots and not frames % sample_frequency:
                 (x1, y1, x2, y2) = pm.plot.density_rectangle
                 density = 0.0
+                avg_velocities.append(np.average([a[3] for a in actor_coords]))
                 for (x,y,r,v) in actor_coords:
                     if x+r >= x1 and x-r <= x2 and y+r >= y1 and y-r <= y2:
                         density += 1
@@ -139,12 +143,19 @@ def main(options):
 
     if options.create_plots:
         import matplotlib.pyplot as plt
-        import numpy as np
         t = np.arange(0.0, timer, pm.plot.sample_frequency)
-        plt.plot(t, densities)
+        plt.figure(1)
+        plt.subplot(211)
         plt.xlabel("t")
         plt.ylabel("actors in area")
         plt.title("Density")
+        plt.plot(t, densities)
+        plt.subplot(212)
+        plt.xlabel("t")
+        plt.ylabel("average velocity")
+        plt.title("Velocities")
+        plt.plot(t, avg_velocities)
+
         plt.show()
 
     elapsed = time() - time_start
