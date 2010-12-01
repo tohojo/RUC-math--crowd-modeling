@@ -11,6 +11,7 @@ typedef struct {
     double initial_desired_velocity;
     double max_velocity;
     double relax_time;
+	double pressure;
     Vector position;
     Vector initial_position;
     Vector target;

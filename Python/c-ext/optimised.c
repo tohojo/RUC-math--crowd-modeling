@@ -13,6 +13,7 @@ static Py_ssize_t w_count;
 void calculate_forces(Py_ssize_t i)
 {
     int j;
+	actors[i].pressure = 0;
     add_desired_acceleration(&actors[i]);
 
     for(j = 0; j < a_count; j++) {
@@ -120,6 +121,7 @@ void add_repulsion(Actor * a, Actor * b)
 {
     if(A_2 == 0 || B_2 == 0) return;
     Vector repulsion = calculate_repulsion(a, b, A_2, B_2);
+	a->pressure += vector_length(repulsion);
     vector_iadd(&a->acceleration, &repulsion);
 }
 
@@ -134,6 +136,7 @@ void add_social_sphere(Actor * a, Actor * b)
             vector_length(a->velocity) * vector_length(from_b));
 
     vector_imul(&repulsion, (lambda + (1-lambda)*((1+cosine)/2)));
+	a->pressure += vector_length(repulsion);
     vector_iadd(&a->acceleration, &repulsion);
 }
 
@@ -149,6 +152,7 @@ void add_wall_repulsion(Actor * a)
     for(i = 0; i < rep_p_c; i++) {
         repulsion = calculate_wall_repulsion(a, repulsion_points[i]);
         //printf("(%f,%f)\n", repulsion.x, repulsion.y);
+		a->pressure += vector_length(repulsion);
         vector_iadd(&a->acceleration, &repulsion);
     }
 
@@ -311,9 +315,9 @@ static PyObject * get_actors(PyObject * self, PyObject * args)
 	int i;
 
 	for(i = 0; i < a_count; i++) {
-		PyList_SetItem(list, i, Py_BuildValue("dddd", 
+		PyList_SetItem(list, i, Py_BuildValue("ddddd", 
             actors[i].position.x, actors[i].position.y, actors[i].radius,
-			vector_length(actors[i].velocity)));
+			vector_length(actors[i].velocity), actors[i].pressure));
 	}
 
     return list;
