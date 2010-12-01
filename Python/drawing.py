@@ -55,7 +55,7 @@ class Canvas:
                 Helper.screen_radius(a.radius))
 
     def draw_actors(self, actors):
-        for (x,y,r,v) in actors:
+        for (x,y,r) in actors[:3]:
             (x,y) = Helper.screen_coords(x,y)
             gfxdraw.aacircle(self.screen,
                     x,y,
