@@ -15,7 +15,7 @@ create_images = False
 image_prefix = "images/test-"
 
 use_c_ext = True
-use_threads = False
+use_threads = 2
 
 framerate_limit = 0
 
