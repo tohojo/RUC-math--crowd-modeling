@@ -11,6 +11,7 @@ typedef struct {
     double initial_desired_velocity;
     double max_velocity;
     double relax_time;
+	double pressure;
     Vector position;
     Vector initial_position;
     Vector target;
@@ -26,7 +27,9 @@ typedef struct {
 
 static void calculate_forces(Py_ssize_t i);
 static void add_desired_acceleration(Actor * a);
+static Vector calculate_repulsion(Actor * a, Actor * b, double A, double B);
 static void add_repulsion(Actor * a, Actor * b);
+static void add_social_sphere(Actor * a, Actor * b);
 static void add_wall_repulsion(Actor * a);
 static int find_repultion_points(Actor * a, Vector repulsion_points[]);
 static Vector calculate_wall_repulsion(Actor * a, Vector repulsion_point);
