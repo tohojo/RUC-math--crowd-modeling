@@ -6,6 +6,7 @@ from drawing import Canvas
 from Actor import Actor
 from Wall import Wall
 from Vector import Vector, Point
+from plotting import Plots
 import setup
 import parameters as pm
 from threadworkers import run_in_threads
@@ -78,8 +79,7 @@ def main(options):
 
     if options.create_plots:
         sample_frequency = int(pm.plot.sample_frequency/timestep)
-        densities = list()
-        avg_velocities = list()
+        plots = Plots(sample_frequency)
 
     try:
         while tick():
@@ -114,11 +114,16 @@ def main(options):
             if options.create_plots and not frames % sample_frequency:
                 (x1, y1, x2, y2) = pm.plot.density_rectangle
                 density = 0.0
-                avg_velocities.append(np.average([a[3] for a in actor_coords]))
-                for (x,y,r,v) in actor_coords:
+                velocities = list()
+                pressures = list()
+                for (x,y,r,v,p) in actor_coords:
+                    velocities.append(v)
+                    pressures.append(p)
                     if x+r >= x1 and x-r <= x2 and y+r >= y1 and y-r <= y2:
                         density += 1
-                densities.append(density)
+
+                plots.add_sample(timer, density=density, velocities=velocities,
+                        pressures=pressures)
 
             timer += timestep
             frames += 1
@@ -137,29 +142,17 @@ def main(options):
                 print output,
 
             if pm.stop_at is not None and timer >= pm.stop_at:
+                print
                 break
     except KeyboardInterrupt:
         print
 
-    if options.create_plots:
-        import matplotlib.pyplot as plt
-        t = np.arange(0.0, timer, pm.plot.sample_frequency)
-        plt.figure(1)
-        plt.subplot(211)
-        plt.xlabel("t")
-        plt.ylabel("actors in area")
-        plt.title("Density")
-        plt.plot(t, densities)
-        plt.subplot(212)
-        plt.xlabel("t")
-        plt.ylabel("average velocity")
-        plt.title("Velocities")
-        plt.plot(t, avg_velocities)
-
-        plt.show()
-
     elapsed = time() - time_start
     print "%d frames in %f seconds. Avg %f fps" % (frames, elapsed, frames/elapsed)
+
+    if options.create_plots:
+        plots.show()
+
 
 
 if __name__ == "__main__":
