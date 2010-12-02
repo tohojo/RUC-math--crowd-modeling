@@ -291,19 +291,34 @@ flow rate and density.
 	    measured efficiency, and calculate the average efficiancy of all the pedestrians
 	    and use that to compare with other simulations.
 
-    \item \textbf{Flow rate} We want to measure the flow rate of leaving pedestrians at the exit of a room as agents
-	    per second. We want to measure the maximum flow rate of the simulation and the average flow rate.
-	    Part of the model geometry was made as a line seqment as the exit, where we will measure the flow rate.
-	    When the simulation starts there will possibly be no flow rate since the agents first have to move to the exit
-	    before they can run out, hence the lowest flow rate, 0 agents per second, would not give us any useful information,
-	    where as the highest flow rate tells us how many can exit the room per second.
+    \item \textbf{Flow rate} Part of the model geometry was made as a line seqment where we measure the average
+	    flow rate and the maximum flow rate, as agents crossing the line seqment per second.
+	    The time step length is 0.01 sec, so from simulation step no. 1 and up til simulation step no. 100, first interval, we sum up
+	    the number of pedestrians who crossed the line seqment to get the flow rate within the first second of the simulation.
+	    Then we do the same for the next 100 simulation steps, second interval, and subtract the number of pedestrians from the previous
+	    interval. For each new interval we subtract the number of the pedestrians from previous intervals and so forth.
+	    The maximum flow rate is then the interval with highest amount pedestrians crossing the seqment line.
+	    For the average flowrate we divide the number of pedestrians used in the simulation with the total amount of simulation steps
+	    it took for the last agent to cross the seqment line.
 
-    \item \textbf{Density} As part of the model geometry we made a square in front of the exit, with the size $1 m^2$,
-	    where we meaure the density as agent in that square. We want to measure the highest density of all timesteps
-	    in a simulation, since this gives the most information of how dense the crowd was when exiting the room.
-	    For saving calculations we only take the timestep with the highest density.
+	    In case one we implement the line seqment at the exit, so to measure flow rate as pedestrians exiting the room.
+	    When the simulation starts agents first have to move to the exit before they can run out,
+	    hence the lowest flow rate, 0 agents per second,
+	    which would not give us any useful information, where as the highest flow rate tells us how many can exit the room per second.
+	    In case two we implement the line seqment in the middle of the corridor to measure the flow rate in both the directions.
+
+	    In case two we 
+	    
+    \item \textbf{Density} As part of the model geometry we made a square with the size $1 m^2$,
+	    where we meaure the density as agents intersecting that square. We want to measure the highest density of all simulation steps
+	    in the simulations, since this gives the most information of how dense the crowd was when exiting the room.
+	    
+	    In case one we place the square in front of the exit, and in case two we place on the line seqment in the middle of the corridor.
+	    For saving calculations we only take the simulation step with the highest density.
 	    As with the flow rate, the lowest density does not give us any useful information, since the all agents initial
 	    positions possibly can be outside that sguare meter, in all simulations, then the density would in all our
 	    simulations be 0 agents in that sguare meter.
+
+	    In case two
 \end{itemize}
 
