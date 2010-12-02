@@ -70,9 +70,13 @@ void vector_normalise_c(Vector * v, double length)
     v->y /= length;
 }
 
+/**
+ * Calculate the projection of C unto the vector pointing from A to B,
+ * returning the length along AB that this point is found.
+ */
 double vector_projection_length(Vector A, Vector B, Vector C)
 {
-    vector_isub(&C, &A);
-    vector_isub(&B, &A);
-    return vector_dot(C, B)/vector_length(B);
+    vector_isub(&C, &A); // Turn C into AC
+    vector_isub(&B, &A); // Turn B into AB
+    return vector_dot(C, B)/vector_length(B); // AC . AB / |AB|
 }

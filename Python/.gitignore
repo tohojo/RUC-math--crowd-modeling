@@ -1,3 +1,6 @@
 *.pyc
 *.png
 *.so
+images/
+films/
+tags

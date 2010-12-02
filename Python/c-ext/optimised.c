@@ -1,115 +1,31 @@
 #include "optimised.h"
 
-static double A_1, A_2, B_1, B_2;
+/*** Calculation part begin ***/
 
-static PyObject * calculate_acceleration(PyObject * self, PyObject * args)
+static double A_1, A_2, B_1, B_2, U, lambda, timestep;
+
+// Global objects to allow access from different threads
+static Actor * actors;
+static Wall * walls;
+static Py_ssize_t a_count;
+static Py_ssize_t w_count;
+
+void calculate_forces(Py_ssize_t i)
 {
-    // Python objects
-    PyObject * p_this; // Calling actor
-    PyObject * p_actors; // List of other actors
-    PyObject * p_walls; // List of walls
+    int j;
+	actors[i].pressure = 0;
+    add_desired_acceleration(&actors[i]);
 
-    PyObject * p_module;
-    PyObject * p_constants;
-
-    // Native objects
-    Actor * actors;
-    Wall * walls;
-    Actor a;
-
-    Vector acceleration = {0.0, 0.0};
-
-    int i,j = 0;
-
-    PyArg_ParseTuple(args, "OOO:calculate_acceleration", &p_this, &p_actors, &p_walls);
-
-    p_module = PyImport_ImportModule("parameters");
-    p_constants = PyObject_GetAttrString(p_module, "constants");
-    A_2 = double_from_attribute(p_constants, "a_2");
-    B_2 = double_from_attribute(p_constants, "b_2");
-
-    // The actors also contain the current actor, so we need to store one
-    // less actor than the number passed
-    Py_ssize_t a_count = PyList_Size(p_actors) -1;
-    Py_ssize_t w_count = PyList_Size(p_walls);
-
-    actors = malloc(a_count * sizeof(Actor));
-    walls = malloc(w_count * sizeof(Wall));
-
-    a = actor_from_pyobject(p_this);
-
-    for(i = 0, j = 0; i < a_count+1; i++) {
-        PyObject * p_a = PyList_GetItem(p_actors, i);
-
-        if(p_this != p_a) {
-            actors[j++] = actor_from_pyobject(p_a);
-        }
+    for(j = 0; j < a_count; j++) {
+        if(i == j) continue;
+        add_repulsion(&actors[i], &actors[j]);
+        add_social_sphere(&actors[i], &actors[j]);
     }
 
-    // Since we are not touching any python objects in this part, 
-    // we can release the global interpreter lock, to allow for multithreaded
-    // goodness.
-    Py_BEGIN_ALLOW_THREADS
-
-    add_desired_acceleration(&a, &acceleration);
-
-    for(i = 0; i < a_count; i++) {
-        add_repulsion(&a, &actors[i], &acceleration);
-    }
-
-    Py_END_ALLOW_THREADS
-
-    free(actors);
-    free(walls);
-
-    Py_DECREF(p_module);
-
-    return Py_BuildValue("dd", acceleration.x, acceleration.y);
+    add_wall_repulsion(&actors[i]);
 }
 
-static Actor actor_from_pyobject(PyObject * o)
-{
-    Actor a;
-
-    a.radius = double_from_attribute(o, "radius");
-    a.time = double_from_attribute(o, "time");
-    a.initial_desired_velocity = double_from_attribute(o, "initial_desired_velocity");
-    a.max_velocity = double_from_attribute(o, "max_velocity");
-    a.relax_time = double_from_attribute(o, "relax_time");
-
-    a.position = vector_from_attribute(o, "position");
-    a.initial_position = vector_from_attribute(o, "initial_position");
-    a.target = vector_from_attribute(o, "target");
-    a.velocity = vector_from_attribute(o, "velocity");
-
-    return a;
-}
-
-static double double_from_attribute(PyObject * o, char * name)
-{
-    PyObject * o2 = PyObject_GetAttrString(o, name);
-    return PyFloat_AsDouble(o2);
-}
-
-static Vector vector_from_attribute(PyObject * o, char * name)
-{
-    PyObject * o2 = PyObject_GetAttrString(o, name);
-    return vector_from_pyobject(o2);
-}
-
-static Vector vector_from_pyobject(PyObject * o)
-{
-    Vector v;
-
-    PyObject * x = PyObject_GetAttrString(o, "x");
-    v.x = PyFloat_AsDouble(x);
-    PyObject * y = PyObject_GetAttrString(o, "y");
-    v.y = PyFloat_AsDouble(y);
-
-    return v;
-}
-
-static void add_desired_acceleration(Actor * a, Vector * acceleration)
+static void add_desired_acceleration(Actor * a)
 {
     /* Equivalent Python code:
      
@@ -148,32 +64,33 @@ static void add_desired_acceleration(Actor * a, Vector * acceleration)
         self.acceleration = towards_target
         */
 
-    double average_velocity, impatience, desired_velocity = 0.0;
-    Vector towards_target = {0.0, 0.0};
+    double average_velocity = 0.0, impatience = 0.0, 
+		   desired_velocity = 0.0;
+    Vector desired_direction = {0.0, 0.0};
 
     if(a->time) {
         double proj = vector_projection_length(
                 a->initial_position, a->target, a->position);
         average_velocity = proj / a->time;
-    }
 
-    impatience = 1.0 - average_velocity / a->initial_desired_velocity;
+		impatience = 1.0 - average_velocity / a->initial_desired_velocity;
 
-    desired_velocity = (1.0-impatience) * a->initial_desired_velocity + \
-                       impatience * a->max_velocity;
-    towards_target = vector_sub(a->target, a->position);
-    vector_normalise(&towards_target);
+		desired_velocity = (1.0-impatience) * a->initial_desired_velocity + \
+						   impatience * a->max_velocity;
 
-    vector_imul(&towards_target, desired_velocity);
-    vector_isub(&towards_target, &a->velocity);
-    vector_imul(&towards_target, 1.0/a->relax_time);
+    } else {
+		desired_velocity = a->initial_desired_velocity;
+	}
+    desired_direction = vector_sub(a->target, a->position);
+    vector_normalise(&desired_direction);
 
-    acceleration->x = towards_target.x;
-    acceleration->y = towards_target.y;
+	a->acceleration = vector_mul(desired_direction, desired_velocity);
+    vector_isub(&a->acceleration, &a->velocity);
+    vector_imul(&a->acceleration, 1.0/a->relax_time);
 
 }
 
-void add_repulsion(Actor * a, Actor * b, Vector * acceleration)
+Vector calculate_repulsion(Actor * a, Actor * b, double A, double B)
 {
     /* Equivalent Python code:
      
@@ -189,23 +106,413 @@ void add_repulsion(Actor * a, Actor * b, Vector * acceleration)
     */
 
     double radius_sum = a->radius + b->radius;
-    Vector from_b = vector_sub(a->position, b->position);
-    double distance = vector_length(from_b);
+    Vector from_b     = vector_sub(a->position, b->position);
+    double distance   = vector_length(from_b);
     //if(isnan(distance)) return;
 
     vector_normalise(&from_b);
-    vector_imul(&from_b, A_2 * exp((radius_sum-distance)/B_2));
+    vector_imul(&from_b, A * exp((radius_sum-distance)/B));
 
-    vector_iadd(acceleration, &from_b);
+    return from_b;
+
+}
+
+void add_repulsion(Actor * a, Actor * b)
+{
+    if(A_2 == 0 || B_2 == 0) return;
+    Vector repulsion = calculate_repulsion(a, b, A_2, B_2);
+	a->pressure += vector_length(repulsion);
+    vector_iadd(&a->acceleration, &repulsion);
+}
+
+void add_social_sphere(Actor * a, Actor * b)
+{
+    if(A_1 == 0 || B_1 == 0 || 
+			(!a->velocity.x && !a->velocity.y)) return;
+    Vector repulsion = calculate_repulsion(a, b, A_1, B_1);
+    Vector from_b = vector_sub(a->position, b->position);
+
+    double cosine = vector_dot(a->velocity, from_b)/(
+            vector_length(a->velocity) * vector_length(from_b));
+
+    vector_imul(&repulsion, (lambda + (1-lambda)*((1+cosine)/2)));
+	a->pressure += vector_length(repulsion);
+    vector_iadd(&a->acceleration, &repulsion);
+}
+
+void add_wall_repulsion(Actor * a)
+{
+    int i;
+    Vector * repulsion_points  = PyMem_Malloc(w_count * sizeof(Vector));
+    int rep_p_c = 0;
+    Vector repulsion;
+
+    rep_p_c = find_repultion_points(a, repulsion_points);
+
+    for(i = 0; i < rep_p_c; i++) {
+        repulsion = calculate_wall_repulsion(a, repulsion_points[i]);
+        //printf("(%f,%f)\n", repulsion.x, repulsion.y);
+		a->pressure += vector_length(repulsion);
+        vector_iadd(&a->acceleration, &repulsion);
+    }
+
+
+    PyMem_Free(repulsion_points);
+}
+
+int find_repultion_points(Actor * a, Vector repulsion_points[])
+{
+    int i,j;
+    double projection_length;
+    Vector * used_endpoints    = PyMem_Malloc(2*w_count * sizeof(Vector));
+    Vector * possible_endpoints = PyMem_Malloc(w_count * sizeof(Vector));
+    int rep_p_c = 0, use_e_c = 0, pos_e_c = 0;
+
+    for(i = 0; i < w_count; i++) {
+        Wall w = walls[i];
+        projection_length = vector_projection_length(w.start, w.end, a->position);
+        if(projection_length < 0)  {
+            possible_endpoints[pos_e_c++] = w.start;
+        } else if(projection_length > w.length) {
+            possible_endpoints[pos_e_c++] = w.end;
+        } else {
+            // We have the length, L, of how far along AB the projection point is.
+            // To turn this into a point, we multiply AB with L/|AB| and add
+            // this vector to the starting point A.
+			// P = A + AB*L/|AB|
+            repulsion_points[rep_p_c++] = vector_add(w.start, 
+                    vector_mul(vector_sub(w.end, w.start), 
+                        projection_length/w.length));
+            used_endpoints[use_e_c++] = w.start;
+            used_endpoints[use_e_c++] = w.end;
+        }
+    }
+
+    for(i = 0; i < pos_e_c; i++) {
+        int use_e = 1;
+        for(j = 0; j < use_e_c; j++) {
+            if(possible_endpoints[i].x == used_endpoints[j].x && 
+                    possible_endpoints[i].y == used_endpoints[j].y) {
+                use_e = 0;
+            }
+        }
+        if(use_e) {
+            repulsion_points[rep_p_c++] = possible_endpoints[i];
+            used_endpoints[use_e_c++] = possible_endpoints[i];
+        }
+    }
+
+    PyMem_Free(used_endpoints);
+    PyMem_Free(possible_endpoints);
+
+    return rep_p_c;
+}
+
+Vector calculate_wall_repulsion(Actor * a, Vector repulsion_point)
+{
+    Vector repulsion = {0,0};
+    Vector repulsion_vector = vector_sub(repulsion_point, a->position);
+    double repulsion_length = vector_length(repulsion_vector);
+
+    repulsion.x = U * (1/a->radius) * \
+                  (exp(-repulsion_length/a->radius)*\
+                   (a->position.x-repulsion_point.x))/repulsion_length;
+    repulsion.y = U * (1/a->radius) * \
+                  (exp(-repulsion_length/a->radius)*\
+                   (a->position.y-repulsion_point.y))/repulsion_length;
+
+    return repulsion;
+}
+
+void update_position(Actor * a)
+{
+    /* Equivalent Python code:
+        # Calculate displacement from acceleration and velocity
+        delta_p = Vector(
+                self.velocity.x * timestep + 0.5 * self.acceleration.x * timestep**2,
+                self.velocity.y * timestep + 0.5 * self.acceleration.y * timestep**2)
+
+        # Update position and velocity, and reset the acceleration
+        self.position += delta_p
+        self.velocity += self.acceleration
+        self.time += timestep
+    */
+
+    Vector delta_p;
+
+    delta_p.x = a->velocity.x * timestep + 0.5 * a->acceleration.x * pow(timestep, 2);
+    delta_p.y = a->velocity.y * timestep + 0.5 * a->acceleration.y * pow(timestep, 2);
+
+
+    vector_iadd(&a->position, &delta_p);
+	a->velocity = vector_add(a->velocity,
+			vector_mul(a->acceleration, timestep));
+    a->time += timestep;
+}
+
+static int is_escaped(Actor * a)
+{
+	double l = vector_length(vector_sub(a->target, a->position));
+	return (l <= a->radius*2);
+}
+
+
+/*** Calculation part end ***/
+
+
+
+// Threading variables
+static Py_ssize_t use_threads;
+static pthread_t * threads;
+static pthread_attr_t thread_attr;
+
+static PyObject * update_actors(PyObject * self, PyObject * args)
+{
+
+    // Since we are not touching any python objects in this part, 
+    // we can release the global interpreter lock, to allow for multithreaded
+    // goodness.
+    Py_BEGIN_ALLOW_THREADS
+
+        do_calculations();
+
+    Py_END_ALLOW_THREADS
+
+    Py_RETURN_NONE;
+}
+
+static PyObject * add_actors(PyObject * self, PyObject * args)
+{
+    PyObject * p_actor_list;
+    int i;
+
+    PyArg_ParseTuple(args, "O:add_actors", &p_actor_list);
+    a_count = PyList_Size(p_actor_list);
+    actors   = PyMem_Realloc(actors, a_count * sizeof(Actor));
+
+    for(i = 0; i < a_count; i++) {
+        PyObject * p_a = PyList_GetItem(p_actor_list, i);
+        actor_from_pyobject(p_a, &actors[i]);
+    }
+    Py_RETURN_NONE;
+}
+
+static PyObject * get_actor(PyObject * self, PyObject * args)
+{
+    Py_ssize_t i;
+
+    PyArg_ParseTuple(args, "i:get_actor", &i);
+
+	if(i > a_count) Py_RETURN_NONE;
+
+    return Py_BuildValue("ddd", 
+            actors[i].position.x, actors[i].position.y, actors[i].radius);
+}
+
+static PyObject * get_actors(PyObject * self, PyObject * args)
+{
+	PyObject * list = PyList_New(a_count);
+	int i;
+
+	for(i = 0; i < a_count; i++) {
+		PyList_SetItem(list, i, Py_BuildValue("ddddd", 
+            actors[i].position.x, actors[i].position.y, actors[i].radius,
+			vector_length(actors[i].velocity), actors[i].pressure));
+	}
+
+    return list;
+}
+
+static void do_calculations()
+{
+    int i, rc;
+    void * status;
+    if(use_threads) {
+        Part * parts;
+        parts = PyMem_Malloc(use_threads * sizeof(Part));
+        int part_len = a_count / use_threads;
+        for(i = 0; i < use_threads; i++) {
+            parts[i].start = i*part_len;
+            parts[i].end = (i+1)*part_len;
+        }
+        parts[use_threads-1].end += a_count % use_threads;
+
+        for(i = 0; i < use_threads; i++) {
+            rc = pthread_create(&threads[i], NULL, 
+                    do_calculation_part, (void *) &parts[i]);
+        }
+
+        for(i = 0; i < use_threads; i++) {
+            pthread_join(threads[i], &status);
+        }
+    } else {
+        Part p = {0, a_count};
+        do_calculation_part(&p);
+    }
+
+    for(i = 0; i < a_count; i++) {
+        update_position(&actors[i]);
+    }
+
+	check_escapes();
+}
+
+static void do_calculation_part(Part * p)
+{
+    int i,j;
+    for(i = p->start; i < p->end; i++) {
+        calculate_forces(i);
+    }
+    if(use_threads) pthread_exit(NULL);
+}
+
+static void check_escapes()
+{
+	int i, j;
+
+	for(i = 0, j = 0; i < a_count; i++) {
+		if(!is_escaped(&actors[i])) {
+			actors[j++] = actors[i];
+		}
+	}
+
+    if(i != j) {
+        a_count -= i-j;
+        actors = PyMem_Realloc(actors, a_count * sizeof(Actor));
+    }
+}
+
+static Actor actor_from_pyobject(PyObject * o, Actor * a)
+{
+    a->radius                   = double_from_attribute(o, "radius");
+    a->time                     = double_from_attribute(o, "time");
+    a->initial_desired_velocity = double_from_attribute(o, "initial_desired_velocity");
+    a->max_velocity             = double_from_attribute(o, "max_velocity");
+    a->relax_time               = double_from_attribute(o, "relax_time");
+
+
+    a->position         = vector_from_attribute(o, "position");
+    a->initial_position = vector_from_attribute(o, "initial_position");
+    a->target           = vector_from_attribute(o, "target");
+    a->velocity         = vector_from_attribute(o, "velocity");
+    a->acceleration     = vector_from_attribute(o, "acceleration");
+}
+
+static Py_ssize_t ssize_t_from_attribute(PyObject * o, char * name)
+{
+    PyObject * o2 = PyObject_GetAttrString(o, name);
+    Py_ssize_t result = PyInt_AsSsize_t(o2);
+    Py_DECREF(o2);
+    return result;
+}
+
+static double double_from_attribute(PyObject * o, char * name)
+{
+    PyObject * o2 = PyObject_GetAttrString(o, name);
+    double result = PyFloat_AsDouble(o2);
+    Py_DECREF(o2);
+    return result;
+}
+
+static Vector vector_from_attribute(PyObject * o, char * name)
+{
+    PyObject * o2 = PyObject_GetAttrString(o, name);
+    Vector result = vector_from_pyobject(o2);
+    Py_DECREF(o2);
+    return result;
+}
+
+static Vector vector_from_pyobject(PyObject * o)
+{
+    Vector v;
+
+    PyObject * x = PyObject_GetAttrString(o, "x");
+    PyObject * y = PyObject_GetAttrString(o, "y");
+    v.x = PyFloat_AsDouble(x);
+    v.y = PyFloat_AsDouble(y);
+
+    Py_DECREF(x);
+    Py_DECREF(y);
+
+    return v;
 }
 
 static PyMethodDef OptimisedMethods[] = {
-    {"calculate_acceleration", calculate_acceleration, METH_VARARGS, 
+    {"update_actors", update_actors, METH_VARARGS, 
         "Calculate the acceleration of an actor"},
+    {"add_actors", add_actors, METH_VARARGS, 
+        "Add actors to the list"},
+    {"get_actor", get_actor, METH_VARARGS, 
+        "Get an actor's position and radius"},
+    {"get_actors", get_actors, METH_VARARGS, 
+        "Get all actor's position and radius"},
 };
 
 PyMODINIT_FUNC initoptimised(void)
 {
+    PyObject * p_module;
+    PyObject * p_constants;
+    PyObject * p_actors;
+    PyObject * p_walls;
+
     (void) Py_InitModule("optimised", OptimisedMethods);
+    Py_AtExit(cleanup);
+
+    p_module    = PyImport_ImportModule("parameters");
+    p_constants = PyObject_GetAttrString(p_module, "constants");
+    p_actors    = PyObject_GetAttrString(p_module, "actor");
+    p_walls     = PyObject_GetAttrString(p_module, "walls");
+    A_1         = double_from_attribute(p_constants, "a_1");
+    B_1         = double_from_attribute(p_constants, "b_1");
+    A_2         = double_from_attribute(p_constants, "a_2");
+    B_2         = double_from_attribute(p_constants, "b_2");
+    U           = double_from_attribute(p_constants, "u");
+    lambda      = double_from_attribute(p_constants, "lmbda");
+    timestep    = double_from_attribute(p_module, "timestep");
+    use_threads = ssize_t_from_attribute(p_module, "use_threads");
+    a_count     = 0;
+    actors      = NULL;
+
+    init_walls(p_walls);
+
+    Py_DECREF(p_module);
+    Py_DECREF(p_constants);
+    Py_DECREF(p_actors);
+    Py_DECREF(p_walls);
+
+    if(use_threads) init_threads();
 }
 
+static void init_walls(PyObject * p_walls)
+{
+    int i;
+    w_count = PyList_Size(p_walls);
+    walls    = PyMem_Malloc(w_count * sizeof(Wall));
+    for(i = 0; i < w_count; i++) {
+        PyObject * p_w   = PyList_GetItem(p_walls, i);
+        walls[i].start.x = PyFloat_AsDouble(PyTuple_GetItem(p_w, 0));
+        walls[i].start.y = PyFloat_AsDouble(PyTuple_GetItem(p_w, 1));
+        walls[i].end.x   = PyFloat_AsDouble(PyTuple_GetItem(p_w, 2));
+        walls[i].end.y   = PyFloat_AsDouble(PyTuple_GetItem(p_w, 3));
+        walls[i].length  = vector_length(vector_sub(walls[i].end, walls[i].start));
+    }
+}
+
+static void cleanup()
+{
+    if(use_threads) destroy_threads();
+}
+
+static void init_threads()
+{
+    threads = PyMem_Malloc(use_threads * sizeof(pthread_t));
+    pthread_attr_init(&thread_attr);
+    pthread_attr_setdetachstate(&thread_attr, PTHREAD_CREATE_JOINABLE);
+
+}
+
+static void destroy_threads()
+{
+    pthread_attr_destroy(&thread_attr);
+    PyMem_Free(threads);
+}
