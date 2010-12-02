@@ -115,15 +115,12 @@ def main(options):
                 (x1, y1, x2, y2) = pm.plot.density_rectangle
                 density = 0.0
                 velocities = list()
-                pressures = list()
-                for (x,y,r,v,p) in actor_coords:
+                for (x,y,r,v) in actor_coords:
                     velocities.append(v)
-                    pressures.append(p)
                     if x+r >= x1 and x-r <= x2 and y+r >= y1 and y-r <= y2:
                         density += 1
 
-                plots.add_sample(timer, density=density, velocities=velocities,
-                        pressures=pressures)
+                plots.add_sample(timer, density=density, velocities=velocities)
 
             timer += timestep
             frames += 1
