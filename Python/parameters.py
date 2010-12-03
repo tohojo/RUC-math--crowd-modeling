@@ -23,7 +23,7 @@ class constants:
     # From page 12 of the article
     A = 2.2
     B = 0.2
-    U = 3.0
+    U = 2.0
     lmbda = 0.1
 
 class actor:
