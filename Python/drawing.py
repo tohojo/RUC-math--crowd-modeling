@@ -41,7 +41,7 @@ class Canvas:
     def update(self, frames):
         pygame.display.flip()
 
-    def create_image(self):
+    def create_image(self, frames):
         pygame.image.save(self.screen, "%s%05d.png" % (pm.image_prefix, frames))
 
     def draw_wall(self, w):
