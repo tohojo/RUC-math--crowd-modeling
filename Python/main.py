@@ -1,40 +1,29 @@
 #!/usr/bin/python2
 # vim:fileencoding=utf8
 
+debugger = True
 
-from drawing import Canvas
-from Actor import Actor
-from Wall import Wall
-from Vector import Vector, Point
-from plotting import Plots
-import setup
-import parameters as pm
-from threadworkers import run_in_threads
-from time import time
-import numpy as np
-
-if pm.use_c_ext:
-    import optimised
-
+import constants
+from parameters import scenarios
 
 import sys
 from optparse import OptionParser
 
 parser = OptionParser()
 parser.add_option("-s", "--show-simulation", 
-        default=pm.show_simulation, action="store_true", dest="show_simulation",
+        default=constants.show_simulation, action="store_true", dest="show_simulation",
         help="show the simulation while running")
 parser.add_option("-S", "--hide-simulation", 
         action="store_false", dest="show_simulation",
         help="hide the simulation while running")
 parser.add_option("-i", "--create-images",
-        default=pm.create_images, action="store_true", dest="create_images",
+        default=constants.create_images, action="store_true", dest="create_images",
         help="store images of each frame")
 parser.add_option("-I", "--no-create-images",
         action="store_false", dest="create_images",
         help="do not store images of each frame")
 parser.add_option("-p", "--create-plots",
-        default=pm.create_plots, action="store_true", dest="create_plots",
+        default=constants.create_plots, action="store_true", dest="create_plots",
         help="create plots")
 parser.add_option("-P", "--no-create-plots",
         action="store_false", dest="create_plots",
@@ -47,115 +36,29 @@ parser.add_option("", "--profile",
         help="enable profiling of code")
 
 
-def main(options):
+def main(options, args):
 
-    drawing = options.create_images or options.show_simulation
+    if not len(args) and not debugger:
+        print "Missing scenario (options: %s)" % ",".join(scenarios.keys())
+        return
 
-    def tick():
-        return True
+    if debugger:
+        scenario = "square_room"
+    else:
+        scenario = args[0]
 
-    if drawing:
-        canvas = Canvas()
-        canvas.clear_screen()
-        tick = canvas.tick
+    if not scenario in scenarios:
+        print "Invalid scenario: %s (options: %s)" % (scenario,
+                ",".join(scenarios.keys()))
+        return
 
-    actors = setup.generate_actors()
-    walls = [Wall(*i) for i in pm.walls]
-
-    if pm.use_c_ext:
-        optimised.add_actors(actors)
-
-    timestep = pm.timestep
-    timer = 0.0
-    time_start = time()
-    frames = 0
-
-    if options.create_images:
-        import pprint
-        pfile = open("%sparameters" % pm.image_prefix, "w")
-        pfile.write(pprint.pformat(pm.params))
-        pfile.write("\n")
-        pfile.close()
-
-    if options.create_plots:
-        sample_frequency = int(pm.plot.sample_frequency/timestep)
-        plots = Plots(sample_frequency)
-
-    try:
-        while tick():
-            
-            if drawing and not options.trace:
-                canvas.clear_screen()
-
-            if pm.use_c_ext:
-                optimised.update_actors()
-                actor_coords = optimised.get_actors()
-                if drawing:
-                    canvas.draw_actors(actor_coords)
-            else:
-                actor_coords = list()
-                for a in actors:
-                    a.calculate_acceleration(walls, actors)
-
-                for a in actors:
-                    a.update_position(timestep)
-                    if a.has_escaped():
-                        actors.remove(a)
-                        continue
-                    
-                    actor_coords.append((a.position.x, a.position.y, a.radius,
-                        a.velocity.length()))
-
-                    if drawing:
-                        canvas.draw_actor(a)
-
-            
-
-            if options.create_plots and not frames % sample_frequency:
-                (x1, y1, x2, y2) = pm.plot.density_rectangle
-                density = 0.0
-                velocities = list()
-                for (x,y,r,v) in actor_coords:
-                    velocities.append(v)
-                    if x+r >= x1 and x-r <= x2 and y+r >= y1 and y-r <= y2:
-                        density += 1
-
-                plots.add_sample(timer, density=density, velocities=velocities)
-
-            timer += timestep
-            frames += 1
-
-            if drawing:
-                canvas.draw_text("t = %.2f" % timer, options.create_images)
-                canvas.draw_target(pm.actor.target)
-                for w in walls:
-                    canvas.draw_wall(w)
-                if options.show_simulation:
-                    canvas.update(frames)
-                if options.create_images:
-                    canvas.create_image(frames)
-            else:
-                output = "\r%d frames, t=%.2f" % (frames, timer)
-                print output,
-
-            if pm.stop_at is not None and timer >= pm.stop_at:
-                print
-                break
-    except KeyboardInterrupt:
-        print
-
-    elapsed = time() - time_start
-    print "%d frames in %f seconds. Avg %f fps" % (frames, elapsed, frames/elapsed)
-
-    if options.create_plots:
-        plots.show()
+    scenarios[scenario].run(options)
 
 
-
-if __name__ == "__main__":
+if __name__ == "__main__" or debugger:
     (options, args) = parser.parse_args()
     if options.profile:
         import cProfile
-        cProfile.run("main(options)")
+        cProfile.run("main(options, args)")
     else:
-        main(options)
+        main(options, args)

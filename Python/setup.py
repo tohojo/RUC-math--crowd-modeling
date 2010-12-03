@@ -1,35 +1,32 @@
 # vim:fileencoding=utf8
 
-import parameters as pm
+import constants
 import numpy, math, random
 
-from Vector import Vector,Point
-from Actor import Actor
+if constants.random_seed is not None:
+    numpy.random.seed(constants.random_seed)
+    random.seed(constants.random_seed)
 
-if pm.random_seed is not None:
-    numpy.random.seed(pm.random_seed)
-    random.seed(pm.random_seed)
-
-def generate_actors():
+def generate_actors(parameters):
     """Generates a number of actors placed randomly within the
     area specified by the parameters, with parameters as specified
     in the parameters file"""
 
     actors = []
 
-    num = pm.actor.initial_number
-    target = Point(pm.actor.target[0], pm.actor.target[1])
+    num = parameters['initial_count']
+    targets = parameters['targets']
 
-    radii = numpy.random.normal(pm.actor.radius_mean, 
-            pm.actor.radius_deviation, num)
+    radii = numpy.random.normal(parameters['radius_mean'], 
+            parameters['radius_deviation'], num)
     max_radius = max(radii)
-    velocities = numpy.random.normal(pm.actor.velocity_mean, 
-            pm.actor.velocity_deviation, num)
+    velocities = numpy.random.normal(parameters['velocity_mean'], 
+            parameters['velocity_deviation'], num)
 
     # calculate grid cells for placement of actors
     grid_cell_size = max_radius*2+0.05
     grid = list()
-    for r in pm.actor.initial_rectangles:
+    for r in parameters['start_areas']:
         (x1,y1,x2,y2) = r
         x_range = x2-x1
         y_range = y2-y1
@@ -55,14 +52,18 @@ def generate_actors():
         free_space_y = grid_cell_size - radius*2
         x_coord = random.random() * free_space_x + cell[0] + radius
         y_coord = random.random() * free_space_y + cell[1] + radius
-        position = Point(x_coord, y_coord)
-        velocity_v = (target-position).normalize()*velocity
+        position = (x_coord, y_coord)
 
-        actors.append(Actor(
+        actors.append(dict(
             position = position,
-            desired_velocity = velocity,
-            max_velocity = velocity * pm.actor.max_velocity_factor,
-            target = target,
+            initial_position = position,
+            acceleration = (0.0, 0.0),
+            initial_desired_velocity = velocity,
+            velocity = (0.0, 0.0),
+            time = 0.0,
+            relax_time = parameters['relax_time'],
+            max_velocity = velocity * parameters['max_velocity_factor'],
+            target = targets[0],
             radius = radius))
 
     return actors
