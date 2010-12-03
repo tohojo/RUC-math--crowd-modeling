@@ -1,59 +1,7 @@
 \section{Discussion}\label{sec:discussion}
 \subsection{Limitations of the model}
 
-\subsection{Repulsive force from walls}
-In chapter 3 we have seen the formulas for calculating the repulsive forces from the wall and other agents are very similar, both are exponential functions decreasing with some distance, which makes us wonder if both come from the same origin.\\
-
-\begin{itemize}
-\item The difference between those two repulsive forces is basically one is from a single point and the other is from an object that has a dimension much larger than a single agent. If we imagine our agents are particles with negative charge, then there is a pair of repulsive forces which has direction along the line connecting the two particles and magnitude depending on the distance between them. Further we can put lots of particles along a bar, see Figure
-Summing up all the repulsive forces from each particle on the bar will give the repulsive force that the charged bar on the single particle $\alpha$.
-
-\item Applying the idea above to analyse our wall repulsion, as a simple start we place the agent $\alpha$ a distance $ d $ away from the wall which as a length $L$, and by symmetry we know the resulting force must point vertically downwards, see Figure.\\
-
-Integrating the forces can be written as:
-
-\begin{equation}\label{integ}
-\vec{f_{\alpha B}} = 
-\int_0^L \! \vec{f_{\alpha\beta}} \, \mathrm{d}l
-\end{equation}
-
-\item When the repulsive force is known, the expression for the wall potential can be calculated, which can be done by integrating the force along a path. Normally the potential at some position is defined as the work done on the particle by that potential field when the particle is moved from that position to infinitely far away.
-
-\begin{equation}\label{pot}
-	U_{B}= \int_{\vec{r_{\alpha}}�}^{text{f}\infty} \! \vec{f_{\alpha B}} \cdot \, \text{d}\vec{r_{\alpha}} 
-\end{equation}
-
-\item In some article [Helbing 2000], the repulsive force from the wall is given by:
-\begin{equation}\label{helbing2000}
-\vec{f_{\alpha B}} = 
-	\left( 
-			\left[ 
-	A exp 
-				\left[ 
-						\left(  
-							r_{\alpha}-d_{\alpha B}
-						\right)  / B
-				\right] +kg 
-					\left( 
-						r_{\alpha}-d_{\alpha B} 
-					\right) 
-			\right] 
-		\right)
-	\vec{n_{B}^{\alpha}}-\kappa g 
-	\left(
-		r_{\alpha}-d_{\alpha B}
-	\right) 
-	\left(
-			\vec{V_{\alpha}}\cdot \vec{t_{iw}}
-	\right) 
-\vec{t_{iw}}
-\end{equation}
-
-where $ r_{\alpha} $,  $ \vec{V_{\alpha}} $ are the radius and velocity of agent $ \alpha $ as we noted before, $ A $, $ B $, $ k $, $ \kappa $ are constants, $ d_{\alpha B} $ is the distance from the agent to the wall, $ \vec{n_{B}^{\alpha}} $ is a normal vector from the wall, $ \vec{t_{iw}} $ is a tangent vector to the wall. $ g $ is a function of some variable.\\
-In this expression, the wall repulsion force to agent $ \alpha $ is not always perpendicular to the wall, but the force has two components, one perpendicular to the wall and the other tangent to the wall. Particularly the tangent component depends on the velocity of $ \alpha $. However, in Helbing's latest articles he does not show the expression of Equation \ref{helbing2000}, but use the gradient of potential instead. 
-\end{itemize}
-
-\subsubsection{Discussion on walls in special cases.}
+\subsection{Discussion on walls in special cases.}
 In the general case of the repulsive force on a pedestrian, $\alpha$, from a wall nearby is given as a function of the vector from the nearest point. This point we calculate by finding the point that makes the vector form $\alpha$ to the wall be perpendicular to to vector that is the wall. In some cases though the point won't be on the wall it self. This of course makes no sense since you would then be repulsed by a non existing part of the wall meaning that you would avoid free areas which makes no sense. In this case you would have to use the end point of the wall. But doing this can make some unrealistic behavior as well, if the walls have the right composition. 
 
 Let's start out by looking at a case with no problem. A case with no problems is a room where the angles between the walls is less than $180^o$, i.e. a squared room where they are $90^o$. For a pedestrian close to the corner between two walls, you would calculate the repulsive force from both of the walls. This you do in order for the pedestrian to avoid going through either one of the walls. When you do this you get a force directly away from each of the walls. This clearly makes sense and there is no problem in doing so.
