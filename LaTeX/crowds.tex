@@ -1,26 +1,24 @@
 \section{Agent based modeling of crowds}
 \label{sec:crowds}
+One would think that the motion and dynamics of a human crowed would be governed by complex human decision making, one may be surprised that these concepts can be modelled by assuming simple automatic interactions between pedestrians. One way to accomplice such a relatively simple model is the way of the agent based model.
+
 During the last two decades agent based models have been successfully used to 
 describe the behaviour of crowds, however agent based model have their 
-origin elsewhere and a short overview of this is given in section \ref{subsec:ABM}. We
-then explain two different agent-based approaches, namely \emph{cellular automaton} and \emph{social force} in section \ref{subsec:ABapproach}. The social force model is chosen as a subject to be studied further. The studie is carried out throw analysis and simulations the different cases which we simulate will be discussed in section \ref{ourCases}.
+origin elsewhere and a short overview of this is given in section \ref{subsec:ABM}. We then explain two different agent-based approaches, namely \emph{cellular automaton} and \emph{social force} in section \ref{subsec:ABapproach}. The social force model is chosen as a subject to be studied further. The studie is carried out throw analysis and simulations. The different cases which we simulate will be discussed in section \ref{ourCases}.
 
 \subsection{Agent-based models and their origin}\label{subsec:ABM}
-An agent based model describes the behaviour of each individual object in a system. Based on this individual description the model can describe or make predictions about the collective behaviour of the entire system. The idea of agent based model is not a new one. They have their origin in physics where the idea dates back as far as 1820, however because of the sheer number of calculations needed in order to make meaningful predictions it has not been used much until the last half century\cite{simintro}. Now it is used in many different fields such as molecular biology and economics\cite{MDbio}. Further more agent based models have been successfully used to describe the behaviour of animal packs such as fish schools and groups of ladybugs. In these models a set a simple rules give rise to a collective behaviour that resembles the behaviour observed in nature. 
+An agent based model describes the behaviour of each individual object in a system. Based on this individual description the model can describe and make predictions about the collective behaviour of the entire system. The idea of agent based model is not a new one. They have their origin in physics where the idea dates back as far as 1820, however because of the sheer number of calculations needed in order to make meaningful predictions it has not been used much until the last half century\cite{simintro}. Now it is used in many different fields such as molecular biology and economics\cite{MDbio}. Further more agent based models have been successfully used to describe the behaviour of animal packs such as fish schools and groups of ladybugs. In these models a set a simple rules give rise to a collective behaviour that resembles the behaviour observed in nature. 
 
-The modelling of human behaviour using agent-based models is a relatively new field in modelling \cite{helbing00}. Modelling of crowds are growing in interest for several reasons. First of all the model seems to have some striking analogies to gases and fluids. Secondly, due to modern technology such as camera tracking software it has been easier to empirically test the models further more there has been an increased tendency to accidents happens when large croweds are assembled. This has led to a series of different approaches to modelling crowds. 
+The modelling of human behaviour using agent-based models is a relatively new field in modelling \cite{helbing00}. Modelling of crowds are growing in interest for several reasons. First of all one would think that the collective behaviour of a human croweds would be governed by intelligent human decision making, but this crowed seems to have some striking analogies to simple models of gases and fluids. Secondly, due to modern technology such as camera tracking software it has been easier to empirically test the models further more there has been an increased tendency to accidents happens when large croweds are assembled. This has led to a series of different approaches to modelling crowds. 
 
 We have chosen to concentrate on the agent based approaches which will be the subject of the next section.
 
 \subsection{Agent-based approaches to crowd modelling}\label{subsec:ABapproach}
-There have been developed a series of different agent based models of which we will mention two. They are \emph{cellular automata models} and \emph{social force models}. These approaches have been chosen for their ability to describe and predict rather realistic dynamics of the crowed and because of their continues development.
-One approach does however not necessarily rule out the other they can be combined. 
-We will give a short outline of the basic concepts of both models and look at their success.
+There have been developed a series of different agent based models of which we will mention two. They are \emph{cellular automata models} and \emph{social force models}. These approaches have been chosen for their ability to describe and predict rather realistic dynamics of the crowed and because of their continues development. One approach does however not necessarily rule out the other they can be combined. We will give a short outline of the basic concepts of both models and look at their success.
 
 A \emph{cellular automata model} consists of a grid of finite number of cells, like a chessboard. Each cell can have a finite number of states. The state of a given cell is determined by the neighbouring cells. These kinds of model have been used successfully to describe some phenomena that have been observed empirical. Such phenomena are the effect of obstacles when leaving a room, jamming in narrow passages and lane formation. 
 
-\emph{Social Force models} suggests that pedestrians are subject to social forces. These forces are not real physical forces, they do not follow newtons three laws. They are a measure of the pedestrians motivation to preform certain action. The forces arise from the environment and ofter pedestrians and can be both attractive and repulsive. 
-Social force models have successfully described self-organizing phenomena such 
+\emph{Social Force models} suggests that pedestrians are subject to social forces. These forces are not real physical forces, they do not follow newtons three laws. They are a measure of the pedestrians motivation to preform certain action. The forces arise from the environment and other pedestrians and can be both attractive and repulsive. Social force models have successfully described self-organizing phenomena such 
 as lane formation in the case of bi-direction pedestrian flow, crowd impatience where pedestrian who walk slower than they would like to starts to speed up and clogging. 
 
 % TODO: We should probably mention the issue of path finding somewhere 
@@ -29,7 +27,7 @@ as lane formation in the case of bi-direction pedestrian flow, crowd impatience 
 
 \subsection{Concepts for describing crowd behaviour}\label{concepts}
 In order to analyse the behaviour of crowds, we need to establish some 
-concepts to describe this behaviour. It is not obvious which concepts  are 
+concepts to describe this behaviour. It is not obvious which concepts are 
 useful when we need to distinguish between the results we get from our 
 simulations. In this section we describe which concepts we use to describe the 
 behaviour of crowds, and why we have chosen them. This is based on the 
@@ -44,35 +42,21 @@ the chance of someone dying from flames or smoke.
 
 The efficiency of the crowd it measured by \emph{how close the average speed 
 of a pedestrians is to the desired speed of the pedestrian}. This is done for 
-every pedestrian in the simulation and this gives us a measure of how unaffected 
-the crowd moves through the environment. If the every pedestrian moves at his 
-desired speed throughout the entire simulation the efficiency will be at its 
-maximum.
+every pedestrian in the simulation and this gives us a measure of how unaffected the crowd moves through the environment. If every pedestrian moves at his desired speed throughout the entire simulation the efficiency will be at its maximum.
 
 However the measurement of efficiency alone is not sufficient to describe all 
 the aspects of the crowds behaviour. We want to be able to say something about 
-how the crowds move a specific parts of the environment for instance in a 
+how the crowds move in specific parts of the environment for instance in a 
 narrow passage or through a door opening. For this purpose we introduce the 
-concept \emph{flow rate}. The flow rate is a measure of \emph{how many pedestrians 
-that pass a point or line i space per unit of time}.
+concept of \emph{flow rate}. The flow rate is a measurement of \emph{how many pedestrians that pass a point or line segment in space per unit time}.
 
-Furthermore we introduce the concept \emph{density}. The density is the \emph{number 
-of people in an area of space}. The density is useful when comparing results from 
-different simulations. 
+Furthermore we introduce the concept \emph{density}. The density is the \emph{number of people in an area of space}. The density is useful when comparing results from different simulations. 
 % TODO: Why is it useful?
 
-The last concept we want to introduce is the \emph{geometry} of the environment 
-by geometry we mean \emph{the shape of the room or corridor} in which the simulation 
-is taking place. We introduce this because we are interested in examining how 
-the shape of the environment affects the behaviour of the crowd.
+The last concept we want to introduce is the \emph{geometry} of the environment by geometry we mean \emph{the shape of the room or corridor} in which the simulation is taking place. We introduce this because we are interested in examining how the shape of the environment affects the behaviour of the crowd.
 
 These four concepts \emph{efficiency}, \emph{flow rate}, \emph{density} and 
-\emph{geometry} will allow us to compare the results from our different simulations 
-in some detail. For example if we change the geometry of the environment how does 
-this change the efficiency of the crowd? If two rooms have the same geometry 
-how does the density affect the flow rate through a door opening? If the efficiency 
-is low does that imply a low flow rate? These are all questing that can be answered 
-through simulations in the framework of the concepts we have just defined.    
+\emph{geometry} will allow us to compare the results from our different simulations in some detail. For example if we change the geometry of the environment how does this change the efficiency of the crowd? If two rooms have the same geometry how does the density affect the flow rate through a door opening? If the efficiency is low does that imply a low flow rate? These are all questing that can be answered through simulations in the framework of the concepts we have just defined.    
 % TODO: It is not the concepts that affect each other, it is the parameters 
 % that affect the concepts.
 % TODO: Move the explanation of geometry somewhere else.
@@ -85,35 +69,14 @@ understanding. Secondly we want to find any limitations and weaknesses of the
 model. Furthermore we want to simulate scenarios that have been experimentally 
 tested in \citep{self-org}.
 
-We start by making a series of simple simulations  where we can test isolated parts 
-of the model and slowly increase the complexity of the simulations. Basically there 
-are three levels of the model we want to simulate. 
+We start by making a series of simple simulations  where we can test isolated parts of the model and slowly increase the complexity of the simulations. Basically there are three levels of the model we want to simulate. 
 
-First we want to model a square room with an exit in the middle of one of the walls. 
-In this room there will be a modest amount of people and no obstacles. The purpose of 
-this simulation is not to compare the results with real life but rather to catch any 
-early mistakes or misunderstandings in our implementation of the model.
+First we want to model a square room with an exit in the middle of one of the walls. In this room there will be a modest amount of people and no obstacles. The purpose of this simulation is not to compare the results with real life but rather to catch any early mistakes or misunderstandings in our implementation of the model.
 
-From this we move on to varying the parameters of the model too see how the changes in 
-in the these affect the concepts of crowd behaviour we defined in section \ref{concepts}. 
-This will be done in the same simple simulation in order for us to have a transparent look 
-at precisely how the parameters affect the concepts. The results of these simulations 
-will be compared with the value of the parameters presented in the literature.
+From this we move on to varying the parameters of the model too see how the changes in in the these affect the concepts of crowd behaviour we defined in section \ref{concepts}. This will be done in the same simple simulation in order for us to have a transparent look at precisely how the parameters affect the concepts. The results of these simulations will be compared with the value of the parameters presented in the literature.
 
-After this we will test how the model handles different geometries of the environment 
-to see if the model starts producing unnatural crowd behaviour as the complexity of the 
-environment increases. 
+After this we will test how the model handles different geometries of the environment to see if the model starts producing unnatural crowd behaviour as the complexity of the environment increases. 
 
-In the end we will try so simulate more complicated situations to see if we can observe 
-a range of self-organization phenomena that have been reported in the literature. As 
-stated earlier there have been preformed experiments in these scenarios so we can 
-compare our results with the results presented in the literature. These phenomena 
-include clogging in bottlenecks, lane formation in bidirectional pedestrian 
-flow and a faster-is-slower phenomena where some pedestrians end up moving slower than 
-average because they are to impatient and try to overtake other pedestrians\cite{self-org}. 
-Furthermore we want to test some phenomena  that according to the literature should make 
-the model break down. An example of this could be to model a situation of a room filled 
-with smoke.   
+In the end we will try so simulate more complicated situations to see if we can observe a range of self-organization phenomena that have been reported in the literature. As stated earlier there have been preformed experiments in these scenarios so we can compare our results with the results presented in the literature. These phenomena include clogging in bottlenecks, lane formation in bidirectional pedestrian flow and a faster-is-slower phenomena where some pedestrians end up moving slower than average because they are to impatient and try to overtake other pedestrians\cite{self-org}. Furthermore we want to test some phenomena  that according to the literature should make the model break down. An example of this could be to model a situation of a room filled with smoke.   
 
-All this should give a thorough idea about how this model should be handled and what parts 
-of it that could be improved. or were you should be careful when using the model.
+All this should give a thorough idea about how this model should be handled and what parts of it that could be improved. or were you should be careful when using the model.
