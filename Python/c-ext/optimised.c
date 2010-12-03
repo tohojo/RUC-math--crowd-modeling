@@ -2,7 +2,7 @@
 
 /*** Calculation part begin ***/
 
-static double A_1, A_2, B_1, B_2, U, lambda, timestep;
+static double A, B, U, lambda, timestep;
 
 // Global objects to allow access from different threads
 static Actor * actors;
@@ -13,13 +13,11 @@ static Py_ssize_t w_count;
 void calculate_forces(Py_ssize_t i)
 {
     int j;
-	actors[i].pressure = 0;
     add_desired_acceleration(&actors[i]);
 
     for(j = 0; j < a_count; j++) {
         if(i == j) continue;
         add_repulsion(&actors[i], &actors[j]);
-        add_social_sphere(&actors[i], &actors[j]);
     }
 
     add_wall_repulsion(&actors[i]);
@@ -119,24 +117,16 @@ Vector calculate_repulsion(Actor * a, Actor * b, double A, double B)
 
 void add_repulsion(Actor * a, Actor * b)
 {
-    if(A_2 == 0 || B_2 == 0) return;
-    Vector repulsion = calculate_repulsion(a, b, A_2, B_2);
-	a->pressure += vector_length(repulsion);
-    vector_iadd(&a->acceleration, &repulsion);
-}
+    if(!A || !B) return;
+    Vector repulsion = calculate_repulsion(a, b, A, B);
+	if(a->velocity.x && a->velocity.y) {
+		Vector from_b = vector_sub(b->position, a->position);
 
-void add_social_sphere(Actor * a, Actor * b)
-{
-    if(A_1 == 0 || B_1 == 0 || 
-			(!a->velocity.x && !a->velocity.y)) return;
-    Vector repulsion = calculate_repulsion(a, b, A_1, B_1);
-    Vector from_b = vector_sub(a->position, b->position);
+		double cosine = vector_dot(a->velocity, from_b)/(
+				vector_length(a->velocity) * vector_length(from_b));
 
-    double cosine = vector_dot(a->velocity, from_b)/(
-            vector_length(a->velocity) * vector_length(from_b));
-
-    vector_imul(&repulsion, (lambda + (1-lambda)*((1+cosine)/2)));
-	a->pressure += vector_length(repulsion);
+		vector_imul(&repulsion, (lambda + (1-lambda)*((1+cosine)/2)));
+	}
     vector_iadd(&a->acceleration, &repulsion);
 }
 
@@ -152,7 +142,6 @@ void add_wall_repulsion(Actor * a)
     for(i = 0; i < rep_p_c; i++) {
         repulsion = calculate_wall_repulsion(a, repulsion_points[i]);
         //printf("(%f,%f)\n", repulsion.x, repulsion.y);
-		a->pressure += vector_length(repulsion);
         vector_iadd(&a->acceleration, &repulsion);
     }
 
@@ -315,9 +304,9 @@ static PyObject * get_actors(PyObject * self, PyObject * args)
 	int i;
 
 	for(i = 0; i < a_count; i++) {
-		PyList_SetItem(list, i, Py_BuildValue("ddddd", 
+		PyList_SetItem(list, i, Py_BuildValue("dddd", 
             actors[i].position.x, actors[i].position.y, actors[i].radius,
-			vector_length(actors[i].velocity), actors[i].pressure));
+			vector_length(actors[i].velocity)));
 	}
 
     return list;
@@ -462,11 +451,9 @@ PyMODINIT_FUNC initoptimised(void)
     p_constants = PyObject_GetAttrString(p_module, "constants");
     p_actors    = PyObject_GetAttrString(p_module, "actor");
     p_walls     = PyObject_GetAttrString(p_module, "walls");
-    A_1         = double_from_attribute(p_constants, "a_1");
-    B_1         = double_from_attribute(p_constants, "b_1");
-    A_2         = double_from_attribute(p_constants, "a_2");
-    B_2         = double_from_attribute(p_constants, "b_2");
-    U           = double_from_attribute(p_constants, "u");
+    A           = double_from_attribute(p_constants, "A");
+    B           = double_from_attribute(p_constants, "B");
+    U           = double_from_attribute(p_constants, "U");
     lambda      = double_from_attribute(p_constants, "lmbda");
     timestep    = double_from_attribute(p_module, "timestep");
     use_threads = ssize_t_from_attribute(p_module, "use_threads");

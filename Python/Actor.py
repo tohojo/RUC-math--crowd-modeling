@@ -126,8 +126,8 @@ class Actor:
             distance = from_b.length()
 
             from_b.normalize(distance)
-            from_b *= pm.constants.a_2 * \
-                    numpy.exp((radius_sum-distance)/pm.constants.b_2)
+            from_b *= pm.constants.A * \
+                    numpy.exp((radius_sum-distance)/pm.constants.B)
 
             repelling_forces.append(from_b)
 
