@@ -133,7 +133,7 @@ def main(options):
                 if options.show_simulation:
                     canvas.update(frames)
                 if options.create_images:
-                    canvas.create_image()
+                    canvas.create_image(frames)
             else:
                 output = "\r%d frames, t=%.2f" % (frames, timer)
                 print output,
