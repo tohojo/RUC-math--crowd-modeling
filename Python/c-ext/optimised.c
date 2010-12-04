@@ -182,14 +182,31 @@ int find_repultion_points(Actor * a, Vector repulsion_points[])
     for(i = 0; i < pos_e_c; i++) {
         int use_e = 1;
         for(j = 0; j < use_e_c; j++) {
-            if(possible_endpoints[i].x == used_endpoints[j].x && 
-                    possible_endpoints[i].y == used_endpoints[j].y) {
+            if(vector_equals(possible_endpoints[i], used_endpoints[j])) {
                 use_e = 0;
             }
         }
         if(use_e) {
-            repulsion_points[rep_p_c++] = possible_endpoints[i];
-            used_endpoints[use_e_c++] = possible_endpoints[i];
+			// Keep track of whether the endpoint is free-floating, i.e. if
+			// it is shared with another wall.
+			int free_e = 1;
+			for(j = 0; j < pos_e_c; j++) {
+				if(i != j && 
+						vector_equals(possible_endpoints[i],
+							possible_endpoints[j])) {
+					free_e = 0;
+				}
+			}
+			// Endpoints that are free-floating (i.e. sides of doorways) are
+			// only considered for repulsion if they are closer to the actor
+			// than the actor's radius. This allows actors to pass more
+			// freely through doorways.
+			if(!free_e || 
+					vector_length(vector_sub(a->position,
+							possible_endpoints[i])) < a->radius) {
+				repulsion_points[rep_p_c++] = possible_endpoints[i];
+				used_endpoints[use_e_c++] = possible_endpoints[i];
+			}
         }
     }
 

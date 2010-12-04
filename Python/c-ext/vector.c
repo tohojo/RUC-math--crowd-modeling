@@ -80,3 +80,7 @@ double vector_projection_length(Vector A, Vector B, Vector C)
     vector_isub(&B, &A); // Turn B into AB
     return vector_dot(C, B)/vector_length(B); // AC . AB / |AB|
 }
+
+int vector_equals(Vector v1, Vector v2) {
+    return (v1.x == v2.x && v1.y == v2.y);
+}
