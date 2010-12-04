@@ -38,7 +38,8 @@ class Scenario:
     def __init__(self, parameters = {}):
         self.parameters = parameters
         self.timestep = constants.timestep
-        self.parameters['run_time'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        self.run_time = datetime.now()
+        self.parameters['run_time'] = self.run_time.strftime("%Y-%m-%d %H:%M:%S")
         self.parameters['timestep'] = self.timestep
 
         self.create_images = False
@@ -85,7 +86,7 @@ class Scenario:
 
     def _init_plots(self):
         self.sample_frequency = int(constants.plot_sample_frequency/self.timestep)
-        self.plots = Plots(self.sample_frequency)
+        self.plots = Plots(self.sample_frequency, self.parameters)
         self.create_plots = True
 
     def _create_actors(self):
@@ -175,4 +176,4 @@ class Scenario:
             self._uninit_drawing()
 
         if self.options.create_plots:
-            self.plots.show()
+            self.plots.save(os.path.join(constants.plot_dir, self.parameters['name']))
