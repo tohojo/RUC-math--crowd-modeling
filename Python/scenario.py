@@ -57,7 +57,7 @@ class Scenario:
             self._init_drawing()
         if options.create_images:
             self._init_images()
-        if options.create_images:
+        if options.create_plots:
             self._init_plots()
 
         self._create_actors()
@@ -73,7 +73,8 @@ class Scenario:
                 )
 
     def _init_images(self):
-        pfile = open("%sparameters" % pm.image_prefix, "w")
+        pfile = open("%s-parameters" % os.path.join(constants.image_dir, 
+            self.parameters['name']), "w")
         pfile.write(pprint.pformat(self.parameters))
         pfile.write("\n")
         pfile.close()
@@ -81,7 +82,7 @@ class Scenario:
 
     def _init_plots(self):
         self.sample_frequency = int(constants.plot_sample_frequency/self.timestep)
-        self.plots = Plots(sample_frequency)
+        self.plots = Plots(self.sample_frequency)
         self.create_plots = True
 
     def _create_actors(self):
@@ -98,8 +99,8 @@ class Scenario:
         density = 0.0
         velocities = list()
         for i in xrange(optimised.a_count):
-            (x,y) = a_property(i, "position")
-            r = a_property(i, "radius")
+            (x,y) = optimised.a_property(i, "position")
+            r = optimised.a_property(i, "radius")
             velocities.append(optimised.a_property(i, "velocity"))
             if x+r >= x1 and x-r <= x2 and y+r >= y1 and y-r <= y2:
                 density += 1
@@ -126,7 +127,7 @@ class Scenario:
 
     def _done(self):
         run_time = self.parameters['run_time']
-        return (run_time > 0.0 and self.time >= run_time) #or not optimised.a_count
+        return (run_time > 0.0 and self.time >= run_time) or not optimised.a_count
 
     def _run(self):
         try:
@@ -140,7 +141,7 @@ class Scenario:
                     output = "\r%d frames, t=%.2f" % (self.frames, self.time)
                     print output,
 
-                if self.create_plots and not self.frames % sample_frequency:
+                if self.create_plots and not self.frames % self.sample_frequency:
                     self._plot_sample()
 
                 self.time += self.timestep

@@ -1,8 +1,6 @@
 #!/usr/bin/python2
 # vim:fileencoding=utf8
 
-debugger = True
-
 import constants
 from parameters import scenarios
 
@@ -38,14 +36,11 @@ parser.add_option("", "--profile",
 
 def main(options, args):
 
-    if not len(args) and not debugger:
+    if not len(args):
         print "Missing scenario (options: %s)" % ",".join(scenarios.keys())
         return
 
-    if debugger:
-        scenario = "square_room"
-    else:
-        scenario = args[0]
+    scenario = args[0]
 
     if not scenario in scenarios:
         print "Invalid scenario: %s (options: %s)" % (scenario,
@@ -55,7 +50,7 @@ def main(options, args):
     scenarios[scenario].run(options)
 
 
-if __name__ == "__main__" or debugger:
+if __name__ == "__main__":
     (options, args) = parser.parse_args()
     if options.profile:
         import cProfile
