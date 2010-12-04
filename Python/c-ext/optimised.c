@@ -381,8 +381,7 @@ static void check_escapes()
 		}
 	}
 
-	if(i!=j)
-		update_a_count(a_count - (i-j));
+	if(i!=j) update_a_count(a_count - (i-j));
 
 }
 
