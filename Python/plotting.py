@@ -20,10 +20,17 @@ class Plots:
         self.parameters = parameters
 
         self.avg_velocities = list()
-
         self.densities = list()
         self.flowrates = list()
         self.t_values = list()
+
+        self.aggr_avg_velocities = list()
+        self.aggr_flowrates = list()
+        self.aggr_efficiencies = list()
+        self.aggr_x_values = list()
+        self.aggr_x_name = None
+
+
 
     def add_sample(self, t, velocities=None, density=None, flowrate=None):
         self.t_values.append(t)
@@ -32,6 +39,14 @@ class Plots:
 
         self.avg_velocities.append(np.average(velocities))
 
+
+    def add_aggregate(self, x_name, x_value, efficiency=None):
+        self.aggr_x_name = x_name
+        self.aggr_x_values.append(x_value)
+        self.aggr_efficiencies.append(efficiency)
+
+        self.aggr_avg_velocities.append(np.average(self.avg_velocities))
+        self.aggr_flowrates.append(np.average(self.flowrates))
 
     def _create_plot(self, title, xlabel, ylabel):
         fig = plt.figure()
@@ -44,13 +59,18 @@ class Plots:
     def _annotate_plot(self, fig):
 
         ax = fig.gca()
-        param_text = [
-                "$A=%.2f$" % self.parameters['A'],
-                "$B=%.2f$" % self.parameters['B'],
-                "$U=%.2f$" % self.parameters['U'],
-                "$\lambda=%.2f$" % self.parameters['lambda'],
-                "mean velocity$=%.2f$" % self.parameters['velocity_mean'],
-                ]
+        param_text = []
+
+        if self.aggr_x_name != "A":
+            param_text.append("$A=%.2f$" % self.parameters['A'])
+        if self.aggr_x_name != "B":
+            param_text.append("$B=%.2f$" % self.parameters['B'])
+        if self.aggr_x_name != "U":
+            param_text.append("$U=%.2f$" % self.parameters['U'])
+        if self.aggr_x_name != "lambda":
+            param_text.append("$\lambda=%.2f$" % self.parameters['lambda'])
+        if self.aggr_x_name != "velocity_mean":
+            param_text.append("mean velocity$=%.2f$" % self.parameters['velocity_mean'])
 
         leg = fig.gca().legend(loc='best')
 
@@ -68,6 +88,12 @@ class Plots:
     def _velocity_plot(self):
         fig = self._create_plot("Average actor velocity","t", "m/s")
         plt.plot(self.t_values, self.avg_velocities, label='average velocity')
+        self._annotate_plot(fig)
+        return fig
+
+    def _aggr_velocity_plot(self):
+        fig = self._create_plot("Average actor velocity",self.x_name, "m/s")
+        plt.plot(self.aggr_x_values, self.aggr_avg_velocities, label='average velocity')
         self._annotate_plot(fig)
         return fig
 
@@ -95,6 +121,12 @@ class Plots:
         flowrate_plot = self._flowrate_plot()
         flowrate_plot.savefig("%s-%s.pdf" % (prefix, "flowrate"),
                 bbox_inches='tight')
+
+    def save_aggr(self, prefix):
+        velocity_plot = self._aggr_velocity_plot()
+        velocity_plot.savefig("%s-%s-aggr.pdf" % (prefix, "velocity"),
+                bbox_inches='tight')
+
 
     def show(self):
         t = self.t_values

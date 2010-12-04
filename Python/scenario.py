@@ -33,7 +33,10 @@ class Scenario:
             'drawing_width'      : width for drawing images
             'drawing_height'     : height for drawing images
             'pixel-factor'       : number of pixels pr metre
-            'relax_time'         : relaxation time for actors"""
+            'relax_time'         : relaxation time for actors
+            'vary_parameters'    : dictionary of parameter names mapped to a tuple of
+                                   interval start, interval end, stepsize for running
+                                   multiple simulations varying each parameter"""
 
     def __init__(self, parameters = {}):
         self.parameters = parameters
