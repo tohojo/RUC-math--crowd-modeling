@@ -21,7 +21,7 @@ scenarios = {
             'flowrate_line'      : (-1.0, 5.1, 1.0, 5.1),
             'continuous_rate'    : None,
             'continuous_start'   : [],
-            'run_time'           : 60.0,
+            'stop_at'            : None,
             'walls'              : [
                                     (-5.0, -5.0,  5.0, -5.0),
                                     (-5.0, -5.0, -5.0,  5.0),

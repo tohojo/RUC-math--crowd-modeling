@@ -8,22 +8,16 @@ class Plots:
 
         self.avg_velocities = list()
 
-        self.median_velocities = list()
-
-        self.max_velocities = list()
-
         self.densities = list()
+        self.flowrates = list()
         self.t_values = list()
 
-    def add_sample(self, t, velocities=None, density=None):
+    def add_sample(self, t, velocities=None, density=None, flowrate=None):
         self.t_values.append(t)
         self.densities.append(density)
+        self.flowrates.append(flowrate)
 
         self.avg_velocities.append(np.average(velocities))
-
-        self.median_velocities.append(np.median(velocities))
-
-        self.max_velocities.append(max(velocities))
 
 
     def show(self):
@@ -39,7 +33,7 @@ class Plots:
         plt.xlabel("t")
         plt.ylabel("average velocity")
         plt.title("Velocities")
-        plt.plot(t, self.avg_velocities, t, self.median_velocities)
+        plt.plot(t, self.avg_velocities)
 
         plt.show()
 

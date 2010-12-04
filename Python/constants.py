@@ -11,4 +11,4 @@ plot_dir              = "plots/"
 threads               = 2
 framerate_limit       = 0
 
-plot_sample_frequency = 0.05
+plot_sample_frequency = 0.1

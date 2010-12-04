@@ -4,6 +4,8 @@
 
 static double A, B, U, lambda, timestep;
 
+static Vector flowline[2];
+
 // Global objects to allow access from different threads
 static Actor * actors;
 static Wall * walls;
@@ -256,6 +258,13 @@ void update_position(Actor * a)
 	a->velocity = vector_add(a->velocity,
 			vector_mul(a->acceleration, timestep));
     a->time += timestep;
+
+	if(a->flowline_time < 0) {
+        if(vector_projection_distance(
+					flowline[0], flowline[1], a->position) < a->radius) {
+			a->flowline_time = a->time;
+		}
+	}
 }
 
 static int is_escaped(Actor * a)
@@ -322,6 +331,11 @@ static PyObject * a_property(PyObject * self, PyObject * args)
 		return PyFloat_FromDouble(actors[i].radius);
 	} else if(strcmp(property, "velocity") == 0) {
 		return PyFloat_FromDouble(vector_length(actors[i].velocity));
+	} else if(strcmp(property, "flowline_time") == 0) {
+		return PyFloat_FromDouble(actors[i].flowline_time);
+	} else if(strcmp(property, "target") == 0) {
+		return Py_BuildValue("dd", 
+				actors[i].target.x, actors[i].target.y);
 	}
 
 	PyErr_SetString(PyExc_AttributeError, property);
@@ -330,7 +344,7 @@ static PyObject * a_property(PyObject * self, PyObject * args)
 
 static PyObject * set_parameters(PyObject * self, PyObject * args)
 {
-	PyObject * o, * p_walls;
+	PyObject * o, * p_walls, *p_flowline;
     PyArg_ParseTuple(args, "O:set_parameters", &o);
 
     A           = double_from_attribute(o, "A");
@@ -340,6 +354,12 @@ static PyObject * set_parameters(PyObject * self, PyObject * args)
     timestep    = double_from_attribute(o, "timestep");
 
     p_walls     = PyDict_GetItemString(o, "walls");
+    p_flowline  = PyDict_GetItemString(o, "flowrate_line");
+
+	flowline[0].x = PyFloat_AsDouble(PyTuple_GetItem(p_flowline, 0));
+	flowline[0].y = PyFloat_AsDouble(PyTuple_GetItem(p_flowline, 1));
+	flowline[1].x = PyFloat_AsDouble(PyTuple_GetItem(p_flowline, 2));
+	flowline[1].y = PyFloat_AsDouble(PyTuple_GetItem(p_flowline, 3));
 
     init_walls(p_walls);
 	update_a_count(0);
@@ -424,6 +444,8 @@ static Actor actor_from_pyobject(PyObject * o, Actor * a)
     a->initial_desired_velocity = double_from_attribute(o, "initial_desired_velocity");
     a->max_velocity             = double_from_attribute(o, "max_velocity");
     a->relax_time               = double_from_attribute(o, "relax_time");
+
+	a->flowline_time       = -1;
 
 
     a->position         = vector_from_attribute(o, "position");

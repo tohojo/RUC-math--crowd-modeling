@@ -81,6 +81,19 @@ double vector_projection_length(Vector A, Vector B, Vector C)
     return vector_dot(C, B)/vector_length(B); // AC . AB / |AB|
 }
 
+/**
+ * Calculate the distance from the line AB to the point C
+ */
+double vector_projection_distance(Vector A, Vector B, Vector C)
+{
+    Vector AB, proj;
+    double p;
+    AB = vector_sub(B, A);
+    p = vector_projection_length(A, B, C)/vector_length(AB);
+    proj = vector_add(A, vector_mul(AB, p));
+    return vector_length(vector_sub(proj, C));
+}
+
 int vector_equals(Vector v1, Vector v2) {
     return (v1.x == v2.x && v1.y == v2.y);
 }

@@ -28,7 +28,7 @@ class Scenario:
             'continuous_rate'    : rate to spawn actors throughout the simulation
             'continuous_start'   : lines to spawn new actors at. start line i will move
                                    towards target i
-            'run_time'           : time to end the simulation at
+            'stop_at'            : time to end the simulation at
             'walls'              : list of wall quadruplets
             'drawing_width'      : width for drawing images
             'drawing_height'     : height for drawing images
@@ -94,14 +94,15 @@ class Scenario:
 
     def _tick(self):
         if self.drawing:
-            return self.canvas.tick(constants.framerate_limit)
-        return True
+            return self.canvas.tick(constants.framerate_limit) and not self._done()
+        return not self._done()
 
     def _plot_sample(self):
         if not optimised.a_count:
             return
         (x1, y1, x2, y2) = self.parameters['density_rectangle']
         density = 0.0
+        flow_count = 0
         velocities = list()
         for i in xrange(optimised.a_count):
             (x,y) = optimised.a_property(i, "position")
@@ -109,8 +110,17 @@ class Scenario:
             velocities.append(optimised.a_property(i, "velocity"))
             if x+r >= x1 and x-r <= x2 and y+r >= y1 and y-r <= y2:
                 density += 1
+            if optimised.a_property(i, "flowline_time") > 0:
+                flow_count += 1
 
-        self.plots.add_sample(self.time, density=density, velocities=velocities)
+        if self.time > 0:
+            flowrate = flow_count/self.time
+        else:
+            flowrate = 0.0
+        self.plots.add_sample(self.time, 
+                density=density,
+                velocities=velocities, 
+                flowrate=flowrate)
 
     def _draw(self):
         self.canvas.clear_screen()
@@ -131,8 +141,8 @@ class Scenario:
 
 
     def _done(self):
-        run_time = self.parameters['run_time']
-        return (run_time > 0.0 and self.time >= run_time) or not optimised.a_count
+        stop_at = self.parameters['stop_at']
+        return (stop_at is not None and self.time >= stop_at) or not optimised.a_count
 
     def _run(self):
         try:
@@ -143,7 +153,7 @@ class Scenario:
                 if self.drawing: 
                     self._draw()
                 else:
-                    output = "\r%d frames, t=%.2f" % (self.frames, self.time)
+                    output = "\r%d frames, t=%.2f" % (self.frames+1, self.time)
                     print output,
 
                 if self.create_plots and not self.frames % self.sample_frequency:
@@ -153,11 +163,9 @@ class Scenario:
                 self.frames += 1
 
 
-                if self._done():
-                    print
-                    break
         except KeyboardInterrupt:
-            print
+            pass
+        print
 
         elapsed = time() - self.start_time
         print "%d frames in %f seconds. Avg %f fps" % (self.frames, elapsed,
