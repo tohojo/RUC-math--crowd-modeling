@@ -119,7 +119,7 @@ class Scenario:
             r = optimised.a_property(i, "radius")
             self.canvas.draw_actor(x,y,r)
 
-        self.canvas.draw_text("t = %.2f" % self.time, self.create_images)
+        self.canvas.draw_text("t = %.2f" % self.time, not self.create_images)
         for t in self.parameters['targets']:
             self.canvas.draw_target(*t)
         for w in self.parameters['walls']:

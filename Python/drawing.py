@@ -60,11 +60,11 @@ class Canvas:
                 self.screen_radius(0.2),
                 TARGET_COLOUR)
 
-    def draw_text(self, t, create_images):
-        if create_images:
-            text = t
-        else:
+    def draw_text(self, t, draw_fps):
+        if draw_fps:
             text = "%s - %d fps" % (t, self.clock.get_fps())
+        else:
+            text = t
         texture = self.font.render(text, 
                 True, DRAW_COLOUR, BG_COLOUR)
         self.screen.blit(texture, texture.get_rect())
