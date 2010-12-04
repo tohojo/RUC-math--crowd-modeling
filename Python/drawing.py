@@ -22,6 +22,8 @@ class Canvas:
 
         self.clock = pygame.time.Clock()
 
+    def quit(self):
+        pygame.display.quit()
 
     def clear_screen(self):
         self.screen.fill(BG_COLOUR)

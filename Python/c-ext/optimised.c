@@ -303,6 +303,8 @@ static PyObject * a_property(PyObject * self, PyObject * args)
 				actors[i].position.x, actors[i].position.y);
 	} else if(strcmp(property, "radius") == 0) {
 		return PyFloat_FromDouble(actors[i].radius);
+	} else if(strcmp(property, "velocity") == 0) {
+		return PyFloat_FromDouble(vector_length(actors[i].velocity));
 	}
 
 	PyErr_SetString(PyExc_AttributeError, property);

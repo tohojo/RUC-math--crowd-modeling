@@ -72,6 +72,9 @@ class Scenario:
                 os.path.join(constants.image_dir, self.parameters['name']),
                 )
 
+    def _uninit_drawing(self):
+        self.canvas.quit()
+
     def _init_images(self):
         pfile = open("%s-parameters" % os.path.join(constants.image_dir, 
             self.parameters['name']), "w")
@@ -95,6 +98,8 @@ class Scenario:
         return True
 
     def _plot_sample(self):
+        if not optimised.a_count:
+            return
         (x1, y1, x2, y2) = self.parameters['density_rectangle']
         density = 0.0
         velocities = list()
@@ -105,7 +110,7 @@ class Scenario:
             if x+r >= x1 and x-r <= x2 and y+r >= y1 and y-r <= y2:
                 density += 1
 
-        plots.add_sample(self.time, density=density, velocities=velocities)
+        self.plots.add_sample(self.time, density=density, velocities=velocities)
 
     def _draw(self):
         self.canvas.clear_screen()
@@ -157,6 +162,9 @@ class Scenario:
         elapsed = time() - self.start_time
         print "%d frames in %f seconds. Avg %f fps" % (self.frames, elapsed,
                 self.frames/elapsed)
+
+        if self.drawing:
+            self._uninit_drawing()
 
         if self.options.create_plots:
             self.plots.show()
