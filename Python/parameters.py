@@ -34,9 +34,8 @@ scenarios = {
             'pixel_factor'       : 30,
             'relax_time'         : 1.0,
             'vary_parameters'    : {
-                                    'A'            : (2.0, 5.0, 0.1),
-                                    'B'            : (0.2, 1.0, 0.1),
-                                    'velocity_mean': (1.0, 4.0, 0.1),
+                                    #'A'            : (2.0, 5.0, 0.1),
+                                    'velocity_mean': (1.0, 5.0, 0.1),
                                    },
         }),
 }

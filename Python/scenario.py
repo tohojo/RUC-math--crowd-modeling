@@ -3,10 +3,10 @@ import constants, setup
 from drawing import Canvas
 from plotting import Plots
 
-import pprint
+import pprint, os
 from datetime import datetime
 from time import time
-import os
+import numpy as np
 
 class Scenario:
     """Parameters:
@@ -45,28 +45,25 @@ class Scenario:
         self.parameters['run_time'] = self.run_time.strftime("%Y-%m-%d %H:%M:%S")
         self.parameters['timestep'] = self.timestep
 
+        self.average_desired_velocity = 0.0
+
         self.create_images = False
         self.create_plots = False
 
     def run(self, options):
-        optimised.set_parameters(self.parameters)
-        self.options = options
-        self.drawing = options.create_images or options.show_simulation
+        self.options   = options
+        self.drawing   = options.create_images or options.show_simulation
+        self.aggregate = options.aggregate
 
-        self.time = 0.0
-        self.frames = 0
-        self.start_time = time()
-
-        if self.drawing:
-            self._init_drawing()
         if options.create_images:
             self._init_images()
         if options.create_plots:
             self._init_plots()
 
-        self._create_actors()
-
-        self._run()
+        if self.aggregate:
+            self._run_aggregate()
+        else:
+            self._run()
 
     def _init_drawing(self):
         self.canvas = Canvas(
@@ -91,15 +88,21 @@ class Scenario:
         self.sample_frequency = int(constants.plot_sample_frequency/self.timestep)
         self.plots = Plots(self.sample_frequency, self.parameters)
         self.create_plots = True
+        self.plot_prefix = os.path.join(constants.plot_dir, self.parameters['name'])
+
 
     def _create_actors(self):
+        desired_velocities = []
         for a in setup.generate_actors(self.parameters):
+            desired_velocities.append(a['initial_desired_velocity'])
             optimised.add_actor(a)
+
+        self.average_desired_velocity = np.average(desired_velocities)
 
     def _tick(self):
         if self.drawing:
-            return self.canvas.tick(constants.framerate_limit) and not self._done()
-        return not self._done()
+            return self.canvas.tick(constants.framerate_limit)
+        return True
 
     def _plot_sample(self):
         if not optimised.a_count:
@@ -143,12 +146,54 @@ class Scenario:
         if self.create_images:
             self.canvas.create_image(self.frames)
 
+    def _aggregate(self, p_name, p_value):
+        if self.create_plots:
+            self.plots.add_aggregate(p_name, p_value, 
+                    desired_velocity=self.average_desired_velocity,
+                    leaving_time=self.time)
+
 
     def _done(self):
         stop_at = self.parameters['stop_at']
         return (stop_at is not None and self.time >= stop_at) or not optimised.a_count
 
+    def _run_aggregate(self):
+        for p in self.parameters['vary_parameters']:
+            if not p in self.parameters:
+                print "Cannot vary non-existing parameter: %s" % p
+                return
+
+            (start, stop, step) = self.parameters['vary_parameters'][p]
+            print "Aggregate of %s values %.2f-%.2f" % (p, start, stop)
+            orig_value = self.parameters[p]
+            values = np.arange(start, stop+step, step)
+            for v in values:
+                print "%s=%.2f" % (p, v)
+                self.parameters[p] = v
+                success = self._run()
+                if not success:
+                    return
+                self._aggregate(p,v)
+            self.parameters[p] = orig_value
+
+            if self.create_plots:
+                self.plots.save_aggr(self.plot_prefix)
+                self._init_plots()
+
     def _run(self):
+        optimised.set_parameters(self.parameters)
+
+        self.time = 0.0
+        self.frames = 0
+        self.start_time = time()
+
+        self._create_actors()
+
+        if self.drawing:
+            self._init_drawing()
+
+        success = False
+
         try:
             while self._tick():
 
@@ -166,6 +211,9 @@ class Scenario:
                 self.time += self.timestep
                 self.frames += 1
 
+                if self._done():
+                    success = True
+                    break
 
         except KeyboardInterrupt:
             pass
@@ -178,5 +226,7 @@ class Scenario:
         if self.drawing:
             self._uninit_drawing()
 
-        if self.options.create_plots:
-            self.plots.save(os.path.join(constants.plot_dir, self.parameters['name']))
+        if self.options.create_plots and not self.aggregate:
+            self.plots.save(self.plot_prefix)
+
+        return success
