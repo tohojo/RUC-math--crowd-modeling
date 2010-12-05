@@ -321,6 +321,43 @@ flow rate and density.
 
 	    In case two
 \end{itemize}
-
+ the s
 \subsection{Simulating our cases}
-In this section
+In this section we describe the geometrical features of our two cases, how many pedestrians we want in the simulations,
+where the seqment line from which we measure the flow rate, the square used to measure the density and the describing the 
+parameters used and how we want to modify them from simulation to simulation.
+
+In case one we simulate agents leaving a squared room with the size 10 m x 10 m and with one exit with the size 1 m in the middle of
+one of the wall seqments. The waypoint the agents are following is placed 3 meters from the exit outside the room.
+The line seqment used to measure the flow rate is 2 m wide and placed outside the room with a distance of 0.3 m,
+from the exit, to prevent that agents that are clogging are not measured more than one time.
+The square used to measure the density has the size 2 m x 2 m, and is placed right in the room right in front of the exit.
+We simulate the room with 100 pedestrians starting at random places and their initial velocity 0 m/s.
+The agents desired velocity is Gaussian distributed around 1.36 m/s with a standard deviation of 0.26 m/s.
+Maximum desired velocity is determined by multiplying the agents desired velocity with 1.3, so that the agents
+maximum velocity and their desired velicity are linked.
+$\lambda$ is initially set to 0.1, such that the agent are more influenced of what is going on in front of them.
+The parameters A and B are set to respectively 2.2 and 0.2, and the relaxation time is set to 1.
+
+In case two we simulate agents walking in both directions along a corridor of the size 50 m long and 4 m wide.
+The agents are divided into two groups, each one starting in each end of the corridor, where the waypoint that the
+left side group is following is placed 50 m behind the right end of the corridor. Correspondingsly the waypoint
+the right side group is following is placed 50 m behind the left end of the corridor.
+The seqment line we use to measure the flow rate with is placed in the middle of the corridor and is 4 m wide going from wall to wall.
+The area used to measure the density is placed in the middle of the corridor, is 1 m long and 4 m wide and hence
+also going from wall to wall.
+In this simulation we start with 50 placed randomly on the right side of the line seqment used to measure the flow rate,
+and 50 agents placed randomly on the left side of the line seqment.
+The initial conditions are the same as in case one.
+When the simulation has begun we do not want the simulation to stop when the agents have passed each other, therefore we
+make two agent appear randomly on each half of the corridor each second in 60 second.
+
+We want to simulate the two cases several times, where we vary one of the parameters at a time, to see if that improves the simulation,
+in the sense that it looks more realistic, or that the flow rate, efficiency or density is the like of what \ref{seelf-org} simulated.
+After the first simulation of each case with the initial conditions, we run some simulations where we change the parameter A and vary
+it between 0.001 and 10.000.
+Then we set A to the initial condition while we run some simulations where we change the parameter B and vary it between 0.001 and 10.000.
+$\lambda$ is then varied between 0.100 and 1.000 while the other parameters are set to the initial conditions.
+Some runs are made where $v^{max}_{\alpha}$ varies between 1.000 and 10.000.
+The relaxation is varied between 0.100 and 10.000 and the timestep....
+In case two we make some simulations where we vary the width of the door, between 0.700 and 1.000.
