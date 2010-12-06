@@ -60,7 +60,7 @@ passes through the door he will be pushed forward and accelerate which is unwant
 behaviour. This we resolved by removing the force from free endpoint when:
 
 \begin{equation}
-\| y \cos(\alpha) - w \| > R
+\| y - w \| > R
 \end{equation}
 
 This creates what we could call a "non repulsion zone" see figure(Mikkel Lav Tegning!).
@@ -122,5 +122,16 @@ and $ d_{\alpha\beta} $ could be:
 \end{figure}
 
 \subsection{Use social force in further calculation}
-use the value of forces to predict, as they are partly not real forces, the measurement 
-does not reflect the reality in some range.
+use the value of forces to predict, as they are partly not real forces, the measurement does not reflect the reality in some range.
+Pressure
+
+\subsection{Tangential forces}
+Here we discuss the idea of improving the model by improving tangential forces, that is, the force parallel to the surface of an object.
+The tangential forces can be used as collision avoidance, so that agents steer around obstacles or other agents \cite{tang1}.
+This would be relevant when simulating an environment where, e. g., an agent's waypoint is behind a big square pillar, and therefore
+has two steer around the pillar to ge the the waypoint.
+In our case where two groups of agents are crossing each other in a corridor, the tangential force would make the agents to into account
+the position of the agents in front of them and steer around them.
+
+The tangential forces can also improve the model so it can simulate agents escaping a smoke filled room where we determine the visibility.
+In this case of simulation the agents would walk randomly around untill they find a wall, and follow the wall around due to the tangential force.

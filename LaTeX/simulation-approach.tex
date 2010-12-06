@@ -76,10 +76,10 @@ are:
         considered to have escaped, and is removed from the simulation.
 
     \item \textbf{Initial velocity:} This is set as both a vector and a scalar 
-        representing vector length. The scalar speeds are drawn from a 
+        representing vector length. The scalar velocities are drawn from a 
         normal distribution with a mean of $1.34$ and a standard deviation of 
         $0,26$. The initial velocity vectors are created by multiplying the 
-        scalar speed with a normalised vector pointing from the actor's 
+        scalar velocity with a normalised vector pointing from the actor's 
         initial position to the target.
         % TODO: Where do the mean and deviation come from?
 
@@ -98,10 +98,28 @@ are:
         one second for all actors.
         % TODO: Why one second, and is this explanation correct?
 
-    \item \textbf{$\lambda$:} \cite{ABconstant} chose $\lambda$ $\approx 0.1$ to take into account
+    \item \textbf{$\lambda$:} \cite{self-org} chose $\lambda$ $\approx 0.75$ to take into account
 	anisotropic character of pedestrian interaction, such that the situations in front of
-	a pedestrian have bigger impact on the pedestrians behaviour than things going on
-	behind them. A larger $\lambda$ reflects a greater impact from behind.
+	a pedestrian have bigger impact on the pedestrians behavior than things going on
+	behind them. By looking at eguation 44 we see that if we set $\lambda = 1$, the middle 
+	paranthesis will be 1, and hence the personal sphere will only take into account the distance
+	between agent $\alpha$ and $\beta$ and not their placement respect to each other. By setting $\lambda = 0$, the middle paranthesis will be
+	$\frac{1+\cos{\phi}}{2}$
+	and therefore the situation happending behind agent $\alpha$ would affect $\alpha$'s behavior.
+	By setting $\lambda \approx 0.75$, the first part of eguation 44 is
+	 $A_{\alpha}^{1} exp \left(
+            \frac{ r_{\alpha \beta} - d_{\alpha \beta }}
+                 {B_{\alpha}^1}
+	    \right)
+	  \vec{\eta_{\alpha \beta}} \cdot
+	  \left(
+	      0.75 + 0.25
+		\frac{1+\cos{\phi}}{2}
+	    \right)$,
+	and  other agents behind $\alpha$ will only influence $\alpha$ with 25\% of what the influence would be without a $\lambda$.
+	Even though the model is called a social force model, we will point out that it is not physical forces acting on agent $\alpha$ but
+	rather motivation to act. This is more clear when adding $\lambda$, since Newton's 3'rd law (action = reaction) does not hold
+	when $\lambda$ priorities what forces and how much the forces should influence the agents.
 \end{itemize}
 
 \subsubsection{Constants}
@@ -125,10 +143,12 @@ vary between the agents, but are fixed for the whole simulation. They are:
         complicate our program by applying such methods.
         % TODO: Reference for dynamic timestep adjustment
 
-    \item \textbf{$A$, $B$:} These values are given in \cite{ABconstant}. 
+    \item \textbf{$A_1$, $B_1$:} TODO.
+
+    \item \textbf{$A_2$, $B_2$:} These values are given in \cite{helbing00}. 
         Although the model allows for them to vary between agents, we have 
         (just as is done in the article) set them to a fixed value for the 
-        whole simulation. The values given are $A=3,0$ and $B= 0,2$, where $ A $ indicates the strength of interaction and $ B $ reflects the range of interaction.
+        whole simulation. The values given are $A_2=3,0$ and $B_2 = 0,2$.
 \end{itemize}
 
 %The potential between pedestrian $\alpha$ and the wall $B$ is given by 
@@ -161,7 +181,7 @@ and velocity of the other actors, splitting the calculations this way enables
 us to do the calculations of each actor in any order, and even parallel. The 
 drawback is that the actors are only affected by the movement and positions of 
 other actors as they were at the end of the last simulation step. This means 
-that the time step has to be small enough that this does not matter in 
+that the time step has to be small enough that this doesn't matter in 
 practice.
 
 \subsubsection{Calculating the acceleration vectors}
@@ -179,22 +199,7 @@ The acceleration vectors for each actor, $\alpha$, is calculated as follows:
 \end{enumerate}
 
 Steps one to three correspond to the three parts of the model.
-\subsubsection{Calculating the acceleration vector from the desired direction}
-This acceleration comes from the difference between the desired velocity and 
-actual velocity. While the desired velocity is calculated separately, it is 
-composed of the length (desired speed) and the direction. The desired speed 
-depends on the impatience factor $ \eta $, which comes from the average speed
- along the desired direction.
 
-\subsubsection{Calculating the repulsion from other agents}
-The repulsion is a product of two factors, the circular specification factor and
-the angle dependence factor. The circular specification factor is an exponentially
-growth function that depends on the distance and relative positions of
-$ \alpha $ and $ \beta $.  The second factor depends on the angle between
-the direction of motion and the vector pointing from other agent to the agent 
-we are calculating.
- 
- 
 \subsubsection{Calculating the repulsion from walls}
 The calculation of repulsion from the walls is split in two parts for each 
 actor: First all the points on the walls that will affect the actor is 
@@ -273,61 +278,119 @@ the simulations and to see if the simulations make sence.
 In this section we will describe how we want to measure the concepts efficiency,
 flow rate and density.
 
- \textbf{Efficiency}
-	We will measure the efficiency throughout the simulations. The efficiency is a dimensionless number given by the average speed of each pedestrians divided by the desired speed of each pedestrian. In each time step it can be calculated as:
-	\begin{equation}
-		E_t=\frac{1}{N}\sum_{i=1}^{N}\frac{\overline{V_{\alpha}}}{V^0_{\alpha}}
-	\end{equation}
-	Where N is the number of pedestrians still left in the simulation(Since there is no reason to include pedestrians who have reach there desired point and therefore are not moving). 
-	Then to find the efficiency for the entire simulation we then make a summation of $E_t$ for each time step and then divide with the number of simulation steps. So given as an equation we have
-	\begin{equation}
-		E=\frac{1}{T}\sum_{t=0}^{T}\frac{\overline{V}}{V^0_{\alpha}}
-	\end{equation}
-	Where T is the number os simulations step 
+\textbf{Efficiency}
+We will measure the efficiency throughout the simulations. The efficiency is a 
+dimensionless number given by the average speed of each pedestrians divided by 
+the desired speed of each pedestrian. We will meassure the avereage speed in each 
+timestep as:
 
+\begin{equation}
+	\overline{V_t}=\frac{1}{N}\sum_{i=1}^{N}V_i
+\end{equation}
+Where $V_i$ is the speed of the i'th pedestrian and N is the number of pedestrians 
+still left in the simulation(Since there is no reason to include pedestrians who have 
+reach there desired point since they are not moving). Then to find the efficiency for 
+the entire simulation we make a summation of $V_t$ for each time step and then divide 
+with the number of simulation steps. So given as an equation we have
 
+\begin{equation}
+		E=\frac{1}{T}\sum_{t=0}^{T}\frac{\overline{V_i}}{V^0_{i}}
+\end{equation}
 
-% \begin{itemize}
-%     \item \textbf{Efficiency} The efficiency differs through the simulation since the
-% 	    agents efficiency is high if the agents have no obstacles or pedestrians in front of them,
-% 	    and drops when cloggings appear, because the agents actual velocity
-% 	    drops due to the clogging in front of them.
-% 	    Therefor we find it more interesting to measure the efficience when it is the lowest,
-% 	    since that will say most about the simulation and the situation simulated.
-% 	    Further more we want to measure the average efficiency of all the agents,
-% 	    since we that will say more about the simulation than a single agent's efficiency.
-% 	    To make the calculation as cheap as possible, we take the timestep with the lowest	
-% 	    measured efficiency, and calculate the average efficiancy of all the pedestrians
-% 	    and use that to compare with other simulations.
-% 
-%     \item \textbf{Flow rate} Part of the model geometry was made as a line seqment where we measure the average
-% 	    flow rate and the maximum flow rate, as agents crossing the line seqment per second.
-% 	    The time step length is 0.01 sec, so from simulation step no. 1 and up til simulation step no. 100, first interval, we sum up
-% 	    the number of pedestrians who crossed the line seqment to get the flow rate within the first second of the simulation.
-% 	    Then we do the same for the next 100 simulation steps, second interval, and subtract the number of pedestrians from the previous
-% 	    interval. For each new interval we subtract the number of the pedestrians from previous intervals and so forth.
-% 	    The maximum flow rate is then the interval with highest amount pedestrians crossing the seqment line.
-% 	    For the average flowrate we divide the number of pedestrians used in the simulation with the total amount of simulation steps
-% 	    it took for the last agent to cross the seqment line.
-% 
-% 	    In case one we implement the line seqment at the exit, so to measure flow rate as pedestrians exiting the room.
-% 	    When the simulation starts agents first have to move to the exit before they can run out,
-% 	    hence the lowest flow rate, 0 agents per second,
-% 	    which would not give us any useful information, where as the highest flow rate tells us how many can exit the room per second.
-% 	    In case two we implement the line seqment in the middle of the corridor to measure the flow rate in both the directions.
-% 
-% 	    In case two we 
-% 	    
-%     \item \textbf{Density} As part of the model geometry we made a square with the size $1 m^2$,
-% 	    where we meaure the density as agents intersecting that square. We want to measure the highest density of all simulation steps
-% 	    in the simulations, since this gives the most information of how dense the crowd was when exiting the room.
-% 	    
-% 	    In case one we place the square in front of the exit, and in case two we place on the line seqment in the middle of the corridor.
-% 	    For saving calculations we only take the simulation step with the highest density.
-% 	    As with the flow rate, the lowest density does not give us any useful information, since the all agents initial
-% 	    positions possibly can be outside that sguare meter, in all simulations, then the density would in all our
-% 	    simulations be 0 agents in that sguare meter.
-% 
-% 	    In case two
-% \end{itemize}
-% 
+Where T is the number os simulations step and $V^0_{i}$ is the desired speed. This will 
+give us an meassure about how fast the avereage speed the pedestrians where moving. In 
+crowed simulations one should expect the efficiency to go to zero since people won't move 
+fast and in a low density simulations it should be expected to have a value close to one $1$. 
+The efficiency will in some way be a more general measurement of how fast pedestrians move 
+throug a simulation than say the time it takes for the pedestrias to leave a room. Because 
+the time will be strongly depenten on the shape of the area in the simulation and will be 
+hard to compare with another situation. 
+	
+\textbf{Flow rate}
+Part of the model geometry was made as a line seqment where we measure the average flow 
+rate and the maximum flow rate, as pedestrians crossing the line seqment per second. 
+This line should of course be placed somewhere the pedestrians actually are moving through. 
+So in the case of a squared room you could place the line in the doorway that people move 
+through when leaving the room. Also you could place more than one line and see if there is 
+a difference in the flow rate throughout the room.   When we meassure it we will againg have 
+to be carefull with the time onwhich we meassureit. The time step length that we have chosen 
+to use in the simulations is $0.01$s. This is very small when meassuring the flow rate because 
+the pedestrians will be more than $0.1$s about crossing a line completly(I.e. a pedestrian 
+with a radius of $0.4m$ will move at a speed of $40$m$/$s if he where to cross the line in 
+one time step). So in many step the flow rate would then be zero and then suddenly $100 s^{-1}$ 
+when just one pedestrian has crossed the line. On the other hand it would be just as bad to 
+meassure it every time 20 second has gone since all the pedestrian might have crossed the 
+line and maybe they did it in only 10 seconds. So it is important to choose the right time 
+when meassuring the flowrate. We have chosen to measure it for each second, that is every 
+time we have done $100$ time steps. This requires a pedestrian to move at $0.4m/s$ to 
+entirely cross the line. Also we will calculate the flow speed for the entire simulation. 
+This we will measure as the number of pedestrians who have crossed the line in the time 
+that it took for the last pedestrians to cross the line.      
+	
+\textbf{Density}
+Another thing that we want to measure is the density of the pedestrians. When we do this, 
+it of course makes no sence to measure the density of the entire area we make the simulation 
+on, because then it will only change when a pedestrian leaves the simulated area. What we will 
+do to makes is usefull is that we will choose a certain area on wich we will measure the density. 
+In the case of a squared room it would be intersting to measure on an area of a couple of square 
+meters just before the door that the pedestrians are leaving through. A sketch of this can be seen 
+on figure\ref{fig:density}   
+	
+\begin{figure}
+\centering
+\includegraphics[scale=.5]{Figures/SquareCase.pdf}
+\caption{Here is a sketch of the area that we want to measure the density on when simulating a squared room.}
+\label{fig:density}
+\end{figure}
+
+So when we do the measurement it will be given as the area covered by the pedestrian 
+divided by entire area on wich we measure the density. So the density will, as the 
+efficiency, be a nondimensional number. Is will give us a more precise density than 
+if we measured the number of pedestrian in the same area.  Becuase the pedestrians 
+who are standing on the edge of the area but not completly inside, will notaffect 
+the density. The measure of the density we will use to compare with the flow rate 
+an see if the two are correlating when doing a simulation. It would be expected 
+that when the flow rate goes down the diensity goes up in value. But it could be 
+interesting to see it it i the same an se if there is some linearity between the 
+two. This of coures implies that the area we choos will also be where we put the 
+line that the pedestrians will cross when measuring the flow rate.   
+
+\subsection{Simulating our cases}
+In this section we describe the geometrical features of our two cases, how many pedestrians we want in the simulations,
+where the seqment line from which we measure the flow rate, the square used to measure the density and the describing the 
+parameters used and how we want to modify them from simulation to simulation.
+
+In case one we simulate agents leaving a squared room with the size 10 m x 10 m and with one exit with the size 1 m in the middle of
+one of the wall seqments. The waypoint the agents are following is placed 3 meters from the exit outside the room.
+The line seqment used to measure the flow rate is 2 m wide and placed outside the room with a distance of 0.3 m,
+from the exit, to prevent that agents that are clogging are not measured more than one time.
+The square used to measure the density has the size 2 m x 2 m, and is placed right in the room right in front of the exit.
+We simulate the room with 100 pedestrians starting at random places and their initial velocity 0 m/s.
+The agents desired velocity is Gaussian distributed around 1.36 m/s with a standard deviation of 0.26 m/s.
+Maximum desired velocity is determined by multiplying the agents desired velocity with 1.3, so that the agents
+maximum velocity and their desired velicity are linked.
+$\lambda$ is initially set to 0.1, such that the agent are more influenced of what is going on in front of them.
+The parameters A and B are set to respectively 2.2 and 0.2, and the relaxation time is set to 1.
+
+In case two we simulate agents walking in both directions along a corridor of the size 50 m long and 4 m wide.
+The agents are divided into two groups, each one starting in each end of the corridor, where the waypoint that the
+left side group is following is placed 50 m behind the right end of the corridor. Correspondingsly the waypoint
+the right side group is following is placed 50 m behind the left end of the corridor.
+The seqment line we use to measure the flow rate with is placed in the middle of the corridor and is 4 m wide going from wall to wall.
+The area used to measure the density is placed in the middle of the corridor, is 1 m long and 4 m wide and hence
+also going from wall to wall.
+In this simulation we start with 50 placed randomly on the right side of the line seqment used to measure the flow rate,
+and 50 agents placed randomly on the left side of the line seqment.
+The initial conditions are the same as in case one.
+When the simulation has begun we do not want the simulation to stop when the agents have passed each other, therefore we
+make two agent appear randomly on each half of the corridor each second in 60 second.
+
+We want to simulate the two cases several times, where we vary one of the parameters at a time, to see if that improves the simulation,
+in the sense that it looks more realistic, or that the flow rate, efficiency or density is the like of what \cite{self-org} simulated.
+After the first simulation of each case with the initial conditions, we run some simulations where we change the parameter A and vary
+it between 0.001 and 10.000.
+Then we set A to the initial condition while we run some simulations where we change the parameter B and vary it between 0.001 and 10.000.
+$\lambda$ is then varied between 0.100 and 1.000 while the other parameters are set to the initial conditions.
+Some runs are made where $v^{max}_{\alpha}$ varies between 1.000 and 10.000.
+The relaxation is varied between 0.100 and 10.000 and the timestep....
+In case two we make some simulations where we vary the width of the door, between 0.700 and 1.000.
