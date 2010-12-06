@@ -4,11 +4,15 @@
 
 static double A, B, U, lambda, timestep;
 
+static Vector flowline[2];
+
 // Global objects to allow access from different threads
 static Actor * actors;
 static Wall * walls;
 static Py_ssize_t a_count;
 static Py_ssize_t w_count;
+
+static PyObject * module_dict;
 
 void calculate_forces(Py_ssize_t i)
 {
@@ -180,14 +184,31 @@ int find_repultion_points(Actor * a, Vector repulsion_points[])
     for(i = 0; i < pos_e_c; i++) {
         int use_e = 1;
         for(j = 0; j < use_e_c; j++) {
-            if(possible_endpoints[i].x == used_endpoints[j].x && 
-                    possible_endpoints[i].y == used_endpoints[j].y) {
+            if(vector_equals(possible_endpoints[i], used_endpoints[j])) {
                 use_e = 0;
             }
         }
         if(use_e) {
-            repulsion_points[rep_p_c++] = possible_endpoints[i];
-            used_endpoints[use_e_c++] = possible_endpoints[i];
+			// Keep track of whether the endpoint is free-floating, i.e. if
+			// it is shared with another wall.
+			int free_e = 1;
+			for(j = 0; j < pos_e_c; j++) {
+				if(i != j && 
+						vector_equals(possible_endpoints[i],
+							possible_endpoints[j])) {
+					free_e = 0;
+				}
+			}
+			// Endpoints that are free-floating (i.e. sides of doorways) are
+			// only considered for repulsion if they are closer to the actor
+			// than the actor's radius. This allows actors to pass more
+			// freely through doorways.
+			if(!free_e || 
+					vector_length(vector_sub(a->position,
+							possible_endpoints[i])) < a->radius) {
+				repulsion_points[rep_p_c++] = possible_endpoints[i];
+				used_endpoints[use_e_c++] = possible_endpoints[i];
+			}
         }
     }
 
@@ -237,6 +258,13 @@ void update_position(Actor * a)
 	a->velocity = vector_add(a->velocity,
 			vector_mul(a->acceleration, timestep));
     a->time += timestep;
+
+	if(a->flowline_time < 0) {
+        if(vector_projection_distance(
+					flowline[0], flowline[1], a->position) < a->radius) {
+			a->flowline_time = a->time;
+		}
+	}
 }
 
 static int is_escaped(Actor * a)
@@ -251,7 +279,7 @@ static int is_escaped(Actor * a)
 
 
 // Threading variables
-static Py_ssize_t use_threads;
+static Py_ssize_t threads_c;
 static pthread_t * threads;
 static pthread_attr_t thread_attr;
 
@@ -270,68 +298,95 @@ static PyObject * update_actors(PyObject * self, PyObject * args)
     Py_RETURN_NONE;
 }
 
-static PyObject * add_actors(PyObject * self, PyObject * args)
+static PyObject * add_actor(PyObject * self, PyObject * args)
 {
-    PyObject * p_actor_list;
-    int i;
+    PyObject * p_actor;
+    int i = a_count;
 
-    PyArg_ParseTuple(args, "O:add_actors", &p_actor_list);
-    a_count = PyList_Size(p_actor_list);
-    actors   = PyMem_Realloc(actors, a_count * sizeof(Actor));
+    PyArg_ParseTuple(args, "O:add_actors", &p_actor);
 
-    for(i = 0; i < a_count; i++) {
-        PyObject * p_a = PyList_GetItem(p_actor_list, i);
-        actor_from_pyobject(p_a, &actors[i]);
-    }
+	update_a_count(a_count+1);
+	actor_from_pyobject(p_actor, &actors[i]);
+
     Py_RETURN_NONE;
 }
 
-static PyObject * get_actor(PyObject * self, PyObject * args)
+static PyObject * a_property(PyObject * self, PyObject * args)
 {
     Py_ssize_t i;
+	char * property;
 
-    PyArg_ParseTuple(args, "i:get_actor", &i);
+    PyArg_ParseTuple(args, "is:a_property", &i, &property);
 
-	if(i > a_count) Py_RETURN_NONE;
 
-    return Py_BuildValue("ddd", 
-            actors[i].position.x, actors[i].position.y, actors[i].radius);
-}
-
-static PyObject * get_actors(PyObject * self, PyObject * args)
-{
-	PyObject * list = PyList_New(a_count);
-	int i;
-
-	for(i = 0; i < a_count; i++) {
-		PyList_SetItem(list, i, Py_BuildValue("dddd", 
-            actors[i].position.x, actors[i].position.y, actors[i].radius,
-			vector_length(actors[i].velocity)));
+	if(i > a_count) {
+		PyErr_SetString(PyExc_KeyError, NULL);
+		return NULL;
 	}
 
-    return list;
+	if(strcmp(property, "position") == 0) {
+		return Py_BuildValue("dd", 
+				actors[i].position.x, actors[i].position.y);
+	} else if(strcmp(property, "radius") == 0) {
+		return PyFloat_FromDouble(actors[i].radius);
+	} else if(strcmp(property, "velocity") == 0) {
+		return PyFloat_FromDouble(vector_length(actors[i].velocity));
+	} else if(strcmp(property, "flowline_time") == 0) {
+		return PyFloat_FromDouble(actors[i].flowline_time);
+	} else if(strcmp(property, "target") == 0) {
+		return Py_BuildValue("dd", 
+				actors[i].target.x, actors[i].target.y);
+	}
+
+	PyErr_SetString(PyExc_AttributeError, property);
+	return NULL;
+}
+
+static PyObject * set_parameters(PyObject * self, PyObject * args)
+{
+	PyObject * o, * p_walls, *p_flowline;
+    PyArg_ParseTuple(args, "O:set_parameters", &o);
+
+    A           = double_from_attribute(o, "A");
+    B           = double_from_attribute(o, "B");
+    U           = double_from_attribute(o, "U");
+    lambda      = double_from_attribute(o, "lambda");
+    timestep    = double_from_attribute(o, "timestep");
+
+    p_walls     = PyDict_GetItemString(o, "walls");
+    p_flowline  = PyDict_GetItemString(o, "flowrate_line");
+
+	flowline[0].x = PyFloat_AsDouble(PyTuple_GetItem(p_flowline, 0));
+	flowline[0].y = PyFloat_AsDouble(PyTuple_GetItem(p_flowline, 1));
+	flowline[1].x = PyFloat_AsDouble(PyTuple_GetItem(p_flowline, 2));
+	flowline[1].y = PyFloat_AsDouble(PyTuple_GetItem(p_flowline, 3));
+
+    init_walls(p_walls);
+	update_a_count(0);
+
+    Py_RETURN_NONE;
 }
 
 static void do_calculations()
 {
     int i, rc;
     void * status;
-    if(use_threads) {
+    if(threads_c > 1) {
         Part * parts;
-        parts = PyMem_Malloc(use_threads * sizeof(Part));
-        int part_len = a_count / use_threads;
-        for(i = 0; i < use_threads; i++) {
+        parts = PyMem_Malloc(threads_c * sizeof(Part));
+        int part_len = a_count / threads_c;
+        for(i = 0; i < threads_c; i++) {
             parts[i].start = i*part_len;
             parts[i].end = (i+1)*part_len;
         }
-        parts[use_threads-1].end += a_count % use_threads;
+        parts[threads_c-1].end += a_count % threads_c;
 
-        for(i = 0; i < use_threads; i++) {
+        for(i = 0; i < threads_c; i++) {
             rc = pthread_create(&threads[i], NULL, 
                     do_calculation_part, (void *) &parts[i]);
         }
 
-        for(i = 0; i < use_threads; i++) {
+        for(i = 0; i < threads_c; i++) {
             pthread_join(threads[i], &status);
         }
     } else {
@@ -352,7 +407,7 @@ static void do_calculation_part(Part * p)
     for(i = p->start; i < p->end; i++) {
         calculate_forces(i);
     }
-    if(use_threads) pthread_exit(NULL);
+    if(threads_c > 1) pthread_exit(NULL);
 }
 
 static void check_escapes()
@@ -365,10 +420,21 @@ static void check_escapes()
 		}
 	}
 
-    if(i != j) {
-        a_count -= i-j;
-        actors = PyMem_Realloc(actors, a_count * sizeof(Actor));
-    }
+	if(i!=j) update_a_count(a_count - (i-j));
+
+}
+
+static void update_a_count(Py_ssize_t count)
+{
+	if(count == a_count) return;
+
+	a_count = count;
+	actors = PyMem_Realloc(actors, a_count * sizeof(Actor));
+
+	PyObject * tmp = PyInt_FromSsize_t(a_count);
+    PyDict_SetItemString(module_dict, "a_count", tmp);
+	Py_DECREF(tmp);
+
 }
 
 static Actor actor_from_pyobject(PyObject * o, Actor * a)
@@ -378,6 +444,8 @@ static Actor actor_from_pyobject(PyObject * o, Actor * a)
     a->initial_desired_velocity = double_from_attribute(o, "initial_desired_velocity");
     a->max_velocity             = double_from_attribute(o, "max_velocity");
     a->relax_time               = double_from_attribute(o, "relax_time");
+
+	a->flowline_time       = -1;
 
 
     a->position         = vector_from_attribute(o, "position");
@@ -397,17 +465,15 @@ static Py_ssize_t ssize_t_from_attribute(PyObject * o, char * name)
 
 static double double_from_attribute(PyObject * o, char * name)
 {
-    PyObject * o2 = PyObject_GetAttrString(o, name);
+    PyObject * o2 = PyDict_GetItemString(o, name);
     double result = PyFloat_AsDouble(o2);
-    Py_DECREF(o2);
     return result;
 }
 
 static Vector vector_from_attribute(PyObject * o, char * name)
 {
-    PyObject * o2 = PyObject_GetAttrString(o, name);
+    PyObject * o2 = PyDict_GetItemString(o, name);
     Vector result = vector_from_pyobject(o2);
-    Py_DECREF(o2);
     return result;
 }
 
@@ -415,8 +481,8 @@ static Vector vector_from_pyobject(PyObject * o)
 {
     Vector v;
 
-    PyObject * x = PyObject_GetAttrString(o, "x");
-    PyObject * y = PyObject_GetAttrString(o, "y");
+    PyObject * x = PySequence_GetItem(o, 0);
+    PyObject * y = PySequence_GetItem(o, 1);
     v.x = PyFloat_AsDouble(x);
     v.y = PyFloat_AsDouble(y);
 
@@ -429,52 +495,46 @@ static Vector vector_from_pyobject(PyObject * o)
 static PyMethodDef OptimisedMethods[] = {
     {"update_actors", update_actors, METH_VARARGS, 
         "Calculate the acceleration of an actor"},
-    {"add_actors", add_actors, METH_VARARGS, 
-        "Add actors to the list"},
-    {"get_actor", get_actor, METH_VARARGS, 
-        "Get an actor's position and radius"},
-    {"get_actors", get_actors, METH_VARARGS, 
-        "Get all actor's position and radius"},
+    {"add_actor", add_actor, METH_VARARGS, 
+        "Add an actor to the list"},
+    {"a_property", a_property, METH_VARARGS, 
+        "Get a property for an actor"},
+    {"set_parameters", set_parameters, METH_VARARGS, 
+        "Set simulation parameters"},
 };
 
 PyMODINIT_FUNC initoptimised(void)
 {
-    PyObject * p_module;
-    PyObject * p_constants;
-    PyObject * p_actors;
-    PyObject * p_walls;
+    PyObject * c_module;
 
-    (void) Py_InitModule("optimised", OptimisedMethods);
+	PyObject * m, tmp;
+    m = Py_InitModule("optimised", OptimisedMethods);
+    module_dict = PyModule_GetDict(m);
+
+    a_count  = -1;
+    actors   = NULL;
+    A        = 0;
+    B        = 0;
+    lambda   = 0;
+    timestep = 0;
+
+	update_a_count(0);
+
     Py_AtExit(cleanup);
 
-    p_module    = PyImport_ImportModule("parameters");
-    p_constants = PyObject_GetAttrString(p_module, "constants");
-    p_actors    = PyObject_GetAttrString(p_module, "actor");
-    p_walls     = PyObject_GetAttrString(p_module, "walls");
-    A           = double_from_attribute(p_constants, "A");
-    B           = double_from_attribute(p_constants, "B");
-    U           = double_from_attribute(p_constants, "U");
-    lambda      = double_from_attribute(p_constants, "lmbda");
-    timestep    = double_from_attribute(p_module, "timestep");
-    use_threads = ssize_t_from_attribute(p_module, "use_threads");
-    a_count     = 0;
-    actors      = NULL;
+    c_module    = PyImport_ImportModule("constants");
+    threads_c = ssize_t_from_attribute(c_module, "threads");
 
-    init_walls(p_walls);
+    Py_DECREF(c_module);
 
-    Py_DECREF(p_module);
-    Py_DECREF(p_constants);
-    Py_DECREF(p_actors);
-    Py_DECREF(p_walls);
-
-    if(use_threads) init_threads();
+    if(threads_c > 1) init_threads();
 }
 
 static void init_walls(PyObject * p_walls)
 {
     int i;
     w_count = PyList_Size(p_walls);
-    walls    = PyMem_Malloc(w_count * sizeof(Wall));
+    walls    = PyMem_Realloc(walls, w_count * sizeof(Wall));
     for(i = 0; i < w_count; i++) {
         PyObject * p_w   = PyList_GetItem(p_walls, i);
         walls[i].start.x = PyFloat_AsDouble(PyTuple_GetItem(p_w, 0));
@@ -487,12 +547,12 @@ static void init_walls(PyObject * p_walls)
 
 static void cleanup()
 {
-    if(use_threads) destroy_threads();
+    if(threads_c > 1) destroy_threads();
 }
 
 static void init_threads()
 {
-    threads = PyMem_Malloc(use_threads * sizeof(pthread_t));
+    threads = PyMem_Malloc(threads_c * sizeof(pthread_t));
     pthread_attr_init(&thread_attr);
     pthread_attr_setdetachstate(&thread_attr, PTHREAD_CREATE_JOINABLE);
 

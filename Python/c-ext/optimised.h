@@ -11,6 +11,7 @@ typedef struct {
     double initial_desired_velocity;
     double max_velocity;
     double relax_time;
+	double flowline_time;
     Vector position;
     Vector initial_position;
     Vector target;
@@ -45,9 +46,9 @@ typedef struct {
 } Part;
 
 static PyObject * update_actors(PyObject * self, PyObject * args);
-static PyObject * add_actors(PyObject * self, PyObject * args);
-static PyObject * get_actor(PyObject * self, PyObject * args);
-static PyObject * get_actors(PyObject * self, PyObject * args);
+static PyObject * add_actor(PyObject * self, PyObject * args);
+static PyObject * a_property(PyObject * self, PyObject * args);
+static PyObject * set_parameters(PyObject * self, PyObject * args);
 static Actor actor_from_pyobject(PyObject * o, Actor * a);
 static Py_ssize_t ssize_t_from_attribute(PyObject * o, char * name);
 static double double_from_attribute(PyObject * o, char * name);
@@ -60,3 +61,4 @@ static void destroy_threads();
 static void do_calculations();
 static void do_calculation_part(Part * p);
 static void check_escapes();
+static void update_a_count(Py_ssize_t count);

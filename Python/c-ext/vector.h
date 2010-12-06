@@ -16,3 +16,5 @@ double vector_dot(Vector v1, Vector v2);
 void vector_normalise(Vector * v);
 void vector_normalise_c(Vector * v, double length);
 double vector_projection_length(Vector A, Vector B, Vector C);
+double vector_projection_distance(Vector A, Vector B, Vector C);
+int vector_equals(Vector v1, Vector v2);
