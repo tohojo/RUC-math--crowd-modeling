@@ -76,10 +76,10 @@ are:
         considered to have escaped, and is removed from the simulation.
 
     \item \textbf{Initial velocity:} This is set as both a vector and a scalar 
-        representing vector length. The scalar velocities are drawn from a 
+        representing vector length. The scalar speeds are drawn from a 
         normal distribution with a mean of $1.34$ and a standard deviation of 
         $0,26$. The initial velocity vectors are created by multiplying the 
-        scalar velocity with a normalised vector pointing from the actor's 
+        scalar speed with a normalised vector pointing from the actor's 
         initial position to the target.
         % TODO: Where do the mean and deviation come from?
 
@@ -98,28 +98,10 @@ are:
         one second for all actors.
         % TODO: Why one second, and is this explanation correct?
 
-    \item \textbf{$\lambda$:} \cite{self-org} chose $\lambda$ $\approx 0.75$ to take into account
+    \item \textbf{$\lambda$:} \cite{ABconstant} chose $\lambda$ $\approx 0.1$ to take into account
 	anisotropic character of pedestrian interaction, such that the situations in front of
 	a pedestrian have bigger impact on the pedestrians behavior than things going on
-	behind them. By looking at eguation 44 we see that if we set $\lambda = 1$, the middle 
-	paranthesis will be 1, and hence the personal sphere will only take into account the distance
-	between agent $\alpha$ and $\beta$ and not their placement respect to each other. By setting $\lambda = 0$, the middle paranthesis will be
-	$\frac{1+\cos{\phi}}{2}$
-	and therefore the situation happending behind agent $\alpha$ would affect $\alpha$'s behavior.
-	By setting $\lambda \approx 0.75$, the first part of eguation 44 is
-	 $A_{\alpha}^{1} exp \left(
-            \frac{ r_{\alpha \beta} - d_{\alpha \beta }}
-                 {B_{\alpha}^1}
-	    \right)
-	  \vec{\eta_{\alpha \beta}} \cdot
-	  \left(
-	      0.75 + 0.25
-		\frac{1+\cos{\phi}}{2}
-	    \right)$,
-	and  other agents behind $\alpha$ will only influence $\alpha$ with 25\% of what the influence would be without a $\lambda$.
-	Even though the model is called a social force model, we will point out that it is not physical forces acting on agent $\alpha$ but
-	rather motivation to act. This is more clear when adding $\lambda$, since Newton's 3'rd law (action = reaction) does not hold
-	when $\lambda$ priorities what forces and how much the forces should influence the agents.
+	behind them. 
 \end{itemize}
 
 \subsubsection{Constants}
