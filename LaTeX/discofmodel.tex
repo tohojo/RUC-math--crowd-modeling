@@ -12,7 +12,7 @@ perpendicular to to vector that is the wall. In some cases though the point will
 be on the wall it self. This of course makes no sense since you would then be 
 repulsed by a non existing part of the wall meaning that you would avoid free 
 areas. In this case you would have to use the end point of the wall. But doing this 
-can make some unrealistic behavior as well, if the walls have the right composition. 
+can make some unrealistic behaviour as well, if the walls have the right composition. 
 
 Let's start out by looking at a case with no problem. A case with no problems is a 
 room where the angles between the walls is less than $180^o$, i.e. a squared room 
@@ -42,7 +42,7 @@ the walls themselves doesn't matter, only the vector going from the conjoint
 point of the walls to $\alpha$, should affect and only one time. Doing this, 
 there should be no unrealistic scenarios concerning wall junctions and walls 
 with more than 180 degrees between them. But this could create and undesired 
-behaviour at doors of other objects creaded with free end points.
+behaviour at doors of other objects created with free end points.
 
 \begin{figure}[ht]
 \centering
@@ -68,14 +68,6 @@ In rare cases it could happen that a pedestrian is trying to exit the room and h
 no repulsion because he is in the "non repulsive zone", he is then pushed sideways out 
 of the "non repulsion zone" and suddenly he will feel a great repulsive force because 
 he first "discovers" it when he is very close to the wall see figure(Mikkel Lav Tegning!).
-
-\subsection{The tangential force}
-When observing a crowed it could seem as if friction between pedestrians should play 
-an important role in the croweds dynamics. This is further confirmed in (ARTICLE) (ARTICLE). 
-Here a force vector standing tangent to the circumference of pedestrians. This force 
-represents the friction arising when pedestrians touch each other. This fenomena has 
-proven to make more accurate predictions.
-
 
 \subsection{The repulsive force between agents in $ \Re ^{3}$}
 From the given formula for calculating the repulsive force between agents in the 
@@ -122,6 +114,7 @@ and $ d_{\alpha\beta} $ could be:
 \end{figure}
  
 \subsection{Tangential forces}
+<<<<<<< HEAD
 Here we discuss the idea of improving the model by improving tangential forces, that 
 is, the force parallel to the surface of an object. The tangential forces can be used 
 as collision avoidance, so that agents steer around obstacles or other agents \cite{tang1}.
@@ -134,3 +127,14 @@ of them and steer around them.
 The tangential forces can also improve the model so it can simulate agents escaping a smoke filled 
 room where we determine the visibility. In this case of simulation the agents would walk randomly 
 around untill they find a wall, and follow the wall around due to the tangential force.
+=======
+Here we discuss the idea of improving the model by improving tangential forces, that is, the force parallel to the surface of an object.
+The tangential forces can be used as collision avoidance, so that agents steer around obstacles or other agents \cite{tang1}.
+This would be relevant when simulating an environment where, e. g., an agent's waypoint is behind a big square pillar, and therefore
+has two steer around the pillar to ge the the waypoint.
+In our case where two groups of agents are crossing each other in a corridor, the tangential force would make the agents to into account
+the position of the agents in front of them and steer around them.
+
+The tangential forces can also improve the model so it can simulate agents escaping a smoke filled room where we determine the visibility.
+In this case of simulation the agents would walk randomly around untill they find a wall, and follow the wall around due to the tangential force.
+>>>>>>> bd1ba36f518e225f9670416c1bfefc8af3d5f75a
