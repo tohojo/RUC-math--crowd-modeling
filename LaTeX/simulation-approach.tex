@@ -100,8 +100,8 @@ are:
 
     \item \textbf{$\lambda$:} \cite{ABconstant} chose $\lambda$ $\approx 0.1$ to take into account
 	anisotropic character of pedestrian interaction, such that the situations in front of
-	a pedestrian have bigger impact on the pedestrians behavior than things going on
-	behind them. 
+	a pedestrian have bigger impact on the pedestrians behaviour than things going on
+	behind them. A larger $\lambda$ reflects a greater impact from behind.
 \end{itemize}
 
 \subsubsection{Constants}
@@ -125,12 +125,10 @@ vary between the agents, but are fixed for the whole simulation. They are:
         complicate our program by applying such methods.
         % TODO: Reference for dynamic timestep adjustment
 
-    \item \textbf{$A_1$, $B_1$:} TODO.
-
-    \item \textbf{$A_2$, $B_2$:} These values are given in \cite{helbing00}. 
+    \item \textbf{$A$, $B$:} These values are given in \cite{ABconstant}. 
         Although the model allows for them to vary between agents, we have 
         (just as is done in the article) set them to a fixed value for the 
-        whole simulation. The values given are $A_2=3,0$ and $B_2 = 0,2$.
+        whole simulation. The values given are $A=3,0$ and $B= 0,2$, where $ A $ indicates the strength of interaction and $ B $ reflects the range of interaction.
 \end{itemize}
 
 %The potential between pedestrian $\alpha$ and the wall $B$ is given by 
@@ -163,7 +161,7 @@ and velocity of the other actors, splitting the calculations this way enables
 us to do the calculations of each actor in any order, and even parallel. The 
 drawback is that the actors are only affected by the movement and positions of 
 other actors as they were at the end of the last simulation step. This means 
-that the time step has to be small enough that this doesn't matter in 
+that the time step has to be small enough that this does not matter in 
 practice.
 
 \subsubsection{Calculating the acceleration vectors}
@@ -181,7 +179,22 @@ The acceleration vectors for each actor, $\alpha$, is calculated as follows:
 \end{enumerate}
 
 Steps one to three correspond to the three parts of the model.
+\subsubsection{Calculating the acceleration vector from the desired direction}
+This acceleration comes from the difference between the desired velocity and 
+actual velocity. While the desired velocity is calculated separately, it is 
+composed of the length (desired speed) and the direction. The desired speed 
+depends on the impatience factor $ \eta $, which comes from the average speed
+ along the desired direction.
 
+\subsubsection{Calculating the repulsion from other agents}
+The repulsion is a product of two factors, the circular specification factor and
+the angle dependence factor. The circular specification factor is an exponentially
+growth function that depends on the distance and relative positions of
+$ \alpha $ and $ \beta $.  The second factor depends on the angle between
+the direction of motion and the vector pointing from other agent to the agent 
+we are calculating.
+ 
+ 
 \subsubsection{Calculating the repulsion from walls}
 The calculation of repulsion from the walls is split in two parts for each 
 actor: First all the points on the walls that will affect the actor is 
