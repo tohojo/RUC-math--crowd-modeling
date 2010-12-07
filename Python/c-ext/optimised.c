@@ -270,7 +270,11 @@ void update_position(Actor * a)
 static int is_escaped(Actor * a)
 {
 	double l = vector_length(vector_sub(a->target, a->position));
-	return (l <= a->radius*2);
+	if (l <= a->radius*2) return 1;
+    if (a->position.x > ESCAPE_THRESHOLD || a->position.x < -ESCAPE_THRESHOLD
+            || a->position.y > ESCAPE_THRESHOLD || a->position.y < -ESCAPE_THRESHOLD)
+        return 1;
+    return 0;
 }
 
 

@@ -36,6 +36,8 @@ static Vector calculate_wall_repulsion(Actor * a, Vector repulsion_point);
 static void update_position(Actor * a);
 static int is_escaped(Actor * a);
 
+#define ESCAPE_THRESHOLD 50
+
 /*** Calculation part end ***/
 
 
