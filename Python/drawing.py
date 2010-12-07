@@ -7,6 +7,13 @@ BG_COLOUR = (255,255,255)
 DRAW_COLOUR = (0,0,0)
 TARGET_COLOUR = (255,0,0)
 
+
+COLOURS = [
+        (0,255,0),
+        (0,0,255),
+        (255,0,0),
+        ]
+
 class Canvas:
     """Class to manage a canvas and draw objects on it."""
 
@@ -17,6 +24,8 @@ class Canvas:
         self.screen = pygame.display.set_mode((width, height), 0, 32)
         self.pixel_factor = factor
         self.image_prefix = image_prefix
+
+        self.target_colours = dict()
 
         self.font = pygame.font.Font(None, 18)
 
@@ -48,14 +57,22 @@ class Canvas:
         (x2,y2) = self.screen_coords(w[2], w[3])
         gfxdraw.line(self.screen, x1, y1, x2, y2, DRAW_COLOUR)
 
-    def draw_actor(self, x, y,r ):
+    def _get_colour(self, t):
+        if not t in self.target_colours:
+            self.target_colours[t] = COLOURS[len(self.target_colours)]
+        return self.target_colours[t]
+
+    def draw_actor(self, x, y, r, t):
+        colour = self._get_colour(t)
         (x,y) = self.screen_coords(x,y)
         gfxdraw.aacircle(self.screen, x, y,
                 self.screen_radius(r),
-                DRAW_COLOUR)
+                colour)
 
     def draw_target(self, x, y):
         (x,y) = self.screen_coords(x,y)
+        if x > self.width or x < -self.width or y > self.height or y < -self.height:
+            return
         gfxdraw.aacircle(self.screen, x, y,
                 self.screen_radius(0.2),
                 TARGET_COLOUR)

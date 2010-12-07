@@ -134,7 +134,8 @@ class Scenario:
         for i in xrange(optimised.a_count):
             (x,y) = optimised.a_property(i, "position")
             r = optimised.a_property(i, "radius")
-            self.canvas.draw_actor(x,y,r)
+            t = optimised.a_property(i, "target")
+            self.canvas.draw_actor(x,y,r,t)
 
         self.canvas.draw_text("t = %.2f" % self.time, not self.create_images)
         for t in self.parameters['targets']:
