@@ -7,14 +7,13 @@ if constants.random_seed is not None:
     numpy.random.seed(constants.random_seed)
     random.seed(constants.random_seed)
 
-def generate_actors(parameters):
+def generate_actors(parameters, start_areas, num):
     """Generates a number of actors placed randomly within the
     area specified by the parameters, with parameters as specified
     in the parameters file"""
 
     actors = []
 
-    num = parameters['initial_count']
     targets = parameters['targets']
 
     radii = numpy.random.normal(parameters['radius_mean'], 
@@ -26,8 +25,8 @@ def generate_actors(parameters):
     # calculate grid cells for placement of actors
     grid_cell_size = max_radius*2+0.05
     grid = list()
-    for i in xrange(len(parameters['start_areas'])):
-        (x1,y1,x2,y2) = parameters['start_areas'][i]
+    for i in xrange(len(start_areas)):
+        (x1,y1,x2,y2) = start_areas[i]
         t = parameters['targets'][i]
         x_range = x2-x1
         y_range = y2-y1

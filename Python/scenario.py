@@ -46,9 +46,11 @@ class Scenario:
         self.parameters['timestep'] = self.timestep
 
         self.average_desired_velocity = 0.0
+        self.spawn_count = 0.0
 
         self.create_images = False
         self.create_plots = False
+        self.spawning = False
 
     def run(self, options):
         self.options   = options
@@ -59,6 +61,9 @@ class Scenario:
             self._init_images()
         if options.create_plots:
             self._init_plots()
+
+        if self.parameters['continuous_rate'] is not None:
+            self.spawning = True
 
         if self.aggregate:
             self._run_aggregate()
@@ -93,7 +98,8 @@ class Scenario:
 
     def _create_actors(self):
         desired_velocities = []
-        for a in setup.generate_actors(self.parameters):
+        for a in setup.generate_actors(self.parameters, 
+                self.parameters['start_areas'], self.parameters['initial_count']):
             desired_velocities.append(a['initial_desired_velocity'])
             optimised.add_actor(a)
 
@@ -153,6 +159,19 @@ class Scenario:
                     desired_velocity=self.average_desired_velocity,
                     leaving_time=self.time)
 
+    def _spawn(self):
+        spawn_rate = self.parameters['continuous_rate']
+        self.spawn_count += self.timestep * spawn_rate
+        spawn = 0
+        while self.spawn_count > 1.0:
+            spawn += 1
+            self.spawn_count -= 1.0
+
+        if spawn > 0:
+            for a in setup.generate_actors(self.parameters,
+                    self.parameters['continuous_start'], spawn):
+                optimised.add_actor(a)
+
 
     def _done(self):
         stop_at = self.parameters['stop_at']
@@ -199,6 +218,9 @@ class Scenario:
             while self._tick():
 
                 optimised.update_actors()
+
+                if self.spawning:
+                    self._spawn()
                 
                 if self.drawing: 
                     self._draw()
