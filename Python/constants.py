@@ -5,6 +5,6 @@ image_dir             = "images/"
 plot_dir              = "plots/"
 
 threads               = 2
-framerate_limit       = 0
+framerate_limit       = 100
 
 plot_sample_frequency = 0.1

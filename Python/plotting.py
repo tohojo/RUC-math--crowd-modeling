@@ -115,6 +115,13 @@ class Plots:
         self._annotate_plot(fig)
         return fig
 
+    def _aggr_flowrate_plot(self):
+        fig = self._create_plot("Average flowrate", 
+                self.aggr_x_name, "pedestrians/second")
+        plt.plot(self.aggr_x_values, self.aggr_flowrates, label='flowrate')
+        self._annotate_plot(fig)
+        return fig
+
     def _density_plot(self):
         fig = self._create_plot("Actor density","t","number of actors")
         plt.plot(self.t_values, self.densities, label='density')
@@ -153,6 +160,11 @@ class Plots:
 
         leaving_time_plot = self._aggr_leaving_time_plot()
         leaving_time_plot.savefig("%s-%s-aggr-%s.pdf" % (prefix, "leaving_time", 
+            self.aggr_x_name),
+                bbox_inches='tight')
+
+        flowrate_plot = self._aggr_flowrate_plot()
+        flowrate_plot.savefig("%s-%s-aggr-%s.pdf" % (prefix, "flowrate", 
             self.aggr_x_name),
                 bbox_inches='tight')
 

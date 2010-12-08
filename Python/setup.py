@@ -7,14 +7,13 @@ if constants.random_seed is not None:
     numpy.random.seed(constants.random_seed)
     random.seed(constants.random_seed)
 
-def generate_actors(parameters):
+def generate_actors(parameters, start_areas, num):
     """Generates a number of actors placed randomly within the
     area specified by the parameters, with parameters as specified
     in the parameters file"""
 
     actors = []
 
-    num = parameters['initial_count']
     targets = parameters['targets']
 
     radii = numpy.random.normal(parameters['radius_mean'], 
@@ -26,8 +25,9 @@ def generate_actors(parameters):
     # calculate grid cells for placement of actors
     grid_cell_size = max_radius*2+0.05
     grid = list()
-    for r in parameters['start_areas']:
-        (x1,y1,x2,y2) = r
+    for i in xrange(len(start_areas)):
+        (x1,y1,x2,y2) = start_areas[i]
+        t = parameters['targets'][i]
         x_range = x2-x1
         y_range = y2-y1
         x_offset = (x_range % grid_cell_size)/2
@@ -37,14 +37,14 @@ def generate_actors(parameters):
         for i in xrange(cells_x):
             for j in xrange(cells_y):
                 grid.append((i * grid_cell_size + x_offset + x1, 
-                    j * grid_cell_size + y_offset + y1))
+                    j * grid_cell_size + y_offset + y1, t))
 
     if num > len(grid):
         print "Warning: asked to create %d actors, but only room for %d" % (num, len(grid))
 
     cells = random.sample(grid, min(num,len(grid)))
 
-    for i in xrange(num):
+    for i in xrange(len(cells)):
         radius = radii[i]
         velocity = velocities[i]
         cell = cells[i]
@@ -53,6 +53,7 @@ def generate_actors(parameters):
         x_coord = random.random() * free_space_x + cell[0] + radius
         y_coord = random.random() * free_space_y + cell[1] + radius
         position = (x_coord, y_coord)
+        target = cell[2]
 
         actors.append(dict(
             position = position,
@@ -63,7 +64,7 @@ def generate_actors(parameters):
             time = 0.0,
             relax_time = parameters['relax_time'],
             max_velocity = velocity * parameters['max_velocity_factor'],
-            target = targets[0],
+            target = target,
             radius = radius))
 
     return actors
