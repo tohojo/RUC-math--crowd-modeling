@@ -1,7 +1,11 @@
 # vim:fileencoding=utf8
 
 import pygame
-from pygame import gfxdraw
+try:
+    from pygame import gfxdraw
+    drawing = "gfxdraw"
+except ImportError:
+    drawing = "draw"
 
 BG_COLOUR = (255,255,255)
 DRAW_COLOUR = (0,0,0)
@@ -52,10 +56,22 @@ class Canvas:
     def create_image(self, frames):
         pygame.image.save(self.screen, "%s-%05d.png" % (self.image_prefix, frames))
 
+    def _draw_circle(self, x, y, r, c):
+        if drawing == "gfxdraw":
+            gfxdraw.aacircle(self.screen, x, y, r, c)
+        elif drawing == "draw":
+            pygame.draw.circle(self.screen, c, (x,y), r, 1)
+
+    def _draw_line(self, x1, y1, x2, y2, c):
+        if drawing == "gfxdraw":
+            gfxdraw.line(self.screen, x1, y1, x2, y2, c)
+        elif drawing == "draw":
+            pygame.draw.line(self.screen, c, (x1, y1), (x2, y2))
+
     def draw_wall(self, w):
         (x1,y1) = self.screen_coords(w[0], w[1])
         (x2,y2) = self.screen_coords(w[2], w[3])
-        gfxdraw.line(self.screen, x1, y1, x2, y2, DRAW_COLOUR)
+        self._draw_line(x1, y1, x2, y2, DRAW_COLOUR)
 
     def _get_colour(self, t):
         if not t in self.target_colours:
@@ -65,17 +81,13 @@ class Canvas:
     def draw_actor(self, x, y, r, t):
         colour = self._get_colour(t)
         (x,y) = self.screen_coords(x,y)
-        gfxdraw.aacircle(self.screen, x, y,
-                self.screen_radius(r),
-                colour)
+        self._draw_circle(x, y, self.screen_radius(r), colour)
 
     def draw_target(self, x, y):
         (x,y) = self.screen_coords(x,y)
         if x > self.width or x < -self.width or y > self.height or y < -self.height:
             return
-        gfxdraw.aacircle(self.screen, x, y,
-                self.screen_radius(0.2),
-                TARGET_COLOUR)
+        self._draw_circle(x, y, self.screen_radius(0.2), TARGET_COLOUR)
 
     def draw_text(self, t, draw_fps):
         if draw_fps:
