@@ -40,13 +40,20 @@ if options.output is None:
 
 shutil.copy(parameters_file, "%s.parameters" % options.output)
 
+image_path = os.path.join(options.directory, scenario)
+
+try:
+    os.stat("%s-00001.png")
+    ext = "png"
+except OSError:
+    ext = "tga"
 
 args = [
     'mencoder',
     '-profile', 'mpeg4.singlepass',
     '-o', options.output, 
-    '-mf', 'type=png:fps=%s' % options.fps,
-    'mf://%s-*.png' % os.path.join(options.directory, scenario),
+    '-mf', 'type=%s:fps=%s' % (ext, options.fps),
+    'mf://%s-*.%s' % (os.path.join(options.directory, scenario),ext),
 ]
 
 subprocess.call(args)

@@ -1,17 +1,20 @@
-import matplotlib.pyplot as plt
-import matplotlib as mpl
-import numpy as np
-import constants
+try:
+    import matplotlib.pyplot as plt
+    import matplotlib as mpl
+    import numpy as np
+    import constants
+    mpl.rc('font',
+		    size=11.0,
+		    serif="Gentium Basic",
+		    monospace="Inconsolata",
+	  )
+    mpl.rcParams['font.sans-serif'] = 'PT Sans'
+    #mpl.rc('legend',
+    #        fancybox=True,
+    #        )
+except ImportError:
+    pass
 
-mpl.rc('font',
-        size=11.0,
-        serif="Gentium Basic",
-        monospace="Inconsolata",
-        )
-mpl.rcParams['font.sans-serif'] = 'PT Sans'
-#mpl.rc('legend',
-#        fancybox=True,
-#        )
 
 class Plots:
 
