@@ -1,6 +1,3 @@
-
-
-
 \section{The model}
 \label{sec:the-model}
 In this section we will go through the model from the article \cite{self-org} 
@@ -18,8 +15,12 @@ attractive force}. All the forces work in the horizontal plane, the vertical
 plane is not of interest. The forces are illustrated in 
 figure~\ref{ForceModel}.  They will all be studied closely in turn in the 
 following sections.  But before we do this we would like to comment on the 
-notation of the mathematics in the model. In the original paper the radius of a pedestrian is given as $r_{\alpha}$ and the position is $\vec{r_{\alpha}}$. This can easily confuse one, since one could think that $r_{\alpha}$ is the length of $\vec{r_{\alpha}}$, which it is not. So for clarity we write $R_{\alpha}$ for the radius and $\vec{p_{\alpha}}$ for position. In general, 
-any expression that has $^{0}$ is a desire. 
+notation of the mathematics in the model. In the original paper the radius of 
+a pedestrian is given as $r_{\alpha}$ and the position is $\vec{r_{\alpha}}$. 
+This can easily confuse one, since one could think that $r_{\alpha}$ is the length 
+of $\vec{r_{\alpha}}$, which it is not. So for clarity we write $R_{\alpha}$ for 
+the radius and $\vec{p_{\alpha}}$ for position. In general, any expression that 
+has $^{0}$ is a desire. 
 
 \begin{figure}[ht]
     \centering
@@ -95,6 +96,20 @@ We will now move on to show the explicit expression for each force. We will go
 through them one at a time explaining their mathematical structure and their 
 role in the model.
 
+\begin{center}
+\begin{tabular}{lll}
+\hline
+$\vec{f_{\alpha}^{0}}$ & the desired force &\\
+\hline
+$\vec{f_{\alpha B}}$ & the repulsive force from walls &\\
+\hline
+$\vec{f_{\alpha \beta}}$ & the repulsion from other agents\\
+\hline
+$\vec{f_{\alpha i}}$& the attractive force\\
+\hline
+\end{tabular}
+\end{center}
+
 \subsection{The desired force}
 The first term on the right hand side of equation \eqref{model} describes the 
 \emph{willingness} of agent $\alpha$'s to reach the exit. It is a velocity 
@@ -147,7 +162,6 @@ of motion $e_{\alpha}$ devided by the time that the simulation has run. A
 illustration of this can be seen i figure \ref{impatience}. The mathematical 
 expression becomes:
 
-
 \begin{figure}[ht]
     \centering
     {\includegraphics[scale=0.35]{Figures/NotationOfAgent2.pdf}} 
@@ -169,10 +183,11 @@ $V_{\alpha}^{0}(t)$ for $t=0$ and $t>0$ to be the following:
 \[
   V_{\alpha}^{0} (t) = \left\{ 
   \begin{array}{l l}
-    V_{\alpha}^{0}(0) \quad \text{if $t=0$}\\
+    0 & \text{if $t=0$}\\
     \left[ 1 - \eta_{\alpha} \left( t \right) \right] 
     V_{\alpha}^{0} \left( 0 \right) +
-    \eta_{\alpha} \left( t \right)V_{\alpha}^{\text{max}} \quad \text{if $t>0$}\\
+    \eta_{\alpha} \left( t \right)V_{\alpha}^{\text{max}} & \text{if 
+    $t > 0$}\\
   \end{array} \right.
 \]
 
@@ -211,6 +226,26 @@ $V_{\alpha}^{\text{max}}$ and $\overline{V_{\alpha}}$.
 
 This concludes the explanation of the first of the four physical forces. The next 
 force in the equation is the repulsive force from the walls.
+
+\begin{center}
+\begin{tabular}{lll}
+\hline
+$\vec{V_{\alpha}}$ & The actual velocity of agent alpha &\\
+\hline
+$V_{\alpha}^{0}(t)$ & The desired speed of agent alpha &\\
+\hline
+$V_{\alpha}^{0}(0)$ & The initial desired speed of agent alpha &\\
+\hline
+$\overline{V_{\alpha}(t)}$ & The average speed of agent alpha &\\
+\hline
+$\vec{p_{\alpha}}$ & The position vector of agent alpha\\
+\hline
+$e_{\alpha}$& The desired direction of agent alpha\\
+\hline
+$\tau$& The relaxation time &\\
+\hline
+\end{tabular}
+\end{center}
 
 \subsection{Repulsion from the walls}
 The second term on the right hand side of equation \eqref{model} is a force which 
@@ -340,6 +375,22 @@ means that when the potential between wall and pedestrian rises so will the forc
 direction meaning that the pedestrian will be pushed away. This can be understood as if the pedestrian 
 is trying to avoid the wall as it is expected from real life situations. \cite{social-force}. %real references, please.
 
+\begin{center}
+\begin{tabular}{lll}
+\hline
+$\vec{p_{\alpha}^{\text{B}}}$& Vector pointing from origo to the point on the wall nearest to agent alpha &\\
+\hline
+$\vec{W}$& Vector representing the wall &\\
+\hline
+$U_{B}$ & Repulsive potential from the wall\\
+\hline
+$U^{0}_{\alpha B}$ & Constant representing agent alpha's tendency to avoid walls\\
+\hline
+$R_{\alpha}$& Repulsive potential from the wall\\
+\hline
+\end{tabular}
+\end{center}
+
 \subsection{Repulsion from other agents}
 The third term on the right hand side of equation \eqref{model} is a summation of all the 
 force between agent $\alpha$ and agent $\beta$. The equation we use is taken from a newer article \cite{ABconstant}. We did this because the original article contains two constants that is not given in the articel and in a mail we were adviced, by the authors, to use the values and equation from the new article. 
@@ -462,6 +513,24 @@ $ f_{\alpha\beta}(t)^{max} < 0.64 m/s^{2} $. It can never be exactly $0.64m/s^2$
 %TODO: again lets  have a little summation here. What kinds of dynamics does the
 % social interaction part of the model yield.
 
+\begin{center}
+\begin{tabular}{lll}
+\hline
+$d_{\alpha \beta}$& The distance from agent $\alpha$ to $\beta$ &\\
+\hline
+$r_{\alpha\beta}$& The sum of the radii of agent $\alpha$ and $\beta$ \\
+\hline
+$\lambda_{\alpha}$& Anisotropy parameter &\\
+\hline
+$\eta_{\alpha \beta}$& Normal vector pointing from $\beta$ to $\alpha$ \\
+\hline
+$A_{\alpha}$& Parameter controlling the interaction streanght \\
+\hline
+$B_{\alpha}$& Parameter controlling the range of the repulsive interaction  \\
+\hline
+\end{tabular}
+\end{center}
+
 \subsection{The attractive forces between some agents}
 The fourth and last term in \eqref{model} represents the force from attraction 
 in the room. Attractions can be either be either interesting sculptures, 
@@ -477,6 +546,68 @@ constants.
 	     reader an overview of how the model looks like.}
     \label{overview}
 \end{figure}
+
+\begin{center}
+\begin{tabular}{lll}
+\hline
+$\vec{f_{\alpha}^{0}}$ & the desired force &\\
+\hline
+$\vec{f_{\alpha B}}$ & the repulsive force from walls &\\
+\hline
+$\vec{f_{\alpha \beta}}$ & the repulsion from other agents\\
+\hline
+$\vec{f_{\alpha i}}$& the attractive force\\
+\hline
+$\vec{V_{\alpha}}$ & The actual velocity of agent alpha &\\
+\hline
+$V_{\alpha}^{0}(t)$ & The desired speed of agent alpha &\\
+\hline
+$V_{\alpha}^{0}(0)$ & The initial desired speed of agent alpha &\\
+\hline
+$\overline{V_{\alpha}(t)}$ & The average speed of agent alpha &\\
+\hline
+$\vec{p_{\alpha}}$ & The position vector of agent alpha\\
+\hline
+$e_{\alpha}$& The desired direction of agent alpha\\
+\hline
+$\tau$& The relaxation time &\\
+\hline
+$\vec{p_{\alpha}^{\text{B}}}$& Vector pointing from origo to the point on the wall nearest to agent alpha &\\
+\hline
+$\vec{W}$& Vector representing the wall &\\
+\hline
+$U_{B}$ & Repulsive potential from the wall\\
+\hline
+$U^{0}_{\alpha B}$ & Constant representing agent alpha's tendency to avoid walls\\
+\hline
+$R_{\alpha}$& Repulsive potential from the wall\\
+\hline
+$d_{\alpha \beta}$& The distance from agent $\alpha$ to $\beta$ &\\
+\hline
+$r_{\alpha\beta}$& The sum of the radii of agent $\alpha$ and $\beta$ \\
+\hline
+$\lambda_{\alpha}$& Anisotropy parameter &\\
+\hline
+$\eta_{\alpha \beta}$& Normal vector pointing from $\beta$ to $\alpha$ \\
+\hline
+$A_{\alpha}$& Parameter controlling the interaction streanght \\
+\hline
+$B_{\alpha}$& Parameter controlling the range of the repulsive interaction  \\
+\hline
+$d_{\alpha \beta}$& The distance from agent $\alpha$ to $\beta$ &\\
+\hline
+$r_{\alpha\beta}$& The sum of the radii of agent $\alpha$ and $\beta$ \\
+\hline
+$\lambda_{\alpha}$& Anisotropy parameter &\\
+\hline
+$\eta_{\alpha \beta}$& Normal vector pointing from $\beta$ to $\alpha$ \\
+\hline
+$A_{\alpha}$& Parameter controlling the interaction streanght \\
+\hline
+$B_{\alpha}$& Parameter controlling the range of the repulsive interaction  \\
+\hline
+\end{tabular}
+\end{center}
 
 We have now seen the explicit mathematical expression for the social forces 
 as well as explained how this affects the behavior of the agents. To get an 
