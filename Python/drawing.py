@@ -54,7 +54,11 @@ class Canvas:
         pygame.display.flip()
 
     def create_image(self, frames):
-        pygame.image.save(self.screen, "%s-%05d.png" % (self.image_prefix, frames))
+        if pygame.version.vernum < (1,8,0):
+            ext = "tga"
+        else:
+            ext = "png"
+        pygame.image.save(self.screen, "%s-%05d.%s" % (self.image_prefix, frames, ext))
 
     def _draw_circle(self, x, y, r, c):
         if drawing == "gfxdraw":
