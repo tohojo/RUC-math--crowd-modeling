@@ -1,51 +1,23 @@
 \section{Discrepancies between results}
 \label{sec:discrepancies}
-In this section we discuss the different features of the model, problems when 
-computing the model, limits of the model and ways of improving the model that 
-we thought of when we went into more details of the model and started to 
-simulate it.
 
-There are several limitations the model that we encountered when we started 
-analyse and simulate the model. In this section we discuss some relevant 
-limitations of the model that we thought of.
+\subsection{Tangential forces}
+Here we discuss the idea of improving the model by improving tangential forces, that is, the force parallel to the surface of an object.
+The tangential forces can be used as collision avoidance, so that agents steer around obstacles or other agents \cite{tang}.
+This would be relevant when simulating an environment where, e. g., and is standing in the middle of a symmetrical room and the agent's waypoint
+is behind a big square pillar, with equal distance either way around, the agent would get stuck in front of the pillar without the tangential forces,
+since the forces acting on the agent's motivation is cancelling each other out. 
+In our case where two groups of agents are crossing each other in a corridor, the tangential force would make the agents to into account
+the position of the agents in front of them and steer around them.
 
-The flexibility of the model in the sence that which situations it could model 
-and some limitations of the agents and their awareness of the environment.
-E. g. (Comparison article) some people fall in panic situations and become 
-obstacles for other people, which is not a feature this model deals with. In 
-our model none of the agents fall and become an obstacle force other agents as 
-would be seen in real life panic situations.
+The tangential forces can also improve the model so it can simulate agents escaping a smoke filled room where we determine the visibility.
+In this case of simulation the agents would walk randomly around untill they find a wall, and follow the wall around due to the tangential force.
+This would be a way of implementing way finding to the model.
 
-Another flaw in the model is that the agents do not have way finding, which 
-mean that they can not escape a more complex environment with a lot of rooms 
-and corridors. As it is now we can only simulate simple cases as the squared 
-room and the corridor.  An improvement of the model would then be to implement 
-way finding for the agents, so that they can manoeuvre around in other more 
-complex cases then the ones we have.
+Friction between agents would also be possible to add to the model, since the tangential forces from other agents would make it
+harder for agents to walk through a crowd. \cite{self-org} mention that friction is causing clogging in front of exits, since the people
+get stuck in each other. In our simulation the agents are not clogging as heavily as \cite{self-org} mention it can be.
+The time it take for the agent to leave a room in unrealistic low, and we think that implementing the friction by tangential forces
+would make the simulation time more realistic.
 
-In other models as the HiDAC, agents can share information about the 
-environment, such that the agents have a better idea of where the exit is/are 
-(Comparison article). In a real panic situation you would expect people to 
-communicate when evacuation a building.
 
-Other models take into account herding behavior between the agents  
-\cite{helbing00}, so that some people have tendency to follow other agents, 
-while other agents have a tendency to go their own way,  and by doing so 
-explore the environment for possible exits.
-
-As the model is now there is no friction between the agents, so that agents 
-that have higher velocity than the ones standing in their path, can slide in 
-between slower moving agents in front of them, without them slowing down when 
-they slide by. In real case scenario people would not slip by that easily 
-since the friction between the people would slow them down.  Without friction 
-between agents there would be less clogging in front of doors, and the time it 
-takes the agents to exit a room would be less than the time expected. Thus the 
-validation of the would not be as good as if there would be friction between 
-the agents.
-
-At the moment we can not simulate a case where the visibility is very low. The 
-agents have a way point to follow, but if the visibility only is 1 meter, e. 
-g. in a smoke filled room, the  agents would not have way point to follow, and 
-hence round around with out purpose. Here the tangential forces would also 
-help the agent to find the exit, but navigation through the tangential force 
-from the walls.
