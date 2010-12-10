@@ -1,11 +1,14 @@
 \section{Assessment of social force models}
+% TODO: Add a discussion about the "toy model" thing. Go through the whole 
+% section looking at structure, coherency etc.
+% Come up with a concept for the section and make it so.
 \label{sec:assessment}
 When we started to implement and simulate the model we found some fault
 in the model, which gave rise to some ideas of how we make the model better.
 These minor fault in the model and the solutions to have we could improve it
 is described in this section.
 
-\subsection{The repulsive force between agents in $ \Re ^{3}$}
+\subsection{The repulsive force between agents in three-dimensional space}
 From the given formula for calculating the repulsive force between agents in the 
 description of the model, the part calculating the force to keep the personal space 
 can be omitted when the agents are rather close to each other, then the calculation 
@@ -100,3 +103,28 @@ g. in a smoke filled room, the  agents would not have way point to follow, and
 hence round around with out purpose. Here the tangential forces would also 
 help the agent to find the exit, but navigation through the tangential force 
 from the walls.
+
+\subsection{social force in crowd modelling}
+%-take a step back, discuss the model in general terms
+%-is social force a good way to discuss this 
+%-incomplete description, inherent in types of paper
+At this point we have got some understanding of the social force model, and 
+also given our opinion about the limitation of the model. We cannot help to 
+think about the same question as we point out in the introduction, whether 
+social force is a proper measure of crowd behaviour. 
+
+While searching for articles leading to social force model, we see there is a 
+evolutionary path in transferring physical concepts to describe crowd dynamics.
+The success of using fluid dynamics thoughts to model traffic problem encourages 
+people to bring the same measurement to model crowd. 
+Later, Helbing improves that way by combining the fluid dynamic and gas kinetics 
+concepts. \cite{social-force} However, in order to add the self-organized feature 
+into account, it is necessary to use the agent-based concept.  At the same time, 
+use certain quantity to measure the desire of each agent, and the social force model 
+transfer the "social force" into the calculation in the actual acceleration, which may
+arise problems because many laws in physics does not apply in this model. 
+There is a common feature of the social force model articles, that the method for 
+justifying the model is mostly by comparing with observations. It is not 
+similar with many cases in classical mechanics, when talking of forces people 
+always evaluate energy and momentum, but it is not possible when we have 
+the social force involved.
