@@ -1,9 +1,18 @@
-\section{Gaps of the model}
-\label{sec:gaps}
-When we implementet the model into Python and C to simulate it, when had some problems with
-forces from the walls and the exit. In the article we found no descriptions to how we could
-overcome these problems, so we had to figure out how to solve these problems our selfs.
-In this section we describe the problems and how we solved them.
+\section{Lack of features in the model}
+% TODO: Add a section about placement of waypoints.
+%   Square room: Place the waypoint at or just outside the exit.
+%   Corridor: Place the waypoint a long distance away, so that pedestrians 
+%   move almost in a straight line along the corridor.
+\label{sec:lack}
+When we startet to implement the model and simulate our two cases, we encountered some
+problems that we did not foresee when we read the article \cite{self-org}, and the other
+articles \cite{helbing00}, \cite{social-force}.
+We encountered some special cases where the model did not suffice to give a realistic
+simulation, and also we could not, from the articles, figure out how to fix some initial parameters.
+In the articles the authors did not write of any such problems and how to deal with them,
+so we had to come up with our own solutions to solve them, and thereby give a more realistic
+simulation.
+In the following section we discuss these problems and our solutions to these problems.
 
 \subsection{Discussion on walls in special cases.}\label{wallEndpoints}
 The wall is created as a vector. The repulsive force vector is perpendicular to the wall 
@@ -20,12 +29,13 @@ can make some unrealistic behaviour as well, if the walls have the right composi
 
 Let's start out by looking at a case with no problem. A case with no problems is a 
 room where the angles between the walls is less than $180^o$, i.e. a squared room 
-where they are $90^o$. For a pedestrian close to the corner between two walls, you 
+where the angles are $90^o$. For a pedestrian close to the corner between two walls, you 
 would calculate the repulsive force from both of the walls. This you do in order 
 for the pedestrian to avoid going through either one of the walls. When you do 
 this you get a force directly away from each of the walls. This clearly makes 
 sense and there is no problem in doing so.
 
+\subsubsection{Forces at kinks}
 The case where the angle between two walls is greater than $180^o$ could on the 
 other hand give some problems if not handled correctly. The case is sketched in 
 figure \ref{fig:wallcase}. Here there are 3 different areas that a pedestrian $\alpha$ 
@@ -34,18 +44,18 @@ $\alpha$ will not be perpendicular to any of the walls and in C he will be only
 perpendicular to wall 2. If a pedestrian is in area B then we would calculate the 
 forces from the end point of the walls. This will be from the point where the two 
 walls meet. This will give you a double repulsion from one point and that 
-doesn't make sense. Also when you are in are A or C you would get a repulsive force 
+does not make sense. Also when you are in are A or C you would get a repulsive force 
 from a second wall you would be of no risk of going into and in many situations 
-couldn't see because the first wall is blocking the sight. This of course doesn't 
+could not see because the first wall is blocking the sight. This of course does not 
 make any sense either. So the way that we handle this situation is the following. 
-When the angle between the walls is greater than $180^o$, from a pedestrian $\alpha$ 
-point of view, you should look at the two walls as one, in the way that you will 
+When the angle between the walls is greater than $180^o$, from pedestrian $\alpha$'s 
+point of view, you should look at the two walls as one, and in that way you will 
 only calculate one force from the walls. In area A or C only the closest point 
 on the closest wall should affect you. In the case of $\alpha$ being in area B 
 the walls themselves doesn't matter, only the vector going from the conjoint 
 point of the walls to $\alpha$, should affect and only one time. Doing this, 
 there should be no unrealistic scenarios concerning wall junctions and walls 
-with more than 180 degrees between them. But this could create and undesired 
+with more than $180^o$ between them. But this could create and undesired 
 behaviour at doors of other objects created with free end points.
 
 \begin{figure}[ht]
@@ -58,8 +68,8 @@ behaviour at doors of other objects created with free end points.
 We encountered a problem when dealing with doors. The problem arises because 
 the door is constructed by two free endpoints and pedestrians feel a repulsion 
 force from these points according to section \ref{wallEndpoints}. This means 
-that a pedestrians trying to exit through the door will feel a repulsive force 
-from the walls which prevent him from walking through the door. The second he 
+that a pedestrian trying to exit through the door will feel a repulsive force 
+from both of the walls which prevent him from walking through the door. The second he 
 passes through the door he will be pushed forward and accelerate which is unwanted 
 behaviour. This we resolved by removing the force from free endpoint when:
 
@@ -72,6 +82,7 @@ In rare cases it could happen that a pedestrian is trying to exit the room and h
 no repulsion because he is in the "non repulsive zone", he is then pushed sideways out 
 of the "non repulsion zone" and suddenly he will feel a great repulsive force because 
 he first "discovers" it when he is very close to the wall see figure(Mikkel Lav Tegning!).
+
 \subsubsection{Calculating the repulsion from walls}
 The calculation of repulsion from the walls is split in two parts for each 
 actor: First all the points on the walls that will affect the actor is 
@@ -106,6 +117,8 @@ twice. The points are then used as a basis for calculating the repulsion, as
 described in section~\ref{sec:the-model}.
 
 \subsection{Initial conditions and constants}
+% TODO: Go through all the constants and add where we got it from; either a 
+% reference or saying that we came up with it ourselves.
 When initialising the model, parameters are set for each pedestrian. In the 
 model, every parameter can vary between actors, while in practice many of them 
 do not. In this section, we go through the parameters and how they are set.  
@@ -118,7 +131,8 @@ library for Python \cite{numpy}.
 
 \subsubsection{Position related parameters}
 There are a number of parameters that are set that has to do with the initial 
-position of actors and walls. They are:
+position of actors and walls. Some where given, and some we had to come up
+with ourselfs. They are:
 
 \begin{itemize}
     \item \textbf{Wall endpoints:} Points describing the endpoints of the 
@@ -183,28 +197,39 @@ are:
         one second for all actors.
         % TODO: Why one second, and is this explanation correct?
 
-    \item \textbf{$\lambda$:} \cite{self-org} chose $\lambda$ $\approx 0.75$ to take into account
-	anisotropic character of pedestrian interaction, such that the situations in front of
-	a pedestrian have bigger impact on the pedestrians behavior than things going on
-	behind them. By looking at eguation 44 we see that if we set $\lambda = 1$, the middle 
-	paranthesis will be 1, and hence the personal sphere will only take into account the distance
-	between agent $\alpha$ and $\beta$ and not their placement respect to each other. By setting $\lambda = 0$, the middle paranthesis will be
-	$\frac{1+\cos{\phi}}{2}$
-	and therefore the situation happending behind agent $\alpha$ would affect $\alpha$'s behavior.
-	By setting $\lambda \approx 0.75$, the first part of eguation 44 is
-	 $A_{\alpha}^{1} exp \left(
+    \item \textbf{$\lambda$:} \cite{self-org} chose $\lambda$ $\approx 0.1$ 
+        to take into account
+    anisotropic character of pedestrian interaction, such that the situations 
+    in front of
+    a pedestrian have bigger impact on the pedestrians behavior than things 
+    going on
+    behind them. By looking at eguation 44 we see that if we set $\lambda = 
+    1$, the middle paranthesis will be 1, and hence the personal sphere will 
+    only take into account the distance
+    between agent $\alpha$ and $\beta$ and not their placement respect to each 
+    other. By setting $\lambda = 0$, the middle paranthesis will be
+    $\frac{1+\cos{\phi}}{2}$
+    and therefore the situation happending behind agent $\alpha$ would affect 
+    $\alpha$'s behavior.
+    By setting $\lambda \approx 0.1$, the first part of eguation 44 is
+     $A_{\alpha}^{1} exp \left(
             \frac{ r_{\alpha \beta} - d_{\alpha \beta }}
                  {B_{\alpha}^1}
-	    \right)
-	  \vec{\eta_{\alpha \beta}} \cdot
-	  \left(
-	      0.75 + 0.25
-		\frac{1+\cos{\phi}}{2}
-	    \right)$,
-	and  other agents behind $\alpha$ will only influence $\alpha$ with 25\% of what the influence would be without a $\lambda$.
-	Even though the model is called a social force model, we will point out that it is not physical forces acting on agent $\alpha$ but
-	rather motivation to act. This is more clear when adding $\lambda$, since Newton's 3'rd law (action = reaction) does not hold
-	when $\lambda$ priorities what forces and how much the forces should influence the agents.
+        \right)
+      \vec{\eta_{\alpha \beta}} \cdot
+      \left(
+          0.1 + 0.9
+        \frac{1+\cos{\phi}}{2}
+        \right)$,
+    and  other agents behind $\alpha$ will only influence $\alpha$ with 90\% 
+    of what the influence would be without a $\lambda$.
+    Even though the model is called a social force model, we will point out 
+    that it is not physical forces acting on agent $\alpha$ but
+    rather motivation to act. This is more clear when adding $\lambda$, since 
+    Newton's 3'rd law (action = reaction) does not hold
+    when $\lambda$ priorities what forces and how much the forces should 
+    influence the agents.
+    % TODO: Is this explanation correct?
 \end{itemize}
 
 \subsubsection{Constants}
@@ -228,33 +253,13 @@ vary between the agents, but are fixed for the whole simulation. They are:
         complicate our program by applying such methods.
         % TODO: Reference for dynamic timestep adjustment
 
-    \item \textbf{$A_1$, $B_1$:} TODO.
-
-    \item \textbf{$A_2$, $B_2$:} These values are given in \cite{helbing00}. 
+    \item \textbf{$A$, $B$:} These values are given in \cite{helbing00}. 
         Although the model allows for them to vary between agents, we have 
         (just as is done in the article) set them to a fixed value for the 
         whole simulation. The values given are $A_2=3,0$ and $B_2 = 0,2$.
+
+    \item \textbf{U:}
+        % TODO: Add this description; we tried different values and ended up 
+        % having a value of 2.
 \end{itemize}
-
-%The potential between pedestrian $\alpha$ and the wall $B$ is given by 
-
-%\begin{equation}
-%V_B=V_B^0 e^{-(r_\alpha - r_B^\alpha )/R} 
-%\end{equation}
-%where $V_B^0 = 10m^2s^{-2}$ and $R=0.2m$.
-%These model parameters have been determined such that they are compatible with empirical data. 
-%(Kilde: Dirk Helbing and Peter Molnar - Social force model for pedestrian dynamics). This is 
-%the older article by Helbing, and it seems as if its the same initial conditions, as in 
-%the article we are working with, except that the force between to pedestrians has changed. 
-%But still I think we could use the old article to argue why these parameters 
-%have the given values.\\
-
-%\noindent
-%$A^2_\alpha = 3m/s^2$ and $B^2_\alpha = 0.2 m\\$
-%$A = 5 m/s^2$ and $B=0.1m$
-%$r_{\alpha \beta} = 0.6m$
-%$\lambda_a = 0.75$\\\\
-%\noindent
-%These values for the model have been calibrated with empirical data of pedestrian streams.
-% TODO: What is this section doing here?
 

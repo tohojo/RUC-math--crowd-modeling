@@ -14,107 +14,19 @@ borrowed from physics.
 
 Since social forces have so much in common with physical forces, it makes 
 sense to go into a bit more detail about what separates the two.
-%TODO: Continue this
+%TODO: Expand on the difference between social and physical forces.
 
 \subsection{Variants of social force models}
-% TODO: Write this section
+% TODO: This should contain an overview of the different social force models, 
+% starting with the one we picked to simulate, and explaining briefly how the 
+% others differ. With references for all of them.
+
 \subsection{Results obtained from the models}
-% TODO: Write this section
+% TODO: Expand the descriptions so they make sense to a reader that doesn't 
+% know them.
+% Add an introduction detailing the two main scenarios and where they come 
+% from and why they are there.
 
-%\subsection{Concepts for describing crowd behaviour}\label{concepts}
-%In order to analyse the behaviour of crowds, we need to establish some 
-%concepts to describe this behaviour. It is not obvious which concepts are 
-%useful when we need to distinguish between the results we get from our 
-%simulations. In this section we describe which concepts we use to describe 
-%the behaviour of crowds, and why we have chosen them. This is based on the 
-%literature of crowd modelling.
-
-%One of the reasons for modelling crowds is to discover ways to make crowd 
-%situations safer for pedestrians, e.g. when evacuating a building in event of 
-%a fire. One of the main factors in this scenario is the \emph{efficiency} of 
-%the crowd movement. This is especially important when clearing a room in the 
-%event of a fire or other disaster: the faster everyone gets out, the lower is 
-%the chance of someone dying from flames or smoke.
-
-%The efficiency of the crowd it measured by \emph{how close the average speed 
-%of a pedestrians is to the desired speed of the pedestrian}. This is done for 
-%every pedestrian in the simulation and this gives us a measure of how 
-%unaffected the crowd moves through the environment. If every pedestrian moves 
-%at his desired speed throughout the entire simulation the efficiency will be 
-%at its maximum.
-
-%However the measurement of efficiency alone is not sufficient to describe all 
-%the aspects of the crowds behaviour. We want to be able to say something 
-%about how the crowds move in specific parts of the environment for instance 
-%in a narrow passage or through a door opening. For this purpose we introduce 
-%the concept of \emph{flow rate}. The flow rate is a measurement of \emph{how 
-%many pedestrians that pass a point or line segment in space per unit time}.
-
-%Furthermore we introduce the concept \emph{density}. The density is the 
-%\emph{number of people in an area of space}. The density is useful when 
-%comparing results from different simulations.  TODO: Why is it useful?
-
-%The last concept we want to introduce is the \emph{geometry} of the 
-%environment by geometry we mean \emph{the shape of the room or corridor} in 
-%which the simulation is taking place. We introduce this because we are 
-%interested in examining how the shape of the environment affects the 
-%behaviour of the crowd.
-
-%These four concepts \emph{efficiency}, \emph{flow rate}, \emph{density} and 
-%\emph{geometry} will allow us to compare the results from our different 
-%simulations in some detail. For example if we change the geometry of the 
-%environment how does this change the efficiency of the crowd? If two rooms 
-%have the same geometry how does the density affect the flow rate through a 
-%door opening? If the efficiency is low does that imply a low flow rate? These 
-%are all questing that can be answered through simulations in the framework of 
-%the concepts we have just defined.    TODO: It is not the concepts that 
-%affect each other, it is the parameters that affect the concepts.
-% TODO: Move the explanation of geometry somewhere else.
-
-%\subsection{Our case(s)}\label{ourCases}
-%In this section we outline which cases we want to simulate and why.
-%One of the main reasons for doing simulations is that we want to to get a 
-%full understanding of the model. Doing simulations is a way to achieve this
-%understanding. Secondly we want to find any limitations and weaknesses of the 
-%model. Furthermore we want to simulate scenarios that have been 
-%experimentally tested in \citep{self-org}.
-
-%We start by making a series of simple simulations  where we can test isolated 
-%parts of the model and slowly increase the complexity of the simulations. 
-%Basically there are three levels of the model we want to simulate. 
-
-%First we want to model a square room with an exit in the middle of one of the 
-%walls. In this room there will be a modest amount of people and no obstacles. 
-%The purpose of this simulation is not to compare the results with real life 
-%but rather to catch any early mistakes or misunderstandings in our 
-%implementation of the model.
-
-%From this we move on to varying the parameters of the model too see how the 
-%changes in in the these affect the concepts of crowd behaviour we defined in 
-%section \ref{concepts}. This will be done in the same simple simulation in 
-%order for us to have a transparent look at precisely how the parameters 
-%affect the concepts. The results of these simulations will be compared with 
-%the value of the parameters presented in the literature.
-
-%After this we will test how the model handles different geometries of the 
-%environment to see if the model starts producing unnatural crowd behaviour as 
-%the complexity of the environment increases. 
-
-%In the end we will try so simulate more complicated situations to see if we 
-%can observe a range of self-organization phenomena that have been reported in 
-%the literature. As stated earlier there have been preformed experiments in 
-%these scenarios so we can compare our results with the results presented in 
-%the literature. These phenomena include clogging in bottlenecks, lane 
-%formation in bidirectional pedestrian flow and a faster-is-slower phenomena 
-%where some pedestrians end up moving slower than average because they are to 
-%impatient and try to overtake other pedestrians\cite{self-org}. Furthermore 
-%we want to test some phenomena  that according to the literature should make 
-%the model break down. An example of this could be to model a situation of a 
-%room filled with smoke.   
-
-%All this should give a thorough idea about how this model should be handled 
-%and what parts of it that could be improved. or were you should be careful 
-%when using the model.
 \subsubsection{Lane Formation}
 Especially in counterflow situation, pedestrians form lanes of walking 
 directions, which is thought as a result of the non-linear body interaction 
