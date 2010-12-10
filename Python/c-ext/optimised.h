@@ -1,7 +1,9 @@
 #include <Python.h>
 #include <math.h>
-#include <pthread.h>
 #include "vector.h"
+#ifndef _WIN32
+#include <pthread.h>
+#endif
 
 /*** Calculation part begin ***/
 
