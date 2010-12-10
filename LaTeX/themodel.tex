@@ -18,8 +18,7 @@ following sections.  But before we do this we would like to comment on the
 notation of the mathematics in the model. In the original paper the radius of 
 a pedestrian is given as $r_{\alpha}$ and the position is $\vec{r_{\alpha}}$. 
 This can easily confuse one, since one could think that $r_{\alpha}$ is the length 
-of $\vec{r_{\alpha}}$, which it is not. So for clarity we write $R_{\alpha}$ for 
-the radius and $\vec{p_{\alpha}}$ for position. In general, any expression that 
+of $\vec{r_{\alpha}}$, which it is not. So for clarity we write R for radius and p for position. I.e. $\overrightarrow{p_{\alpha}}$ is the vector from a fixed point in space to the position of $\alpha$. In general, any expression that 
 has $^{0}$ is a desire. 
 
 \begin{figure}[ht]
@@ -27,9 +26,9 @@ has $^{0}$ is a desire.
     {\includegraphics[scale=0.45]{Figures/ForceModel.pdf}} \caption[Notation 
     of forces acting on an agent]{Illustration of the forces acting on an 
     agent $\alpha $. $ \beta $ is another agent and the grey bar on the top 
-    represents a wall. $ \vec{f_{\alpha\beta}} $ is the repulsive force from 
-    agent $ \beta $, and $ \vec{f_{\alpha B}} $ is the repulsive force from 
-    the wall. $ \vec{f^{0}_{\alpha}} $ is a force that represents agent $ 
+    represents a wall. $ \overrightarrow{f_{\alpha\beta}} $ is the repulsive force from 
+    agent $ \beta $, and $ \overrightarrow{f_{\alpha B}} $ is the repulsive force from 
+    the wall. $ \overrightarrow{f^{0}_{\alpha}} $ is a force that represents agent $ 
     \alpha $'s desire to reach the exit.  The x and y axes are defined by the 
     Cartesian coordinate system.}
     \label{ForceModel}
@@ -46,8 +45,8 @@ forces here.
 
 Each induvidual agent has a series of parameters describing the features of 
 the agent. An agent is represented by a circle with radius $R_{\alpha}$. The 
-agent has a position vector $\vec{p_{\alpha}}$ and a velocity vector $\vec{V_{\alpha}}$ at 
-all times t. Furthermore each agent has a desired direction $\vec{e_{\alpha}}$ 
+agent has a position vector $\overrightarrow{p_{\alpha}}$ and a velocity vector $\overrightarrow{V_{\alpha}}$ at 
+all times t. Furthermore each agent has a desired direction $\overrightarrow{e_{\alpha}}$ 
 in which it would like to move. An illustration of the notation can be seen in 
 figure \ref{fig:NotationOfAgent}.
 
@@ -56,40 +55,40 @@ figure \ref{fig:NotationOfAgent}.
     {\includegraphics[scale=0.35]{Figures/NotationOfAgent.pdf}} 
     \caption[Notation of an agent]{Illustration of the visual presentation of 
     the mathematical notations for position and velocity. As for agent $ 
-    \alpha $, it has position vector $ \vec{p_{\alpha}} $, velocity vector $ 
-    \vec{V_{\alpha}} $, $\vec{e_{\alpha}}$ or $\vec{e_{\beta}}$ the unit 
+    \alpha $, it has position vector $ \overrightarrow{p_{\alpha}} $, velocity vector $ 
+    \overrightarrow{V_{\alpha}} $, $\overrightarrow{e_{\alpha}}$ or $\overrightarrow{e_{\beta}}$ the unit 
     vector pointing to the exit and  $ R_{\alpha} $ or  $ R_{\beta} $ the 
     radius of its body.  The x and y axes are defined by the Cartesian 
     coordinate system.}
     \label{fig:NotationOfAgent}
 \end{figure}
 
-The change in position $ \vec{p_{\alpha}} $ per time of agent $\alpha$ is the 
-velocity $ \vec{V_{\alpha}} $:
+The change in position $ \overrightarrow{p_{\alpha}} $ per time of agent $\alpha$ is the 
+velocity $ \overrightarrow{V_{\alpha}} $:
 
 \begin{equation}
-		\frac{d \vec{p_{\alpha}}}{dt} = \vec{V_{\alpha}} \left( t \right)
+		\frac{d \overrightarrow{p_{\alpha}}}{dt} = \overrightarrow{V_{\alpha}} \left( t \right)
 \end{equation}
 
 The change of velocity per time is the acceleration of agent $\alpha$, which 
 is due to all the forces acting on the agent is given by:
 
 \begin{equation}
-    \frac{d \vec{V_{\alpha}}}{dt} = \vec{f_{\alpha}} \left( t \right) 
+    \frac{d \overrightarrow{V_{\alpha}}}{dt} = \overrightarrow{f_{\alpha}} \left( t \right) 
 \end{equation}
 
-The summation of all the forces $\vec{f_{\alpha}}$ can be devided into four 
+The summation of all the forces $\overrightarrow{f_{\alpha}}$ can be devided into four 
 terms as stated in the introduction to this section.
 
 \begin{equation}\label{model}
-    \vec{f_{\alpha}} = \vec{f^{0}_{\alpha}} + \vec{f_{\alpha B}} +
-    \sum_{\beta \neq \alpha} \vec{f_{\alpha \beta}} +  
-    \sum_{i} \vec{f_{\alpha i}} 
+    \overrightarrow{f_{\alpha}} = \overrightarrow{f^{0}_{\alpha}} + \overrightarrow{f_{\alpha B}} +
+    \sum_{\beta \neq \alpha} \overrightarrow{f_{\alpha \beta}} +  
+    \sum_{i} \overrightarrow{f_{\alpha i}} 
 \end{equation}
 
-Here $\vec{f_{\alpha}^{0}}$ is the desired force, $\vec{f_{\alpha 
-\text{B}}}$ is the repulsive force from walls. $\vec{f_{\beta\alpha}}$ 
-is a repulsive force from other agents and $\vec{f_{\alpha i}}$ is a 
+Here $\overrightarrow{f_{\alpha}^{0}}$ is the desired force, $\overrightarrow{f_{\alpha 
+\text{B}}}$ is the repulsive force from walls. $\overrightarrow{f_{\beta\alpha}}$ 
+is a repulsive force from other agents and $\overrightarrow{f_{\alpha i}}$ is a 
 attractive force.
 
 We will now move on to show the explicit expression for each force. We will go 
@@ -99,13 +98,13 @@ role in the model.
 \begin{center}
 \begin{tabular}{lll}
 \hline
-$\vec{f_{\alpha}^{0}}$ & the desired force &\\
+$\overrightarrow{f_{\alpha}^{0}}$ & the desired force &\\
 \hline
-$\vec{f_{\alpha B}}$ & the repulsive force from walls &\\
+$\overrightarrow{f_{\alpha B}}$ & the repulsive force from walls &\\
 \hline
-$\vec{f_{\alpha \beta}}$ & the repulsion from other agents\\
+$\overrightarrow{f_{\alpha \beta}}$ & the repulsion from other agents\\
 \hline
-$\vec{f_{\alpha i}}$& the attractive force\\
+$\overrightarrow{f_{\alpha i}}$& the attractive force\\
 \hline
 \end{tabular}
 \end{center}
@@ -116,20 +115,20 @@ The first term on the right hand side of equation \eqref{model} describes the
 dependent force and is given by:
 
 \begin{equation}\label{relaxtime}
-	\vec{f^{0}_{\alpha}}\left( \vec{V_{\alpha}} \right) =
+	\overrightarrow{f^{0}_{\alpha}}\left( \overrightarrow{V_{\alpha}} \right) =
     \frac{1}{\tau}
-    \left( V_{\alpha}^{0} \vec{e_{\alpha}} - \vec{V_{\alpha}} \right)
+    \left( V_{\alpha}^{0} \overrightarrow{e_{\alpha}} - \overrightarrow{V_{\alpha}} \right)
 \end{equation}
 
-Where $V_{\alpha}^{0}$ is the desired speed, $ \vec{e_{\alpha}} $ is the unit 
+Where $V_{\alpha}^{0}$ is the desired speed, $ \overrightarrow{e_{\alpha}} $ is the unit 
 vector pointing in the desired direction of the agent which in most cases will 
-be the exit, but it can in principle be anywhere.  $\vec{V_{\alpha}}$ is the 
+be the exit, but it can in principle be anywhere.  $\overrightarrow{V_{\alpha}}$ is the 
 actual velocity of the agent, and $\tau$ is the \emph{relaxation time}.
 
 The relaxtion time determines how reactive a agent is. In principle the 
 relaxation time can vary for each agent but from the article \cite{self-org} 
 we get that $ \tau_{\alpha}\approx 1s $, which means that it takes the agent 
-one second to change its velocity. $V_{\alpha}^{0} \vec{e_{\alpha}}$ is the desired 
+one second to change its velocity. $V_{\alpha}^{0} \overrightarrow{e_{\alpha}}$ is the desired 
 velocity of the agent. The desired speed can vary over time and is given by:
 
 \begin{equation}\label{v0eta}
@@ -157,7 +156,7 @@ the agent and is given by:
 where $\overline{V}_{\alpha}\left( t \right)$ is the average speed in the 
 desired direction.Excately how one measures the average speed in the desired 
 direction is not properly explained in the article. We define it to be the 
-projection of the position vector $ \vec{p_{\alpha}} $ onto the desired direction 
+projection of the position vector $ \overrightarrow{p_{\alpha}} $ onto the desired direction 
 of motion $e_{\alpha}$ devided by the time that the simulation has run. A 
 illustration of this can be seen i figure \ref{impatience}. The mathematical 
 expression becomes:
@@ -165,14 +164,14 @@ expression becomes:
 \begin{figure}[ht]
     \centering
     {\includegraphics[scale=0.35]{Figures/NotationOfAgent2.pdf}} 
-    \caption{Illustration of the vector $ \vec{p_{\alpha}^{E}}$, which is the 
-    projection of $ \vec{p_{\alpha}} $ onto the desired direction of motion.}
+    \caption{Illustration of the vector $ \overrightarrow{p_{\alpha}^{E}}$, which is the 
+    projection of $ \overrightarrow{p_{\alpha}} $ onto the desired direction of motion.}
     \label{impatience}
 \end{figure}
 
 \begin{equation}\label{averagespeed}
    \overline{V}_{\alpha} \left( t \right) =
-   \frac{1}{t} \vec{p_{\alpha}}\cdot \vec{e_{\alpha}} 
+   \frac{1}{t} \overrightarrow{p_{\alpha}}\cdot \overrightarrow{e_{\alpha}} 
 \end{equation}
 
 $\overline{V}_{\alpha}$ is undefined at $t=0$ beacause that would mean 
@@ -230,7 +229,7 @@ force in the equation is the repulsive force from the walls.
 \begin{center}
 \begin{tabular}{lll}
 \hline
-$\vec{V_{\alpha}}$ & The actual velocity of agent alpha &\\
+$\overrightarrow{V_{\alpha}}$ & The actual velocity of agent alpha &\\
 \hline
 $V_{\alpha}^{0}(t)$ & The desired speed of agent alpha &\\
 \hline
@@ -238,7 +237,7 @@ $V_{\alpha}^{0}(0)$ & The initial desired speed of agent alpha &\\
 \hline
 $\overline{V_{\alpha}(t)}$ & The average speed of agent alpha &\\
 \hline
-$\vec{p_{\alpha}}$ & The position vector of agent alpha\\
+$\overrightarrow{p_{\alpha}}$ & The position vector of agent alpha\\
 \hline
 $e_{\alpha}$& The desired direction of agent alpha\\
 \hline
@@ -252,15 +251,15 @@ The second term on the right hand side of equation \eqref{model} is a force whic
 arise from interactions with the walls or other obstacles. It is given by:
 
 \begin{equation}\label{wallpotential}
-    \vec{f_{\alpha B}} \left( \vec{p_{\alpha}} \right) =
-    - \nabla_{\vec{p_{\alpha}}} U_{B}
-    \left( \| \vec{p_{\alpha}} - \vec{r_{B}^{\alpha}} \| \right)
+    \overrightarrow{f_{\alpha B}} \left( \overrightarrow{p_{\alpha}} \right) =
+    - \nabla_{\overrightarrow{p_{\alpha}}} U_{B}
+    \left( \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| \right)
 \end{equation}
 
-$U_B$ is a repulsive potential and $\|\vec{p_{\alpha}} - \vec{p_{B}^{\alpha}}\|$ 
+$U_B$ is a repulsive potential and $\|\overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}}\|$ 
 is the distance from the position of agent $\alpha$ to the nearest point on the 
 wall as shown in figure \ref{NotationOfWall}. Since $U_B$ is a function of the distance 
-$\| \vec{p_{\alpha}} - \vec{p_{B}^{\alpha}} \|$, the gradient of $U_B$ tells us in 
+$\| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \|$, the gradient of $U_B$ tells us in 
 which direction this repulsion change the most. It is obvious that the change is 
 largest if the agent takes a step directly towards or away from the point in the wall, 
 which means that the agent will be pushed directly away from the point in the wall.
@@ -268,108 +267,81 @@ which means that the agent will be pushed directly away from the point in the wa
 \begin{figure}[ht]
 \centering
 {\includegraphics[scale=0.35]{Figures/NotationOfWall.pdf}} 
-\caption[Notation of the interaction between an agent and a wall]{The illustration shows the mathematical notation for the interaction with walls used. The circle is pedestrian $\alpha$ with radius $R_{\alpha}$, $\vec{p_{\alpha}}$ is the position vector for $\alpha$, the grey box on the top is the wall, $\vec{r_{B}^{\alpha}}$ is the position vector for the closest part of the wall to $\alpha$, $\left( \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \| \right)$ is the smallest distance from $\alpha$ to the wall and $\vec{V_{\alpha}}$ is the velocity vector for $\alpha$.}
+\caption[Notation of the interaction between an agent and a wall]{The illustration shows the mathematical notation for the interaction with walls used. The circle is pedestrian $\alpha$ with radius $R_{\alpha}$, $\overrightarrow{p_{\alpha}}$ is the position vector for $\alpha$, the grey box on the top is the wall, $\overrightarrow{p_{B}^{\alpha}}$ is the position vector for the closest part of the wall to $\alpha$, $\left( \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| \right)$ is the smallest distance from $\alpha$ to the wall and $\overrightarrow{V_{\alpha}}$ is the velocity vector for $\alpha$.}
 \label{NotationOfWall}
 \end{figure}
 
 In order to do the actual calculation we need to know the explicit expression for 
-$ \| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|$. First we need to find point on the wall 
+$ \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \|$. First we need to find point on the wall 
 that is perpendicular to $\alpha$ as this will be the nearest point to $\alpha$. If we define 
-the wall as a vector, $\vec{W}$ going from a point in space $w_1$ to another point $w_2$, then 
+the wall as a vector, $\overrightarrow{W}$ going from a point in space $w_1$ to another point $w_2$, then 
 we can find the projection of $\alpha$'s position onto the wall and this projection will be 
-$\vec{r_{B}^{\alpha}}$. This projection is given by:
+$\overrightarrow{p_{B}^{\alpha}}$. This projection is given by:
 
 \begin{equation}\label{wall}
-\vec{r_{B}^{\alpha}}=\frac{\vec{r_{\alpha}}\cdot \vec{W}}{\| \vec{W} \|^2}\vec{W}
+\overrightarrow{p_{B}^{\alpha}}=\frac{\overrightarrow{p_{\alpha}}\cdot \overrightarrow{W}}{\| \overrightarrow{W} \|^2}\overrightarrow{W}
 \end{equation}
 
-With this we now have the two points we need to calculate $\|\vec{r_{\alpha}} - \vec{r_{B}^{\alpha}}\|$ 
+With this we now have the two points we need to calculate $\|\overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}}\|$ 
 since the position of $\alpha$ is know at all times.
 
-With the explicit expression for $ \| \vec{p_{\alpha}} - \vec{r_{B}^{\alpha}} \| $ 
-in hand we are able to calculate $\vec{f_{\alpha B}} \left( \vec{p_{\alpha}} \right)$ from 
+With the explicit expression for $ \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| $ 
+in hand we are able to calculate $\overrightarrow{f_{\alpha B}} \left( \overrightarrow{p_{\alpha}} \right)$ from 
 Equation \ref{wallpotential}, as long as the expression for the potential function 
-$U_{B}\left( \| \vec{p_{\alpha}} - \vec{p_{B}^{\alpha}} \| \right)$ is given. This is 
+$U_{B}\left( \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| \right)$ is given. This is 
 however not the case in the main article we are working with. In another articles \cite{ABconstant} by 
 the same author the repulsive potential from the wall is given by: 
 
 \begin{equation}
-U_{B} \left( \| \vec{p_{\alpha}} - \vec{p_{B}^{\alpha}} \| \right) =
-U^0_{\alpha B} e^{- \| \vec{p_{\alpha}} - \vec{p_{B}^{\alpha}} \| / R_{\alpha} }
+U_{B} \left( \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| \right) =
+U^0_{\alpha B} e^{- \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| / R_{\alpha} }
 \end{equation}
 
 where $U^0_{\alpha B}$ is a constant and $R_{\alpha}$ is the radius of a pedestrian $\alpha$.
 In that case, the repulsive force on agent $ \alpha $ from the wall is:
 
 \begin{equation}
-    \vec{f_{\alpha B}} \left( \vec{p_{\alpha}} \right) =
-    - \nabla_{\vec{p_{\alpha}}} U_{B}
-    \left( \| \vec{p_{\alpha}} - \vec{p_{B}^{\alpha}} \| \right)\\
-=-\left( \frac{\partial}{\partial x_{\alpha}}U_{B}( \| \vec{p_{\alpha}} - \vec{p_{B}^{\alpha}} \|), \frac{\partial}{\partial y_{\alpha}}U_{B}( \| \vec{p_{\alpha}} - \vec{p_{B}^{\alpha}} \|)\right)
+    \overrightarrow{f_{\alpha B}} \left( \overrightarrow{p_{\alpha}} \right) =
+    - \nabla_{\overrightarrow{p_{\alpha}}} U_{B}
+    \left( \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| \right)\\
+=-\left( \frac{\partial}{\partial x_{\alpha}}U_{B}( \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \|), \frac{\partial}{\partial y_{\alpha}}U_{B}( \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \|)\right)
 \end{equation}
 
 Calculating the derivatives we use that
-$\| \vec{p_{\alpha}} - \vec{p_{B}^{\alpha}} \|= \sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2}$.
+$\| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \|= \sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2}$.
 Inserting this and the expression for $U_{B}$ we get:
 
 \begin{equation}
 \begin{split}
-\vec{f_{\alpha B}} \left( \vec{p_{\alpha}} \right) 
+\overrightarrow{f_{\alpha B}} \left( \overrightarrow{p_{\alpha}} \right) 
 & =-\left( \frac{\partial}{\partial x_{\alpha}}U^0_{\alpha B} e^{-\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2}/R_{\alpha} }\right. , \\
 & \left. \frac{\partial}{\partial y_{\alpha}}U^0_{\alpha B} e^{-\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2}/R_{\alpha} } \right)
 \end{split}
 \end{equation}
 
-When we differentiate this, we will put 
-$u=-\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / r_{\alpha}$ 
-and then use the well known result, from use of the chain rule when using differentiation 
-on an exponential function:
+The differentiation then gives: 
 
 \begin{equation}
-\frac{\partial }{\partial x}Ae^{u(x)}=\frac{\partial u(x)}{\partial x}Ae^{u(x)}
+    \overrightarrow{f_{\alpha B}} \left( \overrightarrow{p_{\alpha}} \right) 
+=-\left(U^0_{\alpha B}\frac{1}{R_{\alpha}}\frac{e^{- \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| / R_{\alpha} } (x_{\alpha}-x_B^{\alpha})}{\| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| },U^0_{\alpha B}\frac{1}{R_{\alpha}}\frac{e^{- \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| / R_{\alpha} } (y_{\alpha}-y_B^{\alpha})}{\| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| }\right) \\
 \end{equation}
 
-This gives:
+The exponential function will always lay between 0 and  1:
 
 \begin{equation}
-\begin{split}
-    \vec{f_{\alpha B}} \left( \vec{p_{\alpha}} \right) 
- & =-\left( \frac{\partial -\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / R_{\alpha}}{\partial  x_{\alpha}}U^0_{\alpha B} e^{-\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / R_{\alpha} } \right. , \\
-& \left. \frac{\partial -\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / R_{\alpha}}{\partial y_{\alpha}}U^0_{\alpha B} e^{- \sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / R_{\alpha} } \right)
-\end{split}
-\end{equation}
-
-Differentation of the square root gives:
-
-\begin{equation}
- \frac{\partial -\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} / R_{\alpha}}{\partial x_{\alpha}} =-\frac{1}{r_{\alpha}}\frac{(x_{\alpha}-x_{B}^{\alpha})}{\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2} }
-\end{equation}
-
-If we do this differentiation and substitute back with
-$\| \vec{r_{\alpha}} - \vec{r_{B}^{\alpha}} \|= \sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2}$, 
-we get the final result:
-
-\begin{equation}
-    \vec{f_{\alpha B}} \left( \vec{r_{\alpha}} \right) 
-=-\left(U^0_{\alpha B}\frac{1}{R_{\alpha}}\frac{e^{- \| \vec{p_{\alpha}} - \vec{p_{B}^{\alpha}} \| / R_{\alpha} } (x_{\alpha}-x_B^{\alpha})}{\| \vec{p_{\alpha}} - \vec{p_{B}^{\alpha}} \| },U^0_{\alpha B}\frac{1}{R_{\alpha}}\frac{e^{- \| \vec{p_{\alpha}} - \vec{p_{B}^{\alpha}} \| / r_{\alpha} } (y_{\alpha}-y_B^{\alpha})}{\| \vec{p_{\alpha}} - \vec{p_{B}^{\alpha}} \| }\right) \\
-\end{equation}
-
-The exponential function will always lay between 0 and 1:
-
-\begin{equation}
-0 < e^{ -\| \vec{p_{\alpha}} - \vec{p_{B}^{\alpha}} \| /R_\alpha} < 1
+0 < e^{ -\| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| /R_\alpha} < 1
 \end{equation}
 
 Which leads to:
 
 \begin{equation}
-0< U_{B} \left( \| \vec{p_{\alpha}} - \vec{p_{B}^{\alpha}} \| \right) < U^0_{\alpha B}
+0< U_{B} \left( \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| \right) < U^0_{\alpha B}
 \end{equation}
 
-We can see that this force act in the following way: $\vec{f_{\alpha B}}$ tends to 0 as the distance 
-$\| \vec{p_{\alpha}} - \vec{p_{B}^{\alpha}} \|$ gets large, meaning that a pedestrian in a reasonably 
-distance from the wall will feel a diminishing force. $\vec{f_{\alpha B}}$ tends to $U^0_{\alpha B}$ 
-as the distance $ \| \vec{p_{\alpha}} - \vec{p_{B}^{\alpha}} \|$ tends to $0$ the pedestrian will be 
+We can see that this force act in the following way: $\overrightarrow{f_{\alpha B}}$ tends to 0 as the distance 
+$\| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \|$ gets large, meaning that a pedestrian in a reasonably 
+distance from the wall will feel a diminishing force. $\overrightarrow{f_{\alpha B}}$ tends to $U^0_{\alpha B}$ 
+as the distance $ \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \|$ tends to $0$ the pedestrian will be 
 pushed, with some force depending on $U^0_{\alpha B}$, away from the wall. The negative of the force 
 means that when the potential between wall and pedestrian rises so will the force, but in the opposite 
 direction meaning that the pedestrian will be pushed away. This can be understood as if the pedestrian 
@@ -378,9 +350,9 @@ is trying to avoid the wall as it is expected from real life situations. \cite{s
 \begin{center}
 \begin{tabular}{lll}
 \hline
-$\vec{p_{\alpha}^{\text{B}}}$& Vector pointing from origo to the point on the wall nearest to agent alpha &\\
+$\overrightarrow{p_{\alpha}^{\text{B}}}$& Vector pointing from origo to the point on the wall nearest to agent alpha &\\
 \hline
-$\vec{W}$& Vector representing the wall &\\
+$\overrightarrow{W}$& Vector representing the wall &\\
 \hline
 $U_{B}$ & Repulsive potential from the wall\\
 \hline
@@ -399,11 +371,11 @@ The function for the repulsion between pedestrians depends on the position vecto
 both agents, and it is given by:
 
 \begin{equation}
-        \vec{f_{\alpha \beta }}\left( t \right) = w\left(\phi_{\alpha \beta}\right)\vec{g}\left(d_{\alpha \beta}(t)\right)
+        \overrightarrow{f_{\alpha \beta }}\left( t \right) = w\left(\phi_{\alpha \beta}\right)\overrightarrow{g}\left(d_{\alpha \beta}(t)\right)
     \label{eq:agentinteraction}
 \end{equation}
 
-The two functions that gives the repulsion between the pedestrians is respectively the angel dependece, $ w\left(\phi_{\alpha \beta}\right)$, and the pure force without any angle dependence, $\vec{g}\left(d_{\alpha \beta}(t)\right)$.
+The two functions that gives the repulsion between the pedestrians is respectively the angel dependece, $ w\left(\phi_{\alpha \beta}\right)$, and the pure force without any angle dependence, $\overrightarrow{g}\left(d_{\alpha \beta}(t)\right)$.
 
 $ w\left(\phi_{\alpha \beta}\right)$ is given as: 
 
@@ -425,10 +397,10 @@ agent $\alpha$ is moving. Cosine to the angle is
 \begin{equation}
 \cos \left( \phi \left( t \right) \right)
 		= 
-	- \vec{\eta_{\alpha \beta}}
+	- \overrightarrow{\eta_{\alpha \beta}}
 		\left( t \right) 
 	\cdot 
-\vec{e_{\alpha}}\left( t \right)
+\overrightarrow{e_{\alpha}}\left( t \right)
 \end{equation}
 
 $\lambda_{\alpha}$ is governing a persons tendency to focus on things happening in front of him 
@@ -441,29 +413,29 @@ A value of $\lambda_{\alpha}=1$ means that the force won't depent on the angle. 
 The force, without the effect of $w\left(\phi_{\alpha \beta}\right)$, is given as the second term, in the right hand side of equation \ref{eq:agentinteraction}. The function is:  
 
 \begin{equation}
-	\vec{g} 
+	\overrightarrow{g} 
 	\left(
 	d_{\alpha \beta}
 	\right)
 	=
-	 A_{\alpha} e^{ \left(\frac{ r_{\alpha \beta} - d_{\alpha \beta}}{B_{\alpha}}\right)}
-	\vec{n}_{\alpha \beta}
+	 A_{\alpha} e^{ \left(\frac{ R_{\alpha \beta} - d_{\alpha \beta}}{B_{\alpha}}\right)}
+	\overrightarrow{n}_{\alpha \beta}
 	        \label{re}	
 \end{equation}
 
 Here $A_{\alpha}$ and $B_{\alpha}$ are constants that can differ for each agent. 
-$r_{\alpha \beta}$ is the sum of the radii of $\alpha$ and $\beta$ that is 
+$R_{\alpha \beta}$ is the sum of the radii of $\alpha$ and $\beta$ that is 
 $R_{\alpha \beta} = R_{\alpha} + R_{\beta}$. $d_{\alpha \beta}$ is the 
 distance from the center of agent $\alpha$ and the center of 
 agent $\beta$ and is therefore given by $d_{\alpha \beta} = 
-\|\vec{p_{\alpha}}\left( t \right) - \vec{p_{\beta}}\left( t \right) \|$.
+\|\overrightarrow{p_{\alpha}}\left( t \right) - \overrightarrow{p_{\beta}}\left( t \right) \|$.
 $\eta_{\alpha \beta}$ is the unit vector pointing from $\alpha$ to $\beta$ 
 and it is given by:
 
 \begin{equation}
     \eta_{\alpha \beta} =
-        \frac{\vec{p_{\alpha}}(t) - \vec{p_{\beta}}(t)}
-             {\|\vec{p_{\alpha}}(t) - \vec{p_{\beta}}(t) \|}
+        \frac{\overrightarrow{p_{\alpha}}(t) - \overrightarrow{p_{\beta}}(t)}
+             {\|\overrightarrow{p_{\alpha}}(t) - \overrightarrow{p_{\beta}}(t) \|}
 \end{equation}
 
 \begin{figure}[ht]
@@ -499,9 +471,9 @@ Taking the norms of both sides of Equation (\ref{re}), we can draw the relation 
 There is one intersection of the graph and the  axis at:
 
 \begin{equation}
-	\left( d_{\alpha \beta} , \| \vec{f_{\alpha \beta}} \left( t \right) \| \right)
+	\left( d_{\alpha \beta} , \| \overrightarrow{f_{\alpha \beta}} \left( t \right) \| \right)
  =
-	\left( 0 , A_{\alpha} exp\left( \frac{r_{\alpha\beta} }{B_{\alpha}}\right)  \right) 
+	\left( 0 , A_{\alpha} exp\left( \frac{R_{\alpha\beta} }{B_{\alpha}}\right)  \right) 
 \end{equation}
 
 If we put in values for the constants, we will be able to get a maximum value of $ f_{\alpha\beta}(t) $, 
@@ -518,7 +490,7 @@ $ f_{\alpha\beta}(t)^{max} < 0.64 m/s^{2} $. It can never be exactly $0.64m/s^2$
 \hline
 $d_{\alpha \beta}$& The distance from agent $\alpha$ to $\beta$ &\\
 \hline
-$r_{\alpha\beta}$& The sum of the radii of agent $\alpha$ and $\beta$ \\
+$R_{\alpha\beta}$& The sum of the radii of agent $\alpha$ and $\beta$ \\
 \hline
 $\lambda_{\alpha}$& Anisotropy parameter &\\
 \hline
@@ -550,15 +522,15 @@ constants.
 \begin{center}
 \begin{tabular}{lll}
 \hline
-$\vec{f_{\alpha}^{0}}$ & the desired force &\\
+$\overrightarrow{f_{\alpha}^{0}}$ & the desired force &\\
 \hline
-$\vec{f_{\alpha B}}$ & the repulsive force from walls &\\
+$\overrightarrow{f_{\alpha B}}$ & the repulsive force from walls &\\
 \hline
-$\vec{f_{\alpha \beta}}$ & the repulsion from other agents\\
+$\overrightarrow{f_{\alpha \beta}}$ & the repulsion from other agents\\
 \hline
-$\vec{f_{\alpha i}}$& the attractive force\\
+$\overrightarrow{f_{\alpha i}}$& the attractive force\\
 \hline
-$\vec{V_{\alpha}}$ & The actual velocity of agent alpha &\\
+$\overrightarrow{V_{\alpha}}$ & The actual velocity of agent alpha &\\
 \hline
 $V_{\alpha}^{0}(t)$ & The desired speed of agent alpha &\\
 \hline
@@ -566,15 +538,15 @@ $V_{\alpha}^{0}(0)$ & The initial desired speed of agent alpha &\\
 \hline
 $\overline{V_{\alpha}(t)}$ & The average speed of agent alpha &\\
 \hline
-$\vec{p_{\alpha}}$ & The position vector of agent alpha\\
+$\overrightarrow{p_{\alpha}}$ & The position vector of agent alpha\\
 \hline
 $e_{\alpha}$& The desired direction of agent alpha\\
 \hline
 $\tau$& The relaxation time &\\
 \hline
-$\vec{p_{\alpha}^{\text{B}}}$& Vector pointing from origo to the point on the wall nearest to agent alpha &\\
+$\overrightarrow{p_{\alpha}^{\text{B}}}$& Vector pointing from origo to the point on the wall nearest to agent alpha &\\
 \hline
-$\vec{W}$& Vector representing the wall &\\
+$\overrightarrow{W}$& Vector representing the wall &\\
 \hline
 $U_{B}$ & Repulsive potential from the wall\\
 \hline
@@ -584,7 +556,7 @@ $R_{\alpha}$& Repulsive potential from the wall\\
 \hline
 $d_{\alpha \beta}$& The distance from agent $\alpha$ to $\beta$ &\\
 \hline
-$r_{\alpha\beta}$& The sum of the radii of agent $\alpha$ and $\beta$ \\
+$R_{\alpha\beta}$& The sum of the radii of agent $\alpha$ and $\beta$ \\
 \hline
 $\lambda_{\alpha}$& Anisotropy parameter &\\
 \hline
@@ -596,7 +568,7 @@ $B_{\alpha}$& Parameter controlling the range of the repulsive interaction  \\
 \hline
 $d_{\alpha \beta}$& The distance from agent $\alpha$ to $\beta$ &\\
 \hline
-$r_{\alpha\beta}$& The sum of the radii of agent $\alpha$ and $\beta$ \\
+$R_{\alpha\beta}$& The sum of the radii of agent $\alpha$ and $\beta$ \\
 \hline
 $\lambda_{\alpha}$& Anisotropy parameter &\\
 \hline
