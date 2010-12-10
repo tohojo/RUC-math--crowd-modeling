@@ -1,4 +1,8 @@
 \section{Lack of features in the model}
+% TODO: Add a section about placement of waypoints.
+%   Square room: Place the waypoint at or just outside the exit.
+%   Corridor: Place the waypoint a long distance away, so that pedestrians 
+%   move almost in a straight line along the corridor.
 \label{sec:lack}
 When we startet to implement the model and simulate our two cases, we encountered some
 problems that we did not foresee when we read the article \cite{self-org}, and the other
@@ -113,6 +117,8 @@ twice. The points are then used as a basis for calculating the repulsion, as
 described in section~\ref{sec:the-model}.
 
 \subsection{Initial conditions and constants}
+% TODO: Go through all the constants and add where we got it from; either a 
+% reference or saying that we came up with it ourselves.
 When initialising the model, parameters are set for each pedestrian. In the 
 model, every parameter can vary between actors, while in practice many of them 
 do not. In this section, we go through the parameters and how they are set.  
@@ -236,31 +242,13 @@ vary between the agents, but are fixed for the whole simulation. They are:
         complicate our program by applying such methods.
         % TODO: Reference for dynamic timestep adjustment
 
-    \item \textbf{$A_2$, $B_2$:} These values are given in \cite{helbing00}. 
+    \item \textbf{$A$, $B$:} These values are given in \cite{helbing00}. 
         Although the model allows for them to vary between agents, we have 
         (just as is done in the article) set them to a fixed value for the 
         whole simulation. The values given are $A_2=3,0$ and $B_2 = 0,2$.
+
+    \item \textbf{U:}
+        % TODO: Add this description; we tried different values and ended up 
+        % having a value of 2.
 \end{itemize}
-
-%The potential between pedestrian $\alpha$ and the wall $B$ is given by 
-
-%\begin{equation}
-%V_B=V_B^0 e^{-(r_\alpha - r_B^\alpha )/R} 
-%\end{equation}
-%where $V_B^0 = 10m^2s^{-2}$ and $R=0.2m$.
-%These model parameters have been determined such that they are compatible with empirical data. 
-%(Kilde: Dirk Helbing and Peter Molnar - Social force model for pedestrian dynamics). This is 
-%the older article by Helbing, and it seems as if its the same initial conditions, as in 
-%the article we are working with, except that the force between to pedestrians has changed. 
-%But still I think we could use the old article to argue why these parameters 
-%have the given values.\\
-
-%\noindent
-%$A^2_\alpha = 3m/s^2$ and $B^2_\alpha = 0.2 m\\$
-%$A = 5 m/s^2$ and $B=0.1m$
-%$r_{\alpha \beta} = 0.6m$
-%$\lambda_a = 0.75$\\\\
-%\noindent
-%These values for the model have been calibrated with empirical data of pedestrian streams.
-% TODO: What is this section doing here?
 
