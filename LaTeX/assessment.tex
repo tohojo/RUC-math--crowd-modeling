@@ -1,19 +1,15 @@
 \section{Assessment of social force models}
-% TODO: Add a discussion about the "toy model" thing. Go through the whole 
-% section looking at structure, coherency etc.
-% Come up with a concept for the section and make it so.
 \label{sec:assessment}
-When we started to implement and simulate the model we found some fault
-in the model, which gave rise to some ideas of how we make the model better.
-These minor fault in the model and the solutions to have we could improve it
-is described in this section.
+In this section we first discuss the limitations of the social force models 
+that we have worked with. These limitation differ from the ones outlined in 
+section \ref{sec:lack-of-features} and \ref{sec:discrepancies} in the way that 
+they are not things that are needed to replecate the results from the article 
+that we have worked with, but are extensions to the model. While going through 
+the literature in the field we have noticed a trend in the publications and this 
+will be discussed in section \ref{subsec:development}. We then move on to comment 
+on the status of social force models in general.
 
 \subsection{Limitations of the model}
-In this section we discuss a set of features that our models does not have, but
-that other social force model have incorporated. These features are a mixture of 
-solutions to things that we have ourselves had problems with when working with the 
-model and things that we have stumbled across in the literature.
-
 There are several limitations the model that we encountered when we started 
 analyse and simulate the model. In this section we discuss some relevant 
 limitations of the model that we thought of.
@@ -62,31 +58,8 @@ from the walls.
 Since the model is a two dimensional model it can not handle any motion in the 
 vertical dimension. 
 
-\subsection{The state of the social force models}
-At this point we have got some understanding of the social force model, and 
-also given our opinion about the limitation of the model. We think it is 
-reasonable to consider what, if anything, the social force models have taught 
-us about crowd behavior. 
-
-The social force model have been used to give both numerical predictions 
-and it has verified a series of phenomena observed in reality.
-
-However this kind of knowledge resembles the knowledge you can get from 
-the early model of the solar system. These model were quite sophisticated 
-such as Potlemy's epicycle model and they were used to correctly predict the 
-motion of the planets.
-
-We think that the social force models are of a predictive type rather than 
-a explanatory type. They do not give us any knowledge about the underlying 
-mechanics of a crowd of pedestrians but they can be used to successfully 
-predict quantative behavior of the crowd such as  flow rate. Therefore there 
-is nothing wrong with using the model to guide the construction of malls, airports 
-and other location where crowds gather.
-
-
 \subsection{Comments on the development of the social force models}
-%-take a step back, discuss the model in general terms
-%-is social force a good way to discuss this 
+\label{subsec:development}
 %-incomplete description, inherent in types of paper
 While searching for articles leading to social force model, we see there is a 
 evolutionary path in transferring physical concepts to describe crowd dynamics.
@@ -106,3 +79,26 @@ justifying the model is mostly by comparing with observations. It is not
 similar with many cases in classical mechanics, when talking of forces people 
 always evaluate energy and momentum, but it is not possible when we have 
 the social force involved.
+
+\subsection{The state of the social force models}
+%-take a step back, discuss the model in general terms
+%-is social force a good way to discuss this
+At this point we have got some understanding of the social force model, and 
+also given our opinion about the limitation of the model. We think it is 
+reasonable to consider what, if anything, the social force models have taught 
+us about crowd behavior. 
+
+The social force model have been used to give both numerical predictions 
+and it has verified a series of phenomena observed in reality.
+
+However this kind of knowledge resembles the knowledge you can get from 
+the early model of the solar system. These model were quite sophisticated 
+such as Potlemy's epicycle model and they were used to correctly predict the 
+motion of the planets.
+
+We think that the social force models are of a predictive type rather than 
+a explanatory type. They do not give us any knowledge about the underlying 
+mechanics of a crowd of pedestrians but they can be used to successfully 
+predict quantative behavior of the crowd such as  flow rate. Therefore there 
+is nothing wrong with using the model to guide the construction of malls, airports 
+and other location where crowds gather.
