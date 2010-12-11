@@ -2,36 +2,45 @@
 \label{sec:assessment}
 In this section we first discuss the limitations of the social force models 
 that we have worked with. These limitation differ from the ones outlined in 
-section \ref{sec:lack-of-features} and \ref{sec:discrepancies} in the way that 
+section \ref{sec:lack} and \ref{sec:discrepancies} in the way that 
 they are not things that are needed to replecate the results from the article 
 that we have worked with, but are extensions to the model. While going through 
 the literature in the field we have noticed a trend in the publications and this 
 will be discussed in section \ref{subsec:development}. We then move on to comment 
 on the status of social force models in general.
 
-\subsection{Limitations of the model}
+\subsection{Limitation and extensions of the model}
 There are several limitations the model that we encountered when we started 
 analyse and simulate the model. In this section we discuss some relevant 
-limitations of the model that we thought of.
+limitations of the model, some of which have been solved by other people in the 
+field. 
+%the first part will mainly be about the agents and the enviroment
+The variety of situations the model can handle is greatly decreased by the 
+agents ability to maneuver around in the environment.
 
-The flexibility of the model in the sence that which situations it could model 
-and some limitations of the agents and their awareness of the environment.
-E. g. (Comparison article) some people fall in panic situations and become 
-obstacles for other people, which is not a feature this model deals with. In 
-our model none of the agents fall and become an obstacle force other agents as 
-would be seen in real life panic situations.
-
-Another flaw in the model is that the agents do not have way finding, which 
+The agents do not have path finding, which 
 mean that they can not escape a more complex environment with a lot of rooms 
-and corridors. As it is now we can only simulate simple cases as the squared 
-room and the corridor.  An improvement of the model would then be to implement 
-way finding for the agents, so that they can manoeuvre around in other more 
-complex cases then the ones we have.
+and corridors. An improvement of the model would then be to implement 
+path finding for the agents, so that they can manoeuvre around in other more 
+complex cases then the ones we have. A example of a social force model with 
+pathfinding is the HiDAC model \cite{HiDAC}.
 
 In other models such as the HiDAC, agents can share information about the 
-environment, such that the agents have a better idea of where the exit is/are 
-(Comparison article). In a real panic situation you would expect people to 
-communicate when evacuation a building.
+environment, such that the agents have a better idea of where the exit is/are \cite{HiDAC}. 
+In a real panic situation you would expect people to communicate when evacuation 
+a building.
+
+At the moment we can not simulate a case where the visibility is very low. The 
+agents have a way point to follow, but if the visibility only is 1 meter, e. 
+g. in a smoke filled room, the  agents would not have way point to follow, and 
+hence round around with out purpose. Here the tangential forces would also 
+help the agent to find the exit, but navigation through the tangential force 
+from the walls.
+%this part should discuss some dynamica that the agents lack, such as falling
+In \cite{HiDAC} people have the ability fall in panic situations and become 
+obstacles for other people, which is not a feature this model deals with. In 
+our model none of the agents fall and become an obstacles for other agents as 
+would be seen in real life panic situations.
 
 Other models take into account herding behavior between the agents  
 \cite{helbing00}, so that some people have tendency to follow other agents, 
@@ -46,17 +55,7 @@ since the friction between the people would slow them down.  Without friction
 between agents there would be less clogging in front of doors, and the time it 
 takes the agents to exit a room would be less than the time expected. Thus the 
 validation of the would not be as good as if there would be friction between 
-the agents.
-
-At the moment we can not simulate a case where the visibility is very low. The 
-agents have a way point to follow, but if the visibility only is 1 meter, e. 
-g. in a smoke filled room, the  agents would not have way point to follow, and 
-hence round around with out purpose. Here the tangential forces would also 
-help the agent to find the exit, but navigation through the tangential force 
-from the walls.
-
-Since the model is a two dimensional model it can not handle any motion in the 
-vertical dimension. 
+the agents. For a social force model that includes friction see \cite{HelbingNew}.
 
 \subsection{Comments on the development of the social force models}
 \label{subsec:development}
@@ -83,6 +82,7 @@ the social force involved.
 \subsection{The state of the social force models}
 %-take a step back, discuss the model in general terms
 %-is social force a good way to discuss this
+% This stuff in this discussion should hold even if the model had all the features listed in the first subsection.
 At this point we have got some understanding of the social force model, and 
 also given our opinion about the limitation of the model. We think it is 
 reasonable to consider what, if anything, the social force models have taught 
