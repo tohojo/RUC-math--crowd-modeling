@@ -8,54 +8,54 @@ in the model, which gave rise to some ideas of how we make the model better.
 These minor fault in the model and the solutions to have we could improve it
 is described in this section.
 
-\subsection{The repulsive force between agents in three-dimensional space}
-The model that we have been working with is a two dimension model. However when 
-people overlap they can do so completely. The interpretation of this is that the 
-agents are standing on top of each other, that is one of the agents have moved in 
-the third dimension. This is not something that our model supports.
+% \subsubsection{The repulsive force between agents in three-dimensional space}
+% The model that we have been working with is a two dimension model. However when 
+% people overlap they can do so completely. The interpretation of this is that the 
+% agents are standing on top of each other, that is one of the agents have moved in 
+% the third dimension. This is not something that our model supports.
+% 
+% From the given formula for calculating the repulsive force between agents in the 
+% description of the model, the part calculating the force to keep the personal space 
+% can be omitted when the agents are rather close to each other, then the calculation 
+% can be reduced as Equation (\ref{eq:re}).
+% 
+% \begin{equation}\label{eq:re}
+% \overrightarrow{f_{\alpha\beta}}(t) = A_{\alpha}^{2} exp\left[ \frac{r_{\alpha\beta} - d_{\alpha}\beta}{B_{\alpha}^{2}}\right]  \overrightarrow{n_{\alpha\beta}}
+% \end{equation}
+% 
+% Taking the norms of both sides of Equation (\ref{eq:re}), we can draw the relation 
+% between the value of $\overrightarrow{f_{\alpha\beta}}(t)$ and $d_{\alpha \beta}$, 
+% as in Figure (\ref{fig:physicalinteraction})\\
+% 
+% \begin{figure}[hb]
+% \centering
+% \includegraphics[scale=0.35]{Figures/physicalinteraction.pdf} 
+% \caption{The function about the interaction force $\vec{f_{\alpha\beta}}(t)$ and the distance between two agents
+% $d_{\alpha\beta}$ }\label{fig:physicalinteraction}
+% \end{figure}
+% 
+% There is one intersection of the graph and the axis $ \left( 0, A_{\alpha}^{2} exp\left( \frac{r_{\alpha\beta} }{B_{\alpha}^{2}}\right)  \right) $. 
+% If put into the constants, we will be able to get a maximum value of $ f_{\alpha\beta}(t) $, 
+% since the distance between agents cannot be negative. Here we set $ A_{\alpha}^{2} = 3 m/s^{2} $, 
+% $ r_{\alpha\beta} = 0.6 m $, and $ B_{\alpha}^{2} = 0.2 m $, so $ f_{\alpha\beta}(t)^{max} \doteq 60 m/s^{2} $, 
+% which is about six times the gravitational acceleration and represents a rather 
+% large force between agents (as large as six person's weight).
+% 
+% However, we notice that the effective part of the force calculated above is only 
+% the horizontal component that enables the agent to move horizontally in the plane 
+% where we do the simulation, but the reality is that the agents sometimes are also 
+% able to move vertically, for example, by stepping upon other people when they cannot 
+% take the pushing force from the surrounding agents. When that happens, the horizontal 
+% component of the repulsive force becomes smaller even if $d_{\alpha\beta}$ is kept 
+% the same.	Therefore, a qualitative modification of dependence between $ f_{\alpha\beta}(t) $ 
+% and $ d_{\alpha\beta} $ could be:
+% %Todo: add some sort of conclusion 
 
-From the given formula for calculating the repulsive force between agents in the 
-description of the model, the part calculating the force to keep the personal space 
-can be omitted when the agents are rather close to each other, then the calculation 
-can be reduced as Equation (\ref{eq:re}).
-
-\begin{equation}\label{eq:re}
-\overrightarrow{f_{\alpha\beta}}(t) = A_{\alpha}^{2} exp\left[ \frac{r_{\alpha\beta} - d_{\alpha}\beta}{B_{\alpha}^{2}}\right]  \overrightarrow{n_{\alpha\beta}}
-\end{equation}
-
-Taking the norms of both sides of Equation (\ref{eq:re}), we can draw the relation 
-between the value of $\overrightarrow{f_{\alpha\beta}}(t)$ and $d_{\alpha \beta}$, 
-as in Figure (\ref{fig:physicalinteraction})\\
-
-\begin{figure}[hb]
-\centering
-\includegraphics[scale=0.35]{Figures/physicalinteraction.pdf} 
-\caption{The function about the interaction force $\vec{f_{\alpha\beta}}(t)$ and the distance between two agents
-$d_{\alpha\beta}$ }\label{fig:physicalinteraction}
-\end{figure}
-
-There is one intersection of the graph and the axis $ \left( 0, A_{\alpha}^{2} exp\left( \frac{r_{\alpha\beta} }{B_{\alpha}^{2}}\right)  \right) $. 
-If put into the constants, we will be able to get a maximum value of $ f_{\alpha\beta}(t) $, 
-since the distance between agents cannot be negative. Here we set $ A_{\alpha}^{2} = 3 m/s^{2} $, 
-$ r_{\alpha\beta} = 0.6 m $, and $ B_{\alpha}^{2} = 0.2 m $, so $ f_{\alpha\beta}(t)^{max} \doteq 60 m/s^{2} $, 
-which is about six times the gravitational acceleration and represents a rather 
-large force between agents (as large as six person's weight).
-
-However, we notice that the effective part of the force calculated above is only the horizontal 
-component that enables the agent to move horizontally in the plane where we do the simulation, 
-but the reality is that the agents sometimes are also able to move vertically, for example, 
-by stepping upon other people when they cannot take the pushing force from the surrounding agents. 
-When that happens, the horizontal component of the repulsive force becomes smaller even if 
-$d_{\alpha\beta}$ is kept the same.	Therefore, a qualitative modification of dependence between 
-$ f_{\alpha\beta}(t) $ and $ d_{\alpha\beta} $ could be:
-
-%Todo: add some sort of conclusion 
-
-\subsection{Limitations of social force models}
-In this section we discuss the different features of the model, problems when 
-computing the model, limits of the model and ways of improving the model that 
-we thought of when we went into more details of the model and started to 
-simulate it.
+\subsection{Limitations of the model}
+In this section we discuss a set of features that our models does not have, but
+that other social force model have incorporated. These features are a mixture of 
+solutions to things that we have ourselves had problems with when working with the 
+model and things that we have stumbled across in the literature.
 
 There are several limitations the model that we encountered when we started 
 analyse and simulate the model. In this section we discuss some relevant 
@@ -75,7 +75,7 @@ room and the corridor.  An improvement of the model would then be to implement
 way finding for the agents, so that they can manoeuvre around in other more 
 complex cases then the ones we have.
 
-In other models as the HiDAC, agents can share information about the 
+In other models such as the HiDAC, agents can share information about the 
 environment, such that the agents have a better idea of where the exit is/are 
 (Comparison article). In a real panic situation you would expect people to 
 communicate when evacuation a building.
@@ -101,6 +101,9 @@ g. in a smoke filled room, the  agents would not have way point to follow, and
 hence round around with out purpose. Here the tangential forces would also 
 help the agent to find the exit, but navigation through the tangential force 
 from the walls.
+
+Since the model is a two dimensional model it can not handle any motion in the 
+vertical dimension. 
 
 \subsection{social force in crowd modelling}
 %-take a step back, discuss the model in general terms
