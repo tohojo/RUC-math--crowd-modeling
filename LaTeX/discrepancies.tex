@@ -20,4 +20,6 @@ get stuck in each other. In our simulation the agents are not clogging as heavil
 The time it take for the agent to leave a room in unrealistic low, and we think that implementing the friction by tangential forces
 would make the simulation time more realistic.
 
+\subsection{Pedestrians overlapping and walking throw walls}
+A problem we encountered during the simulation was pedestrians walking throw walls and/or pedestrians overlapping. This problem occur because the model do not take into account how fast pedestrians are approaching walls or other pedestrians. In other words, a pedestrian running towards a wall will decelerate at the same rate as a person walking towards the wall. One could argue that this is unrealistic behaviour because, the person running should start decelerating sooner than the person walking. One way of implementing this feature is by making the force a pedestrian feel depend not only on the distance to the obstacle but also depend on the current speed towards this obstacle. \cite{Elipical}
 
