@@ -284,8 +284,10 @@ static int is_escaped(Actor * a)
 
 // Threading variables
 static Py_ssize_t threads_c;
+#ifndef _WIN32
 static pthread_t * threads;
 static pthread_attr_t thread_attr;
+#endif
 
 static PyObject * update_actors(PyObject * self, PyObject * args)
 {
@@ -375,6 +377,7 @@ static void do_calculations()
 {
     int i, rc;
     void * status;
+#ifndef _WIN32
     if(threads_c > 1) {
         Part * parts;
         parts = PyMem_Malloc(threads_c * sizeof(Part));
@@ -394,9 +397,12 @@ static void do_calculations()
             pthread_join(threads[i], &status);
         }
     } else {
+#endif
         Part p = {0, a_count};
         do_calculation_part(&p);
+#ifndef _WIN32
     }
+#endif
 
     for(i = 0; i < a_count; i++) {
         update_position(&actors[i]);
@@ -411,7 +417,9 @@ static void do_calculation_part(Part * p)
     for(i = p->start; i < p->end; i++) {
         calculate_forces(i);
     }
+#ifndef _WIN32
     if(threads_c > 1) pthread_exit(NULL);
+#endif
 }
 
 static void check_escapes()
@@ -531,7 +539,9 @@ PyMODINIT_FUNC initoptimised(void)
 
     Py_DECREF(c_module);
 
+#ifndef _WIN32
     if(threads_c > 1) init_threads();
+#endif
 }
 
 static void init_walls(PyObject * p_walls)
@@ -551,19 +561,25 @@ static void init_walls(PyObject * p_walls)
 
 static void cleanup()
 {
+#ifndef _WIN32
     if(threads_c > 1) destroy_threads();
+#endif
 }
 
 static void init_threads()
 {
+#ifndef _WIN32
     threads = PyMem_Malloc(threads_c * sizeof(pthread_t));
     pthread_attr_init(&thread_attr);
     pthread_attr_setdetachstate(&thread_attr, PTHREAD_CREATE_JOINABLE);
+#endif
 
 }
 
 static void destroy_threads()
 {
+#ifndef _WIN32
     pthread_attr_destroy(&thread_attr);
     PyMem_Free(threads);
+#endif
 }
