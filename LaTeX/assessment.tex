@@ -16,37 +16,43 @@ limitations of the model, some of which have been solved by other people in the
 field. 
 %the first part will mainly be about the agents and the enviroment
 The variety of situations the model can handle is greatly decreased by the 
-agents ability to maneuver around in the environment.
+agents ability to maneuver around in the environment. The maneuverability of 
+the agents can be increased by incoorporating a series of features such as 
+\emph{path finding} and \emph{communication between agents}. 
 
-The agents do not have path finding, which 
-mean that they can not escape a more complex environment with a lot of rooms 
-and corridors. An improvement of the model would then be to implement 
-path finding for the agents, so that they can manoeuvre around in other more 
-complex cases then the ones we have. A example of a social force model with 
-pathfinding is the HiDAC model \cite{HiDAC}.
+\subsubsection{Path finding}
+In our model the agents do not have path finding, which means that the model 
+can not simulate a escapes of complex environment with a lot of rooms 
+and corridors. A example of a social force model with pathfinding is the HiDAC 
+model \cite{HiDAC}.
 
-In other models such as the HiDAC, agents can share information about the 
-environment, such that the agents have a better idea of where the exit is/are \cite{HiDAC}. 
-In a real panic situation you would expect people to communicate when evacuation 
-a building.
+\subsubsection{Communication between agents}
+In real panic situations it is not hard to imagine people communication with 
+each other to help each other find the exits or use alternative routes. This is 
+not something that our model is capable of. For a model with communication between 
+agents see \cite{HiDAC}.
 
+\subsubsection{Lowered visibility}
 At the moment we can not simulate a case where the visibility is very low. The 
 agents have a way point to follow, but if the visibility only is 1 meter, e. 
 g. in a smoke filled room, the  agents would not have way point to follow, and 
 hence round around with out purpose. Here the tangential forces would also 
 help the agent to find the exit, but navigation through the tangential force 
 from the walls.
-%this part should discuss some dynamica that the agents lack, such as falling
+
+\subsubsection{Falling}
 In \cite{HiDAC} people have the ability fall in panic situations and become 
 obstacles for other people, which is not a feature this model deals with. In 
 our model none of the agents fall and become an obstacles for other agents as 
 would be seen in real life panic situations.
 
+\subsubsection{Herding}
 Other models take into account herding behavior between the agents  
 \cite{helbing00}, so that some people have tendency to follow other agents, 
 while other agents have a tendency to go their own way,  and by doing so 
 explore the environment for possible exits.
 
+\subsubsection{Friction}
 As the model is now there is no friction between the agents, so that agents 
 that have higher velocity than the ones standing in their path, can slide in 
 between slower moving agents in front of them, without them slowing down when 
@@ -79,7 +85,7 @@ similar with many cases in classical mechanics, when talking of forces people
 always evaluate energy and momentum, but it is not possible when we have 
 the social force involved.
 
-\subsection{The state of the social force models}
+\subsection{Comments on the state of the social force models}
 %-take a step back, discuss the model in general terms
 %-is social force a good way to discuss this
 % This stuff in this discussion should hold even if the model had all the features listed in the first subsection.
