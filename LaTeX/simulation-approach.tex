@@ -441,12 +441,13 @@ are used for both modes. The properties we measure are:
         be perpendicular to the primary movement direction of the actors. The 
         simulation keeps track of at what time each actor first comes into 
         contact with this line segment, i.e. is first less than their radius 
-        away from it. This is used as an approximation of when the actors 
-        cross the line. The average flow rate is then computed as the number 
-        of actors who have crossed the line divided by the time. This is 
-        graphed both as a function of time, and as a function of parameters. 
-        The flow rate value of a whole simulation run is calculated as the 
-        average of the flow rate measurements over time.
+        away from it (as can be seen in code 
+        listing~\ref{lst:update-position}). This is used as an approximation of 
+        when the actors cross the line. The average flow rate is then computed 
+        as the number of actors who have crossed the line divided by the time. 
+        This is graphed both as a function of time, and as a function of 
+        parameters.  The flow rate value of a whole simulation run is 
+        calculated as the average of the flow rate measurements over time.
 
     \item \textbf{Efficiency:} The efficiency is a measure of how close the 
         actors are to moving at their desired speed. It is measured for a 
