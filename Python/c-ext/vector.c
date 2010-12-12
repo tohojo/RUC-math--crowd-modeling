@@ -58,13 +58,13 @@ double vector_dot(Vector v1, Vector v2)
     return v1.x*v2.x + v1.y*v2.y;
 }
 
-void vector_normalise(Vector * v)
+void vector_unitise(Vector * v)
 {
     double l = vector_length(*v);
-    vector_normalise_c(v, l);
+    vector_unitise_c(v, l);
 }
 
-void vector_normalise_c(Vector * v, double length)
+void vector_unitise_c(Vector * v, double length)
 {
     v->x /= length;
     v->y /= length;

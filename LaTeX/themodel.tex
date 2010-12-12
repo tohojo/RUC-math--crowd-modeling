@@ -110,6 +110,7 @@ $\overrightarrow{f_{\alpha i}}$& the attractive force\\
 \end{center}
 
 \subsection{The desired force}
+\label{sec:desired-force}
 The first term on the right hand side of equation \eqref{model} describes the 
 \emph{willingness} of agent $\alpha$'s to reach the exit. It is a velocity 
 dependent force and is given by:
@@ -178,16 +179,18 @@ that you should devide by zero, which is undefined. This in turn means
 that $\eta_{\alpha}(0)$ is undefined. We therefore define 
 $V_{\alpha}^{0}(t)$ for $t=0$ and $t>0$ to be the following:
 
-\[
+\begin{equation}\label{eqn:cond-define}
   V_{\alpha}^{0} (t) = \left\{ 
   \begin{array}{l l}
-    0 & \text{if $t=0$}\\
+    V_\alpha^0(0) & \text{if $t=0$}\\
     \left[ 1 - \eta_{\alpha} \left( t \right) \right] 
     V_{\alpha}^{0} \left( 0 \right) +
     \eta_{\alpha} \left( t \right)V_{\alpha}^{\text{max}} & \text{if 
     $t > 0$}\\
   \end{array} \right.
-\]
+\end{equation}
+% TODO: This definition is a tautology. We need a different notation for 
+% initial desired velocity.
 
 If we look at the expression for $V_{\alpha}^{0}$ for $t>0$ we can 
 start to analyse how this affects the behavior of the agent. There 
@@ -320,7 +323,7 @@ Inserting this and the expression for $U_{B}$ we get:
 
 The differentiation then gives: 
 
-\begin{equation}
+\begin{equation}\label{eqn:wall-repulsion}
     \overrightarrow{f_{\alpha B}} \left( \overrightarrow{p_{\alpha}} \right) 
 =-\left(U^0_{\alpha B}\frac{1}{R_{\alpha}}\frac{e^{- \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| / R_{\alpha} } (x_{\alpha}-x_B^{\alpha})}{\| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| },U^0_{\alpha B}\frac{1}{R_{\alpha}}\frac{e^{- \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| / R_{\alpha} } (y_{\alpha}-y_B^{\alpha})}{\| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| }\right) \\
 \end{equation}
