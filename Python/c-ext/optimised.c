@@ -71,7 +71,7 @@ void add_repulsion(Actor * a, Actor * b)
 {
     if(!A || !B) return;
     Vector repulsion = calculate_repulsion(a, b, A, B);
-	if(a->velocity.x && a->velocity.y) {
+	if(a->velocity.x && a->velocity.y && lambda < 1.0) {
 		Vector from_b = vector_sub(b->position, a->position);
 
 		double cosine = vector_dot(a->velocity, from_b)/(
