@@ -47,7 +47,7 @@ static void add_desired_acceleration(Actor * a)
 		desired_velocity = a->initial_desired_velocity;
 	}
     desired_direction = vector_sub(a->target, a->position);
-    vector_normalise(&desired_direction);
+    vector_unitise(&desired_direction);
 
 	a->acceleration = vector_mul(desired_direction, desired_velocity);
     vector_isub(&a->acceleration, &a->velocity);
@@ -61,7 +61,7 @@ Vector calculate_repulsion(Actor * a, Actor * b, double A, double B)
     Vector from_b     = vector_sub(a->position, b->position);
     double distance   = vector_length(from_b);
 
-    vector_normalise(&from_b);
+    vector_unitise(&from_b);
     vector_imul(&from_b, A * exp((radius_sum-distance)/B));
 
     return from_b;
