@@ -126,7 +126,7 @@ class Plots:
         return fig
 
     def _density_plot(self):
-        fig = self._create_plot("Actor density","t","number of actors")
+        fig = self._create_plot("Actor density","t","actors / $m^2$")
         plt.plot(self.t_values, self.densities, label='density')
         self._annotate_plot(fig)
         return fig
