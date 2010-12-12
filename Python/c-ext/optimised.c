@@ -29,43 +29,6 @@ void calculate_forces(Py_ssize_t i)
 
 static void add_desired_acceleration(Actor * a)
 {
-    /* Equivalent Python code:
-     
-        # To compute the impatience factor, we need the average velocity,
-        # in the direction of desired movement.
-        #
-        # This is found by projecting the direction we have moved onto the
-        # vector from the initial position to the target and computing the
-        # distance from this projection. The distance travelled is then
-        # converted to an average velocity my dividing with the time
-        if self.time == 0.0:
-            average_velocity = 0.0
-        else:
-            proj = Vector.projection_length(
-                       self.initial_position, self.target, self.position)
-
-
-            average_velocity = proj / self.time
-
-        # The impatience factor is given by the average velocity divided
-        # by the *initial* desired velocity. (6) in the article
-        impatience = 1.0 - average_velocity / self.initial_desired_velocity
-
-        # (5) in the article
-        desired_velocity = (1.0-impatience) * self.initial_desired_velocity + \
-                impatience * self.max_velocity
-
-        towards_target = (self.target - self.position).normal()
-
-        #desired_acceleration = (1.0/self.relax_time) * \
-                #(desired_velocity * towards_target - self.velocity)
-        towards_target *= desired_velocity
-        towards_target -= self.velocity
-        towards_target *= (1.0/self.relax_time)
-
-        self.acceleration = towards_target
-        */
-
     double average_velocity = 0.0, impatience = 0.0, 
 		   desired_velocity = 0.0;
     Vector desired_direction = {0.0, 0.0};
@@ -94,29 +57,14 @@ static void add_desired_acceleration(Actor * a)
 
 Vector calculate_repulsion(Actor * a, Actor * b, double A, double B)
 {
-    /* Equivalent Python code:
-     
-            radius_sum = b.radius + self.radius
-
-            from_b = self.position - b.position
-            distance = from_b.length()
-
-            from_b.normalize(distance)
-            from_b *= pm.constants.a_2 * \
-                    numpy.exp((radius_sum-distance)/pm.constants.b_2)
-
-    */
-
     double radius_sum = a->radius + b->radius;
     Vector from_b     = vector_sub(a->position, b->position);
     double distance   = vector_length(from_b);
-    //if(isnan(distance)) return;
 
     vector_normalise(&from_b);
     vector_imul(&from_b, A * exp((radius_sum-distance)/B));
 
     return from_b;
-
 }
 
 void add_repulsion(Actor * a, Actor * b)
@@ -145,7 +93,6 @@ void add_wall_repulsion(Actor * a)
 
     for(i = 0; i < rep_p_c; i++) {
         repulsion = calculate_wall_repulsion(a, repulsion_points[i]);
-        //printf("(%f,%f)\n", repulsion.x, repulsion.y);
         vector_iadd(&a->acceleration, &repulsion);
     }
 
@@ -236,18 +183,6 @@ Vector calculate_wall_repulsion(Actor * a, Vector repulsion_point)
 
 void update_position(Actor * a)
 {
-    /* Equivalent Python code:
-        # Calculate displacement from acceleration and velocity
-        delta_p = Vector(
-                self.velocity.x * timestep + 0.5 * self.acceleration.x * timestep**2,
-                self.velocity.y * timestep + 0.5 * self.acceleration.y * timestep**2)
-
-        # Update position and velocity, and reset the acceleration
-        self.position += delta_p
-        self.velocity += self.acceleration
-        self.time += timestep
-    */
-
     Vector delta_p;
 
     delta_p.x = a->velocity.x * timestep + 0.5 * a->acceleration.x * pow(timestep, 2);
