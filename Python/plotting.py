@@ -93,13 +93,13 @@ class Plots:
 
 
     def _velocity_plot(self):
-        fig = self._create_plot("Average actor velocity","t", "m/s")
+        fig = self._create_plot("Average pedestrian velocity","t", "m/s")
         plt.plot(self.t_values, self.avg_velocities, label='average velocity')
         self._annotate_plot(fig)
         return fig
 
     def _aggr_velocity_plot(self):
-        fig = self._create_plot("Average actor velocity",self.aggr_x_name, "m/s")
+        fig = self._create_plot("Average pedestrian velocity",self.aggr_x_name, "m/s")
         plt.plot(self.aggr_x_values, self.aggr_avg_velocities, label='average velocity')
         self._annotate_plot(fig)
         return fig
@@ -126,13 +126,13 @@ class Plots:
         return fig
 
     def _density_plot(self):
-        fig = self._create_plot("Actor density","t","actors / $m^2$")
+        fig = self._create_plot("Pedestrian density","t","pedestrians / $m^2$")
         plt.plot(self.t_values, self.densities, label='density')
         self._annotate_plot(fig)
         return fig
 
     def _flowrate_plot(self):
-        fig = self._create_plot("Flow rate", "t", "actors/second")
+        fig = self._create_plot("Flow rate", "t", "pedestrians/second")
         plt.plot(self.t_values, self.flowrates, label='aggregate flowrate')
         self._annotate_plot(fig)
         return fig
@@ -178,7 +178,7 @@ class Plots:
         plt.figure(1)
         plt.subplot(211)
         plt.xlabel("t")
-        plt.ylabel("actors in area")
+        plt.ylabel("pedestrians in area")
         plt.title("Density")
         plt.plot(t, self.densities)
         plt.subplot(212)

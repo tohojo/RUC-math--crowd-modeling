@@ -7,12 +7,12 @@ if constants.random_seed is not None:
     numpy.random.seed(constants.random_seed)
     random.seed(constants.random_seed)
 
-def generate_actors(parameters, start_areas, num):
-    """Generates a number of actors placed randomly within the
+def generate_pedestrians(parameters, start_areas, num):
+    """Generates a number of pedestrians placed randomly within the
     area specified by the parameters, with parameters as specified
     in the parameters file"""
 
-    actors = []
+    pedestrians = []
 
     targets = parameters['targets']
 
@@ -22,7 +22,7 @@ def generate_actors(parameters, start_areas, num):
     velocities = numpy.random.normal(parameters['velocity_mean'], 
             parameters['velocity_deviation'], num)
 
-    # calculate grid cells for placement of actors
+    # calculate grid cells for placement of pedestrians
     grid_cell_size = max_radius*2+0.05
     grid = list()
     for i in xrange(len(start_areas)):
@@ -40,7 +40,7 @@ def generate_actors(parameters, start_areas, num):
                     j * grid_cell_size + y_offset + y1, t))
 
     if num > len(grid):
-        print "Warning: asked to create %d actors, but only room for %d" % (num, len(grid))
+        print "Warning: asked to create %d pedestrians, but only room for %d" % (num, len(grid))
 
     cells = random.sample(grid, min(num,len(grid)))
 
@@ -55,7 +55,7 @@ def generate_actors(parameters, start_areas, num):
         position = (x_coord, y_coord)
         target = cell[2]
 
-        actors.append(dict(
+        pedestrians.append(dict(
             position = position,
             initial_position = position,
             acceleration = (0.0, 0.0),
@@ -63,8 +63,8 @@ def generate_actors(parameters, start_areas, num):
             velocity = (0.0, 0.0),
             time = 0.0,
             relax_time = parameters['relax_time'],
-            max_velocity = velocity * parameters['max_velocity_factor'],
+            max_velocity = velocity * parameters['max_velocity_fpedestrian'],
             target = target,
             radius = radius))
 
-    return actors
+    return pedestrians

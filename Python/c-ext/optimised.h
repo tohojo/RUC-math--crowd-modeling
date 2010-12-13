@@ -19,7 +19,7 @@ typedef struct {
     Vector target;
     Vector velocity;
     Vector acceleration;
-} Actor;
+} Pedestrian;
 
 typedef struct {
     Vector start;
@@ -28,15 +28,15 @@ typedef struct {
 } Wall;
 
 static void calculate_forces(Py_ssize_t i);
-static void add_desired_acceleration(Actor * a);
-static Vector calculate_repulsion(Actor * a, Actor * b, double A, double B);
-static void add_repulsion(Actor * a, Actor * b);
-static void add_social_sphere(Actor * a, Actor * b);
-static void add_wall_repulsion(Actor * a);
-static int find_repultion_points(Actor * a, Vector repulsion_points[]);
-static Vector calculate_wall_repulsion(Actor * a, Vector repulsion_point);
-static void update_position(Actor * a);
-static int is_escaped(Actor * a);
+static void add_desired_acceleration(Pedestrian * a);
+static Vector calculate_repulsion(Pedestrian * a, Pedestrian * b, double A, double B);
+static void add_repulsion(Pedestrian * a, Pedestrian * b);
+static void add_social_sphere(Pedestrian * a, Pedestrian * b);
+static void add_wall_repulsion(Pedestrian * a);
+static int find_repultion_points(Pedestrian * a, Vector repulsion_points[]);
+static Vector calculate_wall_repulsion(Pedestrian * a, Vector repulsion_point);
+static void update_position(Pedestrian * a);
+static int is_escaped(Pedestrian * a);
 
 #define ESCAPE_THRESHOLD 50
 
@@ -49,11 +49,11 @@ typedef struct {
     int end;
 } Part;
 
-static PyObject * update_actors(PyObject * self, PyObject * args);
-static PyObject * add_actor(PyObject * self, PyObject * args);
+static PyObject * update_pedestrians(PyObject * self, PyObject * args);
+static PyObject * add_pedestrian(PyObject * self, PyObject * args);
 static PyObject * a_property(PyObject * self, PyObject * args);
 static PyObject * set_parameters(PyObject * self, PyObject * args);
-static Actor actor_from_pyobject(PyObject * o, Actor * a);
+static Pedestrian pedestrian_from_pyobject(PyObject * o, Pedestrian * a);
 static Py_ssize_t ssize_t_from_attribute(PyObject * o, char * name);
 static double double_from_attribute(PyObject * o, char * name);
 static Vector vector_from_attribute(PyObject * o, char * name);

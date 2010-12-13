@@ -13,7 +13,7 @@ scenarios = {
             'start_areas'        : [(-5.0,-5.0,5.0,5.0)],
             'velocity_mean'      : 1.34,
             'velocity_deviation' : 0.26,
-            'max_velocity_factor': 1.3,
+            'max_velocity_fpedestrian': 1.3,
             'radius_mean'        : 0.2,
             'radius_deviation'   : 0.01,
             'targets'            : [(0.0,6.0)],
@@ -31,7 +31,7 @@ scenarios = {
                                    ],
             'drawing_width'      : 450,
             'drawing_height'     : 450,
-            'pixel_factor'       : 30,
+            'pixel_fpedestrian'       : 30,
             'relax_time'         : 1.0,
             'vary_parameters'    : {
                                     #'A'            : (2.0, 5.0, 0.1),
@@ -51,7 +51,7 @@ scenarios = {
                                    ],
             'velocity_mean'      : 0.74,
             'velocity_deviation' : 0.26,
-            'max_velocity_factor': 1.3,
+            'max_velocity_fpedestrian': 1.3,
             'radius_mean'        : 0.2,
             'radius_deviation'   : 0.01,
             'targets'            : [
@@ -72,7 +72,7 @@ scenarios = {
                                    ],
             'drawing_width'      : 750,
             'drawing_height'     : 350,
-            'pixel_factor'       : 30,
+            'pixel_fpedestrian'       : 30,
             'relax_time'         : 1.0,
             'vary_parameters'    : {
                                     #'A'            : (2.0, 5.0, 0.1),
