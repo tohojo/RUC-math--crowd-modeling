@@ -13,13 +13,13 @@ hosted at Github: \url{https://github.com/tohojo/RUC-math--crowd-modeling}.}.
 Our simulation is implemented in the Python programming language, with the 
 calculation intensive parts implemented in C for performance reasons. We 
 assume a virtual coordinate system using meters as a base unit, and with the 
-origin in the centre of the area we simulate. Each pedestrian (or actor) is 
+origin in the centre of the area we simulate. Each pedestrian (or pedestrian) is 
 described by a centre point and a radius, and each wall is described by a line 
 segment connecting two points.
 
 All parameters are stored as double precision floating point values where 
 nothing else is indicated. We use custom data structures to keep track of the 
-actors and walls while running the simulation. Python is used to set up the 
+pedestrians and walls while running the simulation. Python is used to set up the 
 initial conditions, run the program's main control loop, and draw the 
 simulation results through the \emph{PyGame} library \cite{pygame}. This 
 allows to do both real-time animation as well as saving each simulation step 
@@ -51,18 +51,18 @@ scenario defines its own set of parameters, and a simulation run features one
 scenario. The parameters defined for each scenario include:
 
 \begin{itemize*}
-    \item The model constants, $A$, $B$, $U$, $\lambda$ and actor relaxation 
-        time. These are the same for all actors in a simulation.
-    \item Mean desired velocity and radius of actors and their standard 
-        deviation, and the factor used to calculate the maximum velocity.
-    \item The initial number of actors, the area(s) they start in and the 
+    \item The model constants, $A$, $B$, $U$, $\lambda$ and pedestrian relaxation 
+        time. These are the same for all pedestrians in a simulation.
+    \item Mean desired velocity and radius of pedestrians and their standard 
+        deviation, and the fpedestrian used to calculate the maximum velocity.
+    \item The initial number of pedestrians, the area(s) they start in and the 
         target(s) they move towards.
     \item The geometry of the scenario (i.e. placement of walls).
     \item Definition of the areas where measurement of data for plotting 
         graphs is done and which parameters should be plotted (see 
         section~\ref{sec:measurement}).
     \item Various parameters related to drawing of the simulation, maximum run 
-        time and optional continuous inflow of actors.
+        time and optional continuous inflow of pedestrians.
 \end{itemize*}
 
 Parameters that are not set for each scenario, but are defined once for all 
@@ -76,56 +76,56 @@ simulations are:
 
 How the values of the parameters are determined is described in 
 section~\ref{sec:init-cond}. From these parameters, the simulation is set up 
-by initialising the calculation module and creating the actors.
+by initialising the calculation module and creating the pedestrians.
 
-The actors are created with an initial velocity of zero, and distributed 
+The pedestrians are created with an initial velocity of zero, and distributed 
 randomly within the area(s) designated by the parameters for the scenario. To 
-avoid having actors start out by overlapping, the starting area is divided 
+avoid having pedestrians start out by overlapping, the starting area is divided 
 into a grid with cells a little larger than the size of the maximum diameter 
-of the generated actors. The actors are then placed into random cells of the 
-grid. This makes the starting configuration of the actors a little more rigid 
+of the generated pedestrians. The pedestrians are then placed into random cells of the 
+grid. This makes the starting configuration of the pedestrians a little more rigid 
 than what might otherwise be observed, but we feel this is acceptable since 
-actors move out of these grid cells within the first few time steps.
+pedestrians move out of these grid cells within the first few time steps.
 
 \subsection{Calculation of the model}
 For each step of the simulation, the calculations are tun in two parts: 
-Finding the accelerations (or resulting force) for all actors, and updating 
-position and velocity for the actors.  Since the acceleration for each actor 
-is dependent on both position and velocity of the other actors, splitting the 
-calculations this way enables us to do the calculations of each actor in any 
-order, and even parallel. The drawback is that the actors are only affected by 
-the movement and positions of other actors as they were at the end of the last 
+Finding the accelerations (or resulting force) for all pedestrians, and updating 
+position and velocity for the pedestrians.  Since the acceleration for each pedestrian 
+is dependent on both position and velocity of the other pedestrians, splitting the 
+calculations this way enables us to do the calculations of each pedestrian in any 
+order, and even parallel. The drawback is that the pedestrians are only affected by 
+the movement and positions of other pedestrians as they were at the end of the last 
 simulation step. This means that the time step has to be small enough that 
 this doesn't matter in practice.
 
-The acceleration vectors for each actor, $\alpha$, is calculated in three 
+The acceleration vectors for each pedestrian, $\alpha$, is calculated in three 
 steps, corresponding to the parts $\overrightarrow{f_\alpha^0}$, 
 $\overrightarrow{f_{\alpha \beta}}$ and $\overrightarrow{f_{\alpha B}}$ from 
 section~\ref{sec:the-model}. In each simulation step the three forces are 
 calculated in order, first calculating the desired force, then the repulsive 
-force from each of the other actors in the simulation, and finally the 
+force from each of the other pedestrians in the simulation, and finally the 
 repulsive force from each wall. The resulting vectors are added to yield the 
-total acceleration for each actor.
+total acceleration for each pedestrian.
 
-After this is calculated for all actors, their velocities and positions are 
+After this is calculated for all pedestrians, their velocities and positions are 
 updated in a separate step. Each of these four steps are described in detail 
 in the following. The code calling the other parts of the calculation can be 
 seen in code listing~\ref{lst:calling}. This function is called once for each 
-actor (index \texttt{i}) for each simulation step.
+pedestrian (index \texttt{i}) for each simulation step.
 
 \begin{lstlisting}[caption={Code calling the other parts of the 
     calculation.},label=lst:calling]
 void calculate_forces(Py_ssize_t i)
 {
     int j;
-    add_desired_acceleration(&actors[i]);
+    add_desired_acceleration(&pedestrians[i]);
 
     for(j = 0; j < a_count; j++) {
         if(i == j) continue;
-        add_repulsion(&actors[i], &actors[j]);
+        add_repulsion(&pedestrians[i], &pedestrians[j]);
     }
 
-    add_wall_repulsion(&actors[i]);
+    add_wall_repulsion(&pedestrians[i]);
 }
 \end{lstlisting}
 
@@ -143,7 +143,7 @@ here the \emph{i} stands for ``in place''.
 
 \begin{lstlisting}[caption={Code for calculating the desired 
     force.},label=lst:desired-force]
-static void add_desired_acceleration(Actor * a)
+static void add_desired_acceleration(Pedestrian * a)
 {
     double average_velocity = 0.0, impatience = 0.0, 
            desired_velocity = 0.0;
@@ -171,12 +171,12 @@ static void add_desired_acceleration(Actor * a)
 }
 \end{lstlisting}
 
-\subsubsection{Repulsion from other actors}
-The two functions used for calculating the repulsion from other actors is seen 
-in code listing~\ref{lst:actor-repulsion}. The \texttt{add\_repulsion} function 
-is called for each pair of actors. The force without any angle dependency is 
+\subsubsection{Repulsion from other pedestrians}
+The two functions used for calculating the repulsion from other pedestrians is seen 
+in code listing~\ref{lst:pedestrian-repulsion}. The \texttt{add\_repulsion} function 
+is called for each pair of pedestrians. The force without any angle dependency is 
 calculated in the \texttt{calculate\_repulsion} function, and is modified by 
-the angular dependence if the actor's velocity is not zero, and $\lambda$ is 
+the angular dependence if the pedestrian's velocity is not zero, and $\lambda$ is 
 not one. If the velocity is zero, calculating the dot product would result in 
 a division by zero, and if $\lambda$ is one, modifying the force by the 
 angular dependence would have no effect. The whole calculation is skipped if 
@@ -184,8 +184,8 @@ one of the constants $A$ or $B$ are zero, as this would make the calculations
 have no effect, or result in a division by zero, respectively.
 
 \begin{lstlisting}[caption={Calculating the repulsion from other 
-    agents.},label=lst:actor-repulsion]
-Vector calculate_repulsion(Actor * a, Actor * b, double A, double B)
+    pedestrians.},label=lst:pedestrian-repulsion]
+Vector calculate_repulsion(Pedestrian * a, Pedestrian * b, double A, double B)
 {
     double radius_sum = a->radius + b->radius;
     Vector from_b     = vector_sub(a->position, b->position);
@@ -197,7 +197,7 @@ Vector calculate_repulsion(Actor * a, Actor * b, double A, double B)
     return from_b;
 }
 
-void add_repulsion(Actor * a, Actor * b)
+void add_repulsion(Pedestrian * a, Pedestrian * b)
 {
     if(!A || !B) return;
     Vector repulsion = calculate_repulsion(a, b, A, B);
@@ -216,7 +216,7 @@ void add_repulsion(Actor * a, Actor * b)
 \subsubsection{Repulsion from walls}
 The code for adding the repulsion from the walls is shown in code 
 listing~\ref{lst:wall-repulsion}. The \texttt{add\_wall\_repulsion} function 
-is called for each actor and consists of two parts: Finding the points on the 
+is called for each pedestrian and consists of two parts: Finding the points on the 
 walls where repulsion should be calculated from, and calculating the repulsion 
 from these points. The force from the repulsion points is calculated in the 
 function \texttt{calculate\_wall\_repulsion} that is called for each repulsion 
@@ -226,7 +226,7 @@ point. This calculation corresponds to equation~\eqref{eqn:wall-repulsion}.
 
 \begin{lstlisting}[caption={Code to calculate the repulsion from the 
     walls.},label=lst:wall-repulsion]
-void add_wall_repulsion(Actor * a)
+void add_wall_repulsion(Pedestrian * a)
 {
     int i;
     Vector * repulsion_points  = PyMem_Malloc(w_count * sizeof(Vector));
@@ -244,7 +244,7 @@ void add_wall_repulsion(Actor * a)
     PyMem_Free(repulsion_points);
 }
 
-Vector calculate_wall_repulsion(Actor * a, Vector repulsion_point)
+Vector calculate_wall_repulsion(Pedestrian * a, Vector repulsion_point)
 {
     Vector repulsion = {0,0};
     Vector repulsion_vector = vector_sub(repulsion_point, a->position);
@@ -272,12 +272,12 @@ In lines 29-35 an endpoint is discarded if it is already used because it is
 shared with a wall that has already defined a repulsion point. In lines 36-57 
 endpoints that are not discarded in this way are added to the list of 
 repulsion points if they are either not free-floating (i.e. shared with 
-another wall), or closer to the actor centre than the actor's radius. This 
-ensures that doorways to not repulse actors that are passing through it.
+another wall), or closer to the pedestrian centre than the pedestrian's radius. This 
+ensures that doorways to not repulse pedestrians that are passing through it.
 
 \begin{lstlisting}[caption={Code for finding the wall repulsion 
     points.},label=lst:repulsion-points]
-int find_repultion_points(Actor * a, Vector repulsion_points[])
+int find_repultion_points(Pedestrian * a, Vector repulsion_points[])
 {
     int i,j;
     double projection_length;
@@ -324,8 +324,8 @@ int find_repultion_points(Actor * a, Vector repulsion_points[])
 				}
 			}
 			// Endpoints that are free-floating (i.e. sides of doorways) are
-			// only considered for repulsion if they are closer to the actor
-			// than the actor's radius. This allows actors to pass more
+			// only considered for repulsion if they are closer to the pedestrian
+			// than the pedestrian's radius. This allows pedestrians to pass more
 			// freely through doorways.
 			if(!free_e || 
 					vector_length(vector_sub(a->position,
@@ -344,8 +344,8 @@ int find_repultion_points(Actor * a, Vector repulsion_points[])
 \end{lstlisting}
 
 \subsubsection{Updating position and velocity}
-After every actor has been updated with a resulting acceleration vector from 
-the current simulation step, all actors update their position and velocity.  
+After every pedestrian has been updated with a resulting acceleration vector from 
+the current simulation step, all pedestrians update their position and velocity.  
 The position is updated by calculating a displacement vector as follows:
 
 \begin{equation}
@@ -358,15 +358,15 @@ Where $v_x$ and $v_y$ are the $x$ and $y$ components of the velocity vector,
 $a_x$ and $a_y$ are the $x$ and $y$ components of the acceleration vector, and 
 $\Delta t$ is the time step.
 
-After updating the position, the actor's velocity is updated by adding the 
+After updating the position, the pedestrian's velocity is updated by adding the 
 acceleration vector, to be used for the next simulation step. The code that 
 does this is seen in code listing~\ref{lst:update-position}. Lines 14-19 are 
 related to the measuring of data for plotting, and will be explained in 
 section~\ref{sec:measurement}.
 
-\begin{lstlisting}[caption={Code updating the actor 
+\begin{lstlisting}[caption={Code updating the pedestrian 
     position.},label=lst:update-position]
-void update_position(Actor * a)
+void update_position(Pedestrian * a)
 {
     Vector delta_p;
 
@@ -397,10 +397,10 @@ obtaining these results. Which results are used for which scenarios are
 described, along with the scenarios themselves, in section~\ref{sec:results}.
 
 \subsubsection{Drawings of the simulation}
-When the simulation is run, drawings of the actor's positions, walls etc. are 
+When the simulation is run, drawings of the pedestrian's positions, walls etc. are 
 created for each simulation step. These can be shown in real time, or saved 
 and either assembled into a film or used as individual illustrations. We use 
-these images to make qualitative assessments of actor behaviour, e.g. 
+these images to make qualitative assessments of pedestrian behaviour, e.g. 
 determining whether a lane formation occurs. We include the relevant images as 
 illustrations in the results section.
 
@@ -426,12 +426,12 @@ way. It is noted for each feature in which mode it is used and some properties
 are used for both modes. The properties we measure are:
 
 \begin{itemize}
-    \item \textbf{Density:} The density is a measure of how many actors occupy 
+    \item \textbf{Density:} The density is a measure of how many pedestrians occupy 
         a designated area of the simulation. The area measured is given as a 
         parameter of the modelled scenario, and the result is normalised to 
-        actors per square metre.
+        pedestrians per square metre.
 
-    \item \textbf{Average velocity:} This property measures the average actor 
+    \item \textbf{Average velocity:} This property measures the average pedestrian 
         velocity for the given simulation step, and is computed as a simple 
         arithmetic mean. The property is measured both as a function of time 
         and as a function of a varied parameter. In the case of varying a 
@@ -440,29 +440,29 @@ are used for both modes. The properties we measure are:
 
     \item \textbf{Flow rate:} Flow rate is measured along a line segment 
         defined as a parameter to the scenario; the line segment is assumed to 
-        be perpendicular to the primary movement direction of the actors. The 
-        simulation keeps track of at what time each actor first comes into 
+        be perpendicular to the primary movement direction of the pedestrians. The 
+        simulation keeps track of at what time each pedestrian first comes into 
         contact with this line segment, i.e. is first less than their radius 
         away from it (as can be seen in code 
         listing~\ref{lst:update-position}). This is used as an approximation of 
-        when the actors cross the line. The average flow rate is then computed 
-        as the number of actors who have crossed the line divided by the time. 
+        when the pedestrians cross the line. The average flow rate is then computed 
+        as the number of pedestrians who have crossed the line divided by the time. 
         This is graphed both as a function of time, and as a function of 
         parameters.  The flow rate value of a whole simulation run is 
         calculated as the average of the flow rate measurements over time.
 
     \item \textbf{Efficiency:} The efficiency is a measure of how close the 
-        actors are to moving at their desired speed. It is measured for a 
+        pedestrians are to moving at their desired speed. It is measured for a 
         whole simulation and is calculated as the average actual velocity of 
-        all actors divided by the average desired velocity of the actors.
+        all pedestrians divided by the average desired velocity of the pedestrians.
 
     \item \textbf{Leaving time:} The leaving time is a measure of how long it 
-        takes for all actors to leave the simulation completely. Actors are 
+        takes for all pedestrians to leave the simulation completely. Pedestrians are 
         removed from the simulation when they reach their target, or when they 
         get outside the calculation area which is the basis of this 
         measurement. This property is only measured for a whole simulation, 
         and as such is only graphed as a function of the varying parameters. 
         Of course simulations that do not have a finite running time (i.e. 
-        where actors are added continuously, or where they never reach their 
+        where pedestrians are added continuously, or where they never reach their 
         target) do not measure this property.
 \end{itemize}

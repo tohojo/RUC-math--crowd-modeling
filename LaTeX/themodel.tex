@@ -2,11 +2,11 @@
 \label{sec:the-model}
 In this section we will go through the model from the article \cite{self-org} 
 in great detail. As mentioned earlier in section~\ref{sec:social-forces} the 
-social force model is an agent based model, this means that we describe the 
+social force model is an pedestrian based model, this means that we describe the 
 system by looking at each individual object of the system. In this case each 
 object in the system is subject to a series of social forces. These forces 
 are not real physical forces in the sence that they follow newtons laws of 
-motion but rather a measure of the agents motivation for acting in specific 
+motion but rather a measure of the pedestrians motivation for acting in specific 
 ways. However that name \emph{social forces} is not accidential, we borrow 
 both notation and to some extent the interpretation from physics. In the model 
 we are studying there are four different forces. They are \emph{the desired force}, 
@@ -24,54 +24,54 @@ has $^{0}$ is a desire.
 \begin{figure}[ht]
     \centering
     {\includegraphics[scale=0.45]{Figures/ForceModel.pdf}} \caption[Notation 
-    of forces acting on an agent]{Illustration of the forces acting on an 
-    agent $\alpha $. $ \beta $ is another agent and the grey bar on the top 
+    of forces acting on an pedestrian]{Illustration of the forces acting on an 
+    pedestrian $\alpha $. $ \beta $ is another pedestrian and the grey bar on the top 
     represents a wall. $ \overrightarrow{f_{\alpha\beta}} $ is the repulsive force from 
-    agent $ \beta $, and $ \overrightarrow{f_{\alpha B}} $ is the repulsive force from 
-    the wall. $ \overrightarrow{f^{0}_{\alpha}} $ is a force that represents agent $ 
+    pedestrian $ \beta $, and $ \overrightarrow{f_{\alpha B}} $ is the repulsive force from 
+    the wall. $ \overrightarrow{f^{0}_{\alpha}} $ is a force that represents pedestrian $ 
     \alpha $'s desire to reach the exit.  The x and y axes are defined by the 
     Cartesian coordinate system.}
     \label{ForceModel}
 \end{figure}
 
-\subsection{The equation of motion for agent $ \alpha $:}
-The purpose of the model is to describe how each agent moves so an equation of 
-motion for each agent is needed. They way to get this equation of motion is 
+\subsection{The equation of motion for pedestrian $ \alpha $:}
+The purpose of the model is to describe how each pedestrian moves so an equation of 
+motion for each pedestrian is needed. They way to get this equation of motion is 
 much like one would in physics by summing up all the forces acting on the 
-agent. This gives rise to an acceleration of the agent and from this one is 
-able to derive the exact movement of the agent. Again it is important that 
+pedestrian. This gives rise to an acceleration of the pedestrian and from this one is 
+able to derive the exact movement of the pedestrian. Again it is important that 
 this is a method borrowed from physics, we are not working with real physical 
 forces here.
 
-Each induvidual agent has a series of parameters describing the features of 
-the agent. An agent is represented by a circle with radius $R_{\alpha}$. The 
-agent has a position vector $\overrightarrow{p_{\alpha}}$ and a velocity vector $\overrightarrow{V_{\alpha}}$ at 
-all times t. Furthermore each agent has a desired direction $\overrightarrow{e_{\alpha}}$ 
+Each induvidual pedestrian has a series of parameters describing the features of 
+the pedestrian. An pedestrian is represented by a circle with radius $R_{\alpha}$. The 
+pedestrian has a position vector $\overrightarrow{p_{\alpha}}$ and a velocity vector $\overrightarrow{V_{\alpha}}$ at 
+all times t. Furthermore each pedestrian has a desired direction $\overrightarrow{e_{\alpha}}$ 
 in which it would like to move. An illustration of the notation can be seen in 
-figure \ref{fig:NotationOfAgent}.
+figure \ref{fig:NotationOfPedestrian}.
 
 \begin{figure}[hb]
     \centering
-    {\includegraphics[scale=0.35]{Figures/NotationOfAgent.pdf}} 
-    \caption[Notation of an agent]{Illustration of the visual presentation of 
-    the mathematical notations for position and velocity. As for agent $ 
+    {\includegraphics[scale=0.35]{Figures/NotationOfPedestrian.pdf}} 
+    \caption[Notation of an pedestrian]{Illustration of the visual presentation of 
+    the mathematical notations for position and velocity. As for pedestrian $ 
     \alpha $, it has position vector $ \overrightarrow{p_{\alpha}} $, velocity vector $ 
     \overrightarrow{V_{\alpha}} $, $\overrightarrow{e_{\alpha}}$ or $\overrightarrow{e_{\beta}}$ the unit 
     vector pointing to the exit and  $ R_{\alpha} $ or  $ R_{\beta} $ the 
     radius of its body.  The x and y axes are defined by the Cartesian 
     coordinate system.}
-    \label{fig:NotationOfAgent}
+    \label{fig:NotationOfPedestrian}
 \end{figure}
 
-The change in position $ \overrightarrow{p_{\alpha}} $ per time of agent $\alpha$ is the 
+The change in position $ \overrightarrow{p_{\alpha}} $ per time of pedestrian $\alpha$ is the 
 velocity $ \overrightarrow{V_{\alpha}} $:
 
 \begin{equation}
 		\frac{d \overrightarrow{p_{\alpha}}}{dt} = \overrightarrow{V_{\alpha}} \left( t \right)
 \end{equation}
 
-The change of velocity per time is the acceleration of agent $\alpha$, which 
-is due to all the forces acting on the agent is given by:
+The change of velocity per time is the acceleration of pedestrian $\alpha$, which 
+is due to all the forces acting on the pedestrian is given by:
 
 \begin{equation}
     \frac{d \overrightarrow{V_{\alpha}}}{dt} = \overrightarrow{f_{\alpha}} \left( t \right) 
@@ -88,7 +88,7 @@ terms as stated in the introduction to this section.
 
 Here $\overrightarrow{f_{\alpha}^{0}}$ is the desired force, $\overrightarrow{f_{\alpha 
 \text{B}}}$ is the repulsive force from walls. $\overrightarrow{f_{\beta\alpha}}$ 
-is a repulsive force from other agents and $\overrightarrow{f_{\alpha i}}$ is a 
+is a repulsive force from other pedestrians and $\overrightarrow{f_{\alpha i}}$ is a 
 attractive force.
 
 We will now move on to show the explicit expression for each force. We will go 
@@ -102,7 +102,7 @@ $\overrightarrow{f_{\alpha}^{0}}$ & the desired force &\\
 \hline
 $\overrightarrow{f_{\alpha B}}$ & the repulsive force from walls &\\
 \hline
-$\overrightarrow{f_{\alpha \beta}}$ & the repulsion from other agents\\
+$\overrightarrow{f_{\alpha \beta}}$ & the repulsion from other pedestrians\\
 \hline
 $\overrightarrow{f_{\alpha i}}$& the attractive force\\
 \hline
@@ -112,7 +112,7 @@ $\overrightarrow{f_{\alpha i}}$& the attractive force\\
 \subsection{The desired force}
 \label{sec:desired-force}
 The first term on the right hand side of equation \eqref{model} describes the 
-\emph{willingness} of agent $\alpha$'s to reach the exit. It is a velocity 
+\emph{willingness} of pedestrian $\alpha$'s to reach the exit. It is a velocity 
 dependent force and is given by:
 
 \begin{equation}\label{relaxtime}
@@ -122,15 +122,15 @@ dependent force and is given by:
 \end{equation}
 
 Where $V_{\alpha}^{0}$ is the desired speed, $ \overrightarrow{e_{\alpha}} $ is the unit 
-vector pointing in the desired direction of the agent which in most cases will 
+vector pointing in the desired direction of the pedestrian which in most cases will 
 be the exit, but it can in principle be anywhere.  $\overrightarrow{V_{\alpha}}$ is the 
-actual velocity of the agent, and $\tau$ is the \emph{relaxation time}.
+actual velocity of the pedestrian, and $\tau$ is the \emph{relaxation time}.
 
-The relaxtion time determines how reactive a agent is. In principle the 
-relaxation time can vary for each agent but from the article \cite{self-org} 
-we get that $ \tau_{\alpha}\approx 1s $, which means that it takes the agent 
+The relaxtion time determines how reactive a pedestrian is. In principle the 
+relaxation time can vary for each pedestrian but from the article \cite{self-org} 
+we get that $ \tau_{\alpha}\approx 1s $, which means that it takes the pedestrian 
 one second to change its velocity. $V_{\alpha}^{0} \overrightarrow{e_{\alpha}}$ is the desired 
-velocity of the agent. The desired speed can vary over time and is given by:
+velocity of the pedestrian. The desired speed can vary over time and is given by:
 
 \begin{equation}\label{v0eta}
     V_{\alpha}^{0}\left( t \right) = \left[ 1 - \eta_{\alpha} \left( t \right) \right] 
@@ -139,14 +139,14 @@ velocity of the agent. The desired speed can vary over time and is given by:
 \end{equation}
 %TODO: write that V_a^0(0) < V_a^0(t) < V_a^max
 where $V_{\alpha}^{0} \left( 0 \right)$ is the desired speed at $ t=0 $, and 
-$V_{\alpha}^{\text{max}}$ is the maximum desired speed of agent $\alpha$. The 
-maximum desired speed is the speed that agent $\alpha$ will try to get if it 
-is allowed by the environment and other agents. It is not a physical limit to 
-how fast the agent can move but rather a parameter that determines the speed 
-that the agent is comfortable walking with. 
+$V_{\alpha}^{\text{max}}$ is the maximum desired speed of pedestrian $\alpha$. The 
+maximum desired speed is the speed that pedestrian $\alpha$ will try to get if it 
+is allowed by the environment and other pedestrians. It is not a physical limit to 
+how fast the pedestrian can move but rather a parameter that determines the speed 
+that the pedestrian is comfortable walking with. 
 
 $\eta_{\alpha} \left( t \right)$ is called the impatience or nervousness of 
-the agent and is given by:
+the pedestrian and is given by:
 
 \begin{equation}\label{eta}
 	\eta_{\alpha} \left( t \right) =
@@ -164,7 +164,7 @@ expression becomes:
 
 \begin{figure}[ht]
     \centering
-    {\includegraphics[scale=0.35]{Figures/NotationOfAgent2.pdf}} 
+    {\includegraphics[scale=0.35]{Figures/NotationOfPedestrian2.pdf}} 
     \caption{Illustration of the vector $ \vec{p_{\alpha}^{E}}$, which is the projection of $ \vec{p_{\alpha}} $ onto the desired direction of motion.}
     \label{impatience}
 \end{figure}
@@ -193,32 +193,32 @@ $V_{\alpha}^{0}(t)$ for $t=0$ and $t>0$ to be the following:
 % initial desired velocity.
 
 If we look at the expression for $V_{\alpha}^{0}$ for $t>0$ we can 
-start to analyse how this affects the behaviour of the agent. There 
+start to analyse how this affects the behaviour of the pedestrian. There 
 are three cases that is of interests, namely $0 < \eta_{\alpha} < 1$, 
 $\eta_{\alpha} < 0$ and $1 < \eta_{\alpha} $.
 
 In the case where $0 \leq \eta_{\alpha} \leq 1$ the expression for 
 $V_{\alpha}^{0} \left( t \right)$ makes a lot of sense. Here we can see why this term 
-is called the impatience of the agent. If the fraction  between the average 
+is called the impatience of the pedestrian. If the fraction  between the average 
 speed in the desired direction and the initial desired speed is low then 
 $\eta_{\alpha} \approx 1$. 
 When the impatience term is close to one $V_{\alpha}^{0} \left( t \right)$ is 
-dominated by $V_{\alpha}^{\text{max}}$. That is, if the agent have not moved 
+dominated by $V_{\alpha}^{\text{max}}$. That is, if the pedestrian have not moved 
 very far in the desired direction compared to the initial speed the impatience 
-of the agent will cause the agent's future velocity to be dominated by the 
-maximum desired velocity of the agent. 
-If the agent has been moving in the desired direction with his initial speed 
+of the pedestrian will cause the pedestrian's future velocity to be dominated by the 
+maximum desired velocity of the pedestrian. 
+If the pedestrian has been moving in the desired direction with his initial speed 
 the entire time then $\eta_{\alpha} = 0$  and $V_{\alpha}^{0} \left( t 
 \right)$ will continue to be $V_{\alpha}^{0} \left( 0 \right)$. 
 
-However in the case where $\eta_{\alpha} < 0$, that is the agent has moved 
+However in the case where $\eta_{\alpha} < 0$, that is the pedestrian has moved 
 further in the desired direction than he would have had he been walking with his 
-initial speed. This can happen in situations where then agent is being pushed 
+initial speed. This can happen in situations where then pedestrian is being pushed 
 forward forward by the crowd.
 
-In the case where $1 < \eta_{\alpha}$ that is the agent has moved further 
-in the opposite direction than the desired one. Then can happen if the agent 
-starts out by being very close to another agent. However this is not something 
+In the case where $1 < \eta_{\alpha}$ that is the pedestrian has moved further 
+in the opposite direction than the desired one. Then can happen if the pedestrian 
+starts out by being very close to another pedestrian. However this is not something 
 that we think will happen very often. In any circumstances it will only have an 
 effect very early in the simulation. 
 
@@ -231,17 +231,17 @@ force in the equation is the repulsive force from the walls.
 \begin{center}
 \begin{tabular}{lll}
 \hline
-$\overrightarrow{V_{\alpha}}$ & The actual velocity of agent alpha &\\
+$\overrightarrow{V_{\alpha}}$ & The actual velocity of pedestrian alpha &\\
 \hline
-$V_{\alpha}^{0}(t)$ & The desired speed of agent alpha &\\
+$V_{\alpha}^{0}(t)$ & The desired speed of pedestrian alpha &\\
 \hline
-$V_{\alpha}^{0}(0)$ & The initial desired speed of agent alpha &\\
+$V_{\alpha}^{0}(0)$ & The initial desired speed of pedestrian alpha &\\
 \hline
-$\overline{V_{\alpha}(t)}$ & The average speed of agent alpha &\\
+$\overline{V_{\alpha}(t)}$ & The average speed of pedestrian alpha &\\
 \hline
-$\overrightarrow{p_{\alpha}}$ & The position vector of agent alpha\\
+$\overrightarrow{p_{\alpha}}$ & The position vector of pedestrian alpha\\
 \hline
-$e_{\alpha}$& The desired direction of agent alpha\\
+$e_{\alpha}$& The desired direction of pedestrian alpha\\
 \hline
 $\tau$& The relaxation time &\\
 \hline
@@ -259,17 +259,17 @@ arise from interactions with the walls or other obstacles. It is given by:
 \end{equation}
 
 $U_B$ is a repulsive potential and $\|\overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}}\|$ 
-is the distance from the position of agent $\alpha$ to the nearest point on the 
+is the distance from the position of pedestrian $\alpha$ to the nearest point on the 
 wall as shown in figure \ref{NotationOfWall}. Since $U_B$ is a function of the distance 
 $\| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \|$, the gradient of $U_B$ tells us in 
 which direction this repulsion change the most. It is obvious that the change is 
-largest if the agent takes a step directly towards or away from the point in the wall, 
-which means that the agent will be pushed directly away from the point in the wall.
+largest if the pedestrian takes a step directly towards or away from the point in the wall, 
+which means that the pedestrian will be pushed directly away from the point in the wall.
 
 \begin{figure}[ht]
 \centering
 {\includegraphics[scale=0.35]{Figures/NotationOfWall.pdf}} 
-\caption[Notation of the interaction between an agent and a wall]{The illustration shows the mathematical notation for the interaction with walls used. The circle is pedestrian $\alpha$ with radius $R_{\alpha}$, $\overrightarrow{p_{\alpha}}$ is the position vector for $\alpha$, the grey box on the top is the wall, $\overrightarrow{p_{B}^{\alpha}}$ is the position vector for the closest part of the wall to $\alpha$, $\left( \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| \right)$ is the smallest distance from $\alpha$ to the wall and $\overrightarrow{V_{\alpha}}$ is the velocity vector for $\alpha$.}
+\caption[Notation of the interaction between an pedestrian and a wall]{The illustration shows the mathematical notation for the interaction with walls used. The circle is pedestrian $\alpha$ with radius $R_{\alpha}$, $\overrightarrow{p_{\alpha}}$ is the position vector for $\alpha$, the grey box on the top is the wall, $\overrightarrow{p_{B}^{\alpha}}$ is the position vector for the closest part of the wall to $\alpha$, $\left( \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| \right)$ is the smallest distance from $\alpha$ to the wall and $\overrightarrow{V_{\alpha}}$ is the velocity vector for $\alpha$.}
 \label{NotationOfWall}
 \end{figure}
 
@@ -300,7 +300,7 @@ U^0_{\alpha B} e^{- \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alp
 \end{equation}
 
 where $U^0_{\alpha B}$ is a constant and $R_{\alpha}$ is the radius of a pedestrian $\alpha$.
-In that case, the repulsive force on agent $ \alpha $ from the wall is:
+In that case, the repulsive force on pedestrian $ \alpha $ from the wall is:
 
 \begin{equation}
     \overrightarrow{f_{\alpha B}} \left( \overrightarrow{p_{\alpha}} \right) =
@@ -354,29 +354,29 @@ is trying to avoid the wall as it is expected from real life situations. \cite{s
 \begin{center}
 \begin{tabular}{lll}
 \hline
-$\overrightarrow{p_{\alpha}^{\text{B}}}$& Vector pointing from origo to the point on the wall nearest to agent alpha &\\
+$\overrightarrow{p_{\alpha}^{\text{B}}}$& Vector pointing from origo to the point on the wall nearest to pedestrian alpha &\\
 \hline
 $\overrightarrow{W}$& Vector representing the wall &\\
 \hline
 $U_{B}$ & Repulsive potential from the wall\\
 \hline
-$U^{0}_{\alpha B}$ & Constant representing agent alpha's tendency to avoid walls\\
+$U^{0}_{\alpha B}$ & Constant representing pedestrian alpha's tendency to avoid walls\\
 \hline
 $R_{\alpha}$& Repulsive potential from the wall\\
 \hline
 \end{tabular}
 \end{center}
 
-\subsection{Repulsion from other agents}
+\subsection{Repulsion from other pedestrians}
 The third term on the right hand side of equation \eqref{model} is a summation of all the 
-force between agent $\alpha$ and agent $\beta$. The equation we use is taken from a newer article \cite{ABconstant}. We did this because the original article contains two constants that is not given in the articel and in a mail we were adviced, by the authors, to use the values and equation from the new article. 
+force between pedestrian $\alpha$ and pedestrian $\beta$. The equation we use is taken from a newer article \cite{ABconstant}. We did this because the original article contains two constants that is not given in the articel and in a mail we were adviced, by the authors, to use the values and equation from the new article. 
 
 The function for the repulsion between pedestrians depends on the position vector and the velocity of 
-both agents, and it is given by:
+both pedestrians, and it is given by:
 
 \begin{equation}
         \overrightarrow{f_{\alpha \beta }}\left( t \right) = w\left(\phi_{\alpha \beta}\right)\overrightarrow{g}\left(d_{\alpha \beta}(t)\right)
-    \label{eq:agentinteraction}
+    \label{eq:pedestrianinteraction}
 \end{equation}
 
 The two functions that gives the repulsion between the pedestrians is respectively the angel dependece, $ w\left(\phi_{\alpha \beta}\right)$, and the pure force without any angle dependence, $\overrightarrow{g}\left(d_{\alpha \beta}(t)\right)$.
@@ -395,8 +395,8 @@ $ w\left(\phi_{\alpha \beta}\right)$ is given as:
 \end{equation}
 
 the angle $\phi_{\alpha \beta}$ is the angle between the 
-vector pointing from agent $\beta$ to $\alpha$ and the direction in which 
-agent $\alpha$ is moving. Cosine to the angle is 
+vector pointing from pedestrian $\beta$ to $\alpha$ and the direction in which 
+pedestrian $\alpha$ is moving. Cosine to the angle is 
 
 \begin{equation}
 \cos \left( \phi \left( t \right) \right)
@@ -414,7 +414,7 @@ A value of $\lambda_{\alpha}=1$ means that the force won't depend on the angle. 
 
 % we should make a drawing of this.
 
-The force, without the effect of $w\left(\phi_{\alpha \beta}\right)$, is given as the second term, in the right hand side of equation \ref{eq:agentinteraction}. The function is:  
+The force, without the effect of $w\left(\phi_{\alpha \beta}\right)$, is given as the second term, in the right hand side of equation \ref{eq:pedestrianinteraction}. The function is:  
 
 \begin{equation}
 	\overrightarrow{g} 
@@ -427,11 +427,11 @@ The force, without the effect of $w\left(\phi_{\alpha \beta}\right)$, is given a
 	        \label{re}	
 \end{equation}
 
-Here $A_{\alpha}$ and $B_{\alpha}$ are constants that can differ for each agent. 
+Here $A_{\alpha}$ and $B_{\alpha}$ are constants that can differ for each pedestrian. 
 $R_{\alpha \beta}$ is the sum of the radii of $\alpha$ and $\beta$ that is 
 $R_{\alpha \beta} = R_{\alpha} + R_{\beta}$. $d_{\alpha \beta}$ is the 
-distance from the center of agent $\alpha$ and the center of 
-agent $\beta$ and is therefore given by $d_{\alpha \beta} = 
+distance from the center of pedestrian $\alpha$ and the center of 
+pedestrian $\beta$ and is therefore given by $d_{\alpha \beta} = 
 \|\overrightarrow{p_{\alpha}}\left( t \right) - \overrightarrow{p_{\beta}}\left( t \right) \|$.
 $\eta_{\alpha \beta}$ is the unit vector pointing from $\alpha$ to $\beta$ 
 and it is given by:
@@ -445,7 +445,7 @@ and it is given by:
 \begin{figure}[ht]
     \centering
     {\includegraphics[scale=0.35]{Figures/NotationOfInteraction.pdf}} 
-    \caption[Notation of the interaction between two agents]{Illustration of the notation for the interaction between agents.
+    \caption[Notation of the interaction between two pedestrians]{Illustration of the notation for the interaction between pedestrians.
 	     An addition and difference to \ref{NotationOfWall} is that the wall has been replaced by pedestrian $\beta$.
 	     $\eta_{\alpha \beta}$ is the vector pointing from $\alpha$ to $\beta$, and $\phi$ is the angle between $\alpha$'s 
 	     velocity vector and the vector to $\beta$.}
@@ -453,11 +453,11 @@ and it is given by:
 \end{figure}
 
 
-%Equation \ref{agentinteraction} is given by two terms. 
-%The first term determines how much the the angle between the agents is and how much this angle should affect the force. 
+%Equation \ref{pedestrianinteraction} is given by two terms. 
+%The first term determines how much the the angle between the pedestrians is and how much this angle should affect the force. 
 %The constant $\lambda$ is the one controling the importance of the angle.
 %The second term reflects the pedestrians tendency to stay at a certain distance 
-%from other agents. The constants $A_{\alpha}$, $B_{\alpha}$ is the strength 
+%from other pedestrians. The constants $A_{\alpha}$, $B_{\alpha}$ is the strength 
 %and range of the interaction respectively and controls how big the force will be at a certain distance.  
 
 Taking the norms of both sides of Equation (\ref{re}), we can draw the relation between the value of $\overrightarrow{f_{\alpha\beta}}(t)$ and $ d_{\alpha\beta} $, as shown in Figure 
@@ -467,8 +467,8 @@ Taking the norms of both sides of Equation (\ref{re}), we can draw the relation 
     \centering
     {\includegraphics[scale=0.45]{Figures/physicalinteraction.pdf}} 
     \caption[Psysical interaction]{Illustration of the function about the interaction force 
-        $f_{\alpha\beta}(t)$ and the distance between two agents
-        $d_{\alpha \beta}$. It follows that the smaller the distance between two agents, the greater the interaction force is. }
+        $f_{\alpha\beta}(t)$ and the distance between two pedestrians
+        $d_{\alpha \beta}$. It follows that the smaller the distance between two pedestrians, the greater the interaction force is. }
     \label{fig:physicalinteraction2}
 \end{figure}
 
@@ -481,7 +481,7 @@ There is one intersection of the graph and the  axis at:
 \end{equation}
 
 If we put in values for the constants, we will be able to get a maximum value of $ f_{\alpha\beta}(t) $, 
-since the distance between agents cannot be negative. Here we take values from \cite{ABconstant} $ A_{\alpha} = 0.42 m/s^{2} $, 
+since the distance between pedestrians cannot be negative. Here we take values from \cite{ABconstant} $ A_{\alpha} = 0.42 m/s^{2} $, 
 $ R_{\alpha\beta} = 0.6 m $, and $ B_{\alpha} = 1.65 m $, so 
 $ f_{\alpha\beta}(t)^{max} < 0.64 m/s^{2} $. It can never be exactly $0.64m/s^2$ since the vector between $\alpha$ and $\beta$ will be undefined when two pedestrians are in the exact same spot.
 
@@ -492,9 +492,9 @@ $ f_{\alpha\beta}(t)^{max} < 0.64 m/s^{2} $. It can never be exactly $0.64m/s^2$
 \begin{center}
 \begin{tabular}{lll}
 \hline
-$d_{\alpha \beta}$& The distance from agent $\alpha$ to $\beta$ &\\
+$d_{\alpha \beta}$& The distance from pedestrian $\alpha$ to $\beta$ &\\
 \hline
-$R_{\alpha\beta}$& The sum of the radii of agent $\alpha$ and $\beta$ \\
+$R_{\alpha\beta}$& The sum of the radii of pedestrian $\alpha$ and $\beta$ \\
 \hline
 $\lambda_{\alpha}$& Anisotropy parameter &\\
 \hline
@@ -507,12 +507,12 @@ $B_{\alpha}$& Parameter controlling the range of the repulsive interaction  \\
 \end{tabular}
 \end{center}
 
-\subsection{The attractive forces between some agents}
+\subsection{The attractive forces between some pedestrians}
 The fourth and last term in \eqref{model} represents the force from attraction 
 in the room. Attractions can be either be either interesting sculptures, 
-sights or familiar persons the agent prefer to be close to, such as friends 
+sights or familiar persons the pedestrian prefer to be close to, such as friends 
 and family. The mathematical structure of this force is the same as the force 
-from other agents, however it is opposite in algebraic sign and has different 
+from other pedestrians, however it is opposite in algebraic sign and has different 
 constants. 
 
 \begin{figure}[hb] %with some more comments i think that this figure could serve as a summation of the entire section
@@ -530,37 +530,37 @@ $\overrightarrow{f_{\alpha}^{0}}$ & the desired force &\\
 \hline
 $\overrightarrow{f_{\alpha B}}$ & the repulsive force from walls &\\
 \hline
-$\overrightarrow{f_{\alpha \beta}}$ & the repulsion from other agents\\
+$\overrightarrow{f_{\alpha \beta}}$ & the repulsion from other pedestrians\\
 \hline
 $\overrightarrow{f_{\alpha i}}$& the attractive force\\
 \hline
-$\overrightarrow{V_{\alpha}}$ & The actual velocity of agent alpha &\\
+$\overrightarrow{V_{\alpha}}$ & The actual velocity of pedestrian alpha &\\
 \hline
-$V_{\alpha}^{0}(t)$ & The desired speed of agent alpha &\\
+$V_{\alpha}^{0}(t)$ & The desired speed of pedestrian alpha &\\
 \hline
-$V_{\alpha}^{0}(0)$ & The initial desired speed of agent alpha &\\
+$V_{\alpha}^{0}(0)$ & The initial desired speed of pedestrian alpha &\\
 \hline
-$\overline{V_{\alpha}(t)}$ & The average speed of agent alpha &\\
+$\overline{V_{\alpha}(t)}$ & The average speed of pedestrian alpha &\\
 \hline
-$\overrightarrow{p_{\alpha}}$ & The position vector of agent alpha\\
+$\overrightarrow{p_{\alpha}}$ & The position vector of pedestrian alpha\\
 \hline
-$e_{\alpha}$& The desired direction of agent alpha\\
+$e_{\alpha}$& The desired direction of pedestrian alpha\\
 \hline
 $\tau$& The relaxation time &\\
 \hline
-$\overrightarrow{p_{\alpha}^{\text{B}}}$& Vector pointing from origo to the point on the wall nearest to agent alpha &\\
+$\overrightarrow{p_{\alpha}^{\text{B}}}$& Vector pointing from origo to the point on the wall nearest to pedestrian alpha &\\
 \hline
 $\overrightarrow{W}$& Vector representing the wall &\\
 \hline
 $U_{B}$ & Repulsive potential from the wall\\
 \hline
-$U^{0}_{\alpha B}$ & Constant representing agent alpha's tendency to avoid walls\\
+$U^{0}_{\alpha B}$ & Constant representing pedestrian alpha's tendency to avoid walls\\
 \hline
 $R_{\alpha}$& Repulsive potential from the wall\\
 \hline
-$d_{\alpha \beta}$& The distance from agent $\alpha$ to $\beta$ &\\
+$d_{\alpha \beta}$& The distance from pedestrian $\alpha$ to $\beta$ &\\
 \hline
-$R_{\alpha\beta}$& The sum of the radii of agent $\alpha$ and $\beta$ \\
+$R_{\alpha\beta}$& The sum of the radii of pedestrian $\alpha$ and $\beta$ \\
 \hline
 $\lambda_{\alpha}$& Anisotropy parameter &\\
 \hline
@@ -570,9 +570,9 @@ $A_{\alpha}$& Parameter controlling the interaction streanght \\
 \hline
 $B_{\alpha}$& Parameter controlling the range of the repulsive interaction  \\
 \hline
-$d_{\alpha \beta}$& The distance from agent $\alpha$ to $\beta$ &\\
+$d_{\alpha \beta}$& The distance from pedestrian $\alpha$ to $\beta$ &\\
 \hline
-$R_{\alpha\beta}$& The sum of the radii of agent $\alpha$ and $\beta$ \\
+$R_{\alpha\beta}$& The sum of the radii of pedestrian $\alpha$ and $\beta$ \\
 \hline
 $\lambda_{\alpha}$& Anisotropy parameter &\\
 \hline
@@ -586,7 +586,7 @@ $B_{\alpha}$& Parameter controlling the range of the repulsive interaction  \\
 \end{center}
 
 We have now seen the explicit mathematical expression for the social forces 
-as well as explained how this affects the behavior of the agents. To get an 
+as well as explained how this affects the behavior of the pedestrians. To get an 
 overview of how the model is put together look a figure \ref{overview} with 
 the aid of table. In section \ref{sec:assessment} 
 we discuss some of the models features in more detail as well as some features 
