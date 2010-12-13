@@ -16,7 +16,7 @@ scenarios = {
             'max_velocity_factor': 1.3,
             'radius_mean'        : 0.2,
             'radius_deviation'   : 0.01,
-            'targets'            : [(0.0,7.0)],
+            'targets'            : [(0.0,6.0)],
             'density_rectangle'  : (-1.0, 3.0, 1.0, 5.0),
             'flowrate_line'      : (-1.0, 5.1, 1.0, 5.1),
             'continuous_rate'    : None,
