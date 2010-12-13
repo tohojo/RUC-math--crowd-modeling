@@ -1,5 +1,5 @@
 % vim:ft=tex
-\documentclass[a4paper,11pt]{scrartcl}
+\documentclass[a4paper,11pt,twoside]{scrartcl}
 \usepackage{tohojo-xe}
 %\selectlanguage{english}
 \setcounter{secnumdepth}{3}
@@ -13,7 +13,23 @@ Thrane, Troels Christensen, Wence Xiao}
 \date{2010-09-12}
 \fancyhead[OR,EL]{\footnotesize Draft: \timestamp}
 %\type{}
+
+
+\definecolor{Brown}{cmyk}{0,0.81,1,0.60}
+\definecolor{OliveGreen}{cmyk}{0.64,0,0.95,0.40}
+\definecolor{CadetBlue}{cmyk}{0.62,0.57,0.23,0}
+
+\lstset{language=C, basicstyle=\footnotesize, showstringspaces=false,
+ keywordstyle=\ttfamily\color{OliveGreen},
+ identifierstyle=\ttfamily\color{CadetBlue}\bfseries,
+ commentstyle=\color{Brown},
+ stringstyle=\ttfamily,
+ numbers=left, stepnumber=5,
+% captionpos=b,
+ tabsize=4, frame=tb,
+ morekeywords={Vector, Actor}}
 \begin{document}
+
 \begin{titlepage}
     \begin{center}
         {\Huge \sffamily \textbf{Crowd modelling\\[2cm]
