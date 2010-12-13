@@ -7,7 +7,7 @@ static double A, B, U, lambda, timestep;
 static Vector flowline[2];
 
 // Global objects to allow access from different threads
-static Actor * actors;
+static Pedestrian * pedestrians;
 static Wall * walls;
 static Py_ssize_t a_count;
 static Py_ssize_t w_count;
@@ -17,17 +17,17 @@ static PyObject * module_dict;
 void calculate_forces(Py_ssize_t i)
 {
     int j;
-    add_desired_acceleration(&actors[i]);
+    add_desired_acceleration(&pedestrians[i]);
 
     for(j = 0; j < a_count; j++) {
         if(i == j) continue;
-        add_repulsion(&actors[i], &actors[j]);
+        add_repulsion(&pedestrians[i], &pedestrians[j]);
     }
 
-    add_wall_repulsion(&actors[i]);
+    add_wall_repulsion(&pedestrians[i]);
 }
 
-static void add_desired_acceleration(Actor * a)
+static void add_desired_acceleration(Pedestrian * a)
 {
     double average_velocity = 0.0, impatience = 0.0, 
 		   desired_velocity = 0.0;
@@ -55,7 +55,7 @@ static void add_desired_acceleration(Actor * a)
 
 }
 
-Vector calculate_repulsion(Actor * a, Actor * b, double A, double B)
+Vector calculate_repulsion(Pedestrian * a, Pedestrian * b, double A, double B)
 {
     double radius_sum = a->radius + b->radius;
     Vector from_b     = vector_sub(a->position, b->position);
@@ -67,7 +67,7 @@ Vector calculate_repulsion(Actor * a, Actor * b, double A, double B)
     return from_b;
 }
 
-void add_repulsion(Actor * a, Actor * b)
+void add_repulsion(Pedestrian * a, Pedestrian * b)
 {
     if(!A || !B) return;
     Vector repulsion = calculate_repulsion(a, b, A, B);
@@ -82,8 +82,9 @@ void add_repulsion(Actor * a, Actor * b)
     vector_iadd(&a->acceleration, &repulsion);
 }
 
-void add_wall_repulsion(Actor * a)
+void add_wall_repulsion(Pedestrian * a)
 {
+	if(!U) return;
     int i;
     Vector * repulsion_points  = PyMem_Malloc(w_count * sizeof(Vector));
     int rep_p_c = 0;
@@ -100,7 +101,7 @@ void add_wall_repulsion(Actor * a)
     PyMem_Free(repulsion_points);
 }
 
-int find_repultion_points(Actor * a, Vector repulsion_points[])
+int find_repultion_points(Pedestrian * a, Vector repulsion_points[])
 {
     int i,j;
     double projection_length;
@@ -147,8 +148,8 @@ int find_repultion_points(Actor * a, Vector repulsion_points[])
 				}
 			}
 			// Endpoints that are free-floating (i.e. sides of doorways) are
-			// only considered for repulsion if they are closer to the actor
-			// than the actor's radius. This allows actors to pass more
+			// only considered for repulsion if they are closer to the pedestrian
+			// than the pedestrian's radius. This allows pedestrians to pass more
 			// freely through doorways.
 			if(!free_e || 
 					vector_length(vector_sub(a->position,
@@ -165,23 +166,20 @@ int find_repultion_points(Actor * a, Vector repulsion_points[])
     return rep_p_c;
 }
 
-Vector calculate_wall_repulsion(Actor * a, Vector repulsion_point)
+Vector calculate_wall_repulsion(Pedestrian * a, Vector repulsion_point)
 {
-    Vector repulsion = {0,0};
-    Vector repulsion_vector = vector_sub(repulsion_point, a->position);
+    Vector repulsion_vector = vector_sub(a->position, repulsion_point);
     double repulsion_length = vector_length(repulsion_vector);
+	vector_unitise_c(&repulsion_vector, repulsion_length);
 
-    repulsion.x = U * (1/a->radius) * \
-                  (exp(-repulsion_length/a->radius)*\
-                   (a->position.x-repulsion_point.x))/repulsion_length;
-    repulsion.y = U * (1/a->radius) * \
-                  (exp(-repulsion_length/a->radius)*\
-                   (a->position.y-repulsion_point.y))/repulsion_length;
+	double repulsion_force = (1/a->radius) * U * exp(-repulsion_length/a->radius);
 
-    return repulsion;
+	vector_imul(&repulsion_vector, repulsion_force);
+
+    return repulsion_vector;
 }
 
-void update_position(Actor * a)
+void update_position(Pedestrian * a)
 {
     Vector delta_p;
 
@@ -202,7 +200,7 @@ void update_position(Actor * a)
 	}
 }
 
-static int is_escaped(Actor * a)
+static int is_escaped(Pedestrian * a)
 {
 	double l = vector_length(vector_sub(a->target, a->position));
 	if (l <= a->radius*2) return 1;
@@ -224,7 +222,7 @@ static pthread_t * threads;
 static pthread_attr_t thread_attr;
 #endif
 
-static PyObject * update_actors(PyObject * self, PyObject * args)
+static PyObject * update_pedestrians(PyObject * self, PyObject * args)
 {
 
     // Since we are not touching any python objects in this part, 
@@ -239,15 +237,15 @@ static PyObject * update_actors(PyObject * self, PyObject * args)
     Py_RETURN_NONE;
 }
 
-static PyObject * add_actor(PyObject * self, PyObject * args)
+static PyObject * add_pedestrian(PyObject * self, PyObject * args)
 {
-    PyObject * p_actor;
+    PyObject * p_pedestrian;
     int i = a_count;
 
-    PyArg_ParseTuple(args, "O:add_actors", &p_actor);
+    PyArg_ParseTuple(args, "O:add_pedestrians", &p_pedestrian);
 
 	update_a_count(a_count+1);
-	actor_from_pyobject(p_actor, &actors[i]);
+	pedestrian_from_pyobject(p_pedestrian, &pedestrians[i]);
 
     Py_RETURN_NONE;
 }
@@ -267,16 +265,16 @@ static PyObject * a_property(PyObject * self, PyObject * args)
 
 	if(strcmp(property, "position") == 0) {
 		return Py_BuildValue("dd", 
-				actors[i].position.x, actors[i].position.y);
+				pedestrians[i].position.x, pedestrians[i].position.y);
 	} else if(strcmp(property, "radius") == 0) {
-		return PyFloat_FromDouble(actors[i].radius);
+		return PyFloat_FromDouble(pedestrians[i].radius);
 	} else if(strcmp(property, "velocity") == 0) {
-		return PyFloat_FromDouble(vector_length(actors[i].velocity));
+		return PyFloat_FromDouble(vector_length(pedestrians[i].velocity));
 	} else if(strcmp(property, "flowline_time") == 0) {
-		return PyFloat_FromDouble(actors[i].flowline_time);
+		return PyFloat_FromDouble(pedestrians[i].flowline_time);
 	} else if(strcmp(property, "target") == 0) {
 		return Py_BuildValue("dd", 
-				actors[i].target.x, actors[i].target.y);
+				pedestrians[i].target.x, pedestrians[i].target.y);
 	}
 
 	PyErr_SetString(PyExc_AttributeError, property);
@@ -340,7 +338,7 @@ static void do_calculations()
 #endif
 
     for(i = 0; i < a_count; i++) {
-        update_position(&actors[i]);
+        update_position(&pedestrians[i]);
     }
 
 	check_escapes();
@@ -362,8 +360,8 @@ static void check_escapes()
 	int i, j;
 
 	for(i = 0, j = 0; i < a_count; i++) {
-		if(!is_escaped(&actors[i])) {
-			actors[j++] = actors[i];
+		if(!is_escaped(&pedestrians[i])) {
+			pedestrians[j++] = pedestrians[i];
 		}
 	}
 
@@ -376,7 +374,7 @@ static void update_a_count(Py_ssize_t count)
 	if(count == a_count) return;
 
 	a_count = count;
-	actors = PyMem_Realloc(actors, a_count * sizeof(Actor));
+	pedestrians = PyMem_Realloc(pedestrians, a_count * sizeof(Pedestrian));
 
 	PyObject * tmp = PyInt_FromSsize_t(a_count);
     PyDict_SetItemString(module_dict, "a_count", tmp);
@@ -384,7 +382,7 @@ static void update_a_count(Py_ssize_t count)
 
 }
 
-static Actor actor_from_pyobject(PyObject * o, Actor * a)
+static Pedestrian pedestrian_from_pyobject(PyObject * o, Pedestrian * a)
 {
     a->radius                   = double_from_attribute(o, "radius");
     a->time                     = double_from_attribute(o, "time");
@@ -440,12 +438,12 @@ static Vector vector_from_pyobject(PyObject * o)
 }
 
 static PyMethodDef OptimisedMethods[] = {
-    {"update_actors", update_actors, METH_VARARGS, 
-        "Calculate the acceleration of an actor"},
-    {"add_actor", add_actor, METH_VARARGS, 
-        "Add an actor to the list"},
+    {"update_pedestrians", update_pedestrians, METH_VARARGS, 
+        "Calculate the acceleration of an pedestrian"},
+    {"add_pedestrian", add_pedestrian, METH_VARARGS, 
+        "Add an pedestrian to the list"},
     {"a_property", a_property, METH_VARARGS, 
-        "Get a property for an actor"},
+        "Get a property for an pedestrian"},
     {"set_parameters", set_parameters, METH_VARARGS, 
         "Set simulation parameters"},
 };
@@ -459,7 +457,7 @@ PyMODINIT_FUNC initoptimised(void)
     module_dict = PyModule_GetDict(m);
 
     a_count  = -1;
-    actors   = NULL;
+    pedestrians   = NULL;
     A        = 0;
     B        = 0;
     lambda   = 0;
