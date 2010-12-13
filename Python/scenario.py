@@ -14,26 +14,26 @@ class Scenario:
             'B'                  : B constant (see model)
             'U'                  : U constant (see model)
             'lambda'             : lambda constant (see model)
-            'initial_count'      : initial number of actors to spawn
-            'start_areas'        : rectangles actors can spawn in (as quadruplets)
-            'velocity_mean'      : mean value for initial actor velocity
-            'velocity_deviation' : deviation for initial actor velocity
+            'initial_count'      : initial number of pedestrians to spawn
+            'start_areas'        : rectangles pedestrians can spawn in (as quadruplets)
+            'velocity_mean'      : mean value for initial pedestrian velocity
+            'velocity_deviation' : deviation for initial pedestrian velocity
             'max_velocity_factor': max_velocity = initial_velocity * max_velocity_factor
             'radius_mean'        : mean value for radii
             'radius_deviation'   : deviation for radii
-            'targets'            : list of targets actors should move towards (randomly 
+            'targets'            : list of targets pedestrians should move towards (randomly 
                                    distributed between multiple targets)
             'density_rectangle'  : rectangle to measure density within (quadruplet)
             'flowrate_line'      : line to measure flow at (quadruplet start + end)
-            'continuous_rate'    : rate to spawn actors throughout the simulation
-            'continuous_start'   : lines to spawn new actors at. start line i will move
+            'continuous_rate'    : rate to spawn pedestrians throughout the simulation
+            'continuous_start'   : lines to spawn new pedestrians at. start line i will move
                                    towards target i
             'stop_at'            : time to end the simulation at
             'walls'              : list of wall quadruplets
             'drawing_width'      : width for drawing images
             'drawing_height'     : height for drawing images
-            'pixel-factor'       : number of pixels pr metre
-            'relax_time'         : relaxation time for actors
+            'pixel_factor'       : number of pixels pr metre
+            'relax_time'         : relaxation time for pedestrians
             'vary_parameters'    : dictionary of parameter names mapped to a tuple of
                                    interval start, interval end, stepsize for running
                                    multiple simulations varying each parameter"""
@@ -96,12 +96,12 @@ class Scenario:
         self.plot_prefix = os.path.join(constants.plot_dir, self.parameters['name'])
 
 
-    def _create_actors(self):
+    def _create_pedestrians(self):
         desired_velocities = []
-        for a in setup.generate_actors(self.parameters, 
+        for a in setup.generate_pedestrians(self.parameters, 
                 self.parameters['start_areas'], self.parameters['initial_count']):
             desired_velocities.append(a['initial_desired_velocity'])
-            optimised.add_actor(a)
+            optimised.add_pedestrian(a)
 
         self.average_desired_velocity = np.average(desired_velocities)
 
@@ -117,7 +117,6 @@ class Scenario:
         density_c = 0
         density = 0.0
         density_area = (y2-y1)*(x2-x1)
-        flow_count = 0
         velocities = list()
         for i in xrange(optimised.a_count):
             (x,y) = optimised.a_property(i, "position")
@@ -125,14 +124,11 @@ class Scenario:
             velocities.append(optimised.a_property(i, "velocity"))
             if x+r >= x1 and x-r <= x2 and y+r >= y1 and y-r <= y2:
                 density_c += 1
-            if optimised.a_property(i, "flowline_time") > 0:
-                flow_count += 1
+
+        flow_count = optimised.flow_count()
+        flowrate = flow_count/constants.plot_sample_frequency
 
         density = density_c / density_area
-        if self.time > 0:
-            flowrate = flow_count/self.time
-        else:
-            flowrate = 0.0
         self.plots.add_sample(self.time, 
                 density=density,
                 velocities=velocities, 
@@ -144,7 +140,7 @@ class Scenario:
             (x,y) = optimised.a_property(i, "position")
             r = optimised.a_property(i, "radius")
             t = optimised.a_property(i, "target")
-            self.canvas.draw_actor(x,y,r,t)
+            self.canvas.draw_pedestrian(x,y,r,t)
 
         self.canvas.draw_text("t = %.2f" % self.time, not self.create_images)
         for t in self.parameters['targets']:
@@ -171,9 +167,9 @@ class Scenario:
             self.spawn_count -= 1.0
 
         if spawn > 0:
-            for a in setup.generate_actors(self.parameters,
+            for a in setup.generate_pedestrians(self.parameters,
                     self.parameters['continuous_start'], spawn):
-                optimised.add_actor(a)
+                optimised.add_pedestrian(a)
 
 
     def _done(self):
@@ -210,7 +206,7 @@ class Scenario:
         self.frames = 0
         self.start_time = time()
 
-        self._create_actors()
+        self._create_pedestrians()
 
         if self.drawing:
             self._init_drawing()
@@ -220,7 +216,7 @@ class Scenario:
         try:
             while self._tick():
 
-                optimised.update_actors()
+                optimised.update_pedestrians()
 
                 if self.spawning:
                     self._spawn()

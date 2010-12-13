@@ -82,7 +82,7 @@ class Canvas:
             self.target_colours[t] = COLOURS[len(self.target_colours)]
         return self.target_colours[t]
 
-    def draw_actor(self, x, y, r, t):
+    def draw_pedestrian(self, x, y, r, t):
         colour = self._get_colour(t)
         (x,y) = self.screen_coords(x,y)
         self._draw_circle(x, y, self.screen_radius(r), colour)

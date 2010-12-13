@@ -4,12 +4,11 @@ In this section we first discuss the limitations of the social force models
 that we have worked with. These limitation differ from the ones outlined in 
 section \ref{sec:lack} and \ref{sec:discrepancies} in the way that 
 they are not features that are needed to replicate the results from the articles, 
-but are extensions to the model. We then move on to comment on the status of 
-social force models in general.
-While going through the literature of the field we have noticed a trend in the 
-publications and this will be discussed in section \ref{subsec:development}.
+but are extensions to the model.
 
-\subsection{Limitation and extensions of the model}
+\subsection{Extensions of the model}
+% TODO: This section is about minor limitations to our model that have 
+% been solved by others.
 There are several limitations the model that we encountered when we started 
 analyse and simulate the model. In this section we discuss some relevant 
 limitations of the model, some of which have been solved by other people in the 
@@ -40,7 +39,7 @@ agents see \cite{HiDAC}.
 At the moment we can not simulate a situations where the visibility is very low 
 e.g. a room filled with smoke. In the model we have worked with The agents always 
 have a waypoint to steer towards, but if the visibility only is 1 meter the 
-agents can not necessarily see the waypoint. %TODO: find reference
+agents can not necessarily see the waypoint. \cite{HelbingNew}
 
 \subsubsection{Falling and injuries}
 In situations of crowd panic people are often injured. This is either due to the 
@@ -58,10 +57,30 @@ These features all add up to give a more realistic simulation of crowds
 but do simulation like these teach us anything about why a crowd behaves 
 as it does?
 
+\subsection{Inserting social force concept into classical mechanics}
+\label{subsec:development}
+% This section is about a major limitation/error in the model that 
+% cannot be solved easily.
+% Discussion about using physological concepts in the model.
+While searching for articles leading to social force model, we see there is a 
+evolutionary path in transferring physical concepts to describe crowd dynamics.
+
+The success of using fluid dynamics to model traffic problem encourages 
+people to bring the same approach to model crowds. Helbing later improved the  
+model by combining fluid dynamic and gas kinetics concepts\cite{social-force}. 
+
+However, in order to add the self-organized feature into account, it is necessary 
+to use the agent-based concept.  At the same time, use certain quantity to measure
+the desire of each agent, and the social force model transfer the "social force" into 
+the calculation in the actual acceleration, which may arise problems because many laws 
+in physics does not apply in this model as the social force is not a real 
+physical force.
+
 \subsection{Comments on the state of the social force models}
-%-take a step back, discuss the model in general terms
-%-is social force a good way to discuss this
-% This stuff in this discussion should hold even if the model had all the features listed in the first subsection.
+% This is sort of a conclusion on the last two sections. What have we 
+% learned about crowds from the modelling. What is the status of this 
+% kind of model. Talk about the fact that it seems that we need to 
+% change the parameters for each case we want to simulate.
 At this point we have got some understanding of the social force model, and 
 also given our opinion about the limitation of the model. We think it is 
 reasonable to consider what, if anything, the social force models have taught 
@@ -80,26 +99,6 @@ solar eclipses.
 We think that the social force models are of a predictive type rather than 
 a explanatory type. They do not give us any knowledge about the underlying 
 mechanics of a crowd of pedestrians but they can be used to successfully 
-predict quantative behavior of the crowd such as  flow rate. Therefore there 
+predict quantative behavior of the crowd such as flow rate. Therefore there 
 is nothing wrong with using the model to guide the construction of malls, airports 
 and other location where crowds gather.
-
-\subsection{Comments on the development of the social force models}
-\label{subsec:development}
-%-incomplete description, inherent in types of paper
-While searching for articles leading to social force model, we see there is a 
-evolutionary path in transferring physical concepts to describe crowd dynamics.
-
-The success of using fluid dynamics to model traffic problem encourages 
-people to bring the same approach to model crowds. Helbing later improved the  
-model by combining fluid dynamic and gas kinetics concepts\cite{social-force}. 
-
-However, in order to add the self-organized feature into account, it is necessary 
-to use the agent-based concept.  At the same time, use certain quantity to measure
-the desire of each agent, and the social force model transfer the "social force" into 
-the calculation in the actual acceleration, which may arise problems because many laws 
-in physics does not apply in this model. 
-
-This approach of building on earlier models is apparent when reading through the 
-literature. One article does rarely contain all the information needed to replicate 
-the results given in the article.
