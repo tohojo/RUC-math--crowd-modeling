@@ -84,6 +84,7 @@ void add_repulsion(Actor * a, Actor * b)
 
 void add_wall_repulsion(Actor * a)
 {
+	if(!U) return;
     int i;
     Vector * repulsion_points  = PyMem_Malloc(w_count * sizeof(Vector));
     int rep_p_c = 0;
@@ -167,18 +168,15 @@ int find_repultion_points(Actor * a, Vector repulsion_points[])
 
 Vector calculate_wall_repulsion(Actor * a, Vector repulsion_point)
 {
-    Vector repulsion = {0,0};
-    Vector repulsion_vector = vector_sub(repulsion_point, a->position);
+    Vector repulsion_vector = vector_sub(a->position, repulsion_point);
     double repulsion_length = vector_length(repulsion_vector);
+	vector_unitise_c(&repulsion_vector, repulsion_length);
 
-    repulsion.x = U * (1/a->radius) * \
-                  (exp(-repulsion_length/a->radius)*\
-                   (a->position.x-repulsion_point.x))/repulsion_length;
-    repulsion.y = U * (1/a->radius) * \
-                  (exp(-repulsion_length/a->radius)*\
-                   (a->position.y-repulsion_point.y))/repulsion_length;
+	double repulsion_force = (1/a->radius) * U * exp(-repulsion_length/a->radius);
 
-    return repulsion;
+	vector_imul(&repulsion_vector, repulsion_force);
+
+    return repulsion_vector;
 }
 
 void update_position(Actor * a)
