@@ -43,7 +43,7 @@ shutil.copy(parameters_file, "%s.parameters" % options.output)
 image_path = os.path.join(options.directory, scenario)
 
 try:
-    os.stat("%s-00001.png")
+    os.stat("%s-00001.png" % image_path)
     ext = "png"
 except OSError:
     ext = "tga"
