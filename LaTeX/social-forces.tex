@@ -13,36 +13,60 @@ is not accidental: both notation and to some extent the interpretation is
 borrowed from physics. 
 
 Since social forces have so much in common with physical forces, it makes 
-sense to go into a bit more detail about what separates the two.
+sense to go into a bit more detail about what separates the two. If a real force between pedestrians where to occur the pedestrians would actually have to touch each other. The social force works on a distance so even though people don't touch they will feel a repulsion. Had it been a real force one would feel a pressure from the force and at one point the pressure could be so high that you could get hurt from it. This makes no sense and will of course never happens in real life as long as people are not touching. So like the name implies the social force is a force that comes from the social behavior of people trying to avoid each other and has should not be confused as an actual force on a pedestrian, since it doesn't make any sense in a real physical context.  We will in a later chapter discuss how we think this model should be interpret, when it is used to describe something real with unreal forces.   
+
 %TODO: Expand on the difference between social and physical forces.
 
 \subsection{Variants of social force models}
+In this sections we will briefly go through the forces that are used in the social force models and mention some of the differences. This we'll do to make an overview of of the social force models and try to explain some things that you could use but is not included in the model that we have base this report on. We will not go into details with the equations a this point but just explain the main idea about how different interactions works. 
+
+The model(\cite{self-org}) that we work with consider people to be circular when calculating the forces. There are basically three different forces on a pedestrian $\alpha$. An attractive force from the desired point that $\alpha$ want to reach, a force directly away from each of the other pedestrians and a force directly away from the nearest point on the each of the surrounding  walls and obstacles. The force from the desired point and the wall are the same no matter the directions of $\alpha$. The force from other pedestrians has two parts, one part that depends on whether the pedestrians are in front or behind $\alpha$ and then one part that is unchanged of the direction of the force. The force from pedestrians(when not looking at the angle) and walls only depends on the distance. 
+
+In some models they also includes tangential forces from pedestrians and walls. Then tangential force from pedestrians is said to be a friction force between pedestrian. The tangential force from the walls means a pedestrian will tend to follow the wall. It is described in \cite{helbing00},  and \cite{HelbingNew}. So it is used both in older and a newer paper than the one we use.
+
+The force from pedestrians are also changed a little so that the whole force is dependent on whether another pedestrian comes in the front or from behind. This they use in \cite{ABconstant}, \cite{HelbingNew} and  \cite{helbing00}. So it is a with the tangential forces, something that has been used from time to time. 
+
+In some variations of the model they also have a more advanced force from other pedestrians. In the advanced form the force from other pedestrians depends on the speed of the pedestrians. This they use in \cite{HelbingNew} and \cite{ABconstant}.  Both are paper newer than the one we use. In \cite{ABconstant} they claim that it gives a better fit when determining constants by making video tracking of real life situations, when they use a speed dependent force rather than using a force that is given by distance alone. 
+
+
+
+
 % TODO: This should contain an overview of the different social force models, 
 % starting with the one we picked to simulate, and explaining briefly how the 
 % others differ. With references for all of them.
 
+
+
 \subsection{Results obtained from the models}
-% TODO: Expand the descriptions so they make sense to a reader that doesn't 
-% know them.
-% Add an introduction detailing the two main scenarios and where they come 
-% from and why they are there.
+In this section we will go through different phenomenons that occurs in different scenarios and then explain the scenarios that we have chosen to simulate. The phenomenons will be interesting since they are easy to compare with the simulation results we get, since they require no independent calculations but can bee seen directly when running the simulations. So we will have an easy measure to see if we are able to get our interpretation of the model to work the same ways as is it presented in the papers. The scenarios that we have chosen to work with are of course based on the situations needed to see the different scenarios. It should be noted that all the phenomenons are mentioned in our main article \cite{self-org}. So it should be possible to reproduce the results from the article using the model they present in the same article. 
 
 \subsubsection{Lane Formation}
-Especially in counterflow situation, pedestrians form lanes of walking 
+Lane formation can be seen in counterflow situation, pedestrians form lanes of walking 
 directions, which is thought as a result of the non-linear body interaction 
-force.
+force. When groups of pedestrians move against each other they will line up behind other pedestrians going in the same direction as themselves and form lines throughout the corridor. This is seen in real life situations and is one of the situations that the model are able to reproduce \cite{self-org}. 
 
-\subsubsection{Oscillatory Flows at Bottlenecks}
-In bidirectional flow situations, each direction takes turns to pass the 
-bottleneck.
 
-\subsubsection{Freezing by Heating Effect}
+
+\subsubsection{Freezing-by-Heating Effect}
 This phenomenon is characterized by a blockage that follows an increasing 
 density. The precondition for this effect is the driving force from desired 
 velocity and actual velocity, while the tangential term from the interaction 
-force is not needed.
+force is not needed. The freezing by heating effect is directly connected to simulations in physics\cite{frebyheat}. It is a  phenomenon that is the opposite of what you would see in a normal microscopic simulation of particles. In physics you would normally expect that when temperature rises in a liquid, i.e. when the particles move faster, then the particles will start reach a transition state a which it becomes a gas. So your density would fall an particles would be able to move more freely around. But in the model presented by \cite{self-org} and more thorough explained in \cite{frebyheat} it doesn't happen like that for the social-force model. What you actually see is that when the particles/pedestrians start to move at a higher speed they will start to blockage each other. That is they will transit to a solid state and the density will rise and they will a some point completely stop moving. This is found to happen  in simulations  with bidirectional flow, like two group
+ s going through a corridor in opposite directions where the pedestrians has a high desired velocity.        
+
+
+\subsubsection{Oscillatory Flows at Bottlenecks}
+This effect also arise in situations of corridors with bidirectional flows. The difference is that the corridor need a bottleneck. The bottleneck makes is impossible for the pedestrians to pass each other the same way as with the lane formations, because at bottleneck they will start to block for each other. So what happens is that people start to slow down and oscillatory flow arises. The oscillatory flow is a flow that for some time will go in one direction through the bottleneck and then at some point it will change and go the other way. The typical way is that a small group of pedestrians will go through  at a time and not so often do you see single individuals passing through. This is seen in real life experiments and should be reproducible by the model \cite{self-org} .
+
+
 
 \subsubsection{Faster-Is-Slower Effect}
 It has been observed in evacuations situations that some process takes more 
-time if it is performed at high speed. In our simulation, in order to see this 
-effect, we need to have the body repulsion and friction force.
+time if it is performed at high speed. This is called the faster-is-slower effect. It comes in situations like when people are trying to leave a place through a door. When people are trying to moving faster than normal they will actually start to move slower through the door. This is according to \cite{self-org} also one of the things that the models captures. When simulations of people leaving a room one should see that the time it takes to empty the room will longer when the desired velocity is big.  In some sense the faster-is-slower effect are the same as the freezing-by-heating effect just in a different scenario. Is does not contains any bidirectional flow and people won't stop completely, but both occurs when the desired speed is growing. 
+
+\subsubsection{The scenarios}
+The scenarios that we will work with is chosen so that we should be able to observe the four different phenomenons that we just went through(Lane formation, freezing-by-heating, oscillatory flows at bottleneck and faster-is-slower). After having gone through the phenomenons, two scenarios seems obvious to work with; People leaving a squared room and a corridor with bidirectional flow. The squared room scenario should make us able to see the faster-is-slower effect. What we will do is that we will measure the exit time pf a certain group of pedestrians and see if, when they move faster, it will take longer to clear the room. The corridor should makes it possible to observe the lane formations and raising the velocity of the pedestrians should at some point allow for the freezing-by-heating effect to occur. For some of the simulations we will include a bottleneck in the corridor and the hopefully we should also start to see the oscillatory flows through the bottleneck. This sho
+ uld makes us able to see if we can recreate the results seen in the literature.   
+
+
+ 
