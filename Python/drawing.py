@@ -21,12 +21,12 @@ COLOURS = [
 class Canvas:
     """Class to manage a canvas and draw objects on it."""
 
-    def __init__(self, width, height, fpedestrian, image_prefix):
+    def __init__(self, width, height, factor, image_prefix):
         pygame.init()
         self.width = width
         self.height = height
         self.screen = pygame.display.set_mode((width, height), 0, 32)
-        self.pixel_fpedestrian = fpedestrian
+        self.pixel_factor = factor
         self.image_prefix = image_prefix
 
         self.target_colours = dict()
@@ -104,8 +104,8 @@ class Canvas:
 
 
     def screen_coords(self, x, y):
-        x *= self.pixel_fpedestrian
-        y *= -self.pixel_fpedestrian
+        x *= self.pixel_factor
+        y *= -self.pixel_factor
 
         shift_w = self.width/2
         shift_h = self.height/2
@@ -116,5 +116,5 @@ class Canvas:
         return (int(x),int(y))
 
     def screen_radius(self, r):
-        return int(r*self.pixel_fpedestrian)
+        return int(r*self.pixel_factor)
 

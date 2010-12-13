@@ -18,7 +18,7 @@ class Scenario:
             'start_areas'        : rectangles pedestrians can spawn in (as quadruplets)
             'velocity_mean'      : mean value for initial pedestrian velocity
             'velocity_deviation' : deviation for initial pedestrian velocity
-            'max_velocity_fpedestrian': max_velocity = initial_velocity * max_velocity_fpedestrian
+            'max_velocity_factor': max_velocity = initial_velocity * max_velocity_factor
             'radius_mean'        : mean value for radii
             'radius_deviation'   : deviation for radii
             'targets'            : list of targets pedestrians should move towards (randomly 
@@ -32,7 +32,7 @@ class Scenario:
             'walls'              : list of wall quadruplets
             'drawing_width'      : width for drawing images
             'drawing_height'     : height for drawing images
-            'pixel-fpedestrian'       : number of pixels pr metre
+            'pixel-factor'       : number of pixels pr metre
             'relax_time'         : relaxation time for pedestrians
             'vary_parameters'    : dictionary of parameter names mapped to a tuple of
                                    interval start, interval end, stepsize for running
@@ -74,7 +74,7 @@ class Scenario:
         self.canvas = Canvas(
                 self.parameters['drawing_width'],
                 self.parameters['drawing_height'],
-                self.parameters['pixel_fpedestrian'],
+                self.parameters['pixel_factor'],
                 os.path.join(constants.image_dir, self.parameters['name']),
                 )
 

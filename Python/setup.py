@@ -63,7 +63,7 @@ def generate_pedestrians(parameters, start_areas, num):
             velocity = (0.0, 0.0),
             time = 0.0,
             relax_time = parameters['relax_time'],
-            max_velocity = velocity * parameters['max_velocity_fpedestrian'],
+            max_velocity = velocity * parameters['max_velocity_factor'],
             target = target,
             radius = radius))
 
