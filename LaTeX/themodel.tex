@@ -175,7 +175,7 @@ expression becomes:
 \end{equation}
 
 $\overline{V}_{\alpha}$ is undefined at $t=0$ beacause that would mean 
-that you should devide by zero, which is undefined. This in turn means 
+that you should divide by zero, which is undefined. This in turn means 
 that $\eta_{\alpha}(0)$ is undefined. We therefore define 
 $V_{\alpha}^{0}(t)$ for $t=0$ and $t>0$ to be the following:
 
@@ -193,8 +193,8 @@ $V_{\alpha}^{0}(t)$ for $t=0$ and $t>0$ to be the following:
 % initial desired velocity.
 
 If we look at the expression for $V_{\alpha}^{0}$ for $t>0$ we can 
-start to analyse how this affects the behavior of the agent. There 
-are three cases that is of interestes, namely $0 < \eta_{\alpha} < 1$, 
+start to analyse how this affects the behaviour of the agent. There 
+are three cases that is of interests, namely $0 < \eta_{\alpha} < 1$, 
 $\eta_{\alpha} < 0$ and $1 < \eta_{\alpha} $.
 
 In the case where $0 \leq \eta_{\alpha} \leq 1$ the expression for 
@@ -309,23 +309,25 @@ In that case, the repulsive force on agent $ \alpha $ from the wall is:
 =-\left( \frac{\partial}{\partial x_{\alpha}}U_{B}( \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \|), \frac{\partial}{\partial y_{\alpha}}U_{B}( \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \|)\right)
 \end{equation}
 
-Calculating the derivatives we use that
-$\| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \|= \sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2}$.
-Inserting this and the expression for $U_{B}$ we get:
+Calculating the derivatives we assume that we now the direction of the force, so the differentiation will be one dimensional
 
 \begin{equation}
 \begin{split}
-\overrightarrow{f_{\alpha B}} \left( \overrightarrow{p_{\alpha}} \right) 
-& =-\left( \frac{\partial}{\partial x_{\alpha}}U^0_{\alpha B} e^{-\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2}/R_{\alpha} }\right. , \\
-& \left. \frac{\partial}{\partial y_{\alpha}}U^0_{\alpha B} e^{-\sqrt{(x_{\alpha}-x^{\alpha}_{B})^2+(y_{\alpha}-y^{\alpha}_B)^2}/R_{\alpha} } \right)
+f_{\alpha B} \left( \overrightarrow{p_{\alpha}} \right) 
+ = -\frac{\partial}{\partial \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \|}U^0_{\alpha B} e^{- \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| / R_{\alpha} }
 \end{split}
 \end{equation}
 
 The differentiation then gives: 
 
-\begin{equation}\label{eqn:wall-repulsion}
-    \overrightarrow{f_{\alpha B}} \left( \overrightarrow{p_{\alpha}} \right) 
-=-\left(U^0_{\alpha B}\frac{1}{R_{\alpha}}\frac{e^{- \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| / R_{\alpha} } (x_{\alpha}-x_B^{\alpha})}{\| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| },U^0_{\alpha B}\frac{1}{R_{\alpha}}\frac{e^{- \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| / R_{\alpha} } (y_{\alpha}-y_B^{\alpha})}{\| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| }\right) \\
+\begin{equation}
+    f_{\alpha B} \left( \overrightarrow{p_{\alpha}} \right) 
+=\frac{1}{R_{\alpha}} U^0_{\alpha B} e^{- \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| / R_{\alpha} }
+\end{equation}
+
+To get the direction of the force, we multiply it with the unit vector of the vector from the wall to $\alpha$ since the force will have the same direction 
+\begin{equation}
+\overrightarrow{f_{\alpha B}}=\frac{1}{R_{\alpha}} U^0_{\alpha B} e^{- \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| / R_{\alpha} }\frac{\left(p_{\alpha x}-p_{Bx}^{\alpha },p_{\alpha y}-p_{By}^{\alpha }\right)}{ \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| }
 \end{equation}
 
 The exponential function will always lay between 0 and  1:
@@ -408,7 +410,7 @@ agent $\alpha$ is moving. Cosine to the angle is
 $\lambda_{\alpha}$ is governing a persons tendency to focus on things happening in front of him 
 rather than behind him. It will have a value  $0\leq \lambda_{\alpha}\leq 1$
 
-A value of $\lambda_{\alpha}=1$ means that the force won't depent on the angle. Thus $\alpha$ will react the same to $\beta$ no matter if $\beta$ is in the front or comes from the side or back. A value of $0$ will on the other hand give the maximum angle depence. We find that $0\leq w\left(\phi_{\alpha \beta}\right)\leq1$ when $-1 \leq \cos \left( \phi \right) \left( t \right) \leq 1$. From this we see that $\alpha$ wont be affected at all if $\beta$ is coming from behind and the force will be maximum when $\beta$ comes directly in the front. It should be noted that in general one will find that the maximum of $w\left(\phi_{\alpha \beta}\right)$ always will be $1$ and the minimum will be equal to $\lambda_{\alpha}$.   
+A value of $\lambda_{\alpha}=1$ means that the force won't depend on the angle. Thus $\alpha$ will react the same to $\beta$ no matter if $\beta$ is in the front or comes from the side or back. A value of $0$ will on the other hand give the maximum angle dependence. We find that $0\leq w\left(\phi_{\alpha \beta}\right)\leq1$ when $-1 \leq \cos \left( \phi \right) \left( t \right) \leq 1$. From this we see that $\alpha$ wont be affected at all if $\beta$ is coming from behind and the force will be maximum when $\beta$ comes directly in the front. It should be noted that in general one will find that the maximum of $w\left(\phi_{\alpha \beta}\right)$ always will be $1$ and the minimum will be equal to $\lambda_{\alpha}$. In very high density calculations $\lambda_{\alpha}$ is often put to $1$, removing $w(\phi_{\alpha \beta})$ and speeding up the simulations.   
 
 % we should make a drawing of this.
 
