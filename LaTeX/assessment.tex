@@ -9,9 +9,10 @@ social force models in general.
 While going through the literature of the field we have noticed a trend in the 
 publications and this will be discussed in section \ref{subsec:development}.
 
-\subsection{Limitation and extensions of the model}
+\subsection{Extensions of the model}
 % TODO: This section should be high-level additions (navigation, 
-% decision-making etc) instead of low-level changes.
+% decision-making etc) instead of low-level changes. It is already high level 
+% but state it explicitly in the beginning.
 There are several limitations the model that we encountered when we started 
 analyse and simulate the model. In this section we discuss some relevant 
 limitations of the model, some of which have been solved by other people in the 
@@ -60,10 +61,28 @@ These features all add up to give a more realistic simulation of crowds
 but do simulation like these teach us anything about why a crowd behaves 
 as it does?
 
+\subsection{Inserting social force concept into classical mechanics}
+\label{subsec:development}
+% Discussion about using physological concepts in the model.
+While searching for articles leading to social force model, we see there is a 
+evolutionary path in transferring physical concepts to describe crowd dynamics.
+
+The success of using fluid dynamics to model traffic problem encourages 
+people to bring the same approach to model crowds. Helbing later improved the  
+model by combining fluid dynamic and gas kinetics concepts\cite{social-force}. 
+
+However, in order to add the self-organized feature into account, it is necessary 
+to use the agent-based concept.  At the same time, use certain quantity to measure
+the desire of each agent, and the social force model transfer the "social force" into 
+the calculation in the actual acceleration, which may arise problems because many laws 
+in physics does not apply in this model as the social force is not a real 
+physical force.
+
 \subsection{Comments on the state of the social force models}
 %-take a step back, discuss the model in general terms
 %-is social force a good way to discuss this
 % This stuff in this discussion should hold even if the model had all the features listed in the first subsection.
+% Add the stuff about the parameter. Do we need to tweek the paramaters each time.
 At this point we have got some understanding of the social force model, and 
 also given our opinion about the limitation of the model. We think it is 
 reasonable to consider what, if anything, the social force models have taught 
@@ -86,22 +105,8 @@ predict quantative behavior of the crowd such as flow rate. Therefore there
 is nothing wrong with using the model to guide the construction of malls, airports 
 and other location where crowds gather.
 
-\subsection{Comments on the development of the social force models}
-\label{subsec:development}
-%-incomplete description, inherent in types of paper
-While searching for articles leading to social force model, we see there is a 
-evolutionary path in transferring physical concepts to describe crowd dynamics.
-
-The success of using fluid dynamics to model traffic problem encourages 
-people to bring the same approach to model crowds. Helbing later improved the  
-model by combining fluid dynamic and gas kinetics concepts\cite{social-force}. 
-
-However, in order to add the self-organized feature into account, it is necessary 
-to use the agent-based concept.  At the same time, use certain quantity to measure
-the desire of each agent, and the social force model transfer the "social force" into 
-the calculation in the actual acceleration, which may arise problems because many laws 
-in physics does not apply in this model. 
-
-This approach of building on earlier models is apparent when reading through the 
-literature. One article does rarely contain all the information needed to replicate 
-the results given in the article.
+% \subsubsection{Articles} TODO: Wriggle this into the introduction.
+% %-incomplete description, inherent in types of paper
+% This approach of building on earlier models is apparent when reading through the 
+% literature. One article does rarely contain all the information needed to replicate 
+% the results given in the article.
