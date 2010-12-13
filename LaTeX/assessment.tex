@@ -3,11 +3,11 @@
 In this section we first discuss the limitations of the social force models 
 that we have worked with. These limitation differ from the ones outlined in 
 section \ref{sec:lack} and \ref{sec:discrepancies} in the way that 
-they are not features that are needed to replecate the results from the article, 
-but are extensions to the model. 
+they are not features that are needed to replicate the results from the articles, 
+but are extensions to the model. We then move on to comment on the status of 
+social force models in general.
 While going through the literature of the field we have noticed a trend in the 
-publications and this will be discussed in section \ref{subsec:development}. 
-We then move on to comment on the status of social force models in general.
+publications and this will be discussed in section \ref{subsec:development}.
 
 \subsection{Limitation and extensions of the model}
 There are several limitations the model that we encountered when we started 
@@ -21,14 +21,14 @@ the agents can be increased by incoorporating a series of features such as
 \emph{path finding} and \emph{communication between agents}. 
 
 In real panic situations one could expect to see a series of events that our 
-model is incapable of simulating. Such as people \emph{falling} or showing a 
-\emph{herding behavior}.
+model is incapable of simulating. Events such as people \emph{falling} or showing a 
+\emph{herding behavior}. We will discuss these features one at a time.
 
 \subsubsection{Path finding}
 In our model the agents do not have path finding, which means that the model 
-can not simulate a escapes of complex environment with a lot of rooms 
+can not simulate people escaping a complex environment with a lot of rooms 
 and corridors. A example of a social force model with pathfinding is the HiDAC 
-model \cite{HiDAC}.
+model\cite{HiDAC}.
 
 \subsubsection{Communication between agents}
 In real panic situations it is not hard to imagine people communication with 
@@ -37,18 +37,16 @@ not something that our model is capable of. For a model with communication betwe
 agents see \cite{HiDAC}.
 
 \subsubsection{Lowered visibility}
-At the moment we can not simulate a case where the visibility is very low. The 
-agents have a way point to follow, but if the visibility only is 1 meter, e. 
-g. in a smoke filled room, the  agents would not have way point to follow, and 
-hence round around with out purpose. Here the tangential forces would also 
-help the agent to find the exit, but navigation through the tangential force 
-from the walls. %find reference
+At the moment we can not simulate a situations where the visibility is very low 
+e.g. a room filled with smoke. In the model we have worked with The agents always 
+have a waypoint to steer towards, but if the visibility only is 1 meter the 
+agents can not necessarily see the waypoint. %TODO: find reference
 
-\subsubsection{Falling}
-In \cite{HiDAC} people have the ability fall in panic situations and become 
-obstacles for other people, which is not a feature this model deals with. In 
-our model none of the agents fall and become an obstacles for other agents as 
-would be seen in real life panic situations.
+\subsubsection{Falling and injuries}
+In situations of crowd panic people are often injured. This is either due to the 
+enormous pressure that can built up in the crowd or due to people falling. Our 
+does not take into account these possibilities. In the HiDAC model people can 
+be injured and even fall and become obstacles for other pedestrians.\cite{HiDAC}
 
 \subsubsection{Herding}
 Other models take into account herding behavior between the agents  
@@ -56,27 +54,9 @@ Other models take into account herding behavior between the agents
 while other agents have a tendency to go their own way,  and by doing so 
 explore the environment for possible exits.
 
-\subsection{Comments on the development of the social force models}
-\label{subsec:development}
-%-incomplete description, inherent in types of paper
-While searching for articles leading to social force model, we see there is a 
-evolutionary path in transferring physical concepts to describe crowd dynamics.
-
-The success of using fluid dynamics thoughts to model traffic problem encourages 
-people to bring the same measurement to model crowd. Later, Helbing improves that 
-way by combining the fluid dynamic and gas kinetics concepts \cite{social-force}. 
-
-% However, in order to add the self-organized feature into account, it is necessary 
-% to use the agent-based concept.  At the same time, use certain quantity to measure 
-% the desire of each agent, and the social force model transfer the "social force" into 
-% the calculation in the actual acceleration, which may arise problems because many laws 
-% in physics does not apply in this model. 
-
-There is a common feature of the social force model articles, that the method for 
-justifying the model is mostly by comparing with observations. It is not 
-similar with many cases in classical mechanics, when talking of forces people 
-always evaluate energy and momentum, but it is not possible when we have 
-the social force involved.
+These features all add up to give a more realistic simulation of crowds 
+but do simulation like these teach us anything about why a crowd behaves 
+as it does?
 
 \subsection{Comments on the state of the social force models}
 %-take a step back, discuss the model in general terms
@@ -103,3 +83,23 @@ mechanics of a crowd of pedestrians but they can be used to successfully
 predict quantative behavior of the crowd such as  flow rate. Therefore there 
 is nothing wrong with using the model to guide the construction of malls, airports 
 and other location where crowds gather.
+
+\subsection{Comments on the development of the social force models}
+\label{subsec:development}
+%-incomplete description, inherent in types of paper
+While searching for articles leading to social force model, we see there is a 
+evolutionary path in transferring physical concepts to describe crowd dynamics.
+
+The success of using fluid dynamics to model traffic problem encourages 
+people to bring the same approach to model crowds. Helbing later improved the  
+model by combining fluid dynamic and gas kinetics concepts\cite{social-force}. 
+
+However, in order to add the self-organized feature into account, it is necessary 
+to use the agent-based concept.  At the same time, use certain quantity to measure
+the desire of each agent, and the social force model transfer the "social force" into 
+the calculation in the actual acceleration, which may arise problems because many laws 
+in physics does not apply in this model. 
+
+This approach of building on earlier models is apparent when reading through the 
+literature. One article does rarely contain all the information needed to replicate 
+the results given in the article.
