@@ -1,5 +1,5 @@
 % vim:ft=tex
-\documentclass[a4paper,11pt]{scrartcl}
+\documentclass[a4paper,11pt,twoside]{scrartcl}
 \usepackage{tohojo-xe}
 %\selectlanguage{english}
 \setcounter{secnumdepth}{3}
@@ -7,13 +7,27 @@
 \hypersetup{pdfauthor={Toke Høiland-Jørgensen, Mikkel Hartmann, Dan 
 Albrechtsen, Malik Thrane, Troels Christensen, Wence Xiao}, pdftitle={Crowd 
 modelling}}
-
 \title{Crowd modelling}
 \author{Toke Høiland-Jørgensen, Mikkel Hartmann, Dan Albrechtsen, Malik 
 Thrane, Troels Christensen, Wence Xiao}
 \date{2010-09-12}
 \fancyhead[OR,EL]{\footnotesize Draft: \timestamp}
 %\type{}
+
+
+\definecolor{Brown}{cmyk}{0,0.81,1,0.60}
+\definecolor{OliveGreen}{cmyk}{0.64,0,0.95,0.40}
+\definecolor{CadetBlue}{cmyk}{0.62,0.57,0.23,0}
+
+\lstset{language=C, basicstyle=\footnotesize, showstringspaces=false,
+ keywordstyle=\ttfamily\color{OliveGreen},
+ identifierstyle=\ttfamily\color{CadetBlue}\bfseries,
+ commentstyle=\color{Brown},
+ stringstyle=\ttfamily,
+ numbers=left, stepnumber=5,
+% captionpos=b,
+ tabsize=4, frame=tb,
+ morekeywords={Vector, Actor}}
 \begin{document}
 
 \begin{titlepage}
@@ -21,7 +35,6 @@ Thrane, Troels Christensen, Wence Xiao}
         {\Huge \sffamily \textbf{Crowd modelling\\[2cm]
         }}\includegraphics[width=10cm]{Figures/Frontpage}
         \\[2cm]
-
         {\large Toke Høiland-Jørgensen \\
         Mikkel Hartmann\\
         Dan Albrechtsen\\
@@ -29,23 +42,18 @@ Thrane, Troels Christensen, Wence Xiao}
         Troels Christensen\\
         Wence Xiao\\
         [0.5cm] }
-
         {\small \textbf{\textsf{Advisor}}\\
         Viggo Andreasen}
         \vfill
         \textsf{Modelling project, fall 2010\\
         Mathematics RUC}
 	\end{center}
-
     \clearpage
 %    \input{abstract}
 \end{titlepage}
-
 \tableofcontents
 \listoffigures
-
 \clearpage
-
 \input{introduction}
 \clearpage
 \input{social-forces}
@@ -67,5 +75,4 @@ Thrane, Troels Christensen, Wence Xiao}
 \bibliographystyle{ruc}
 \bibliography{crowd-modelling}
 \clearpage
-
 \end{document}
