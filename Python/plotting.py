@@ -132,8 +132,14 @@ class Plots:
         return fig
 
     def _flowrate_plot(self):
-        fig = self._create_plot("Flow rate", "t", "pedestrians/second")
-        plt.plot(self.t_values, self.flowrates, label='aggregate flowrate')
+        # Convert flowrate graph into a moving average
+        average_count = int(round(constants.flowrate_moving_avg / constants.plot_sample_frequency))
+        flowrates = []
+        for i in xrange(len(self.flowrates)):
+            start = max(0, i-average_count)
+            flowrates.append(np.average(self.flowrates[start:i+1]))
+        fig = self._create_plot("Flow rate (%.1f second average)" % constants.flowrate_moving_avg, "t", "pedestrians/second")
+        plt.plot(self.t_values, flowrates, label="flow rate" )
         self._annotate_plot(fig)
         return fig
 

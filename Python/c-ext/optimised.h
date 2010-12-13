@@ -53,6 +53,7 @@ static PyObject * update_pedestrians(PyObject * self, PyObject * args);
 static PyObject * add_pedestrian(PyObject * self, PyObject * args);
 static PyObject * a_property(PyObject * self, PyObject * args);
 static PyObject * set_parameters(PyObject * self, PyObject * args);
+static PyObject * flow_count(PyObject * self, PyObject * args);
 static Pedestrian pedestrian_from_pyobject(PyObject * o, Pedestrian * a);
 static Py_ssize_t ssize_t_from_attribute(PyObject * o, char * name);
 static double double_from_attribute(PyObject * o, char * name);

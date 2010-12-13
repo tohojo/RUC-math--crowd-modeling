@@ -12,6 +12,8 @@ static Wall * walls;
 static Py_ssize_t a_count;
 static Py_ssize_t w_count;
 
+static Py_ssize_t new_flow_c;
+
 static PyObject * module_dict;
 
 void calculate_forces(Py_ssize_t i)
@@ -196,6 +198,7 @@ void update_position(Pedestrian * a)
         if(vector_projection_distance(
 					flowline[0], flowline[1], a->position) < a->radius) {
 			a->flowline_time = a->time;
+			new_flow_c += 1;
 		}
 	}
 }
@@ -248,6 +251,15 @@ static PyObject * add_pedestrian(PyObject * self, PyObject * args)
 	pedestrian_from_pyobject(p_pedestrian, &pedestrians[i]);
 
     Py_RETURN_NONE;
+}
+
+static PyObject * flow_count(PyObject * self, PyObject * args)
+{
+	PyObject * f_c;
+
+	f_c = PyInt_FromSsize_t(new_flow_c);
+	new_flow_c = 0;
+	return f_c;
 }
 
 static PyObject * a_property(PyObject * self, PyObject * args)
@@ -444,6 +456,8 @@ static PyMethodDef OptimisedMethods[] = {
         "Add an pedestrian to the list"},
     {"a_property", a_property, METH_VARARGS, 
         "Get a property for an pedestrian"},
+    {"flow_count", flow_count, METH_VARARGS, 
+        "Get number of pedestrians that have passed the flow line since last polled"},
     {"set_parameters", set_parameters, METH_VARARGS, 
         "Set simulation parameters"},
 };
@@ -456,12 +470,13 @@ PyMODINIT_FUNC initoptimised(void)
     m = Py_InitModule("optimised", OptimisedMethods);
     module_dict = PyModule_GetDict(m);
 
-    a_count  = -1;
-    pedestrians   = NULL;
-    A        = 0;
-    B        = 0;
-    lambda   = 0;
-    timestep = 0;
+    a_count     = -1;
+    pedestrians = NULL;
+    A           = 0;
+    B           = 0;
+    lambda      = 0;
+    timestep    = 0;
+    new_flow_c  = 0;
 
 	update_a_count(0);
 

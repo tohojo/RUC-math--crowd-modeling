@@ -32,7 +32,7 @@ class Scenario:
             'walls'              : list of wall quadruplets
             'drawing_width'      : width for drawing images
             'drawing_height'     : height for drawing images
-            'pixel-factor'       : number of pixels pr metre
+            'pixel_factor'       : number of pixels pr metre
             'relax_time'         : relaxation time for pedestrians
             'vary_parameters'    : dictionary of parameter names mapped to a tuple of
                                    interval start, interval end, stepsize for running
@@ -117,7 +117,6 @@ class Scenario:
         density_c = 0
         density = 0.0
         density_area = (y2-y1)*(x2-x1)
-        flow_count = 0
         velocities = list()
         for i in xrange(optimised.a_count):
             (x,y) = optimised.a_property(i, "position")
@@ -125,14 +124,11 @@ class Scenario:
             velocities.append(optimised.a_property(i, "velocity"))
             if x+r >= x1 and x-r <= x2 and y+r >= y1 and y-r <= y2:
                 density_c += 1
-            if optimised.a_property(i, "flowline_time") > 0:
-                flow_count += 1
+
+        flow_count = optimised.flow_count()
+        flowrate = flow_count/constants.plot_sample_frequency
 
         density = density_c / density_area
-        if self.time > 0:
-            flowrate = flow_count/self.time
-        else:
-            flowrate = 0.0
         self.plots.add_sample(self.time, 
                 density=density,
                 velocities=velocities, 
