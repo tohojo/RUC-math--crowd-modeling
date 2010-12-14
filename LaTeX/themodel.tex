@@ -62,15 +62,15 @@ the sum of the three main forces.
 
 \begin{equation}\label{model}
     \overrightarrow{f_{\alpha}} = \overrightarrow{f^{d}_{\alpha}} +
-    \sum_{\gamma} \overrightarrow{f_{\alpha \gamma}} +
-    \sum_{\beta \neq \alpha} \overrightarrow{f_{\alpha \beta}}
+    \sum_{\beta \neq \alpha} \overrightarrow{f_{\alpha \beta}} +
+    \sum_{\gamma} \overrightarrow{f_{\alpha \gamma}}
 \end{equation}
 
-Here $\overrightarrow{f_{\alpha}^{d}}$ is the desired force, 
-$\overrightarrow{f_{\alpha \gamma}}$ is the repulsive force from wall $\gamma$ 
-and $\overrightarrow{f_{\alpha \beta}}$ is the repulsive force from pedestrian 
-$\beta$. The main forces are summarised in table~\ref{tbl:main-forces} and 
-will be described in detail in the following sections.
+Here $\overrightarrow{f_{\alpha}^{d}}$ is the desired force,  
+$\overrightarrow{f_{\alpha \beta}}$ is the repulsive force from pedestrian 
+$\beta$ and $\overrightarrow{f_{\alpha \gamma}}$ is the repulsive force from 
+wall $\gamma$. The main forces are summarised in table~\ref{tbl:main-forces} 
+and will be described in detail in the following sections.
 
 \begin{table}[h]
     \centering
@@ -78,10 +78,10 @@ will be described in detail in the following sections.
         \toprule
         \multicolumn{2}{c}{\textsf{Main forces}}\\
         $\overrightarrow{f_{\alpha}^{d}}$ & Desired force\\
-        $\overrightarrow{f_{\alpha \gamma}}$ & Repulsive force from wall 
-        $\gamma$\\
         $\overrightarrow{f_{\alpha \beta}}$ & Repulsive force from pedestrian 
         $\beta$\\
+        $\overrightarrow{f_{\alpha \gamma}}$ & Repulsive force from wall 
+        $\gamma$\\
         \midrule
         \multicolumn{2}{c}{\textsf{Base notation}}\\
         $\overrightarrow{p_{\alpha}}$ & Position vector of pedestrian 
