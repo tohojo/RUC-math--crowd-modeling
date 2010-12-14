@@ -5,7 +5,7 @@ from scenario import Scenario
 scenarios = {
         'square_room': Scenario({
             'name'               : 'square_room',
-            'A'                  : 2.2,
+            'A'                  : 9.0,
             'B'                  : 0.2,
             'U'                  : 2.0,
             'lambda'             : 0.1,
