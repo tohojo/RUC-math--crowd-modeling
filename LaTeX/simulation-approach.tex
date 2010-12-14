@@ -202,10 +202,10 @@ void add_repulsion(Pedestrian * a, Pedestrian * b)
     if(!A || !B) return;
     Vector repulsion = calculate_repulsion(a, b, A, B);
 	if(a->velocity.x && a->velocity.y && lambda < 1.0) {
-		Vector from_b = vector_sub(b->position, a->position);
+		Vector from_a = vector_sub(b->position, a->position);
 
-		double cosine = vector_dot(a->velocity, from_b)/(
-				vector_length(a->velocity) * vector_length(from_b));
+		double cosine = vector_dot(a->velocity, from_a)/(
+				vector_length(a->velocity) * vector_length(from_a));
 
 		vector_imul(&repulsion, (lambda + (1-lambda)*((1+cosine)/2)));
 	}
