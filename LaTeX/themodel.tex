@@ -24,7 +24,6 @@ they are calculated. Since the notation used in the article is ambiguous and
 confusing, we introduce our own notation in an attempt to make it clearer. We 
 will not refer to the original notation, but only use our own.
 
-
 In the model, a pedestrian is represented by a circle with a centre, a radius 
 and a current velocity. Walls are represented as line segments. The desired 
 direction is represented by assigning to each pedestrian a target to move 
@@ -77,14 +76,21 @@ will be described in detail in the following sections.
     \centering
     \begin{tabular}{l l}
         \toprule
-        $\overrightarrow{f_{\alpha}^{d}}$ & the desired force\\
-        $\overrightarrow{f_{\alpha \gamma}}$ & the repulsive force from wall 
+        \multicolumn{2}{c}{\textsf{Main forces}}\\
+        $\overrightarrow{f_{\alpha}^{d}}$ & Desired force\\
+        $\overrightarrow{f_{\alpha \gamma}}$ & Repulsive force from wall 
         $\gamma$\\
-        $\overrightarrow{f_{\alpha \beta}}$ & the repulsion from pedestrian 
+        $\overrightarrow{f_{\alpha \beta}}$ & Repulsive force from pedestrian 
         $\beta$\\
+        \midrule
+        \multicolumn{2}{c}{\textsf{Base notation}}\\
+        $\overrightarrow{p_{\alpha}}$ & Position vector of pedestrian 
+        $\alpha$\\
+        $\overrightarrow{V_{\alpha}}$ & Velocity of pedestrian $\alpha$\\
+        $R_\alpha$ & Radius of pedestrian $\alpha$\\
         \bottomrule
     \end{tabular}
-    \caption{Summary of main forces.}
+    \caption{Summary of main forces and base notation.}
     \label{tbl:main-forces}
 \end{table}
 
@@ -96,17 +102,19 @@ pedestrian, if unhindered, will move towards its target at an initial desired
 speed that is given as a model parameter. The desired force is a velocity 
 dependent force given by:
 
-\begin{equation}\label{relaxtime}
+\begin{equation}\label{eqn:desired-force}
 	\overrightarrow{f^{d}_{\alpha}} (t) =
     \frac{1}{\tau}
     \left( V_{\alpha}^{d}(t) \overrightarrow{e_{\alpha}} - 
     \overrightarrow{V_{\alpha}}(t) \right)
 \end{equation}
 
-Here $V_{\alpha}^{d}(t)$ is the desired speed at time $t$, $\overrightarrow{e_{\alpha}}$ is 
-the unit vector pointing towards the pedestrians target and  
-$\overrightarrow{V_{\alpha}}(t)$ is the actual velocity of the pedestrian at 
-time $t$.
+Here $V_{\alpha}^{d}(t)$ is the desired speed at time $t$, 
+$\overrightarrow{e_{\alpha}}$ is the unit vector pointing towards the 
+pedestrian's target and  $\overrightarrow{V_{\alpha}}(t)$ is the actual 
+velocity of the pedestrian at time $t$. It is not clear from the what the 
+initial velocity of the pedestrians is (i.e. $\overrightarrow{V_\alpha}(0)$). 
+In our simulations we set it to be zero.
 
 $\tau$ is the \emph{relaxation time} and determines how fast a pedestrian 
 returns to its desired velocity after having been walking slower because of 
@@ -117,18 +125,18 @@ practice, $\tau$ is the same for all pedestrians in the simulation.
 $V_{\alpha}^{d}(t)$ is the desired speed of the pedestrian. The desired speed 
 can vary over time and is given by:
 
-\begin{equation}\label{desired-speed}
+\begin{equation}\label{eqn:desired-speed}
     V_{\alpha}^{d}(t) = \left[ 1 - \eta_{\alpha}(t) \right] 
     V_{\alpha}^{Id} +
     \eta_{\alpha}(t) V_{\alpha}^{\text{max}}
 \end{equation}
 
-Here $V_{\alpha}^{Id}$ is the \emph{initial desired speed} (a model parameter), 
-and $V_{\alpha}^{\text{max}}$ is the \emph{maximum desired speed} of 
-pedestrian $\alpha$. The maximum desired speed is given as a parameter and is 
-a linear function of the initial desired speed for pedestrian $\alpha$. This 
-speed is the maximum speed the pedestrian will try to accelerate to when 
-compensating for slowing down because of obstacles.
+Here $V_{\alpha}^{Id}$ is the \emph{initial desired speed} (a model 
+parameter), and $V_{\alpha}^{\text{max}}$ is the \emph{maximum desired speed} 
+of pedestrian $\alpha$. The maximum desired speed is given as a parameter and 
+is given as a function of the initial desired speed by multiplying with a 
+factor larger than one. This speed is the maximum speed the pedestrian will 
+try to accelerate to when compensating for slowing down because of obstacles.
 
 The value $\eta_{\alpha}(t)$ is called the \emph{impatience factor} of the 
 pedestrian and is given by:
@@ -173,67 +181,55 @@ is defined as follows:
     \end{array} \right.
 \end{equation}
 
-Analysing equation~\eqref{eqn:impatience}, it is clear that the impatience 
-factor is between zero and one as long as the average velocity is positive and 
-less than the initial desired velocity. 
+Analysing equations~\eqref{eqn:desired-speed} and \eqref{eqn:impatience}, it 
+is clear that as the average speed approaches $V^{Id}_\alpha$ so does the 
+desired speed, since $\eta_\alpha(t)\rightarrow0$ for $\langle V_\alpha(t) 
+\rangle \rightarrow V^{Id}_\alpha$ which makes $V^d_\alpha(t)$ be dominated by 
+$V^{Id}_\alpha$.  
 
-If we look at the expression for $V_{\alpha}^{0}$ for $t>0$ we can 
-start to analyse how this affects the behaviour of the pedestrian. There 
-are three cases that is of interests, namely $0 < \eta_{\alpha} < 1$, 
-$\eta_{\alpha} < 0$ and $1 < \eta_{\alpha} $.
 
-In the case where $0 \leq \eta_{\alpha} \leq 1$ the expression for 
-$V_{\alpha}^{0} \left( t \right)$ makes a lot of sense. Here we can see why this term 
-is called the impatience of the pedestrian. If the fraction  between the average 
-speed in the desired direction and the initial desired speed is low then 
-$\eta_{\alpha} \approx 1$. 
-When the impatience term is close to one $V_{\alpha}^{0} \left( t \right)$ is 
-dominated by $V_{\alpha}^{\text{max}}$. That is, if the pedestrian have not moved 
-very far in the desired direction compared to the initial speed the impatience 
-of the pedestrian will cause the pedestrian's future velocity to be dominated by the 
-maximum desired velocity of the pedestrian. 
-If the pedestrian has been moving in the desired direction with his initial speed 
-the entire time then $\eta_{\alpha} = 0$  and $V_{\alpha}^{0} \left( t 
-\right)$ will continue to be $V_{\alpha}^{0} \left( 0 \right)$. 
+If $\eta_\alpha(t)$ is considered as a function of the average velocity 
+instead of the time, it is monotonously decreasing. This means that 
+$V^d_\alpha(t)$ considered as a function of the average velocity is 
+monotonously decreasing if $V^{\text{max}}_\alpha > V^{Id}_\alpha$, 
+monotonously increasing if $V^{\text{max}}_\alpha < V^{Id}_\alpha$, and 
+constant if $V^{\text{max}}_\alpha = V^{Id}_\alpha$. This function also has 
+the property that $V^d_\alpha(t)=V^{Id}_\alpha$ when $\langle V_\alpha(t) 
+\rangle = V^{Id}_\alpha$.
 
-However in the case where $\eta_{\alpha} < 0$, that is the pedestrian has moved 
-further in the desired direction than he would have had he been walking with his 
-initial speed. This can happen in situations where then pedestrian is being pushed 
-forward forward by the crowd.
+Since $V^{\text{max}}_\alpha$ is set to be larger than $V^{Id}_\alpha$, this 
+means that as the average speed goes up, the desired speed goes down.  When 
+the desired speed is lower than the actual speed, this will result in a 
+negative desired force due to~\eqref{eqn:desired-force}, and vice versa. The 
+end result is that the desired force will act as a stabilising force, that 
+accelerates the pedestrian when it's moving slower than its desired speed, and 
+decelerate it when it's moving faster, but allowing for movement of up to the 
+maximum desired speed to ``make up'' for lost time if the pedestrian has been 
+slowed down by the other forces acting on it.
 
-In the case where $1 < \eta_{\alpha}$ that is the pedestrian has moved further 
-in the opposite direction than the desired one. Then can happen if the pedestrian 
-starts out by being very close to another pedestrian. However this is not something 
-that we think will happen very often. In any circumstances it will only have an 
-effect very early in the simulation. 
+The components of the desired force are summarised in 
+table~\ref{tbl:desired-force}.
 
-We see that desired force is mainly controlled by the two parameters $V_{\alpha}^{0} (0)$, 
-$V_{\alpha}^{\text{max}}$ and $\overline{V_{\alpha}}$.
+\begin{table}[h]
+    \centering
+    \begin{tabular}{l l}
+        \toprule
+        \multicolumn{2}{c}{\textsf{Parameters of the desired force}}\\
+        $\overrightarrow{V_{\alpha}}(t)$ & Velocity of pedestrian $\alpha$ 
+        at time $t$\\
+        $V_{\alpha}^{d}(t)$ & Desired speed of pedestrian $\alpha$ at time 
+        $t$\\
+        $V_{\alpha}^{Id}$ & Initial desired speed of pedestrian $\alpha$ \\
+        $\langle V_{\alpha}(t) \rangle$ & Average speed of pedestrian 
+        $\alpha$ \\
+        $\tau$& Relaxation time \\
+        \bottomrule
+    \end{tabular}
+    \caption{Summary of parameters of the desired force}
+    \label{tbl:desired-force}
+\end{table}
 
-This concludes the explanation of the first of the four physical forces. The next 
-force in the equation is the repulsive force from the walls.
-
-\begin{center}
-\begin{tabular}{lll}
-\hline
-$\overrightarrow{V_{\alpha}}$ & The actual velocity of pedestrian alpha &\\
-\hline
-$V_{\alpha}^{0}(t)$ & The desired speed of pedestrian alpha &\\
-\hline
-$V_{\alpha}^{0}(0)$ & The initial desired speed of pedestrian alpha &\\
-\hline
-$\overline{V_{\alpha}(t)}$ & The average speed of pedestrian alpha &\\
-\hline
-$\overrightarrow{p_{\alpha}}$ & The position vector of pedestrian alpha\\
-\hline
-$e_{\alpha}$& The desired direction of pedestrian alpha\\
-\hline
-$\tau$& The relaxation time &\\
-\hline
-\end{tabular}
-\end{center}
-
-\subsection{Repulsion from other pedestrians}
+\subsection{Repulsion from other pedestrians}\label{seq:repulsion-pedestrians}
 The third term on the right hand side of equation \eqref{model} is a summation of all the 
 force between pedestrian $\alpha$ and pedestrian $\beta$. The equation we use is taken from a newer article \cite{ABconstant}. We did this because the original article contains two constants that is not given in the articel and in a mail we were adviced, by the authors, to use the values and equation from the new article. 
 
@@ -373,7 +369,7 @@ $B_{\alpha}$& Parameter controlling the range of the repulsive interaction  \\
 \end{tabular}
 \end{center}
 
-\subsection{Repulsion from the walls}
+\subsection{Repulsion from the walls}\label{seq:repulsion-walls}
 The second term on the right hand side of equation \eqref{model} is a force which 
 arise from interactions with the walls or other obstacles. It is given by:
 
