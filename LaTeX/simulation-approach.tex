@@ -113,8 +113,8 @@ in the following. The code calling the other parts of the calculation can be
 seen in code segment~\ref{lst:calling}. This function is called once for each 
 pedestrian (index \texttt{i}) for each simulation step.
 
-\begin{lstlisting}[caption={Code calling the other parts of the 
-    calculation.},label=lst:calling]
+\begin{lstlisting}[caption={Main function calling the other parts of the 
+    calculation code.},label=lst:calling]
 void calculate_forces(Py_ssize_t i)
 {
     int j;
@@ -141,7 +141,7 @@ copying them around in different places of the computer's memory. This gives
 rise to the constructs around the \texttt{vector\_i*}-functions in the code; 
 here the \emph{i} stands for ``in place''.
 
-\begin{lstlisting}[caption={Code for calculating the desired 
+\begin{lstlisting}[caption={Calculating the desired 
     force.},label=lst:desired-force]
 static void add_desired_acceleration(Pedestrian * a)
 {
@@ -224,7 +224,7 @@ point. This calculation corresponds to equation~\eqref{eqn:wall-repulsion}.
 
 % TODO: Change this code to match the changed way of doing stuff.
 
-\begin{lstlisting}[caption={Code to calculate the repulsion from the 
+\begin{lstlisting}[caption={Calculating the repulsion from the 
     walls.},label=lst:wall-repulsion]
 void add_wall_repulsion(Pedestrian * a)
 {
@@ -272,7 +272,7 @@ repulsion points if they are either not free-floating (i.e. shared with
 another wall), or closer to the pedestrian centre than the pedestrian's radius. This 
 ensures that doorways to not repulse pedestrians that are passing through it.
 
-\begin{lstlisting}[caption={Code for finding the wall repulsion 
+\begin{lstlisting}[caption={Finding the wall repulsion 
     points.},label=lst:repulsion-points]
 int find_repultion_points(Pedestrian * a, Vector repulsion_points[])
 {
@@ -361,7 +361,7 @@ does this is seen in code segment~\ref{lst:update-position}. Lines 14-19 are
 related to the measuring of data for plotting, and will be explained in 
 section~\ref{sec:measurement}.
 
-\begin{lstlisting}[caption={Code updating the pedestrian 
+\begin{lstlisting}[caption={Updating the pedestrian 
     position.},label=lst:update-position]
 void update_position(Pedestrian * a)
 {
