@@ -15,6 +15,7 @@ typedef struct {
     double relax_time;
 	double flowline_time;
     Vector position;
+	Vector prev_position;
     Vector initial_position;
     Vector target;
     Vector velocity;
