@@ -248,7 +248,9 @@ vary between the pedestrians, but are fixed for the whole simulation. They are:
     \item \textbf{$A$, $B$:} These values are given in \cite{ABconstant}. 
         Although the model allows for them to vary between pedestrians, we have 
         (just as is done in the article) set them to a fixed value for the 
-        whole simulation. The values given are $A_2=3,0$ and $B_2 = 0,2$.
+        whole simulation. The values given are $A_2=3,0$ and $B_2 = 0,2$. However, 
+        we need to adjust the values to make the pedestrians behave like in reality 
+        when the mean velocity of pedestrians is changed.
 
     \item \textbf{$ U^{0} $:} While calculating the wall repulsive force, a potential
         constant $ U^{0} $ is needed to get the force. Though it will be realistic to 
@@ -259,3 +261,6 @@ vary between the pedestrians, but are fixed for the whole simulation. They are:
  
 \end{itemize}
 
+Above we have made some compliments to the model, setting up constants and 
+design details in calculation that is not shown in the model, and then we are able to  
+show our own simulation in the following section.
