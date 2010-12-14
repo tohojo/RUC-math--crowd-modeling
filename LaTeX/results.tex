@@ -1,33 +1,33 @@
 \section{Results}
 \label{sec:results}
-
-In this section we describe the results obtained from our simulations. We have 
-simulated two scenarios: A square room the pedestrians exit from, and a 
-corridor where pedestrians walk along the corridor from both ends, meeting in 
-the middle. For each scenario we describe the parameters we have set for the 
-scenario, which features we found worth measuring for this scenario, the 
-results we expected, and the results we obtained. Possible remedies for any 
-discrepancies between the expected and the actual results are discussed in 
-section~\ref{sec:discrepancies}.
+In this section we describe the results obtained from our simulations. We have simulated two scenarios: A square room where the pedestrians exit throw a single door, and pedestrians walking throw a corridor where there is a bidirectional flow. For each scenario we describe the parameters we have set for the scenario, which features we found worth measuring for this scenario, the results we expected, and the results we obtained. Possible remedies for any discrepancies between the expected and the actual results are discussed in section~\ref{sec:discrepancies}.
 
 \subsection{The square room scenario}
-In this scenario we simulate pedestrians leaving a square room of 10 m by 10 m 
-with one exit with a width of 1 m in the middle of one of the walls. 100 
-pedestrians start out spread out throughout the whole room, and head for the 
-same exit. Pedestrian flow rate is measure in the door opening, and the 
-density of pedestrians in a 2 m by 2 m area directly in front of the door is 
-measured. We also measure the time it takes for all pedestrians to leave the room.
-
-The parameters for this simulation are as follows:
-
+In this scenario we simulate pedestrians leaving a square room of 10 m by 10 m with a single $80cm$ wide door. 100 pedestrians are positioned randomly throughout the room. The second the simulation start all pedestrians head for the exit. The parameters for this simulation are as follows:
 \begin{itemize*}
     \item $A: 2,2$, $B: 0,2$, $U: 2.0$, $\lambda: 0,1$.
-    \item Mean desired velocity: $1,34 m/s$, deviation $0,26 m/s$. Max 
-        velocity fpedestrian $1,3$.
-    \item Radius mean $0,2 m$, deviation $0,01 m$.
+    \item Mean desired velocity: $1,34 m/s$, deviation $0,26 m/s$. Max velocity factor $1,3$.
+    \item Radius mean $0,3 m$, deviation $0,01 m$.
     \item Relaxation time: $1,0 s$.
     \item Number of pedestrians: $100$.
 \end{itemize*}
+
+First the claim of the "faster-is-slower" effect is tested.
+\begin{quote}
+Even counterintuitive
+effects are well reproduced. This includes the “faster is-
+slower effect” and stripe formation in intersecting flows. \cite{self-org}
+\end{quote}
+We would then expect that a high nervousness would lead to slower evacuation, because of additional clogging at the doorway. But this phenomena do not occur in our simulation see figure \ref{FastIsSlow}
+%\begin{figure}
+%\centering
+%\includegraphics[scale=1]{FastIsSlowNot}
+%\end{figure}
+The larger the nervousness the faster is the evacuation. We have increased the max-velocity factor sow much that people eventually move throw the walls. This start occurring around max-velocity-factor = 2.5, and measurements beyond this point are neglected.
+
+Pedestrian flow rate is measure in the door opening, and the density of pedestrians in a 2 m by 2 m area directly in front of the door is measured. We also measure the time it takes for all pedestrians to leave the room.
+
+The parameters for this simulation are as follows:
 
 % TODO: Add parameters that are varied.
 
