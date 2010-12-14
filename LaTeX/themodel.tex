@@ -488,67 +488,51 @@ $R_{\alpha}$& Repulsive potential from the wall\\
     \label{overview}
 \end{figure}
 
-\begin{center}
-\begin{tabular}{lll}
-\hline
-$\overrightarrow{f_{\alpha}^{0}}$ & the desired force &\\
-\hline
-$\overrightarrow{f_{\alpha B}}$ & the repulsive force from walls &\\
-\hline
-$\overrightarrow{f_{\alpha \beta}}$ & the repulsion from other pedestrians\\
-\hline
-$\overrightarrow{f_{\alpha i}}$& the attractive force\\
-\hline
-$\overrightarrow{V_{\alpha}}$ & The actual velocity of pedestrian alpha &\\
-\hline
-$V_{\alpha}^{0}(t)$ & The desired speed of pedestrian alpha &\\
-\hline
-$V_{\alpha}^{0}(0)$ & The initial desired speed of pedestrian alpha &\\
-\hline
-$\overline{V_{\alpha}(t)}$ & The average speed of pedestrian alpha &\\
-\hline
-$\overrightarrow{p_{\alpha}}$ & The position vector of pedestrian alpha\\
-\hline
-$e_{\alpha}$& The desired direction of pedestrian alpha\\
-\hline
-$\tau$& The relaxation time &\\
-\hline
-$\overrightarrow{p_{\alpha}^{\text{B}}}$& Vector pointing from origo to the point on the wall nearest to pedestrian alpha &\\
-\hline
-$\overrightarrow{W}$& Vector representing the wall &\\
-\hline
-$U_{B}$ & Repulsive potential from the wall\\
-\hline
-$U^{0}_{\alpha B}$ & Constant representing pedestrian alpha's tendency to avoid walls\\
-\hline
-$R_{\alpha}$& Repulsive potential from the wall\\
-\hline
-$d_{\alpha \beta}$& The distance from pedestrian $\alpha$ to $\beta$ &\\
-\hline
-$R_{\alpha\beta}$& The sum of the radii of pedestrian $\alpha$ and $\beta$ \\
-\hline
-$\lambda_{\alpha}$& Anisotropy parameter &\\
-\hline
-$\eta_{\alpha \beta}$& Normal vector pointing from $\beta$ to $\alpha$ \\
-\hline
-$A_{\alpha}$& Parameter controlling the interaction streanght \\
-\hline
-$B_{\alpha}$& Parameter controlling the range of the repulsive interaction  \\
-\hline
-$d_{\alpha \beta}$& The distance from pedestrian $\alpha$ to $\beta$ &\\
-\hline
-$R_{\alpha\beta}$& The sum of the radii of pedestrian $\alpha$ and $\beta$ \\
-\hline
-$\lambda_{\alpha}$& Anisotropy parameter &\\
-\hline
-$\eta_{\alpha \beta}$& Normal vector pointing from $\beta$ to $\alpha$ \\
-\hline
-$A_{\alpha}$& Parameter controlling the interaction streanght \\
-\hline
-$B_{\alpha}$& Parameter controlling the range of the repulsive interaction  \\
-\hline
-\end{tabular}
-\end{center}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{l l}
+        \toprule
+        \multicolumn{2}{c}{\textsf{Main forces}}\\
+        $\overrightarrow{f_{\alpha}^{d}}$ & Desired force\\
+        $\overrightarrow{f_{\alpha \beta}}$ & Interaction force from pedestrian 
+        $\beta$\\
+        $\overrightarrow{f_{\alpha \gamma}}$ & Repulsive force from wall 
+        $\gamma$\\
+
+        \midrule
+        \multicolumn{2}{c}{\textsf{Base notation}}\\
+        $\overrightarrow{p_{\alpha}}$ & Position vector of pedestrian 
+        $\alpha$\\
+        $\overrightarrow{V_{\alpha}}$ & Velocity of pedestrian $\alpha$ \\ 
+        \addlinespace[0.3em]
+        $R_\alpha$ & Radius of pedestrian $\alpha$\\
+
+        \midrule
+        \multicolumn{2}{c}{\textsf{Parameters of the desired force}}\\
+        $\overrightarrow{V_{\alpha}}(t)$ & Velocity of pedestrian $\alpha$ 
+        at time $t$\\
+        $V_{\alpha}^{d}(t)$ & Desired speed of pedestrian $\alpha$ at time 
+        $t$\\
+        $V_{\alpha}^{Id}$ & Initial desired speed of pedestrian $\alpha$ \\
+        $\langle V_{\alpha}(t) \rangle$ & Average speed of pedestrian 
+        $\alpha$ \\
+        $\tau$& Relaxation time \\
+
+        \midrule
+        \multicolumn{2}{c}{\textsf{Parameters of the interaction force}}\\
+        $\theta_{\alpha \beta}$ & Angle between $\alpha$'s direction of 
+        movement and the vector from $\alpha$ to $\beta$\\
+        $d_{\alpha \beta}$& Distance between pedestrians $\alpha$ and $\beta$ \\
+        $\overrightarrow{u_{\beta \alpha}}$& Unit vector pointing from $\beta$ to $\alpha$ \\
+        $\lambda$& Parameter controlling the anisotropic property of the 
+        interaction\\
+        $A$& Parameter controlling the interaction strength \\
+        $B$& Parameter controlling the range of the repulsive interaction  \\
+        \bottomrule
+    \end{tabular}
+    \caption{Summary of the model.}
+    \label{tbl:model-summary}
+\end{table}
 
 \subsection{How to solve the differential equations}
 
