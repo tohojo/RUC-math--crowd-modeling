@@ -40,7 +40,7 @@ scenarios = {
         }),
         'corridor': Scenario({
             'name'               : 'corridor',
-            'A'                  : 10.0,
+            'A'                  : 3.0,
             'B'                  : 0.2,
             'U'                  : 3.0,
             'lambda'             : 0.1,
@@ -49,7 +49,7 @@ scenarios = {
                                     (-10.0,-3.0,-1.0,3.0),
                                     (1.0,-3.0,10.0,3.0)
                                    ],
-            'velocity_mean'      : 3.0,
+            'velocity_mean'      : 0.74,
             'velocity_deviation' : 0.26,
             'max_velocity_factor': 3.0,
             'radius_mean'        : 0.2,
