@@ -34,8 +34,8 @@ scenarios = {
             'pixel_factor'       : 30,
             'relax_time'         : 1.0,
             'vary_parameters'    : {
-                                    #'A'            : (2.0, 5.0, 0.1),
-                                    'velocity_mean': (1.0, 5.0, 0.1),
+                                    'A'            : (1.0, 3.0, 0.1),
+                                    #'velocity_mean': (1.0, 5.0, 0.1),
                                    },
         }),
         'corridor': Scenario({
@@ -75,8 +75,8 @@ scenarios = {
             'pixel_factor'       : 30,
             'relax_time'         : 0.5,
             'vary_parameters'    : {
-                                    #'A'            : (2.0, 5.0, 0.1),
-                                    'velocity_mean': (1.0, 5.0, 0.1),
+                                    'A'            : (4.0, 6.0, 0.01),
+                                    #'velocity_mean': (1.0, 5.0, 0.1),
                                    },
         }),
 }

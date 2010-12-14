@@ -3,6 +3,8 @@
 *.out
 *.toc
 *.lof
+*.lot
+*.lol
 *.blg
 *.bbl
 crowd-modelling.pdf
