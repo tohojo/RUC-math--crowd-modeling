@@ -26,9 +26,24 @@ In some models they also includes tangential forces from pedestrians and walls. 
 
 The force from pedestrians are also changed a little so that the whole force is dependent on whether another pedestrian comes in the front or from behind. This they use in \cite{ABconstant}, \cite{HelbingNew} and  \cite{helbing00}. So it is a with the tangential forces, something that has been used from time to time. 
 
-In some variations of the model they also have a more advanced force from other pedestrians. In the advanced form the force from other pedestrians depends on the speed of the pedestrians. This they use in \cite{HelbingNew} and \cite{ABconstant}.  Both are paper newer than the one we use. In \cite{ABconstant} they claim that it gives a better fit when determining constants by making video tracking of real life situations, when they use a speed dependent force rather than using a force that is given by distance alone. 
+In some variations of the model they also have a more advanced force from other pedestrians. In the advanced form the force from other pedestrians depends on the speed of the pedestrians and also the shpe of the pedestrian is made ellitical. This they use in \cite{HelbingNew} and \cite{ABconstant}.  Both are paper newer than the one we use. In \cite{ABconstant} they claim that it gives a better fit when determining constants by making video tracking of real life situations, when they use a speed dependent force rather than using a force that is given by distance alone. 
 
 
+
+It should be noted that even thought there are some changes in the forces throughout the different paper, they write in the article we use \cite{self-org}:
+\begin{quote}
+ One may, of
+course, take into account other details such as a velocity
+dependence of the forces and noncircular shaped
+pedestrian bodies, but this does not have qualitative
+effects on the dynamical phenomena resulting in the
+simulations. In fact, most observed self-organization
+phenomena are quite insensitive to the specification
+of the interaction forces, while it may, of course, influence
+the quantitative results.
+\end{quote}
+
+So if this is correct, we should be able to limit ourself to the model that they have in the paper we use. Having said this we will now describe different phenomenons that the model can give in the right scenarios.  
 
 
 % TODO: This should contain an overview of the different social force models, 
@@ -69,4 +84,5 @@ The scenarios that we will work with is chosen so that we should be able to obse
  uld makes us able to see if we can recreate the results seen in the literature.   
 
 
- After having explained the choice of model, the different phenomenons and the cases we want to simulate, we will now go on to the next section.  In this section we will go into details with the equations that the model contains and give a thorough discribtion of how they look and how they are used. This describtion will also give an explanation on all of the variables and constants that the equations contains.
+ We have now explained why the very basic idea of the model we use, and the variations there can be between the social-force models. These differences is claimed to have little effect on the qualitative results. Therefore we expect that the model we work with should have no problems replicating the different phenomenons that we just gave an brief explanation of. After having done this, we will now continue on and go into details of the math involved in the model. 
+
