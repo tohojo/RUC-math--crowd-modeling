@@ -1,3 +1,9 @@
 #!/bin/bash
 
-cd c-ext && python2 setup.py build && cp build/lib.linux-x86_64-2.7/optimised.so ..
+if which python2 >/dev/null 2>&1; then
+	PYTHON=python2
+else
+	PYTHON=python
+fi
+
+cd c-ext && $PYTHON setup.py build && cp $(find -name optimised.so -o -name optimised.pyd) ..
