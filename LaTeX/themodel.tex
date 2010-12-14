@@ -58,7 +58,7 @@ figure~\ref{pedestrian-notation}.
 \end{figure}
 
 The resulting force for pedestrian $\alpha$, $\overrightarrow{f_{\alpha}}$ is 
-the sum of the three main forces.
+the sum of the three main forces:
 
 \begin{equation}\label{model}
     \overrightarrow{f_{\alpha}} = \overrightarrow{f^{d}_{\alpha}} +
@@ -86,7 +86,8 @@ and will be described in detail in the following sections.
         \multicolumn{2}{c}{\textsf{Base notation}}\\
         $\overrightarrow{p_{\alpha}}$ & Position vector of pedestrian 
         $\alpha$\\
-        $\overrightarrow{V_{\alpha}}$ & Velocity of pedestrian $\alpha$\\
+        $\overrightarrow{V_{\alpha}}$ & Velocity of pedestrian $\alpha$ \\ 
+        \addlinespace[0.3em]
         $R_\alpha$ & Radius of pedestrian $\alpha$\\
         \bottomrule
     \end{tabular}
@@ -126,7 +127,7 @@ $V_{\alpha}^{d}(t)$ is the desired speed of the pedestrian. The desired speed
 can vary over time and is given by:
 
 \begin{equation}\label{eqn:desired-speed}
-    V_{\alpha}^{d}(t) = \left[ 1 - \eta_{\alpha}(t) \right] 
+    V_{\alpha}^{d}(t) = \left( 1 - \eta_{\alpha}(t) \right) 
     V_{\alpha}^{Id} +
     \eta_{\alpha}(t) V_{\alpha}^{\text{max}}
 \end{equation}
@@ -174,7 +175,7 @@ is defined as follows:
     V_{\alpha}^{d} (t) = \left\{ 
     \begin{array}{l l}
         V_\alpha^{Id} & \text{if $t=0$}\\
-        \left[ 1 - \eta_{\alpha}(t) \right] 
+        \left( 1 - \eta_{\alpha}(t) \right) 
         V^{Id}_{\alpha} +
         \eta_{\alpha}(t) V_{\alpha}^{\text{max}}
         & \text{if $t > 0$}\\
