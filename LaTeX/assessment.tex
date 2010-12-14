@@ -40,22 +40,18 @@ pedestrians see \cite{HiDAC}.
 At the moment we can not simulate a situations where the visibility is very low 
 e.g. a room filled with smoke. In the model we have worked with The pedestrians always 
 have a waypoint to steer towards, but if the visibility only is 1 meter the 
-pedestrians can not necessarily see the waypoint \cite{HelbingNew}. This could be implemented by adding a tangential component to the force coming from the wall.
+pedestrians can not necessarily see the waypoint \cite{HelbingNew}. This could be implemented by adding a tangential component to the force coming from the wall. Sow people will follow the wall when they get close to it.
 
 \subsubsection{Falling and injuries}
-In situations of crowd panic people are often injured. This is either due to the 
-enormous pressure that can built up in the crowd or due to people falling. Our 
+In situations of crowd panic, people are often injured. This is either due to the 
+enormous pressure that can built up in a crowd or due to people falling and being stamped. Our 
 does not take into account these possibilities. In the HiDAC model people can 
 be injured and even fall and become obstacles for other pedestrians.\cite{HiDAC}
 
 \subsubsection{Herding}
-Other models take into account herding behavior between the pedestrians  
-\cite{helbing00}, so that some people have tendency to follow other pedestrians, 
-while other pedestrians have a tendency to go their own way,  and by doing so 
-explore the environment for possible exits.
+Other models take into account herding behaviour between the pedestrians \cite{helbing00}, so that some people have tendency to follow other pedestrians, while other pedestrians have a tendency to go their own way,  and by doing so explore the environment for possible exits.
 
-These features all add up to give a more realistic simulation of crowds 
-but do simulation like these teach us anything about why a crowd behaves 
+These features all add up to give a more realistic simulation of crowds but do simulation like these teach us anything about why a crowd behaves 
 as it does?
 
 \subsection{Inserting social force concept into classical mechanics}
@@ -63,35 +59,19 @@ as it does?
 % This section is about a major limitation/error in the model that 
 % cannot be solved easily.
 % Discussion about using physological concepts in the model.
-In the previous part we see some features that could be added to the model to 
-make it perform more close to reality. However, there is a major problem that 
-lies in the model and can not be fixed by adding a new feature, when the 
-social force is added into the way of classical mechanic calculation.
 
-In the early research for pedestrian behaviour, people try to apply the existing 
-models in the physical world to describe a crowd, but there is no term describing 
-a molecule's will in models like those. Therefore, in order to make the model 
-human, Helbing gets the revolutionary idea to measure the psychological state 
-by a term called "social force", which is not a real force in the physical world. 
-\cite{social-force} Then the measurements of social and physical features 
-of pedestrians (those measurements are all put into the catalogue called "force") 
-are gathered together and calculated within the limit of classical mechanics, 
-which destroys many laws in the physical world, for example, Newton's third law 
-and the conservation of energy. Then this model is not a model in physics as 
-it does not fit nicely in the whole physical world. However, it insists in describing 
-the physical behaviour, because what we get straightly from the model are 
-the positions and velocities of pedestrians. In general, the model grabs some 
-ingredients from both social and physical aspects, put them into the physics 
-machine, and comes up with the product that falls in the physics catalogue. 
-In that manner, the model is not convincing to us.
+In the previous section we have seen some features that could improve the predictions made by the model.
 
-The inconsistency gives a challenging work to justify the model in general, 
-because there is no governing theory that can do the job. The only way from Helbing 
-is by comparing the outcome of the model to the reality. In order to achieve the 
-fitness, many parameters need to be adjusted at the same time, and we do not 
-even know how to tune the parameters precisely, which makes the way to 
-get the fitness tedious. Moreover, if the model is used to make predictions, the
-outcomes are not persuasive. 
+However, there is a major problem that lies in the model and can not be fixed by adding a new feature, when the social force is added into the way of classical mechanic calculation.
+
+In the early research for pedestrian behaviour, people try to apply the existing models in the physical world to describe a crowd, but there is no term describing 
+a molecule's will in models like those. Therefore, in order to make the model human, Helbing gets the revolutionary idea of measuring the psychological state 
+by a term called "social force", which is not a real force in the physical world \cite{social-force}, but a representation of a desire to reach a given position. Then the measurements of social and physical features of pedestrians (those measurements are all put into the catalogue called "force") are gathered together and calculated within the limit of classical mechanics, which destroys many laws in the physical world, for example, Newton's third law and the conservation of energy. Then this model is not a model in physics as it does not fit nicely in the whole physical world. However, it insists in describing the physical behaviour, because what we get directly from the model are the positions and velocities of pedestrians. In general, the model grabs some ingredients from both social and physical aspects, put them into the physics machine, and comes up with the product that falls in the physics catalogue. In that manner, the model is not convincing to us.
+This conflict between actual physics and psychology gives rise to some interesting problems. Can one really measure the pressure in such a crowd when the interactions between pedestrians are governed by desires?
+
+The inconsistency gives a challenging work to justify the model in general, because there is no governing theory that can do the job. The only way from Helbing 
+is by comparing the outcome of the model to the reality. In order to achieve the fitness, many parameters need to be adjusted at the same time, and we do not even know how to tune the parameters precisely, which makes the way to get the fitness tedious. Moreover, if the model is used to make predictions, the
+outcomes are not persuasive . 
 
 \subsection{Comments on the state of the social force models}
 % This is sort of a conclusion on the last two sections. What have we 
@@ -129,4 +109,4 @@ In the article \cite{self-org} you can read the following comment:
 
 However in our case we have had to calibrate the parameters for each 
 situation. The parameters that work for the square scenario does not 
-necessarily yield the desired results in the corridor case.
+necessarily work for the corridor case.  
