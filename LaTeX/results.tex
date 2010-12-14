@@ -64,6 +64,9 @@ The parameters for this simulation are as follows:
 When running the simulation we observe lane formations, and they almost clog up
 in the corridor.
 
+To get the freezing by heating effect we raise the max desired velocity to 4.
+The other parameters are fixed:
+
 \begin{itemize*}
     \item $A: 2,2$, $B: 0,2$, $U: 2,0$, $\lambda: 0,1$.
     \item Mean desired velocity: $0,74 m/s$, deviation $0,26 m/s$. Max 
@@ -86,4 +89,46 @@ density does not increase when the max desired velocity is increased. When raisi
 the pedestrians more easely get through the crowd.}
 \label{fig:freezingbyheating}
 \end{figure}
+
+\cite{helbing00} set the relaxation time to $0,5$. As the first corridor simulations we set the parameters as \cite{ABconstant}
+and then change the relaxation time to $0,5$ as \cite{helbing00}. After the simulation with the initial conditions, we raise the
+max desired velocity to see if we can replicate the freezing by heating effect.
+
+The initial simulation has the following parameters:
+
+\begin{itemize*}
+    \item $A: 2,2$, $B: 0,2$, $U: 2,0$, $\lambda: 0,1$.
+    \item Mean desired velocity: $0,74 m/s$, deviation $0,26 m/s$. Max 
+        velocity factor $1,3$.
+    \item Radius mean $0,3 m$, deviation $0,01 m$.
+    \item Relaxation time: $0,5 s$.
+    \item Number of pedestrians: $20$ starting, adding $1/s$.
+\end{itemize*}
+
+The next simulation the parameters are as follows:
+
+\begin{itemize*}
+    \item $A: 2,2$, $B: 0,2$, $U: 2,0$, $\lambda: 0,1$.
+    \item Mean desired velocity: $0,74 m/s$, deviation $0,26 m/s$. Max 
+        velocity factor $4,0$.
+    \item Radius mean $0,3 m$, deviation $0,01 m$.
+    \item Relaxation time: $0,5 s$.
+    \item Number of pedestrians: $20$ starting, adding $1/s$.
+\end{itemize*}
+
+When comparing the simulations we do not see the freezing by heating effect.
+Instead we see that the pedestrians more easely escape the clogging, and the flow in each directions
+gets more steady.
+
+\begin{figure}
+\centering
+\subfloat[The figure show the density in corridor when the parameters are set as \cite{ABconstant} and \cite{helbing00}.]{\includegraphics[scale=0.45]{Figures/dens_relax05_20.pdf}}
+\subfloat[This figure shows the density in the corridor when the max velocity factor is set to $4.0$ and the max desired velocity is set to $4,0$, and the other parameters as figure a.]{\includegraphics[scale=0.45]{Figures/dens_relax05_mvel4_20.pdf}}
+\caption{These figures was made to see if the freezing by heating effect when raising the max velocity factor. As seen in the figures, the
+density does not increase when the max desired velocity is increased. When raising the max desired velocity the density gets lower because
+the pedestrians more easely get through the crowd.}
+\label{fig:freezingbyheating}
+\end{figure}
+
+
 % TODO: Add parameters that are varied.
