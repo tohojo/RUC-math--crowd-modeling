@@ -183,15 +183,16 @@ Vector calculate_wall_repulsion(Pedestrian * a, Vector repulsion_point)
 
 void update_position(Pedestrian * a)
 {
-    Vector delta_p;
+    Vector new_p, new_v;
 
-    delta_p.x = a->velocity.x * timestep + 0.5 * a->acceleration.x * pow(timestep, 2);
-    delta_p.y = a->velocity.y * timestep + 0.5 * a->acceleration.y * pow(timestep, 2);
+	new_p = vector_add(vector_sub(vector_mul(a->position, 2), a->prev_position), 
+			vector_mul(a->acceleration, pow(timestep, 2)));
 
+	new_v = vector_mul(vector_sub(new_p, a->prev_position), 1/2*timestep);
 
-    vector_iadd(&a->position, &delta_p);
-	a->velocity = vector_add(a->velocity,
-			vector_mul(a->acceleration, timestep));
+	a->prev_position = a->position;
+	a->position = new_p;
+	a->velocity = new_v;
     a->time += timestep;
 
 	if(a->flowline_time < 0) {
@@ -406,6 +407,7 @@ static Pedestrian pedestrian_from_pyobject(PyObject * o, Pedestrian * a)
 
 
     a->position         = vector_from_attribute(o, "position");
+    a->prev_position    = vector_from_attribute(o, "position");
     a->initial_position = vector_from_attribute(o, "initial_position");
     a->target           = vector_from_attribute(o, "target");
     a->velocity         = vector_from_attribute(o, "velocity");
