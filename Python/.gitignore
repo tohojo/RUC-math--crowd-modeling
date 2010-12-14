@@ -1,6 +1,7 @@
 *.pyc
 *.png
 *.so
+*.pyd
 images/
 films/
 plots/
