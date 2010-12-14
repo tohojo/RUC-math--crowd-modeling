@@ -25,18 +25,18 @@ The article \cite{self-org} claims that social force models are models which are
 
 \subsection{Tangential forces}
 Here we discuss the idea of improving the model by improving tangential forces, that is, the force parallel to the surface of an object.
-The tangential forces can be used as collision avoidance, so that agents steer around obstacles or other agents \cite{tang}.
-This would be relevant when simulating an environment where, e. g., and is standing in the middle of a symmetrical room and the agent's waypoint
-is behind a big square pillar, with equal distance either way around, the agent would get stuck in front of the pillar without the tangential forces,
-since the forces acting on the agent's motivation is cancelling each other out. 
-In our case where two groups of agents are crossing each other in a corridor, the tangential force would make the agents to into account
-the position of the agents in front of them and steer around them.
-The tangential forces can also improve the model so it can simulate agents escaping a smoke filled room where we determine the visibility.
-In this case of simulation the agents would walk randomly around untill they find a wall, and follow the wall around due to the tangential force.
+The tangential forces can be used as collision avoidance, so that pedestrians steer around obstacles or other pedestrians \cite{tang}.
+This would be relevant when simulating an environment where, e. g., and is standing in the middle of a symmetrical room and the pedestrian's waypoint
+is behind a big square pillar, with equal distance either way around, the pedestrian would get stuck in front of the pillar without the tangential forces,
+since the forces acting on the pedestrian's motivation is cancelling each other out. 
+In our case where two groups of pedestrians are crossing each other in a corridor, the tangential force would make the pedestrians to into account
+the position of the pedestrians in front of them and steer around them.
+The tangential forces can also improve the model so it can simulate pedestrians escaping a smoke filled room where we determine the visibility.
+In this case of simulation the pedestrians would walk randomly around untill they find a wall, and follow the wall around due to the tangential force.
 This would be a way of implementing way finding to the model.
 
-Friction between agents would also be possible to add to the model, since the tangential forces from other agents would make it
-harder for agents to walk through a crowd. \cite{self-org} mention that friction is causing clogging in front of exits, since the people
-get stuck in each other. In our simulation the agents are not clogging as heavily as \cite{self-org} mention it can be.
-The time it take for the agent to leave a room in unrealistic low, and we think that implementing the friction by tangential forces
+Friction between pedestrians would also be possible to add to the model, since the tangential forces from other pedestrians would make it
+harder for pedestrians to walk through a crowd. \cite{self-org} mention that friction is causing clogging in front of exits, since the people
+get stuck in each other. In our simulation the pedestrians are not clogging as heavily as \cite{self-org} mention it can be.
+The time it take for the pedestrian to leave a room in unrealistic low, and we think that implementing the friction by tangential forces
 would make the simulation time more realistic.
