@@ -45,8 +45,25 @@ would make the simulation time more realistic.
 According to \cite{self-org} the freezing by heating effect should arise when the max desired velocity of the pedestrians was raised.
 That is that clogging should arise when raising the max velocity of the pedestrians, because more are ariving to the possible
 clogging area, and thus have more trouble getting through the crowd. 
-We tried to raise the max velocity, but instead of observing the freezing by heating effect, we saw that the pedestrians
+We tried to raise the max velocity, see figure \ref{fig:freezingbyheating1} and figure \ref{fig:freezingbyheating05}, but instead of observing the freezing by heating effect, we saw that the pedestrians
 got through the corridor more easely, and that the density in the corridor was lower when the max velocity was high.
 We think that there are more explations to this result. For the first the pedestrian $\alpha$'s force toward the target
 is higher when $\alpha$'s velocity gets higher, and therefore he more easely pushes his way through the crowd. For the second
 there are no friction between the pedestrians to slow $\alpha$ speed down, besides the social sphere.
+
+\subsection{Comparison between the relaxation time $1,0$ and $0,5$}
+It is seen that the density in the corridor is more steady when the relaxation time is set to $0.5$.
+This is true for both max desired velocity tested.
+
+\begin{figure}[h]
+\centering
+\subfloat[The figure show the density in corridor when the relaxation time is set to $1,0$]{\includegraphics[scale=0.45]{Figures/dens_init_20.pdf}}
+\subfloat[This figure shows the density in the corridor when the relaxation time is set to $0,5$]{\includegraphics[scale=0.45]{Figures/dens_relax05_20.pdf}}
+\caption{These figures show the difference of the density when changing the relaxation time of the model from $1$ to $0,5$.
+It is seen the the density is more steady when the relaxtion time is $0,5$ instead of $1,0$}
+\label{fig:comparison_of_timestep}
+\end{figure}
+
+A possible explanation of why the density is more steady through out the simulation when the relaxation time is $0,5$,
+is that the pedestrians reacts faster to changes of their velocity. Thus when they bump into each other, they speed up
+faster, and therefore avoid clogging up before more get in their path.
