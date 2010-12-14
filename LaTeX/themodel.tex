@@ -77,9 +77,11 @@ will be described in detail in the following sections.
     \centering
     \begin{tabular}{l l}
         \toprule
-        $\overrightarrow{f_{\alpha}^{0}}$ & the desired force\\
-        $\overrightarrow{f_{\alpha B}}$ & the repulsive force from walls\\
-        $\overrightarrow{f_{\alpha \beta}}$ & the repulsion from other pedestrians\\
+        $\overrightarrow{f_{\alpha}^{d}}$ & the desired force\\
+        $\overrightarrow{f_{\alpha \gamma}}$ & the repulsive force from wall 
+        $\gamma$\\
+        $\overrightarrow{f_{\alpha \beta}}$ & the repulsion from pedestrian 
+        $\beta$\\
         \bottomrule
     \end{tabular}
     \caption{Summary of main forces.}
@@ -88,86 +90,92 @@ will be described in detail in the following sections.
 
 \subsection{The desired force}
 \label{sec:desired-force}
-The first term on the right hand side of equation \eqref{model} describes the 
-\emph{willingness} of pedestrian $\alpha$'s to reach the exit. It is a velocity 
-dependent force and is given by:
+The first force we describe is the \emph{desired force}. This force represents 
+the pedestrians desire to move towards its target. The idea is that a 
+pedestrian, if unhindered, will move towards its target at an initial desired 
+speed that is given as a model parameter. The desired force is a velocity 
+dependent force given by:
 
 \begin{equation}\label{relaxtime}
-	\overrightarrow{f^{0}_{\alpha}}\left( \overrightarrow{V_{\alpha}} \right) =
+	\overrightarrow{f^{d}_{\alpha}} (t) =
     \frac{1}{\tau}
-    \left( V_{\alpha}^{0} \overrightarrow{e_{\alpha}} - \overrightarrow{V_{\alpha}} \right)
+    \left( V_{\alpha}^{d}(t) \overrightarrow{e_{\alpha}} - 
+    \overrightarrow{V_{\alpha}}(t) \right)
 \end{equation}
 
-Where $V_{\alpha}^{0}$ is the desired speed, $ \overrightarrow{e_{\alpha}} $ is the unit 
-vector pointing in the desired direction of the pedestrian which in most cases will 
-be the exit, but it can in principle be anywhere.  $\overrightarrow{V_{\alpha}}$ is the 
-actual velocity of the pedestrian, and $\tau$ is the \emph{relaxation time}.
+Here $V_{\alpha}^{d}(t)$ is the desired speed at time $t$, $\overrightarrow{e_{\alpha}}$ is 
+the unit vector pointing towards the pedestrians target and  
+$\overrightarrow{V_{\alpha}}(t)$ is the actual velocity of the pedestrian at 
+time $t$.
 
-The relaxtion time determines how reactive a pedestrian is. In principle the 
-relaxation time can vary for each pedestrian but from the article \cite{self-org} 
-we get that $ \tau_{\alpha}\approx 1s $, which means that it takes the pedestrian 
-one second to change its velocity. $V_{\alpha}^{0} \overrightarrow{e_{\alpha}}$ is the desired 
-velocity of the pedestrian. The desired speed can vary over time and is given by:
+$\tau$ is the \emph{relaxation time} and determines how fast a pedestrian 
+returns to its desired velocity after having been walking slower because of 
+obstacles etc. The relaxation time is a model parameter that in principle can vary 
+for each pedestrian. However, from \cite{self-org} it is clear that in 
+practice, $\tau$ is the same for all pedestrians in the simulation.
 
-\begin{equation}\label{v0eta}
-    V_{\alpha}^{0}\left( t \right) = \left[ 1 - \eta_{\alpha} \left( t \right) \right] 
-    V_{\alpha}^{0} \left( 0 \right) +
-    \eta_{\alpha} \left( t \right)V_{\alpha}^{\text{max}}
-\end{equation}
-%TODO: write that V_a^0(0) < V_a^0(t) < V_a^max
-where $V_{\alpha}^{0} \left( 0 \right)$ is the desired speed at $ t=0 $, and 
-$V_{\alpha}^{\text{max}}$ is the maximum desired speed of pedestrian $\alpha$. The 
-maximum desired speed is the speed that pedestrian $\alpha$ will try to get if it 
-is allowed by the environment and other pedestrians. It is not a physical limit to 
-how fast the pedestrian can move but rather a parameter that determines the speed 
-that the pedestrian is comfortable walking with. 
+$V_{\alpha}^{d}(t)$ is the desired speed of the pedestrian. The desired speed 
+can vary over time and is given by:
 
-$\eta_{\alpha} \left( t \right)$ is called the impatience or nervousness of 
-the pedestrian and is given by:
-
-\begin{equation}\label{eta}
-	\eta_{\alpha} \left( t \right) =
-    1 - \frac{\overline{V}_{\alpha} \left( t \right)}
-             {V_{\alpha}^{0} \left( 0 \right)}
+\begin{equation}\label{desired-speed}
+    V_{\alpha}^{d}(t) = \left[ 1 - \eta_{\alpha}(t) \right] 
+    V_{\alpha}^{Id} +
+    \eta_{\alpha}(t) V_{\alpha}^{\text{max}}
 \end{equation}
 
-where $\overline{V}_{\alpha}\left( t \right)$ is the average speed in the 
-desired direction.Excately how one measures the average speed in the desired 
-direction is not properly explained in the article. We define it to be the 
-projection of the position vector $ \overrightarrow{p_{\alpha}} $ onto the desired direction 
-of motion $e_{\alpha}$ devided by the time that the simulation has run. A 
-illustration of this can be seen i figure \ref{impatience}. The mathematical 
-expression becomes:
+Here $V_{\alpha}^{Id}$ is the \emph{initial desired speed} (a model parameter), 
+and $V_{\alpha}^{\text{max}}$ is the \emph{maximum desired speed} of 
+pedestrian $\alpha$. The maximum desired speed is given as a parameter and is 
+a linear function of the initial desired speed for pedestrian $\alpha$. This 
+speed is the maximum speed the pedestrian will try to accelerate to when 
+compensating for slowing down because of obstacles.
+
+The value $\eta_{\alpha}(t)$ is called the \emph{impatience factor} of the 
+pedestrian and is given by:
+
+\begin{equation}\label{eqn:impatience}
+	\eta_{\alpha}(t) =
+    1 - \frac{\langle V_{\alpha}(t)\rangle}{V^{Id}_{\alpha}}
+\end{equation}
+
+where $\langle V_{\alpha}(t) \rangle$ is the average speed in the desired 
+direction for all times $0\dots t$. It is not clear from the article exactly 
+how this average speed is calculated. We have defined it by projecting the 
+vector from the pedestrian's initial position, $p^i_\alpha$, onto the vector 
+pointing from $p^i_\alpha$ to the pedestrian's target. The length of this 
+projection is divided by the time to yield the average speed. An 
+illustration of this interpretation is given in figure~\ref{impatience}.
 
 \begin{figure}[ht]
     \centering
-    {\includegraphics[scale=0.35]{Figures/NotationOfPedestrian2.pdf}} 
-    \caption{Illustration of the vector $ \vec{p_{\alpha}^{E}}$, which is the projection of $ \vec{p_{\alpha}} $ onto the desired direction of motion.}
+    {\includegraphics[width=0.5\textwidth]{Figures/NotationOfPedestrian2.pdf}} 
+    \caption[Our interpretation of the average velocity]{Our interpretation of 
+    the average velocity. The vector pointing from the pedestrian's initial 
+    position, $p^i_\alpha$, is projected onto the vector pointing from 
+    $p^i_\alpha$ to the pedestrian's target. The length of this projection is 
+    divided by the time to yield the average speed.}
     \label{impatience}
 \end{figure}
 
-\begin{equation}\label{averagespeed}
-   \overline{V}_{\alpha} \left( t \right) =
-   \frac{1}{t} \overrightarrow{p_{\alpha}}\cdot \overrightarrow{e_{\alpha}} 
-\end{equation}
-
-$\overline{V}_{\alpha}$ is undefined at $t=0$ beacause that would mean 
-that you should divide by zero, which is undefined. This in turn means 
-that $\eta_{\alpha}(0)$ is undefined. We therefore define 
-$V_{\alpha}^{0}(t)$ for $t=0$ and $t>0$ to be the following:
+$\langle V_{\alpha}\rangle$ is undefined at $t=0$ as that would result in a 
+division by zero. This means that $V^d_\alpha(0)$ is undefined. We correct 
+this by defining $V^d_\alpha(0)=V^{Id}_\alpha$. This means that $V^d_\alpha(t)$ 
+is defined as follows:
 
 \begin{equation}\label{eqn:cond-define}
-  V_{\alpha}^{0} (t) = \left\{ 
-  \begin{array}{l l}
-    V_\alpha^0(0) & \text{if $t=0$}\\
-    \left[ 1 - \eta_{\alpha} \left( t \right) \right] 
-    V_{\alpha}^{0} \left( 0 \right) +
-    \eta_{\alpha} \left( t \right)V_{\alpha}^{\text{max}} & \text{if 
-    $t > 0$}\\
-  \end{array} \right.
+    V_{\alpha}^{d} (t) = \left\{ 
+    \begin{array}{l l}
+        V_\alpha^{Id} & \text{if $t=0$}\\
+        \left[ 1 - \eta_{\alpha}(t) \right] 
+        V^{Id}_{\alpha} +
+        \eta_{\alpha}(t) V_{\alpha}^{\text{max}}
+        & \text{if $t > 0$}\\
+    \end{array} \right.
 \end{equation}
-% TODO: This definition is a tautology. We need a different notation for 
-% initial desired velocity.
+
+Analysing equation~\eqref{eqn:impatience}, it is clear that the impatience 
+factor is between zero and one as long as the average velocity is positive and 
+less than the initial desired velocity. 
 
 If we look at the expression for $V_{\alpha}^{0}$ for $t>0$ we can 
 start to analyse how this affects the behaviour of the pedestrian. There 
