@@ -49,7 +49,7 @@ figure~\ref{pedestrian-notation}.
     the target ($\overrightarrow{e_{\alpha}}$)  and radius ($ R_{\alpha} $).
     %
     \subref{subfig:forces} Main forces acting on a pedestrian $\alpha$. 
-    Repulsive force from pedestrian $\beta$ 
+    Interaction force from pedestrian $\beta$ 
     ($\overrightarrow{f_{\alpha\beta}}$), repulsive force from wall $\gamma$ 
     ($\overrightarrow{f_{\alpha \gamma}}$) and desired force towards target 
     ($\overrightarrow{f^{d}_{\alpha}}$).}
@@ -67,7 +67,7 @@ the sum of the three main forces:
 \end{equation}
 
 Here $\overrightarrow{f_{\alpha}^{d}}$ is the desired force,  
-$\overrightarrow{f_{\alpha \beta}}$ is the repulsive force from pedestrian 
+$\overrightarrow{f_{\alpha \beta}}$ is the interaction force from pedestrian 
 $\beta$ and $\overrightarrow{f_{\alpha \gamma}}$ is the repulsive force from 
 wall $\gamma$. The main forces are summarised in table~\ref{tbl:main-forces} 
 and will be described in detail in the following sections.
@@ -78,7 +78,7 @@ and will be described in detail in the following sections.
         \toprule
         \multicolumn{2}{c}{\textsf{Main forces}}\\
         $\overrightarrow{f_{\alpha}^{d}}$ & Desired force\\
-        $\overrightarrow{f_{\alpha \beta}}$ & Repulsive force from pedestrian 
+        $\overrightarrow{f_{\alpha \beta}}$ & Interaction force from pedestrian 
         $\beta$\\
         $\overrightarrow{f_{\alpha \gamma}}$ & Repulsive force from wall 
         $\gamma$\\
@@ -97,11 +97,10 @@ and will be described in detail in the following sections.
 
 \subsection{The desired force}
 \label{sec:desired-force}
-The first force we describe is the \emph{desired force}. This force represents 
-the pedestrians desire to move towards its target. The idea is that a 
-pedestrian, if unhindered, will move towards its target at an initial desired 
-speed that is given as a model parameter. The desired force is a velocity 
-dependent force given by:
+The \emph{desired force} represents the pedestrians' desire to move towards its 
+target. The idea is that a pedestrian, if unhindered, will move towards its 
+target at an initial desired speed that is given as a model parameter. The 
+desired force is a velocity dependent force given by:
 
 \begin{equation}\label{eqn:desired-force}
 	\overrightarrow{f^{d}_{\alpha}} (t) =
@@ -230,145 +229,136 @@ table~\ref{tbl:desired-force}.
     \label{tbl:desired-force}
 \end{table}
 
-\subsection{Repulsion from other pedestrians}\label{seq:repulsion-pedestrians}
-The third term on the right hand side of equation \eqref{model} is a summation of all the 
-force between pedestrian $\alpha$ and pedestrian $\beta$. The equation we use is taken from a newer article \cite{ABconstant}. We did this because the original article contains two constants that is not given in the articel and in a mail we were adviced, by the authors, to use the values and equation from the new article. 
+\subsection{Interaction force between pedestrians}
+\label{seq:interaction-pedestrians}
+The \emph{interaction force} between pedestrians is a force between each pair 
+of pedestrians $\alpha$ and $\beta$. This force is calculated for $\alpha$ as 
+a sum of the interaction forces for all other pedestrians. The interaction 
+force is repulsive in nature, and prevents the pedestrians from overlapping or 
+walking through each other.
 
-The function for the repulsion between pedestrians depends on the position vector and the velocity of 
-both pedestrians, and it is given by:
+The variant of this force that we present is slightly different from the one 
+in \cite{self-org}.  The force from the article contained too parts with 
+different constants but otherwise identical; however, no explanation was given 
+for how to obtain one set of constants. We have written the authors of the 
+article, and they suggested we use the values from a newer article, 
+\cite{ABconstant}. The force presented in this article corresponds to 
+collapsing the two parts given in the original article into one, and adjusting 
+the constants accordingly.
+
+The function for the interaction force between pedestrians depends on the 
+position and velocity of both pedestrians, and is given by:
 
 \begin{equation}
-        \overrightarrow{f_{\alpha \beta }}\left( t \right) = w\left(\phi_{\alpha \beta}\right)\overrightarrow{g}\left(d_{\alpha \beta}(t)\right)
+    \overrightarrow{f_{\alpha \beta }}(t) = 
+    w\left(\theta_{\alpha \beta}\right)
+    \overrightarrow{g}\left(d_{\alpha \beta}(t)\right)
     \label{eq:pedestrianinteraction}
 \end{equation}
 
-The two functions that gives the repulsion between the pedestrians is respectively the angel dependece, $ w\left(\phi_{\alpha \beta}\right)$, and the pure force without any angle dependence, $\overrightarrow{g}\left(d_{\alpha \beta}(t)\right)$.
+Here $\theta_{\alpha \beta}$ is the angle between the movement direction of 
+$\alpha$ and the vector pointing from $\alpha$ to $\beta$ and $d_{\alpha 
+\beta}$ is the distance between the centres of the pedestrians. 
 
-$ w\left(\phi_{\alpha \beta}\right)$ is given as: 
+$ w(\theta_{\alpha \beta})$ is given as: 
 
 \begin{equation}
-    w\left(\phi_{\alpha \beta}\right)=
+    w\left(\theta_{\alpha \beta}\right)=
     \left(
-        \lambda_{\alpha} + \left(
-            1 - \lambda_{\alpha}
+        \lambda + \left(
+            1 - \lambda
         \right)
-		\frac{1+\cos{\phi}}{2}
+		\frac{1+\cos{\theta}}{2}
     \right) 
     \label{angleAB}
 \end{equation}
 
-the angle $\phi_{\alpha \beta}$ is the angle between the 
-vector pointing from pedestrian $\beta$ to $\alpha$ and the direction in which 
-pedestrian $\alpha$ is moving. Cosine to the angle is 
+Where $\lambda$ is a parameter of the model between zero and one. This means 
+that $w$ is a weight between zero and one that modifies the force given by 
+$\overrightarrow{g}\left(d_{\alpha \beta}(t)\right)$ by an angular component.  
+When $\lambda=1$, so is $w$, and no angular modification is made. When 
+$\lambda<1$, the force is modified by a weight determined by the angle, giving 
+higher weights to angles closer to $0$ and lower weights to angles close to 
+$\pi$. This corresponds to the pedestrian paying more attention to (and thus 
+interacting more strongly with) other pedestrians in front of it, than behind 
+it. The $\lambda$ parameter determines how pronounced this anisotropic 
+property of the model is.
+
+% TODO: we should make a drawing of this.
+
+The interaction force, $\overrightarrow{g}\left(d_{\alpha \beta} (t)\right)$, is 
+given by:  
 
 \begin{equation}
-\cos \left( \phi \left( t \right) \right)
-		= 
-	- \overrightarrow{\eta_{\alpha \beta}}
-		\left( t \right) 
-	\cdot 
-\overrightarrow{e_{\alpha}}\left( t \right)
+    \overrightarrow{g} 
+    \left(
+        d_{\alpha \beta}
+    \right)
+    =
+    A e^{ \left(
+        \frac{ R_\alpha + R_\beta - d_{\alpha \beta}}
+             {B}
+    \right)}
+    \overrightarrow{n}_{\beta \alpha}
+    \label{re}	
 \end{equation}
 
-$\lambda_{\alpha}$ is governing a persons tendency to focus on things happening in front of him 
-rather than behind him. It will have a value  $0\leq \lambda_{\alpha}\leq 1$
+Here $\overrightarrow{n}_{\beta \alpha}$ is the unit vector pointing from 
+$\beta$ to $\alpha$ and $A$ and $B$ are model parameters. In the original 
+article it is specified that they may vary between pedestrians. However, in 
+practice they have a single value, so we treat them as such. The notation for 
+the interaction force is summarised in 
+figure~\ref{subfig:notation-interaction}.
 
-A value of $\lambda_{\alpha}=1$ means that the force won't depend on the angle. Thus $\alpha$ will react the same to $\beta$ no matter if $\beta$ is in the front or comes from the side or back. A value of $0$ will on the other hand give the maximum angle dependence. We find that $0\leq w\left(\phi_{\alpha \beta}\right)\leq1$ when $-1 \leq \cos \left( \phi \right) \left( t \right) \leq 1$. From this we see that $\alpha$ wont be affected at all if $\beta$ is coming from behind and the force will be maximum when $\beta$ comes directly in the front. It should be noted that in general one will find that the maximum of $w\left(\phi_{\alpha \beta}\right)$ always will be $1$ and the minimum will be equal to $\lambda_{\alpha}$. In very high density calculations $\lambda_{\alpha}$ is often put to $1$, removing $w(\phi_{\alpha \beta})$ and speeding up the simulations.   
-
-% we should make a drawing of this.
-
-The force, without the effect of $w\left(\phi_{\alpha \beta}\right)$, is given as the second term, in the right hand side of equation \ref{eq:pedestrianinteraction}. The function is:  
-
-\begin{equation}
-	\overrightarrow{g} 
-	\left(
-	d_{\alpha \beta}
-	\right)
-	=
-	 A_{\alpha} e^{ \left(\frac{ R_{\alpha \beta} - d_{\alpha \beta}}{B_{\alpha}}\right)}
-	\overrightarrow{n}_{\alpha \beta}
-	        \label{re}	
-\end{equation}
-
-Here $A_{\alpha}$ and $B_{\alpha}$ are constants that can differ for each pedestrian. 
-$R_{\alpha \beta}$ is the sum of the radii of $\alpha$ and $\beta$ that is 
-$R_{\alpha \beta} = R_{\alpha} + R_{\beta}$. $d_{\alpha \beta}$ is the 
-distance from the center of pedestrian $\alpha$ and the center of 
-pedestrian $\beta$ and is therefore given by $d_{\alpha \beta} = 
-\|\overrightarrow{p_{\alpha}}\left( t \right) - \overrightarrow{p_{\beta}}\left( t \right) \|$.
-$\eta_{\alpha \beta}$ is the unit vector pointing from $\alpha$ to $\beta$ 
-and it is given by:
-
-\begin{equation}
-    \eta_{\alpha \beta} =
-        \frac{\overrightarrow{p_{\alpha}}(t) - \overrightarrow{p_{\beta}}(t)}
-             {\|\overrightarrow{p_{\alpha}}(t) - \overrightarrow{p_{\beta}}(t) \|}
-\end{equation}
-
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
-    {\includegraphics[scale=0.35]{Figures/NotationOfInteraction.pdf}} 
-    \caption[Notation of the interaction between two pedestrians]{Illustration of the notation for the interaction between pedestrians.
-	     An addition and difference to \ref{NotationOfWall} is that the wall has been replaced by pedestrian $\beta$.
-	     $\eta_{\alpha \beta}$ is the vector pointing from $\alpha$ to $\beta$, and $\phi$ is the angle between $\alpha$'s 
-	     velocity vector and the vector to $\beta$.}
-    \label{fig:NotationOfInteraction}
+    \subfloat[Notation for interaction]{
+        \includegraphics[width=0.45\textwidth]{Figures/NotationOfInteraction.pdf}
+        \label{subfig:notation-interaction}
+    } 
+    \subfloat[Relation between distance and force]{
+        \includegraphics[width=0.45\textwidth]{Figures/physicalinteraction.pdf}
+        \label{subfig:interaction-relation}
+    } 
+    \caption[Interaction between two pedestrians]{Interaction between two 
+    pedestrians. \subref{subfig:notation-interaction} Notation of the 
+    interaction between pedestrians. $d_{\alpha \beta}$ is the distance 
+    between pedestrians, $\overrightarrow{n}_{\beta \alpha}$ is the unit 
+    vector pointing from $\beta$ to $\alpha$, $\theta$ is the angle between 
+    $\alpha$'s direction of movement and the vector pointing from $\alpha$ to 
+    $\beta$. \subref{subfig:interaction-relation} The repulsive force away 
+    from $\beta$ increases exponentially the closer $\alpha$ gets to $\beta$.}
+    \label{fig:pedestrian-interaction}
 \end{figure}
 
+The relation between the repulsive force from $\beta$ to $\alpha$ is seen in 
+figure~\ref{subfig:interaction-relation}. The force increases exponentially 
+the closer $\alpha$ gets to $\beta$. This means that the force will hardly be 
+noticeable for pedestrians that are far away from each other, but is strong 
+enough when they are close to each other to prevent them from colliding, 
+without adding any physical interaction forces. The threshold for when the 
+force becomes large enough to have an impact on the movement of $\alpha$ (the 
+range of the force) depends on the parameter $B$. The strength of the force 
+depends on the parameter $A$.
 
-%Equation \ref{pedestrianinteraction} is given by two terms. 
-%The first term determines how much the the angle between the pedestrians is and how much this angle should affect the force. 
-%The constant $\lambda$ is the one controling the importance of the angle.
-%The second term reflects the pedestrians tendency to stay at a certain distance 
-%from other pedestrians. The constants $A_{\alpha}$, $B_{\alpha}$ is the strength 
-%and range of the interaction respectively and controls how big the force will be at a certain distance.  
-
-Taking the norms of both sides of Equation (\ref{re}), we can draw the relation between the value of $\overrightarrow{f_{\alpha\beta}}(t)$ and $ d_{\alpha\beta} $, as shown in Figure 
-(\ref{fig:physicalinteraction2}).\\
-
-\begin{figure}[hb]
+\begin{table}
     \centering
-    {\includegraphics[scale=0.45]{Figures/physicalinteraction.pdf}} 
-    \caption[Psysical interaction]{Illustration of the function about the interaction force 
-        $f_{\alpha\beta}(t)$ and the distance between two pedestrians
-        $d_{\alpha \beta}$. It follows that the smaller the distance between two pedestrians, the greater the interaction force is. }
-    \label{fig:physicalinteraction2}
-\end{figure}
-
-There is one intersection of the graph and the  axis at:
-
-\begin{equation}
-	\left( d_{\alpha \beta} , \| \overrightarrow{f_{\alpha \beta}} \left( t \right) \| \right)
- =
-	\left( 0 , A_{\alpha} exp\left( \frac{R_{\alpha\beta} }{B_{\alpha}}\right)  \right) 
-\end{equation}
-
-If we put in values for the constants, we will be able to get a maximum value of $ f_{\alpha\beta}(t) $, 
-since the distance between pedestrians cannot be negative. Here we take values from \cite{ABconstant} $ A_{\alpha} = 0.42 m/s^{2} $, 
-$ R_{\alpha\beta} = 0.6 m $, and $ B_{\alpha} = 1.65 m $, so 
-$ f_{\alpha\beta}(t)^{max} < 0.64 m/s^{2} $. It can never be exactly $0.64m/s^2$ since the vector between $\alpha$ and $\beta$ will be undefined when two pedestrians are in the exact same spot.
-
-%TODO: remember to finish this section
-%TODO: again lets  have a little summation here. What kinds of dynamics does the
-% social interaction part of the model yield.
-
-\begin{center}
-\begin{tabular}{lll}
-\hline
-$d_{\alpha \beta}$& The distance from pedestrian $\alpha$ to $\beta$ &\\
-\hline
-$R_{\alpha\beta}$& The sum of the radii of pedestrian $\alpha$ and $\beta$ \\
-\hline
-$\lambda_{\alpha}$& Anisotropy parameter &\\
-\hline
-$\eta_{\alpha \beta}$& Normal vector pointing from $\beta$ to $\alpha$ \\
-\hline
-$A_{\alpha}$& Parameter controlling the interaction streanght \\
-\hline
-$B_{\alpha}$& Parameter controlling the range of the repulsive interaction  \\
-\hline
-\end{tabular}
-\end{center}
+    \begin{tabular}{l l}
+        \toprule
+        \multicolumn{2}{c}{\textsf{Parameters of the interaction force}}\\
+        $\theta_{\alpha \beta}$ & Angle between $\alpha$'s direction of 
+        movement and the vector from $\alpha$ to $\beta$\\
+        $d_{\alpha \beta}$& Distance between pedestrians $\alpha$ and $\beta$ \\
+        $n_{\beta \alpha}$& Unit vector pointing from $\beta$ to $\alpha$ \\
+        $\lambda$& Parameter controlling the anisotropic property of the 
+        interaction\\
+        $A$& Parameter controlling the interaction strength \\
+        $B$& Parameter controlling the range of the repulsive interaction  \\
+        \bottomrule
+    \end{tabular}
+    \caption{Summary of parameters of the interaction force}
+    \label{tbl:interaction-forces}
+\end{table}
 
 \subsection{Repulsion from the walls}\label{seq:repulsion-walls}
 The second term on the right hand side of equation \eqref{model} is a force which 
