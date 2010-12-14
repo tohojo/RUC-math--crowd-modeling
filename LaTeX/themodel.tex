@@ -563,6 +563,18 @@ $B_{\alpha}$& Parameter controlling the range of the repulsive interaction  \\
 \end{tabular}
 \end{center}
 
+\subsection{How to solve the differential equations}
+
+When we do the simulations of the model we will have $4N$ unlinear coupled differential equations, where $N$ is the number of pedestrians. The differential equations will be for the $x(t)$ and $y(t)$-positions of the pedestrians and $v_x(t)$ and $w_y(t)$ for the speed of the pedestrians. Solving these differential equation will be done nummerically in timesteps. There is alot of different algorithmes that can be used for solving these kind of equations. The way we will do it is by using the Euler algorithme. It is given by making a truncated Taylor expansion\cite{MD}:
+
+\begin{equation}
+p(t+\Delta t)=p(t)+v(t)\Delta t + \frac{1}{2}f(t)\Delta t^2
+\end{equation}     
+
+$\Delta t$ is the time step used. We will go into more details about how we choose it in the next section. 
+It is an algorithme that can be used to solve differential equations in molecular dynamics, which is bassicly the same kind of models that we work with just used to describe molecules instead of pedestrians\cite{social-force}. It is a method that has the advantage that it is one of the simplest way to solve the equations.  On the otherside it has a clear disadvantage being that is not as precise as more advanced algorithmes\cite{MD}. So this might result in having the model behave different than it actually is supposed to do, because of the errors in the nummerical solutions. But looking through some of the articles about social-force models, we can see that this is an algorithme, that is used by the authors too. This is seen in \cite{ABconstant} where they specific mention the Euler algorithme as the way to solve the differential equations. Which is the same article from where we adviced to use the pedestrians repulsion from. So we expect that even though it is not the best algorithmen that could be used to solve the equations we will be able to use it for the model and still get the results we hope for.  
+
+
 We have now seen the explicit mathematical expression for the social forces 
 as well as explained how this affects the behavior of the pedestrians. To get an 
 overview of how the model is put together look a figure \ref{overview} with 
