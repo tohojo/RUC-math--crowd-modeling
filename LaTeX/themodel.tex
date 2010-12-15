@@ -112,9 +112,10 @@ desired force is a velocity dependent force given by:
 Here $V_{\alpha}^{d}(t)$ is the desired speed at time $t$, 
 $\overrightarrow{e_{\alpha}}$ is the unit vector pointing towards the 
 pedestrian's target and  $\overrightarrow{V_{\alpha}}(t)$ is the actual 
-velocity of the pedestrian at time $t$. It is not clear from the what the 
-initial velocity of the pedestrians is (i.e. $\overrightarrow{V_\alpha}(0)$). 
-In our simulations we set it to be zero.
+velocity of the pedestrian at time $t$. It is not clear from the article what 
+the initial velocity of the pedestrians is (i.e.  
+$\overrightarrow{V_\alpha}(0)$), so we have assumed it to be zero.
+
 
 $\tau$ is the \emph{relaxation time} and determines how fast a pedestrian 
 returns to its desired velocity after having been walking slower because of 
@@ -466,7 +467,31 @@ table~\ref{tbl:wall-repulsion}.
     \label{tbl:wall-repulsion}
 \end{table}
 
-\subsection{Summary of the model}
+\subsection{Summary}
+As we have seen, the model consists of three main parts: the desired force, 
+the interaction force between agents and the repulsive force from walls. The 
+desired force represents the pedestrians desire to move at a certain speed, 
+given as a model parameter. The force accelerates the pedestrian to this 
+speed, even allowing the pedestrian to exceed this speed to catch up to lost 
+time in the event of a slowdown. The interaction force prevents pedestrians 
+from walking into each other. It is a repulsive force between pedestrians that 
+decreases exponentially with the distance to each other. Model parameters 
+determines the magnitude and range of the force. Finally, the repulsive force 
+from the walls prevents pedestrians from bumping into and walking through 
+walls. This force, like the interaction force, decreases exponentially with 
+distance, and its magnitude is determined by a model parameter.
+
+A complete summary of the model's notation and parameters is given in 
+table~\ref{tbl:model-summary}.
+
+Our review of the model has revealed various areas that we need to address in 
+order to create practical numerical simulations. We have already filled out 
+some gaps by adding details from articles other than the original, but the 
+model as we have presented it in this article is still quite abstract. In the 
+following section, we outline the parts missing to turn the model into a 
+simulation, and how we've solved these problems.
+
+
 \begin{table}[h]
     \centering
     \begin{tabular}{l l}
@@ -521,16 +546,4 @@ table~\ref{tbl:wall-repulsion}.
     \caption{Summary of the model.}
     \label{tbl:model-summary}
 \end{table}
-
-\subsection{How to solve the differential equations}
-
-When we do the simulations of the model we will have $4N$ unlinear coupled differential equations, where $N$ is the number of pedestrians. The differential equations will be for the $x(t)$ and $y(t)$-positions of the pedestrians and $v_x(t)$ and $w_y(t)$ for the speed of the pedestrians. Solving these differential equation will be done nummerically in timesteps. There is alot of different algorithmes that can be used for solving these kind of equations. The way we will do it is by using the Euler algorithme. It is given by making a truncated Taylor expansion\cite{MD}:
-
-\begin{equation}
-p(t+\Delta t)=p(t)+v(t)\Delta t + \frac{1}{2}f(t)\Delta t^2
-\end{equation}     
-
-$\Delta t$ is the time step used. We will go into more details about how we choose it in the next section. 
-It is an algorithme that can be used to solve differential equations in molecular dynamics, which is bassicly the same kind of models that we work with just used to describe molecules instead of pedestrians\cite{social-force}. It is a method that has the advantage that it is one of the simplest way to solve the equations.  On the otherside it has a clear disadvantage being that is not as precise as more advanced algorithmes\cite{MD}. So this might result in having the model behave different than it actually is supposed to do, because of the errors in the nummerical solutions. But looking through some of the articles about social-force models, we can see that this is an algorithme, that is used by the authors too. This is seen in \cite{ABconstant} where they specific mention the Euler algorithme as the way to solve the differential equations. Which is the same article from where we adviced to use the pedestrians repulsion from. So we expect that even though it is not the best algorithmen that could be used to solve the equations, we should still be able to use it for the model to get the results we are supposed to get.  
-
 
