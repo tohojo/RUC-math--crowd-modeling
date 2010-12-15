@@ -133,4 +133,47 @@ the pedestrians more easely get through the crowd.}
 \label{fig:freezingbyheating05}
 \end{figure}
 
+\subsection{The bottleneck}
+In this scenario we wanted to the the oscillitory flows that is reported 
+in \cite{self-org} to happen when you have a bidirectional flaw through a 
+bottleneck. A print screen from the simulation is shown in figure 
+\ref{fig:bottleneckbidirec}.
+
+\begin{figure}[h]
+\centering
+{\includegraphics[scale=0.35]{Figures/bottleneck.png}}
+\caption{}
+\label{fig:bottleneckbidirec}
+\end{figure}
+
+\subsection{The corridor with open space}
+In this scenario we wanted to reproduce the results that people start to 
+clock up in a corridor if there is a sudden area that allow pedestrians to try 
+and overtake each other. To see if the flow rate is affected by the pedestrians 
+who try to overtake each other we compare the flow rate with the wide space with 
+the flow rate from a normal corridor scenario. A screen shot from each simulation 
+can be seen in figure \ref{fig:widekink}.
+
+\begin{figure}[h]
+\centering
+\subfloat[]{\includegraphics[scale=0.25]{Figures/normalcorridor.png}}
+\subfloat[]{\includegraphics[scale=0.25]{Figures/Widespace.png}}
+\caption{}
+\label{fig:chokepoint}
+\end{figure}
+
+We expected to see that the flow rate in the scenario shown in figure 
+\ref{fig:chokepoint} (b) would be lower than in the scenario (a). What we sat 
+in shown in figure \ref{fig:is-faster-slower}
+
+\begin{figure}[h]
+\centering
+\subfloat[A graph of the mean velocity of the pedestrians in normal corridor]{\includegraphics[scale=0.45]{Figures/corridor-velocity.pdf}}
+\subfloat[A graph of the mean velocity of the pedestrian in the corridor with a wide space]{\includegraphics[scale=0.45]{Figures/bottleneck-velocity.pdf}}\\
+\subfloat[A graph of the flow rate of the pedestrians in the normal corridor]{\includegraphics[scale=0.45]{Figures/corridor-flowrate.pdf}}
+\subfloat[A graph of the flowrate in the corridor with the wide space]{\includegraphics[scale=0.45]{Figures/bottleneck-flowrate.pdf}}
+\caption{}
+\label{fig:is-faster-slower}
+\end{figure}
+
 % TODO: Add parameters that are varied.
