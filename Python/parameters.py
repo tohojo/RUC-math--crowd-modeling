@@ -195,13 +195,13 @@ scenarios = {
                                     (-500.0, 0.0)
                                    ],
             'density_rectangle'  : (-1.0, -0.8, 1.0, 0.8),
-            'flowrate_line'      : (0.0, -1.0, 0.0, 1.0),
+            'flowrate_line'      : (11.0, -3.0, 11.0, 3.0),     
             'continuous_rate'    : 10,
             'continuous_start'   : [
                                     (-10.0, -1.0, -9.0, 1.0),
                                     (9.0, -1.0, 10.0, 1.0)
                                    ],
-            'stop_at'            : None,
+            'stop_at'            : 60,
             'walls'              : [
                                     (-10.0,  3.0, -5.0,  3.0),
                                     (-10.0, -3.0, -5.0, -3.0),

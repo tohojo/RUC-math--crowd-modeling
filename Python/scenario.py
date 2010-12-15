@@ -3,7 +3,7 @@ import constants, setup
 from drawing import Canvas
 from plotting import Plots
 
-import pprint, os
+import pprint, os, random
 from datetime import datetime
 from time import time
 import numpy as np
@@ -205,6 +205,10 @@ class Scenario:
         self.time = 0.0
         self.frames = 0
         self.start_time = time()
+
+        if self.parameters["random_seed"] is not None:
+            np.random.seed(self.parameters["random_seed"])
+            random.seed(self.parameters["random_seed"])
 
         self._create_pedestrians()
 
