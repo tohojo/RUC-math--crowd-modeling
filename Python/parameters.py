@@ -11,10 +11,10 @@ scenarios = {
             'lambda'             : 1.0,
             'initial_count'      : 100,
             'start_areas'        : [(-5.0,-5.0,5.0,5.0)],
-            'velocity_mean'      : 2.0,
+            'velocity_mean'      : 1.3,
             'velocity_deviation' : 0.26,
             'max_velocity_factor': 1.3,
-            'radius_mean'        : 0.3,
+            'radius_mean'        : 0.2,
             'radius_deviation'   : 0.01,
             'targets'            : [(0.0,6.0)],
             'density_rectangle'  : (-1.0, 3.0, 1.0, 5.0),
@@ -22,6 +22,7 @@ scenarios = {
             'continuous_rate'    : None,
             'continuous_start'   : [],
             'stop_at'            : None,
+            'random_seed'        : 0,
             'walls'              : [
                                     (-5.0, -5.0,  5.0, -5.0),
                                     (-5.0, -5.0, -5.0,  5.0),
@@ -66,6 +67,7 @@ scenarios = {
                                     (9.0, -1.0, 10.0, 1.0)
                                    ],
             'stop_at'            : None,
+            'random_seed'        : 0,
             'walls'              : [
                                     (-10.0,  3.0, 10.0,  3.0),
                                     (-10.0, -3.0, 10.0, -3.0),
@@ -108,6 +110,7 @@ scenarios = {
                                     (9.0, -1.0, 10.0, 1.0)
                                    ],
             'stop_at'            : None,
+            'random_seed'        : 0,
             'walls'              : [
                                     (-10.0,  1.0, -5.0,  1.0),
                                     (-10.0, -1.0, -5.0, -1.0),
@@ -156,6 +159,7 @@ scenarios = {
                                     (9.0, -1.0, 10.0, 1.0)
                                    ],
             'stop_at'            : None,
+            'random_seed'        : 0,
             'walls'              : [
                                     (-10.0,  3.0, -5.0,  3.0),
                                     (-10.0, -3.0, -5.0, -3.0),

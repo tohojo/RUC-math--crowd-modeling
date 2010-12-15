@@ -3,10 +3,6 @@
 import constants
 import numpy, math, random
 
-if constants.random_seed is not None:
-    numpy.random.seed(constants.random_seed)
-    random.seed(constants.random_seed)
-
 def generate_pedestrians(parameters, start_areas, num):
     """Generates a number of pedestrians placed randomly within the
     area specified by the parameters, with parameters as specified
