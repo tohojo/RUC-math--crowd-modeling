@@ -71,7 +71,6 @@ simulations are:
 \begin{itemize*}
     \item Time step size.
     \item Plotting data sampling frequency.
-    \item Seed value for the random number generator.
 \end{itemize*}
 
 How the values of the parameters are determined is described in 
@@ -79,15 +78,11 @@ section~\ref{sec:init-cond}. From these parameters, the simulation is set up
 by initialising the calculation module and creating the pedestrians.
 
 The pedestrians are created with an initial velocity of zero, and distributed 
-randomly within the area(s) designated by the parameters for the scenario. To 
-avoid having pedestrians start out by overlapping, the starting area is divided 
-into a grid with cells a little larger than the size of the maximum diameter 
-of the generated pedestrians. The pedestrians are then placed into random cells of the 
-grid. This makes the starting configuration of the pedestrians a little more rigid 
-than what might otherwise be observed, but we feel this is acceptable since 
-pedestrians move out of these grid cells within the first few time steps.
+randomly within the area(s) designated by the parameters for the scenario, as 
+described in section~\ref{sec:init-pedestrians}. 
 
 \subsection{Calculation of the model}
+\label{sec:model-calculation}
 For each step of the simulation, the calculations are tun in two parts: 
 Finding the accelerations (or resulting force) for all pedestrians, and updating 
 position and velocity for the pedestrians.  Since the acceleration for each pedestrian 

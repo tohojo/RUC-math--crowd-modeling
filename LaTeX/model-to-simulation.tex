@@ -1,237 +1,171 @@
 \section{From model to simulation}
 \label{sec:model-to-simulation}
-When we started to implement the model and simulate our two cases, we encountered some
-problems that we did not foresee when we read the article \cite{self-org}, and the other
-articles \cite{helbing00}, \cite{social-force}.
-We encountered some special cases where the model did not suffice to give a realistic
-simulation, and also we could not, from the articles, figure out how to fix some initial parameters.
-In the articles the authors did not write of any such problems and how to deal with them,
-so we had to come up with our own solutions to solve them, and thereby give a more realistic
-simulation.
-In the following section we discuss these problems and our solutions to these problems.
+In this section we outline the things needed to turn the model as described in 
+section~\ref{sec:the-model} into a numerical simulation on a computer. This 
+includes clearing up ambiguities and filling in gaps in the model definition. 
+The goal is, of course, to actually create a working simulation of the model. 
+Some of the things described in this section we have come up with ourselves, 
+and other things we have collected from various other sources. References are 
+noted were applicable.
 
-\subsection{How to solve the differential equations}
+The things we discuss in this section are how to approximate the movement of 
+pedestrians, how to set initial conditions and constants and how to identify 
+the points on the walls to calculate repulsion from. Approximation of the 
+movement is needed when turning the model into a concrete numerical 
+simulation. Initial conditions are needed to set up the simulation, but not 
+all parameters are given in the articles. Finally, as is noted in 
+section~\ref{sec:wall-repulsion}, there are some edge cases that come into 
+play when determining which points to use in the calculation of the repulsion 
+from the walls. These problems are discussed in the following sections.
 
-When we do the simulations of the model we will have $4N$ unlinear coupled differential equations, where $N$ is the number of pedestrians. The differential equations will be for the $x(t)$ and $y(t)$-positions of the pedestrians and $v_x(t)$ and $w_y(t)$ for the speed of the pedestrians. Solving these differential equation will be done nummerically in timesteps. There is alot of different algorithmes that can be used for solving these kind of equations. The way we will do it is by using the Euler algorithme. It is given by making a truncated Taylor expansion\cite{MD}:
+
+\subsection{Approximating continuous movement}
+The model can be viewed as representing $4n$ non-linear coupled differential 
+equations, where $n$ is the number of pedestrians. These differential 
+equations describe the positions and speed of movement of the pedestrians in 
+the $x$ and $y$ directions. Since we do not know the differential equations, 
+we will approximate them by doing numerical simulations in discrete time 
+steps. There are various ways of approximating differential equations such as 
+those represented by the model; we have chosen to use Euler's method as it 
+is simple to work with. Euler's method is given by a truncated Taylor 
+expansion \cite{MD}:
 
 \begin{equation}
-p(t+\Delta t)=p(t)+v(t)\Delta t + \frac{1}{2}f(t)\Delta t^2
+    p(t+\Delta t)=p(t)+v(t)\Delta t + \frac{1}{2}f(t)\Delta t^2
 \end{equation}     
 
-$\Delta t$ is the time step used. We will go into more details about how we choose it in the next section. 
-It is an algorithme that can be used to solve differential equations in molecular dynamics, which is bassicly the same kind of models that we work with just used to describe molecules instead of pedestrians\cite{social-force}. It is a method that has the advantage that it is one of the simplest way to solve the equations.  On the otherside it has a clear disadvantage being that is not as precise as more advanced algorithmes\cite{MD}. So this might result in having the model behave different than it actually is supposed to do, because of the errors in the nummerical solutions. But looking through some of the articles about social-force models, we can see that this is an algorithme, that is used by the authors too. This is seen in \cite{ABconstant} where they specific mention the Euler algorithme as the way to solve the differential equations. Which is the same article from where we adviced to use the pedestrians repulsion from. So we expect that even though it is not the best algorithmen that could be used to solve the equations, we should still be able to use it for the model to get the results we are supposed to get.  
+% TODO: Add equation for velocity
 
+Here $p$ is the position, $v$ is the velocity, $f$ is the force and $\Delta t$ 
+is the time step.
 
-\subsection{Discussion on walls in special cases.}\label{wallEndpoints}
-The wall is created as a vector. The repulsive force vector is perpendicular to the wall 
-vector and has a direction directly towards the pedestrian $\alpha$.
+Euler's method, while simple, is not a very precise way of estimating the 
+equations, and is very sensitive to choosing a suitable time step. Various 
+more advanced methods of choosing the time step size as well as better 
+algorithms to estimate the equations exist \cite{MD}. However, these methods 
+are much more complicated to work with. Since Euler's method is specifically 
+mentioned as method used in \cite{ABconstant}, we have chosen to stick with 
+this method despite its disadvantages.
 
-In the general case of the repulsive force on an pedestrian, $\alpha$, from a wall 
-nearby is given as a function of the vector from the nearest point. This point we 
-calculate by finding the point that makes the vector form $\alpha$ to the wall be 
-perpendicular to to vector that is the wall. In some cases though the point will not 
-be on the wall it self. This of course makes no sense since the pedestrian would then be 
-repulsed by a non existing part of the wall meaning that it would avoid free 
-areas. In this case we would have to use the end point of the wall. But doing this 
-can make some unrealistic behaviour as well, if the walls have the right composition. 
+\subsubsection{Choosing the time step}
+\label{sec:choosing-timestep}
+Choosing a suitable time step size is important when applying Euler's method. 
+There are two main trade-offs in selecting this step size: precision of the 
+approximation and numerical rounding errors. If the step size is too large, 
+Euler's method will yield an approximation that differ too much from the 
+actual values of the equations. In our case this would result in pedestrians 
+changing direction and velocity too slowly, making them e.g. move through a 
+wall between two time steps. However, lowering the time step size will, apart 
+from resulting in longer calculation sizes, potentially increase the error 
+introduced by rounding errors. Rounding errors occur because numerical 
+simulations have a finite precision and so have to be rounded. The more 
+calculations occur, the larger this error becomes. This means that setting the 
+time step too low will result in too many errors from this source.
 
-Let's start out by looking at a case with no problem. A case with no problems is a 
-room where the angles between the walls is less than $180^o$, i.e. a squared room 
-where the angles are $90^o$. For a pedestrian close to the corner between two walls, we 
-would calculate the repulsive force from both of the walls. By doing this, we can avoid 
-the pedestrians to go through either one of the walls. Then we get a force directly away 
-from each of the walls. This clearly makes sense and there is no problem in doing so.
-
-\subsubsection{Forces at kinks}
-The case where the angle between two walls is greater than $180^o$ could on the 
-other hand give some problems if not handled correctly. The case is sketched in 
-figure \ref{fig:wallcase}. Here there are 3 different areas that a pedestrian $\alpha$ 
-can be in. The area A where $\alpha$ is only perpendicular to wall $1$, in area B, 
-$\alpha$ will not be perpendicular to any of the walls and in C he will be only 
-perpendicular to wall 2. 
-
-If a pedestrian is in area B then we would calculate the 
-forces from the end point of the walls. This will be from the point where the two 
-walls meet. This will give a double repulsion from one point and that 
-does not make sense. Also when the pedestrian is in are A or C it would get a repulsive force 
-from a second wall it would be of no risk of going into and in many situations 
-could not see because the first wall is blocking the sight. This of course does not 
-make any sense either. So the way that we handle this situation is the following. 
-When the angle between the walls is greater than $180^o$, from pedestrian $\alpha$'s 
-point of view, it should look at the two walls as one, and in that way it will 
-only calculate one force from the walls. In area A or C only the closest point 
-on the closest wall should affect it. In the case of $\alpha$ being in area B 
-the walls themselves does not matter, only the vector going from the conjoint 
-point of the walls to $\alpha$, should affect and only one time. Doing this, 
-there should be no unrealistic scenarios concerning wall junctions and walls 
-with more than $180^o$ between them. But this could create undesired 
-behaviour at doors of other objects created with free end points.
-
-\begin{figure}[ht]
-\centering
-\includegraphics[scale=0.45]{Figures/WallCase.pdf} 
-\caption{}\label{fig:wallcase}
-\end{figure}
-
-\subsubsection{The force at doorways}
-We encountered a problem when dealing with doors. The problem arises because 
-the door is constructed by two free endpoints and an pedestrian feels two repulsion 
-forces from these points according to section \ref{wallEndpoints}. This means 
-that a pedestrian trying to exit through the door will feel repulsive forces 
-from both of the walls which prevent it from walking through the door. The moment it 
-passes through the door it will be pushed forward and accelerate which is unwanted 
-behaviour. This we resolved by removing the force from free endpoint when:
-
-\begin{equation}
-\| p - w \| > R
-\end{equation}
-where $ p $ is the position of the pedestrian, $ w $ is the position of the door's endpoint, 
-and $ R $ is the radius of the pedestrian.
-
-This creates what we could call a "non repulsion zone" see figure(Mikkel Lav Tegning!).
-In rare cases it could happen that an pedestrian is trying to exit the room and it feels 
-no repulsion because it is in the "non repulsive zone", and it is then pushed sideways out 
-of the "non repulsion zone" and suddenly it will feel a great repulsive force because 
-it first "discovers" the force when it is very close to the wall see figure(Mikkel Lav Tegning!).
-
-\subsubsection{Calculating the repulsion from walls}
-\label{sec:repulsion-points}
-The calculation of repulsion from the walls is split in two parts for each 
-pedestrian: First all the points on the walls that will affect the pedestrian is 
-identified, then the repulsion from each point is calculated. As explained in 
-section~\ref{sec:the-model}, the repulsion from the wall is measured from the 
-nearest point of the wall to the pedestrian. Identifying these points is done using 
-the following algorithm:
-
-\begin{enumerate}
-    \item For each wall, calculate the projection of the vector pointing from 
-        the wall's starting point to the pedestrian, unto the vector pointing from 
-        the wall's starting point to its endpoint.
-        \begin{enumerate}
-            \item If this point is part of the wall, save it to the list of points 
-                repulsion should be calculated from, and add the wall's two endpoints 
-                to the list of already used endpoints.
-
-            \item If the projected point is not part of the wall, the endpoint closest 
-                to the pedestrian is used instead. This endpoint is saved to a 
-                third list of endpoints repulsion should be calculated from.
-        \end{enumerate}
-
-    \item After having gone through all walls, for each point in the third 
-        list, check if this point is already in the list of used endpoints. If 
-        so, discard it. Otherwise, add it to the list of points repulsion 
-        should be calculated from, and to the list of used endpoints.
-\end{enumerate}
-
-The algorithm starts out with the list of walls, and produces a list of points 
-to calculate this repulsion from, ensuring that no wall endpoint is used 
-twice. The points are then used as a basis for calculating the repulsion, as 
-described in section~\ref{sec:the-model}.
+Methods exist to iteratively adjust the precision of the approximations, such 
+as the Runge-Kutta method \cite{butcher2003}. However, from experimenting with 
+various time step values, we have found that setting a suitably small static 
+time step provides reasonable results, so we have chosen not to complicate our 
+simulation further by applying such methods.
 
 \subsection{Initial conditions and constants}
 \label{sec:init-cond}
-% TODO: Go through all the constants and add where we got it from; either a 
-% reference or saying that we came up with it ourselves.
-When initialising the model, parameters are set for each pedestrian. In the 
-model, every parameter can vary between pedestrians, while in practice many of them 
-do not. In this section, we go through the parameters and how they are set.  
-For all random numbers, the operating system's built-in random number 
-generator is used and considered to be sufficient for our purposes. We run 
-multiple simulations of the same initial conditions by fixing the seed of the 
-random number generator to the same value for each run. Distributions are 
-drawn by using the distribution functions of the \emph{NumPy} mathematical 
-library for Python \cite{numpy}.
+As seen in section~\ref{sec:the-model}, there are various parameters the must 
+be set in order to simulate the model. Apart from this, there are also various 
+initial conditions (such as the pedestrians' starting position) that must be 
+set. In this section, we outline these parameters and initial conditions, and 
+describe how we have obtained their values.
 
-\subsubsection{Position related parameters}
-There are a number of parameters that are set that have to do with the initial 
-position of pedestrians and walls. Some are given, and some we had to come up
-with ourselves. They are:
+\subsubsection{A note on random numbers}
+Some of the initial conditions are set using random distributions, either 
+evenly or Gaussian distributed, in order to simulate national variations in 
+e.g. the size of pedestrians.  These random numbers are created by the 
+pseudorandom number generator built in to the Python programming language.  
+This generator is an implementation of the Mersenne twister 
+generator\footnote{See \url{http://en.wikipedia.org/wiki/Mersenne\_twister}} and we 
+consider it sufficient for our purposes. This type of pseudorandom number 
+generator is deterministic for identical seed values, which means we can run 
+multiple simulations of the same initial conditions by fixing the seed of the 
+random number generator to the same value for each run.
+
+Of course the use of (pseudo)random numbers may be a source of errors. We 
+discuss this further in section~\ref{sec:random-errors}.
+
+For the initial conditions that are Gaussian distributed, we obtain 
+distributions by using the distribution functions of the \emph{NumPy} 
+mathematical library for Python \cite{numpy}.
+
+\subsubsection{Scenario geometry}
+We set various parameters that describe the geometry of the scenarios we want 
+to simulate. We have defined these ourselves, from the scenario descriptions 
+given in section~\ref{sec:results}. These parameters are:
 
 \begin{itemize}
-    \item \textbf{Wall endpoints:} Points describing the endpoints of the 
-        walls. They are set according to the scenario we want to simulate, so 
-        in a square room with a single exit in the middle of a wall, there 
-        will be five wall segments.
+    \item \textbf{Placement of walls:} The placement of the walls is described 
+        by defining the endpoints describing the lines segments that 
+        constitute each wall.
 
-    \item \textbf{Pedestrian positions:} Each pedestrian has a starting position 
-        distributed randomly within the room. They are created by drawing a 
-        set of random numbers for the x and y coordinates respectively, and 
-        adjusting the range of this random number to be within the room's 
-        dimensions. Pedestrians' positions are adjusted so that they do not overlap 
-        with the walls by adjusting coordinates so that the distance from the 
-        center of each pedestrian to each wall is at most the radius. This 
-        adjustment is not made between pedestrians, so they may overlap initially. 
-        It is assumed that the model will correct this within the first few 
-        simulation steps, which is also what we have seen in practice.
+    \item \textbf{Pedestrian starting areas:} For each scenario we define one 
+        or more areas in which the pedestrians start. The pedestrians are 
+        distributed randomly within these areas, as described below.
 
-    \item \textbf{Pedestrian's radius:} The pedestrian's radius is drawn from a normal 
-        distribution with a mean of $0,3$ meters and a standard deviation of 
-        $0,05$ meters. This is done to simulate a natural variety in the width 
-        of human shoulders, and to avoid deadlocks caused by perfectly 
-        symmetrical forces that might otherwise occur \cite{helbing00}.
-        %TODO: Check this reference, maybe better explanation?
+    \item \textbf{Pedestrian targets:}  Pedestrians move towards their 
+        assigned target, as described in section~\ref{sec:desired-force}. 
+        Targets do no differ between pedestrians, except that we assign a 
+        target for each starting area to allow for simulating scenarios where 
+        pedestrians move towards each other in groups.
+
+        Since the model does not deal with path finding, targets are not 
+        changed during the simulation. When a pedestrian reaches its target, 
+        it is considered to have escaped, and is removed from the simulation.
 \end{itemize}
 
-\subsubsection{Movement related parameters}
-A number of parameters are set to control the movement of the pedestrians. They 
-are:
+
+\subsubsection{Pedestrians' parameters}
+\label{sec:init-pedestrians}
+There are a number of parameters that relate to the pedestrians. They are:
 
 \begin{itemize}
-% TODO: Add a section about placement of waypoints.
-%   Square room: Place the waypoint at or just outside the exit.
-%   Corridor: Place the waypoint a long distance away, so that pedestrians 
-%   move almost in a straight line along the corridor.
-    \item \textbf{Waypoint:} We think of this setup that suits each scenario  
-        by ourselves. Each pedestrian has a waypoint that they move towards, 
-        and is the same for all pedestrians when there is only one exit. 
-        For a square room, this waypoint is set just outside the exit the pedestrian 
-        will move towards. For a corridor, the waypoint is put at a position 
-        far away from the corridor and along the line that the corridor lies, so that
-        there is no traffic rules for each pedestrian such as to stick to the right or left.
+    \item \textbf{Pedestrians' radii:} The radii of the pedestrians, 
+        $R_\alpha$, is drawn from a Gaussian distribution with a mean of $0,3$ 
+        meters and a standard deviation of $0,05$ meters. This is done to 
+        simulate a natural variety in the width of human shoulders, and to 
+        avoid deadlocks caused by perfectly symmetrical forces that might 
+        otherwise occur. This method of assigning pedestrian radii is taken 
+        from \cite{helbing00}.
+        %TODO: Check source.
         
-        %where there are multiple exits, pedestrians are set to move towards one of 
-        %the exits at random, regardless of their position within the room. 
-        Since the model does not deal with pathfinding, waypoints are not 
-        changed during the simulation. When an pedestrian reaches its waypoint, it is 
-        considered to have escaped, and is removed from the simulation.
+    \item \textbf{Pedestrian positions:} Pedestrians start out randomly 
+        distributed throughout the designated starting areas defined for each 
+        scenario. We have not found an explanation for how this is done in any 
+        of the articles, so we have come up with the following algorithm for 
+        placing pedestrians:
 
-    \item \textbf{Initial velocity:} The initial velocity does not matter much 
-        because the pedestrian can quickly adjust its velocity during the first few 
-        step sizes, and there is no recommends from the articles. 
-        Our way of getting the initial velocity is by setting both a vector and a scalar 
-        representing vector length. The scalar velocities are drawn from a 
-        normal distribution with a mean of $1.34$ and a standard deviation of 
-        $0,26$. The initial velocity vectors are created by multiplying the 
-        scalar velocity with a normalised vector pointing from the pedestrian's 
-        initial position to the waypoint.
-        % TODO: Where do the mean and deviation come from?
-
-    \item \textbf{Desired speed $  V_{i}^{0}  $:} The desired speed is 
-        the speed the pedestrian wants to move at (see the explanation in 
-        section~\ref{sec:the-model}). The desired speed at $ t=0 $ is set 
-        equal to the initial speed 
-        under our assumption that when people start to leave a room they will 
-        initially (try to) move with their desired speed, and then be 
-        affected by the model parameters once they start moving.
-
-    \item \textbf{Maximum desired speed $ V_{i}^{max} $:} The maximum 
-        desired speed depends on its desired speed as $ V_{i}^{max} =1.3 V_{i}^{0}  $.
-       c
+        To avoid having pedestrians start out on top of each other, the 
+        starting area is divided into a grid with cells a little larger than 
+        the size of the maximum diameter of the generated pedestrians. The 
+        pedestrians are then placed into random cells of the grid. This makes 
+        the starting configuration of the pedestrians a little more rigid than 
+        what might otherwise be observed, but we feel this is acceptable since 
+        pedestrians move out of these grid cells within the first few time 
+        steps.
         
-    \item \textbf{Relaxation time $ \tau $:} The relaxation time is the time it would 
-        take an unhindered pedestrian to adjust to its desired velocity after 
-        having been hindered by something blocking their path. This is set to 
-        one second for all pedestrians, in \cite{self-org}. However, in another article 
-        \cite{helbing00}, the relaxation time is $ 0,5 $.
+    \item \textbf{Initial velocity:} As described in 
+        section~\ref{sec:desired-force}, the initial pedestrian velocity is 
+        assumed to be zero.
 
-    \item \textbf{$\lambda$:} \cite{ABconstant} chose $\lambda$ $\approx 0.1$ 
-        to take into account
-    anisotropic character of pedestrian interaction, such that the situations 
-    in front of
-    a pedestrian have bigger impact on the pedestrians behaviour than things 
-    going on
-    behind them. 
-    % TODO: Is this explanation correct?
+
+    \item \textbf{Initial desired speed:} The initial desired speed, 
+        $V^{Id}_\alpha$, for the pedestrians is set to be Gaussian 
+        distributed with a mean of $1,34$ and a standard deviation of $0,26$. 
+        % TODO: Update these when we have the actual velocities, add source.
+
+    \item \textbf{Maximum desired speed :} The maximum desired speed is set to 
+        $V_{i}^{max}1,3V^{Id}_\alpha$.
+        % TODO: Source
+        
+    \item \textbf{Relaxation time:} The relaxation time, $\tau$, is set to one 
+        second. This value is taken from \cite{self-org}. 
 \end{itemize}
 
 \subsubsection{Constants} \label{constants}
@@ -239,39 +173,134 @@ The model includes a number of constants. These are parameters that do not
 vary between the pedestrians, but are fixed for the whole simulation. They are:
 
 \begin{itemize}
-    \item \textbf{Timestep:} The timestep is the $\Delta t$ that passes for 
-        each step of the simulation. As discussed in 
-        section~ %TODO: Make new reference
-		, there are various trade-offs in making 
-        this parameter larger or smaller. We have experimented with different 
-        values, and have found that a value of $0,01$ seconds makes for a 
-        simulation without errors such as jitter that results from larger 
-        timestep values. Since setting the timestep corresponds to setting a 
-        delta value for an Euler integration, there are various methods that 
-        originate from this integration method, that might be used to vary the 
-        timestep dynamically during the simulation. 
-         However, we have found 
-        that with a fixed value of $0,01$ seconds, we get reasonable 
-        performance of our simulation, so we have not found the need to 
-        complicate our program by applying such methods.
-        % TODO: Reference for dynamic timestep adjustment
+    \item \textbf{Time step size:} We have experimented with various time step 
+        sizes, and have found that with a fixed value of $0,01$ seconds, we 
+        get reasonable results from our simulation.
 
-    \item \textbf{$A$, $B$:} These values are given in \cite{ABconstant}. 
-        Although the model allows for them to vary between pedestrians, we have 
-        (just as is done in the article) set them to a fixed value for the 
-        whole simulation. The values given are $A_2=3,0$ and $B_2 = 0,2$. However, 
-        we need to adjust the values to make the pedestrians behave like in reality 
-        when the mean velocity of pedestrians is changed.
+    \item \textbf{$A$, $B$:} We set $A=3,0$ and $B=0,2$, taken from  
+        \cite{ABconstant}.
+        % TODO: Update with actual values
 
-    \item \textbf{$ U^{0} $:} While calculating the wall repulsive force, a potential
-        constant $ U^{0} $ is needed to get the force. Though it will be realistic to 
-        have a hard core potential \cite{self-org}, we have tried different values 
-        of $ U^{0} $ so that the pedestrians do not keep a too far distance from the wall 
-        and they do not pass through the wall under normal conditions. In the end, 
-        we choose $ U^{0} =2 $ .
+    \item \textbf{$U$:} We have not found a source for the $U$ parameter. 
+        Experimenting with different values, we have found that a value of 
+        $U=2,0$ gives reasonable results.
+        % TODO: Update with actual values. Do we have a source?
  
+        \item \textbf{$\lambda$:} We set $\lambda=0,1$, from 
+            \cite{ABconstant}.
 \end{itemize}
 
-Above we have made some compliments to the model, setting up constants and 
-design details in calculation that is not shown in the model, and then we are able to  
-show our own simulation in the following section.
+\subsection{Finding the nearest point on a wall}
+\label{sec:repulsion-points}
+As mentioned in section~\ref{sec:wall-repulsion}, it is not clear from the 
+article how the nearest point $p_{\gamma \alpha}$ on a wall from a given 
+pedestrian is found. In many cases it is obvious: $p_{\gamma \alpha}$ is the 
+point of intersection of the wall and a line perpendicular to the wall passing 
+through $p_\alpha$ (the projection of $p_\alpha$ onto the wall).
+
+However, since walls are described as line segments, such a point is not 
+guaranteed to exist; the pedestrian may be positioned off either end of the 
+wall. In the simple case, this is easily remedied: simply define $p_{\gamma 
+\alpha}$ as the projection of $p_\alpha$ onto the wall, and if no such 
+projection exists, define $p_{\gamma \alpha}$ to be the wall endpoint closest 
+to $p_\alpha$. This approach works except for two cases: When walls have kinks 
+and at doorways.
+
+\subsubsection{Walls with kinks}
+Since each wall is defined as a line segment, a single wall cannot have kinks 
+in it. To define such a wall, multiple line segments are defined with shared 
+end points. When the angle between such two walls is greater than $180^\circ$, 
+as indicated by the angle $\theta$ in figure~\ref{fig:wall-kinks}, a 
+problem appears.
+
+The reason for this problem is that the same endpoint may be indicated for 
+repulsion from multiple walls. Looking at figure~\ref{fig:wall-kinks}, a 
+pedestrian in area A will be repulsed both by a point on the wall $\gamma_1$, 
+but also from the nearest endpoint of $\gamma_2$, which is shared with 
+$\gamma_1$. A pedestrian in area B will be repulsed from both walls at the 
+endpoint shared between $\gamma_1$ and $\gamma_2$. Both these situations will 
+result in an extra repulsion that is the result of the way walls are 
+represented (as line segments), and not a part of the model. To avoid this, 
+the algorithm for selecting which points to calculate wall repulsion from has 
+to take this into account.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.45]{Figures/WallCase.pdf} \caption[A wall with 
+    kinks]{A wall with kinks. A pedestrian $\alpha$ in the area A will be 
+    repulsed by a point on the wall $\gamma_1$ and by the nearest endpoint of 
+    $\gamma_2$. In the area B, $\alpha$ will be repulsed twice by the endpoint 
+    shared between $\gamma_1$ and $\gamma_2$. This situation occurs when the 
+    angle $\theta > 180^\circ$.}
+    \label{fig:wall-kinks}
+\end{figure}
+
+\subsubsection{Doorways}
+Another problem occurs at doorways: if the wall repulsion points are set to be 
+the nearest endpoints of wall segments, a pedestrian passing through a doorway 
+would be repulsed by both sides of this doorway, creating an unwanted barrier 
+for passing through it. In simulations, this appears as a weak invisible force 
+that pedestrians have to overcome to escape through doorways.
+
+To solve this problem, the algorithm for selecting which points on the walls 
+to calculate the repulsion from must take into account that once a pedestrian 
+is passing through a doorway, no repulsion should be calculated from the wall 
+segments that form the door. A way to accomplish this is to distinguish 
+between endpoints that are shared with other walls, and endpoints that are 
+``free-floating''. Such endpoints are only considered for repulsion if they 
+are closer to the pedestrian than its radius, i.e. if the pedestrian touches 
+the wall. This is illustrated in figure~\ref{fig:doorways}.
+
+\subsubsection{Algorithm for identifying wall repulsion points}
+\label{sec:repulsion-points-algorithm}
+Based on the description above, we have devised the following algorithm for 
+selecting which points on the walls should be included when calculating the 
+repulsion force from walls.
+
+The algorithm is run for each pedestrian. Its input is the pedestrians 
+position, $p_\alpha$ and the set of starting points and endpoints of the 
+walls. The output is a set of points repulsion should be calculated from. A 
+set of endpoints that are already used and endpoints that are candidates for 
+repulsion are used during the operation of the algorithm.
+
+\begin{enumerate}
+    \item For each wall, calculate the projection of the vector pointing from 
+        the wall's starting point to the pedestrian, unto the vector pointing 
+        from the wall's starting point to its endpoint.
+        \begin{enumerate}
+            \item If this point is part of the wall, add it to the set of 
+                points repulsion should be calculated from, and add the wall's 
+                two endpoints to the set of already used endpoints.
+
+            \item If the projected point is not part of the wall, the endpoint closest 
+                to the pedestrian is used instead. This endpoint is added to 
+                the set endpoints that are candidates for repulsion.
+        \end{enumerate}
+
+    \item After having gone through all walls, for each point in the set of 
+        candidate endpoints, check if this point is already in the set of 
+        used endpoints. If it is, discard it. 
+
+    \item Otherwise, check if the endpoint is shared with another wall (i.e. 
+        if it appears twice in the set of candidate endpoints).
+        
+    \item If the endpoint is either shared with another wall or closer to the 
+        pedestrian than the pedestrian's radius, add it to the set of 
+        repulsion points.
+\end{enumerate}
+
+Our implementation of this algorithm is described in 
+section~\ref{sec:model-calculation}.
+
+\subsection{Summary}
+In this section we have discussed the things that are needed to turn the model 
+description into a numerical simulation. These things are approximating the 
+movement of pedestrians through Euler's method, setting initial constants and 
+parameters, and an algorithm for identifying the points on the walls nearest 
+to a pedestrian. Some of the solutions to the problems associated with turning 
+the model into a simulation we have found solutions of in the literature, and 
+some we have come up with ourselves. Euler's method and some of the constants 
+belong in the former group, while other constants and the algorithm for 
+identifying wall points belong in the latter.
+
+In the following section, we outline how we have implemented our simulation.
