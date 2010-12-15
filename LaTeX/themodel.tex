@@ -360,134 +360,113 @@ depends on the parameter $A$.
     \label{tbl:interaction-forces}
 \end{table}
 
-\subsection{Repulsion from the walls}\label{seq:repulsion-walls}
-The second term on the right hand side of equation \eqref{model} is a force which 
-arise from interactions with the walls or other obstacles. It is given by:
+\subsection{Repulsion from the walls}
+\label{seq:repulsion-walls}
+The \emph{repulsive force} from the walls is the force that prevents 
+pedestrians form walking into, or even through, walls in the simulation. As 
+with the interaction force between pedestrians, the repulsive force from the 
+walls functions without taking into account the physical forces between walls 
+and pedestrians.
+
+The repulsion from the wall $\gamma$ is given by:
 
 \begin{equation}\label{wallpotential}
-    \overrightarrow{f_{\alpha B}} \left( \overrightarrow{p_{\alpha}} \right) =
-    - \nabla_{\overrightarrow{p_{\alpha}}} U_{B}
-    \left( \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| \right)
+    \overrightarrow{f_{\alpha \gamma}}(t) =
+    - \nabla_{\overrightarrow{p_{\alpha}}} h
+    \left( d_{\alpha \gamma}(t) \right)
 \end{equation}
 
-$U_B$ is a repulsive potential and $\|\overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}}\|$ 
-is the distance from the position of pedestrian $\alpha$ to the nearest point on the 
-wall as shown in figure \ref{NotationOfWall}. Since $U_B$ is a function of the distance 
-$\| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \|$, the gradient of $U_B$ tells us in 
-which direction this repulsion change the most. It is obvious that the change is 
-largest if the pedestrian takes a step directly towards or away from the point in the wall, 
-which means that the pedestrian will be pushed directly away from the point in the wall.
+Here $h$ is a repulsive potential and $d_{\alpha \gamma}(t)$ is the distance 
+from the pedestrian to the nearest point on the wall at time $t$. 
+$\nabla_{\overrightarrow{p_\alpha}}$ is the gradient of the repulsive 
+potential with respect to the pedestrian's position. The notation for the wall 
+interaction is summarised in figure~\ref{fig:wall-notation}.
+
+It is not clear from the article how finding the nearest point on the wall is 
+accomplished. In most cases this can be done by projecting the position of the 
+pedestrian onto the line segment that defines a wall. Some complications 
+arise when walls are at odd angles to pedestrians; this is discussed further 
+in section~\ref{sec:repulsion-points}. In the following, we assume that the 
+nearest point on the wall, $\overrightarrow{p_{\gamma \alpha}}$, is known.
 
 \begin{figure}[ht]
-\centering
-{\includegraphics[scale=0.35]{Figures/NotationOfWall.pdf}} 
-\caption[Notation of the interaction between an pedestrian and a wall]{The illustration shows the mathematical notation for the interaction with walls used. The circle is pedestrian $\alpha$ with radius $R_{\alpha}$, $\overrightarrow{p_{\alpha}}$ is the position vector for $\alpha$, the grey box on the top is the wall, $\overrightarrow{p_{B}^{\alpha}}$ is the position vector for the closest part of the wall to $\alpha$, $\left( \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| \right)$ is the smallest distance from $\alpha$ to the wall and $\overrightarrow{V_{\alpha}}$ is the velocity vector for $\alpha$.}
-\label{NotationOfWall}
+    \centering
+    {\includegraphics[width=0.5\textwidth]{Figures/NotationOfWall.pdf}} 
+    \caption[Notation for the interaction between pedestrians and 
+    walls]{Notation for the interaction between pedestrians and walls.  
+    $\overrightarrow{p_\gamma}$ is the point on the wall $\gamma$ nearest to 
+    pedestrian $\alpha$ and  $d_{\alpha \gamma}(t)$ is the distance between 
+    the pedestrian and the wall.}
+    \label{fig:wall-notation}
 \end{figure}
 
-In order to do the actual calculation we need to know the explicit expression for 
-$ \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \|$. First we need to find point on the wall 
-that is perpendicular to $\alpha$ as this will be the nearest point to $\alpha$. If we define 
-the wall as a vector, $\overrightarrow{W}$ going from a point in space $w_1$ to another point $w_2$, then 
-we can find the projection of $\alpha$'s position onto the wall and this projection will be 
-$\overrightarrow{p_{B}^{\alpha}}$. This projection is given by:
-
-\begin{equation}\label{wall}
-\overrightarrow{p_{B}^{\alpha}}=\frac{\overrightarrow{p_{\alpha}}\cdot \overrightarrow{W}}{\| \overrightarrow{W} \|^2}\overrightarrow{W}
-\end{equation}
-
-With this we now have the two points we need to calculate $\|\overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}}\|$ 
-since the position of $\alpha$ is know at all times.
-
-With the explicit expression for $ \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| $ 
-in hand we are able to calculate $\overrightarrow{f_{\alpha B}} \left( \overrightarrow{p_{\alpha}} \right)$ from 
-Equation \ref{wallpotential}, as long as the expression for the potential function 
-$U_{B}\left( \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| \right)$ is given. This is 
-however not the case in the main article we are working with. In another articles \cite{ABconstant} by 
-the same author the repulsive potential from the wall is given by: 
+The definition of $h\left( d_{\alpha \gamma}(t) \right)$ is not given in 
+\cite{self-org}. However, as with the interaction force between pedestrians, 
+it is given in \cite{ABconstant} by: 
 
 \begin{equation}
-U_{B} \left( \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| \right) =
-U^0_{\alpha B} e^{- \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| / R_{\alpha} }
+    h \left( d_{\alpha \gamma}(t) \right) =
+    U e^{\frac{- d_{\alpha \gamma}(t) }{ R_{\alpha} }}
 \end{equation}
 
-where $U^0_{\alpha B}$ is a constant and $R_{\alpha}$ is the radius of a pedestrian $\alpha$.
-In that case, the repulsive force on pedestrian $ \alpha $ from the wall is:
+where $U$ is a constant given as a model parameter.
+
+Since $p_{\gamma \alpha}$ and $p_\alpha$ are known, the gradient can be 
+calculated only for the magnitude of the force, adding the direction later. 
+Given this interpretation, the wall interaction force becomes:
+
 
 \begin{equation}
-    \overrightarrow{f_{\alpha B}} \left( \overrightarrow{p_{\alpha}} \right) =
-    - \nabla_{\overrightarrow{p_{\alpha}}} U_{B}
-    \left( \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| \right)\\
-=-\left( \frac{\partial}{\partial x_{\alpha}}U_{B}( \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \|), \frac{\partial}{\partial y_{\alpha}}U_{B}( \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \|)\right)
+    f_{\alpha \gamma}(t) =
+    -\frac{\partial}{\partial d_{\alpha \gamma}(t)}U e^{\frac{- d_{\alpha 
+    \gamma}(t) }{ R_{\alpha} }} \overrightarrow{u_{\gamma \alpha}}
 \end{equation}
 
-Calculating the derivatives we assume that we now the direction of the force, so the differentiation will be one dimensional
+where $\overrightarrow{u_{\gamma \alpha}}$ is the unit vector pointing from 
+$\gamma$ to $\alpha$.
+
+Differentiating this gives: 
 
 \begin{equation}
-\begin{split}
-f_{\alpha B} \left( \overrightarrow{p_{\alpha}} \right) 
- = -\frac{\partial}{\partial \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \|}U^0_{\alpha B} e^{- \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| / R_{\alpha} }
-\end{split}
+    f_{\alpha \gamma}(t) =
+    \frac{U}{R_\alpha} 
+    e^{\frac{- d_{\alpha \gamma}(t) }{ R_{\alpha} }}
+    \overrightarrow{u_{\gamma \alpha}}
+    \label{eqn:wall-repulsion}
 \end{equation}
 
-The differentiation then gives: 
+Since the distance between the pedestrian and the wall cannot be negative, the 
+exponential term of the repulsion will always be between zero and one, rising 
+towards one as the distance decreases. This means that $0 < |f_{\alpha 
+\gamma}(t)| < U/R_\alpha$, increasing exponentially towards $U/R_\alpha$ as 
+the distance between the pedestrian and the wall decreases. Similar to the 
+interaction force between pedestrians, this means the repulsion from the walls 
+is negligeble when the distance is large, but strong enough to prevent 
+pedestrians from walking into or through walls even when no physical forces 
+are present. The model parameter, $U$, determines exactly how strong this 
+repulsive force is.
 
-\begin{equation}
-    f_{\alpha B} \left( \overrightarrow{p_{\alpha}} \right) 
-=\frac{1}{R_{\alpha}} U^0_{\alpha B} e^{- \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| / R_{\alpha} }
-\end{equation}
+The parameters for the wall repulsion is summarised in 
+table~\ref{tbl:wall-repulsion}.
 
-To get the direction of the force, we multiply it with the unit vector of the vector from the wall to $\alpha$ since the force will have the same direction 
-\begin{equation}\label{eqn:wall-repulsion}
-\overrightarrow{f_{\alpha B}}=\frac{1}{R_{\alpha}} U^0_{\alpha B} e^{- \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| / R_{\alpha} }\frac{\left(p_{\alpha x}-p_{Bx}^{\alpha },p_{\alpha y}-p_{By}^{\alpha }\right)}{ \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| }
-\end{equation}
-
-The exponential function will always lay between 0 and  1:
-
-\begin{equation}
-0 < e^{ -\| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| /R_\alpha} < 1
-\end{equation}
-
-Which leads to:
-
-\begin{equation}
-0< U_{B} \left( \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \| \right) < U^0_{\alpha B}
-\end{equation}
-
-We can see that this force act in the following way: $\overrightarrow{f_{\alpha B}}$ tends to 0 as the distance 
-$\| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \|$ gets large, meaning that a pedestrian in a reasonably 
-distance from the wall will feel a diminishing force. $\overrightarrow{f_{\alpha B}}$ tends to $U^0_{\alpha B}$ 
-as the distance $ \| \overrightarrow{p_{\alpha}} - \overrightarrow{p_{B}^{\alpha}} \|$ tends to $0$ the pedestrian will be 
-pushed, with some force depending on $U^0_{\alpha B}$, away from the wall. The negative of the force 
-means that when the potential between wall and pedestrian rises so will the force, but in the opposite 
-direction meaning that the pedestrian will be pushed away. This can be understood as if the pedestrian 
-is trying to avoid the wall as it is expected from real life situations. \cite{social-force}. %real references, please.
-
-\begin{center}
-\begin{tabular}{lll}
-\hline
-$\overrightarrow{p_{\alpha}^{\text{B}}}$& Vector pointing from origo to the point on the wall nearest to pedestrian alpha &\\
-\hline
-$\overrightarrow{W}$& Vector representing the wall &\\
-\hline
-$U_{B}$ & Repulsive potential from the wall\\
-\hline
-$U^{0}_{\alpha B}$ & Constant representing pedestrian alpha's tendency to avoid walls\\
-\hline
-$R_{\alpha}$& Repulsive potential from the wall\\
-\hline
-\end{tabular}
-\end{center}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{l l}
+        \toprule
+        \multicolumn{2}{c}{\textsf{Parameters for wall repulsion}}\\
+        $\overrightarrow{p_{\gamma \alpha}}$ & Point on the wall $\gamma$ closest to 
+        the pedestrian.\\
+        $d_{\alpha \gamma}(t)$ & Distance from the wall $\gamma$ to pedestrian 
+        $\alpha$. \\
+        $U$ & Constant determining the magnitude of the repulsive force from 
+        walls. \\
+        \bottomrule
+    \end{tabular}
+    \caption{Summary of parameters for wall repulsion.}
+    \label{tbl:wall-repulsion}
+\end{table}
 
 \subsection{Summary of the model}
-\begin{figure}[hb] %with some more comments i think that this figure could serve as a summation of the entire section
-    \centering
-    {\includegraphics[scale=0.35]{Figures/overview.pdf}} 
-    \caption[Overview of the model]{Illustration of an overview of how the model is put together. The different equations and their notation is written to give the 
-	     reader an overview of how the model looks like.}
-    \label{overview}
-\end{figure}
-
 \begin{table}[h]
     \centering
     \begin{tabular}{l l}
@@ -528,6 +507,15 @@ $R_{\alpha}$& Repulsive potential from the wall\\
         interaction\\
         $A$& Parameter controlling the interaction strength \\
         $B$& Parameter controlling the range of the repulsive interaction  \\
+
+        \midrule
+        \multicolumn{2}{c}{\textsf{Parameters for wall repulsion}}\\
+        $\overrightarrow{p_{\gamma \alpha}}$ & Point on the wall $\gamma$ closest to 
+        the pedestrian.\\
+        $d_{\alpha \gamma}(t)$ & Distance from the wall $\gamma$ to pedestrian 
+        $\alpha$. \\
+        $U$ & Constant determining the magnitude of the repulsive force from 
+        walls. \\
         \bottomrule
     \end{tabular}
     \caption{Summary of the model.}
@@ -546,9 +534,3 @@ $\Delta t$ is the time step used. We will go into more details about how we choo
 It is an algorithme that can be used to solve differential equations in molecular dynamics, which is bassicly the same kind of models that we work with just used to describe molecules instead of pedestrians\cite{social-force}. It is a method that has the advantage that it is one of the simplest way to solve the equations.  On the otherside it has a clear disadvantage being that is not as precise as more advanced algorithmes\cite{MD}. So this might result in having the model behave different than it actually is supposed to do, because of the errors in the nummerical solutions. But looking through some of the articles about social-force models, we can see that this is an algorithme, that is used by the authors too. This is seen in \cite{ABconstant} where they specific mention the Euler algorithme as the way to solve the differential equations. Which is the same article from where we adviced to use the pedestrians repulsion from. So we expect that even though it is not the best algorithmen that could be used to solve the equations, we should still be able to use it for the model to get the results we are supposed to get.  
 
 
-We have now seen the explicit mathematical expression for the social forces 
-as well as explained how this affects the behavior of the pedestrians. To get an 
-overview of how the model is put together look a figure \ref{overview} with 
-the aid of table. In section \ref{sec:assessment} 
-we discuss some of the models features in more detail as well as some features 
-that the model does not have. For the implementation of the model see section \ref{sec:simulation}.
