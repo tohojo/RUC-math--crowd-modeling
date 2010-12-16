@@ -108,20 +108,24 @@ We think that there are more explations to this result. For the first the pedest
 is higher when $\alpha$'s velocity gets higher, and therefore he more easely pushes his way through the crowd. For the second
 there are no friction between the pedestrians to slow $\alpha$ speed down, besides the social sphere.
 
-\subsection{Comparison between the relaxation time $1,0$ and $0,5$}
-It is seen that the density in the corridor is more steady when the relaxation time is set to $0.5$.
-This is true for both max desired velocity tested.
+\subsection{Comparison between the relaxation time $1,0$ second and $0,5$ second}
+When simulating the corridor with the initial conditions and changing the relaxation time from $1,0 s$ to $0,5 s$,
+the pedestrians do not get stuck as easely when the relaxtion time is $0,5 s$ as they do when the relaxation time
+is $1,0 s$. This can be seen in figure \ref{fig:comparison_of_timestep}, that in (a), the density get high faster,
+while in (b) the density does not increase as fast as (a).
+When the relaxation time is $0,5 s$, the pedestrians reacts faster, in the sense that they speed up faster,
+after collisions with pedestrians walking in the other direction.
 
 \begin{figure}[h]
 \centering
-\subfloat[The figure show the density in corridor when the relaxation time is set to $1,0$]{\includegraphics[scale=0.45]{Figures/dens_init_20.pdf}}
-\subfloat[This figure shows the density in the corridor when the relaxation time is set to $0,5$]{\includegraphics[scale=0.45]{Figures/dens_relax05_20.pdf}}
-\caption{These figures show the difference of the density when changing the relaxation time of the model from $1$ to $0,5$.
-It is seen the the density is more steady when the relaxtion time is $0,5$ instead of $1,0$}
+\subfloat[The figure show the density in corridor when the relaxation time is set to $1,0 s$]{\includegraphics[scale=0.45]{Figures/dens_init_relax1.pdf}}
+\subfloat[This figure shows the density in the corridor when the relaxation time is set to $0,5 s$]{\includegraphics[scale=0.45]{Figures/dens_init_relax05.pdf}}
+\caption{These figures show the difference of the density when changing the relaxation time of the model from $1,0 s$ to $0,5 s$.
+It is seen the the density is more steady when the relaxtion time is $0,5 s$ instead of $1,0 s$}
 \label{fig:comparison_of_timestep}
 \end{figure}
 
-A possible explanation of why the density is more steady through out the simulation when the relaxation time is $0,5$,
+A possible explanation of why the density is more steady through out the simulation when the relaxation time is $0,5 s$,
 is that the pedestrians reacts faster to changes of their velocity. Thus when they bump into each other, they speed up
 faster, and therefore avoid clogging up before more get in their path.
 

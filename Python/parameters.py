@@ -40,40 +40,40 @@ scenarios = {
         }),
         'corridor': Scenario({
             'name'               : 'corridor',
-            'A'                  : 12.0,
+            'A'                  : 3.0,
             'B'                  : 0.2,
-            'U'                  : 12.0,
-            'lambda'             : 1.0,
-            'initial_count'      : 1,
+            'U'                  : 2.0,
+            'lambda'             : 0.1,
+            'initial_count'      : 50,
             'start_areas'        : [
-                                    (-10.0,-0.7,-1.0,0.7),
-                                    (1.0,-0.7,10.0,0.7)
+                                    (-10.0,3.0,10.0,3.0),
+                                    (-10.0,-3.0,10.0,-3.0)
                                    ],
-            'velocity_mean'      : 2.0,
+            'velocity_mean'      : 1.34,
             'velocity_deviation' : 0.26,
-            'max_velocity_factor': 3.0,
-            'radius_mean'        : 0.2,
-            'radius_deviation'   : 0.01,
+            'max_velocity_factor': 1.3,
+            'radius_mean'        : 0.3,
+            'radius_deviation'   : 0.05,
             'targets'            : [
                                     (500.0,0.0),
                                     (-500.0, 0.0)
                                    ],
             'density_rectangle'  : (-1.0, -0.8, 1.0, 0.8),
             'flowrate_line'      : (0.0, -1.0, 0.0, 1.0),
-            'continuous_rate'    : 10,
+            'continuous_rate'    : 3,
             'continuous_start'   : [
                                     (-10.0, -0.7, -9.0, 0.7),
                                     (9.0, -0.7, 10.0, 0.7)
                                    ],
-            'stop_at'            : 50,
+            'stop_at'            : 60,
             'walls'              : [
-                                    (-10.0,  1.0, 10.0,  1.0),
-                                    (-10.0, -1.0, 10.0, -1.0)
+                                    (-10.0,  3.0, 10.0,  3.0),
+                                    (-10.0, -3.0, 10.0, -3.0)
                                    ],
             'drawing_width'      : 750,
             'drawing_height'     : 350,
             'pixel_factor'       : 30,
-            'relax_time'         : 0.1,
+            'relax_time'         : 1.0,
             'vary_parameters'    : {
                                     #'A'            : (4.0, 6.0, 0.01),
                                     'velocity_mean': (1.5, 5.0, 0.5),

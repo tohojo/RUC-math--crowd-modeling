@@ -160,15 +160,17 @@ There are a number of parameters that relate to the pedestrians. They are:
 
     \item \textbf{Initial desired speed:} The initial desired speed, 
         $V^{Id}_\alpha$, for the pedestrians is set to be Gaussian 
-        distributed with a mean of $1,34$ and a standard deviation of $0,26$. 
-        % TODO: Update these when we have the actual velocities, add source.
+        distributed with a mean of $1,34$ and a standard deviation of $0,26$.
+	These values are taken from \cite{social-force}. 
+
 
     \item \textbf{Maximum desired speed :} The maximum desired speed is set to 
         $V_{\alpha}^{max}=1,3V^{Id}_\alpha$.
-        % TODO: Source
+	As the initial desired speed this value is also taken from \cite{social-force}.
+      
         
-    \item \textbf{Relaxation time:} The relaxation time, $\tau$, is set to one 
-        second. This value is taken from \cite{self-org}. 
+    \item \textbf{Relaxation time:} The relaxation time, $\tau$, is set to $1$ 
+        second in \cite{self-org}, and $0,5$ second in \cite{social-force} and \cite{helbing00}. 
 \end{itemize}
 
 \subsubsection{Constants} \label{constants}
@@ -184,10 +186,11 @@ vary between the pedestrians, but are fixed for the whole simulation. They are:
         \cite{ABconstant}.
         % TODO: Update with actual values
 
-    \item \textbf{$U$:} We have not found a source for the $U$ parameter. 
-        Experimenting with different values, we have found that a value of 
-        $U=2,0$ gives reasonable results.
-        % TODO: Update with actual values. Do we have a source?
+    \item \textbf{$U$:} In \cite{social-force} they set $U$ to be $10,0 m^2 s^{-2}$.
+	Since this gave a bad result, meaning the force from the wall was too high
+	when simulating, we experimentedg with different values, and found tha
+	a value of $U=2,0 m^2 s^{-2}$ gives reasonable results.
+ 
  
         \item \textbf{$\lambda$:} We set $\lambda=0,1$, from 
             \cite{ABconstant}.
