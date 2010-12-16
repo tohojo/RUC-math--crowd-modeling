@@ -45,14 +45,14 @@ figure~\ref{pedestrian-notation}.
     \caption[Notation for pedestrians]{Notation for a pedestrian.  
     \subref{subfig:notation} The notation for pedestrian properties. Position 
     vector ($ \overrightarrow{p_{\alpha}} $), velocity vector ($ 
-    \overrightarrow{V_{\alpha}} $), vector pointing towards 
-    the target ($\overrightarrow{e_{\alpha}}$)  and radius ($ R_{\alpha} $).
+    \overrightarrow{V_{\alpha}} $), vector pointing towards the target 
+    ($\overrightarrow{e_{\alpha}}$)  and radius ($ R_{\alpha} $).
     %
-    \subref{subfig:forces} Main forces acting on a pedestrian $\alpha$. 
+    \subref{subfig:forces} Main forces acting on a pedestrian $\alpha$.  
     Interaction force from pedestrian $\beta$ 
     ($\overrightarrow{f_{\alpha\beta}}$), repulsive force from wall $\gamma$ 
-    ($\overrightarrow{f_{\alpha \gamma}}$) and desired force towards target 
-    ($\overrightarrow{f^{d}_{\alpha}}$).}
+    ($\overrightarrow{f_{\alpha \gamma}}$) and desired movement force towards 
+    target ($\overrightarrow{f^{d}_{\alpha}}$).}
 
     \label{pedestrian-notation}
 \end{figure}
@@ -66,7 +66,7 @@ the sum of the three main forces:
     \sum_{\gamma} \overrightarrow{f_{\alpha \gamma}}
 \end{equation}
 
-Here $\overrightarrow{f_{\alpha}^{d}}$ is the desired force,  
+Here $\overrightarrow{f_{\alpha}^{d}}$ is the desired movement force,  
 $\overrightarrow{f_{\alpha \beta}}$ is the interaction force from pedestrian 
 $\beta$ and $\overrightarrow{f_{\alpha \gamma}}$ is the repulsive force from 
 wall $\gamma$. The main forces are summarised in table~\ref{tbl:main-forces} 
@@ -77,7 +77,7 @@ and will be described in detail in the following sections.
     \begin{tabular}{l l}
         \toprule
         \multicolumn{2}{c}{\textsf{Main forces}}\\
-        $\overrightarrow{f_{\alpha}^{d}}$ & Desired force\\
+        $\overrightarrow{f_{\alpha}^{d}}$ & Desired movement force\\
         $\overrightarrow{f_{\alpha \beta}}$ & Interaction force from pedestrian 
         $\beta$\\
         $\overrightarrow{f_{\alpha \gamma}}$ & Repulsive force from wall 
@@ -95,12 +95,12 @@ and will be described in detail in the following sections.
     \label{tbl:main-forces}
 \end{table}
 
-\subsection{The desired force}
+\subsection{The desired movement force}
 \label{sec:desired-force}
-The \emph{desired force} represents the pedestrians' desire to move towards its 
+The \emph{desired movement force} represents the pedestrians' desire to move towards its 
 target. The idea is that a pedestrian, if unhindered, will move towards its 
 target at an initial desired speed that is given as a model parameter. The 
-desired force is a velocity dependent force given by:
+desired movement force is a velocity dependent force given by:
 
 \begin{equation}\label{eqn:desired-force}
 	\overrightarrow{f^{d}_{\alpha}} (t) =
@@ -201,21 +201,22 @@ the property that $V^d_\alpha(t)=V^{Id}_\alpha$ when $\langle V_\alpha(t)
 Since $V^{\text{max}}_\alpha$ is set to be larger than $V^{Id}_\alpha$, this 
 means that as the average speed goes up, the desired speed goes down.  When 
 the desired speed is lower than the actual speed, this will result in a 
-negative desired force due to~\eqref{eqn:desired-force}, and vice versa. The 
-end result is that the desired force will act as a stabilising force, that 
-accelerates the pedestrian when it's moving slower than its desired speed, and 
-decelerate it when it's moving faster, but allowing for movement of up to the 
-maximum desired speed to ``make up'' for lost time if the pedestrian has been 
-slowed down by the other forces acting on it.
+negative desired movement force due to~\eqref{eqn:desired-force}, and vice 
+versa. The end result is that the desired movement force will act as a 
+stabilising force, that accelerates the pedestrian when it's moving slower 
+than its desired speed, and decelerate it when it's moving faster, but 
+allowing for movement of up to the maximum desired speed to ``make up'' for 
+lost time if the pedestrian has been slowed down by the other forces acting on 
+it.
 
-The components of the desired force are summarised in 
+The components of the desired movement force are summarised in 
 table~\ref{tbl:desired-force}.
 
 \begin{table}[h]
     \centering
     \begin{tabular}{l l}
         \toprule
-        \multicolumn{2}{c}{\textsf{Parameters of the desired force}}\\
+        \multicolumn{2}{c}{\textsf{Parameters of the desired movement force}}\\
         $\overrightarrow{V_{\alpha}}(t)$ & Velocity of pedestrian $\alpha$ 
         at time $t$\\
         $V_{\alpha}^{d}(t)$ & Desired speed of pedestrian $\alpha$ at time 
@@ -226,7 +227,7 @@ table~\ref{tbl:desired-force}.
         $\tau$& Relaxation time \\
         \bottomrule
     \end{tabular}
-    \caption{Summary of parameters of the desired force}
+    \caption{Summary of parameters of the desired movement force}
     \label{tbl:desired-force}
 \end{table}
 
@@ -362,7 +363,7 @@ depends on the parameter $A$.
 \end{table}
 
 \subsection{Repulsion from the walls}
-\label{seq:repulsion-walls}
+\label{sec:wall-repulsion}
 The \emph{repulsive force} from the walls is the force that prevents 
 pedestrians form walking into, or even through, walls in the simulation. As 
 with the interaction force between pedestrians, the repulsive force from the 
@@ -468,18 +469,19 @@ table~\ref{tbl:wall-repulsion}.
 \end{table}
 
 \subsection{Summary}
-As we have seen, the model consists of three main parts: the desired force, 
-the interaction force between agents and the repulsive force from walls. The 
-desired force represents the pedestrians desire to move at a certain speed, 
-given as a model parameter. The force accelerates the pedestrian to this 
-speed, even allowing the pedestrian to exceed this speed to catch up to lost 
-time in the event of a slowdown. The interaction force prevents pedestrians 
-from walking into each other. It is a repulsive force between pedestrians that 
-decreases exponentially with the distance to each other. Model parameters 
-determines the magnitude and range of the force. Finally, the repulsive force 
-from the walls prevents pedestrians from bumping into and walking through 
-walls. This force, like the interaction force, decreases exponentially with 
-distance, and its magnitude is determined by a model parameter.
+As we have seen, the model consists of three main parts: the desired movement 
+force, the interaction force between agents and the repulsive force from 
+walls. The desired movement force represents the pedestrians desire to move at 
+a certain speed, given as a model parameter. The force accelerates the 
+pedestrian to this speed, even allowing the pedestrian to exceed this speed to 
+catch up to lost time in the event of a slowdown. The interaction force 
+prevents pedestrians from walking into each other. It is a repulsive force 
+between pedestrians that decreases exponentially with the distance to each 
+other. Model parameters determines the magnitude and range of the force. 
+Finally, the repulsive force from the walls prevents pedestrians from bumping 
+into and walking through walls. This force, like the interaction force, 
+decreases exponentially with distance, and its magnitude is determined by a 
+model parameter.
 
 A complete summary of the model's notation and parameters is given in 
 table~\ref{tbl:model-summary}.
@@ -497,9 +499,9 @@ simulation, and how we've solved these problems.
     \begin{tabular}{l l}
         \toprule
         \multicolumn{2}{c}{\textsf{Main forces}}\\
-        $\overrightarrow{f_{\alpha}^{d}}$ & Desired force\\
-        $\overrightarrow{f_{\alpha \beta}}$ & Interaction force from pedestrian 
-        $\beta$\\
+        $\overrightarrow{f_{\alpha}^{d}}$ & Desired movement force\\
+        $\overrightarrow{f_{\alpha \beta}}$ & Interaction force from 
+        pedestrian $\beta$\\
         $\overrightarrow{f_{\alpha \gamma}}$ & Repulsive force from wall 
         $\gamma$\\
 
@@ -512,7 +514,7 @@ simulation, and how we've solved these problems.
         $R_\alpha$ & Radius of pedestrian $\alpha$\\
 
         \midrule
-        \multicolumn{2}{c}{\textsf{Parameters of the desired force}}\\
+        \multicolumn{2}{c}{\textsf{Parameters of the desired movement force}}\\
         $\overrightarrow{V_{\alpha}}(t)$ & Velocity of pedestrian $\alpha$ 
         at time $t$\\
         $V_{\alpha}^{d}(t)$ & Desired speed of pedestrian $\alpha$ at time 

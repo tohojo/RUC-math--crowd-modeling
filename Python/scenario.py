@@ -29,6 +29,7 @@ class Scenario:
             'continuous_start'   : lines to spawn new pedestrians at. start line i will move
                                    towards target i
             'stop_at'            : time to end the simulation at
+            'random_seed'        : seed for the random number generator
             'walls'              : list of wall quadruplets
             'drawing_width'      : width for drawing images
             'drawing_height'     : height for drawing images
@@ -40,6 +41,8 @@ class Scenario:
 
     def __init__(self, parameters = {}):
         self.parameters = parameters
+        if not "random_seed" in self.parameters:
+            self.parameters["random_seed"] = constants.random_seed
         self.timestep = constants.timestep
         self.run_time = datetime.now()
         self.parameters['run_time'] = self.run_time.strftime("%Y-%m-%d %H:%M:%S")
