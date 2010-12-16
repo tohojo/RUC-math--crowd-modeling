@@ -2,12 +2,117 @@
 \label{sec:discussion}
 As we have seen in section~\ref{sec:results}, we have not obtained the 
 expected results from our simulations in all cases. In this section we discuss 
-possible reasons for this discrepancy between the expected and actual results, 
-and some possible changes that we believe will fix these discrepancies.
+some possible changes that we believe will fix these discrepancies.
 
-The section is divided into two parts: in the first we discuss possible errors 
-related to our implementation of the simulation, and in the second part we 
-discuss changes to the model that might fix some of the discrepancies.
+The section is divided into three parts: A discussion of the effects of adding 
+additional forces to the model, a discussion of parameter values, and a 
+discussion of possible errors related to our implementation of the simulation.
+
+\subsection{Adding additional forces}
+An obvious possibility when discussing why we do not see the expected results, 
+is analysing the forces that comprise the model. Two things become apparent: 
+the forces in the model are simplistic, as they are calculated in only one 
+direction (away from the point of repulsion), and none of them are dependent 
+on the current velocity of the pedestrians. This gives rise to two types of 
+behaviour: pedestrians walking directly towards each other do not try to avoid 
+colliding, and pedestrians running towards a wall decelerate at the same rate 
+as pedestrians walking towards it. This is illustrated in 
+figure~\ref{fig:extra-forces-behaviour}.
+
+\begin{figure}[h]
+    \centering
+    \subfloat[Pedestrians walking towards each other.]{
+        \begin{tikzpicture}[scale=2,>=latex]
+             \node (p1) at (-0.5,0.5) [circle,draw] {};
+             \node (p2) at ( 0.5,0.5) [circle,draw] {};
+             \node (p3) at (-0.5,0) [circle,draw] {};
+             \node (p4) at ( 0.5,0) [circle,draw] {};
+
+             \draw[->] (p1) -- +(0.5,0);
+             \draw[->] (p2) -- +(-0.5,0);
+             \draw[->] (p3) -- (0,0.1);
+             \draw[->] (p4) -- (0,-0.1);
+
+            \useasboundingbox (-2,-1) rectangle (2,1);
+        \end{tikzpicture}
+        \label{subfig:colliding}
+        }
+    \subfloat[Pedestrians running and walking towards a wall.]{
+        \begin{tikzpicture}[scale=2,>=latex]
+            \draw[o-o] (-1,1) -- (1,1);
+            \node (p1) at (-0.5,0) [circle,draw] {};
+            \node (p2) at ( 0.5,0) [circle,draw] {};
+
+            \draw[blue,->] (p1) -- +(0,0.5);
+            \draw[blue,->] (p2) -- +(0,0.75);
+            \draw[red,->] (p1) -- +(0,-0.25);
+            \draw[red,->] (p2) -- +(0,-0.25);
+            \useasboundingbox (-2,-1) rectangle (2,1);
+        \end{tikzpicture}
+        \label{subfig:equal-repulsion}}
+    \caption[Behaviour from simplistic forces]{Behaviour from simplistic 
+    forces. \subref{subfig:colliding} Pedestrians walking towards each other 
+    do not divert to the side (top pair), even though doing to would avoid a 
+    collision (bottom pair). \subref{subfig:equal-repulsion} Pedestrians 
+    heading towards the wall at different speeds (blue arrows) are repulsed 
+    equally (red arrows).}
+    \label{fig:extra-forces-behaviour}
+\end{figure}
+
+When pedestrians decelerate at the same rate no matter their velocity, they 
+will in certain extreme cases (i.e. when they are moving very fast) not 
+decelerate enough, and so will move through walls or even each other. Since 
+the repulsive forces are exponential in nature, lowering the time step size 
+enough for the increasing forces to take effect as the distance becomes 
+shorter somewhat mitigates the tendency to walk through walls; however, it is 
+not always enough. Adding a velocity-dependent term to the repulsive forces 
+could be a remedy for this behaviour. Indeed, adding such a force has been 
+seen to improve model predictions when compared to data from real life 
+situations \cite{ABconstant}.
+
+Making pedestrians avoid each other might be done by adding a component of the 
+repulsive force that is tangential to the direction of the vector between the 
+repulsion points. Such a force would be a way to avoid having pedestrians that 
+head straight for a collision (as we have seen examples of in our simulations) 
+and instead make them sidestep each other, as illustrated in 
+figure~\ref{subfig:colliding}. We believe this would improve the results from 
+the simulations of corridors that have pedestrians walking in both directions. 
+It could also enable pedestrians to navigate around static obstacles, such as 
+pillars. While we have not done any simulations involving such obstacles, this 
+has been seen in e.g. \cite{tang}. Finally, a tangential force might allow 
+pedestrians to navigate along a wall if its target is on the other side of it; 
+this could be used to simulate pedestrians trapped in a smoke-filled room 
+where the exits are not visible.
+
+Another improvement of adding tangential forces comes from the similarities 
+between such forces and frictional forces seen in real life. This would make 
+it harder for pedestrians to move through a densely packed crowd, and we 
+believe adding such forces would enable us to see the faster-is-slower effect 
+in our simulation. This is corroborated by the fact that other articles that 
+include this effect incorporate just such a tangential force \cite{self-org}. 
+Other effects related to clogging of passages, such as the freezing by heating 
+effect might also be more apparent given tangential forces.
+
+
+\subsection{Parameter values}
+The magnitude of the forces in the model depend heavily on the values of the 
+various constants that are set as model parameters. This means that choosing 
+good model parameters is important to get good results. The parameters we have 
+used are obtained from several different articles, and so we cannot be sure 
+that our starting point has been a good one. Especially since the parameters 
+vary wildly between articles, when they are at all comparable. We have 
+attempted to adjust some of the parameters when we have seen strange 
+behaviour, such as pedestrians walking through walls, etc. The fact remains, 
+though, that we cannot be sure that the parameters we have ended up using are 
+good ones, and this might be a source of error.
+
+In newer articles we have seen parameter values obtained by fitting model 
+predictions to results obtained experimentally, by filming real human crowds.  
+We believe this is a good way to estimate parameters, but it leaves us at a 
+disadvantage since we are not able to do such experiments with our own 
+implementation of the model and we cannot compare the implementations to that 
+of others to transfer the results. Therefore, selection of parameters 
+continues to be a possible source of errors for our simulations.
 
 \subsection{Our implementation of the simulations}
 \label{sec:random-errors}
@@ -45,7 +150,10 @@ are generated. An example of this is seen in figure~\ref{fig:random-seed},
 where one pedestrian starts out with a very low desired velocity, causing it 
 to move extremely slowly. The long leaving time is then not caused by clogging 
 of the exit, but simply by the delay from the time it takes the pedestrian to 
-cross the distance between its starting point and the exit.
+cross the distance between its starting point and the exit. To mitigate the 
+effect caused by extremely high or low random numbers, we have sought to pick 
+seed values for the random number generator that do not result in such 
+numbers.
 
 \begin{figure}[h]
     \centering
@@ -58,74 +166,20 @@ cross the distance between its starting point and the exit.
 \end{figure}
 
 
+\subsection{Summary}
+We have discussed several possible cause for errors in our model, and possible 
+remedies. The forces in the model have a simplistic nature in that they only 
+have one direction, corresponding to the direction between the repulsion 
+points, and they are not adjusted by pedestrian walking speed. This could be 
+remedied by adding tangential forces and forces that are dependent on walking 
+speed, which might produce better results. Selection of parameters is also a 
+possible source of error; a possible remedy, that is inaccessible to us, is 
+obtaining parameters from real-world experiments, by fitting data to 
+simulations. Finally, errors arising from the nature of our implementation 
+might occur. This includes possible coding errors, and errors as a result of 
+extremely small or large random numbers used when setting initial conditions. 
+This can be somewhat mitigated by testing the implementation, and by 
+discarding very small or large random numbers.
 
-\subsection{Clogging in narrow places}
-The article \cite{self-org} claims that social force models are able to reproduce the clogging phenomena which arises when a large number of pedestrians try to pass a narrow passage. This phenomena is also know as the "faster is slower phenomena". Through our simulation this phenomena has not occurred.
-
-
-
-\subsection{Pedestrians overlapping and walking through walls}
-A problem we encountered during the simulation was pedestrians walking through walls and/or pedestrians overlapping. Both these scenarios are illustrated in figure \ref{fig:problemSenario}. This could be caused by the size of the time step see section \ref{constants}, but the time step can not always correct this problem.
-
-A person can have a resulting force which points towards the wall even as the distance to the wall approaches zero. This problem arise when pedestrians are moving fast and are unable to stop in time and occurs because the model do not take into account how fast pedestrians are approaching walls or other pedestrians.
-
-In other words, a pedestrian running towards a wall will decelerate at the same rate as a person walking towards the wall. One could argue that this is unrealistic behaviour because, the person running should start decelerating sooner than the person walking. A person which has a force towards the wall which exceed the force he feels from the wall, then he will always go through the wall. This phenomena is off course not dependent on the time step, since even with a infinity small time step this could occur. One way of elimination this problem is by making the force a pedestrian feel depend not only on the distance to the obstacle but also depend on the current speed towards this obstacle. Such a feature has been documented to improve the predictions of the model\cite{ABconstant}.
-\begin{figure}
-\centering
-\subfloat[Overlapping occurs when speeds get to high in this case $2.50m/s$ which prevents pedestrians from stopping in time.]{\includegraphics[scale=0.5]{Figures/squareRoomOverlapping}}
-\subfloat[A single pedestrian escapes through the wall due to a initial speed of $3.50m/s$]{\includegraphics[scale=0.5]{Figures/squareRoomThrowWall}}
-\caption{These pictures was produced with the following values: $A=2.2$, $B=0.2$, $U=2.0$, Pedestrian number=$100$, $\lambda=0.1$, $v^{max}_0=1.3 \cdot v_0$, $\tau = 1.0$, $\triangle t = 0.01$, only the starting velocity was changed}
-\label{fig:problemSenario}
-\end{figure}
-\subsection{Faster-is-slower effect}
-The article \cite{self-org} claims that social force models are models which are capable of representing the faster-is-slower effect. In our simulations people leave the room faster and faster as we increase their max speed. The article 
-
-\subsection{Tangential forces}
-Here we discuss the idea of improving the model by improving tangential forces, that is, the force parallel to the surface of an object.
-The tangential forces can be used as collision avoidance, so that pedestrians steer around obstacles or other pedestrians \cite{tang}.
-This would be relevant when simulating an environment where, e. g., and is standing in the middle of a symmetrical room and the pedestrian's waypoint
-is behind a big square pillar, with equal distance either way around, the pedestrian would get stuck in front of the pillar without the tangential forces,
-since the forces acting on the pedestrian's motivation is cancelling each other out. 
-In our case where two groups of pedestrians are crossing each other in a corridor, the tangential force would make the pedestrians to into account
-the position of the pedestrians in front of them and steer around them.
-The tangential forces can also improve the model so it can simulate pedestrians escaping a smoke filled room where we determine the visibility.
-In this case of simulation the pedestrians would walk randomly around untill they find a wall, and follow the wall around due to the tangential force.
-This would be a way of implementing way finding to the model.
-
-Friction between pedestrians would also be possible to add to the model, since the tangential forces from other pedestrians would make it
-harder for pedestrians to walk through a crowd. \cite{self-org} mention that friction is causing clogging in front of exits, since the people
-get stuck in each other. In our simulation the pedestrians are not clogging as heavily as \cite{self-org} mention it can be.
-The time it take for the pedestrian to leave a room in unrealistic low, and we think that implementing the friction by tangential forces
-would make the simulation time more realistic.
-
-\subsection{Freezing by heating effect}
-According to \cite{self-org} the freezing by heating effect should arise when the max desired velocity of the pedestrians was raised.
-That is that clogging should arise when raising the max velocity of the pedestrians, because more are ariving to the possible
-clogging area, and thus have more trouble getting through the crowd. 
-We tried to raise the max velocity, see figure \ref{fig:freezingbyheating1} and figure \ref{fig:freezingbyheating05}, but instead of observing the freezing by heating effect, we saw that the pedestrians
-got through the corridor more easely, and that the density in the corridor was lower when the max velocity was high.
-We think that there are more explations to this result. For the first the pedestrian $\alpha$'s force toward the target
-is higher when $\alpha$'s velocity gets higher, and therefore he more easely pushes his way through the crowd. For the second
-there are no friction between the pedestrians to slow $\alpha$ speed down, besides the social sphere.
-
-\subsection{Comparison between the relaxation time $1,0$ second and $0,5$ second}
-When simulating the corridor with the initial conditions and changing the relaxation time from $1,0 s$ to $0,5 s$,
-the pedestrians do not get stuck as easely when the relaxtion time is $0,5 s$ as they do when the relaxation time
-is $1,0 s$. This can be seen in figure \ref{fig:comparison_of_timestep}, that in (a), the density get high faster,
-while in (b) the density does not increase as fast as (a).
-When the relaxation time is $0,5 s$, the pedestrians reacts faster, in the sense that they speed up faster,
-after collisions with pedestrians walking in the other direction.
-
-\begin{figure}[h]
-\centering
-\subfloat[The figure show the density in corridor when the relaxation time is set to $1,0 s$]{\includegraphics[scale=0.45]{Figures/dens_init_relax1.pdf}}
-\subfloat[This figure shows the density in the corridor when the relaxation time is set to $0,5 s$]{\includegraphics[scale=0.45]{Figures/dens_init_relax05.pdf}}
-\caption{These figures show the difference of the density when changing the relaxation time of the model from $1,0 s$ to $0,5 s$.
-It is seen the the density is more steady when the relaxtion time is $0,5 s$ instead of $1,0 s$}
-\label{fig:comparison_of_timestep}
-\end{figure}
-
-A possible explanation of why the density is more steady through out the simulation when the relaxation time is $0,5 s$,
-is that the pedestrians reacts faster to changes of their velocity. Thus when they bump into each other, they speed up
-faster, and therefore avoid clogging up before more get in their path.
-
+In the next section we asses social force models based on our results and the 
+error sources discussed in this section.
