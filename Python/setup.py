@@ -3,10 +3,6 @@
 import constants
 import numpy, math, random
 
-if constants.random_seed is not None:
-    numpy.random.seed(constants.random_seed)
-    random.seed(constants.random_seed)
-
 def generate_pedestrians(parameters, start_areas, num):
     """Generates a number of pedestrians placed randomly within the
     area specified by the parameters, with parameters as specified
@@ -21,6 +17,12 @@ def generate_pedestrians(parameters, start_areas, num):
     max_radius = max(radii)
     velocities = numpy.random.normal(parameters['velocity_mean'], 
             parameters['velocity_deviation'], num)
+
+    (v_max, v_min) = (max(velocities), min(velocities))
+    if abs(v_max-v_min) > 5*parameters['velocity_deviation']:
+        print "Warning: Large velocity deviation (%.3f, min: %.3f, max: %.3f)" % (
+                abs(v_max-v_min), v_min, v_max)
+
 
     # calculate grid cells for placement of pedestrians
     grid_cell_size = max_radius*2+0.05

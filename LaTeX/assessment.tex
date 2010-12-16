@@ -1,58 +1,76 @@
 \section{Assessment of social force models}
 \label{sec:assessment}
-In this section we first discuss a series of minor limitations of the social force models 
-that we have worked with. These limitation differ from the ones outlined in 
-section \ref{sec:lack} and \ref{sec:discrepancies} in the way that 
-they are not features that are needed to replicate the results from the articles, 
-but are extensions to the model.
-In our work we have also encountered some more severe difficulties with some 
-fundamental aspects of the model.
-We then move on to discuss the current state of social force models in general. 
+
+% TODO: What is good about social force models.
+% TODO: What can we use the model for, provided it works.
+% TODO: Now what? perspektivering.
+    % Path finding
+    % Tangential forces
+
+The social force model we emphasized on in our report is good enough to demonstrate 
+the social force concept. In this section we will first introduce some additional features 
+, which differ from the ones outlined in section \ref{sec:model-to-simulation} and 
+\ref{sec:discussion} in the way that they are not features that are needed to 
+replicate the results from the articles, but are extensions to the model.
+Later we will point out our major concern about social force model, even if 
+such features are inserted. At last, give our opinion about the current state of 
+social force models in general and what social force model is good at.
 
 \subsection{Extensions of the model}
 % TODO: This section is about minor limitations to our model that have 
 % been solved by others.
-During the analyses and simulation of the model we encountered several minor limitations 
-In this section we discuss these limitations, some of which have been solved by others in the 
-field. 
+During the analyses and simulation of the model we have encountered 
+several minor limitations. In this section we discuss these limitations, 
+some of which have been solved by others in the field. 
 
-The variety of situations the model can handle is greatly decreased by the 
-pedestrians ability to manoeuvre around in the environment. The manoeuvrability of 
-the pedestrians can be increased by incorporating a series of features such as 
-\emph{path finding} and \emph{communication between pedestrians}. 
+The variety of situations the model can handle is greatly affected by the 
+pedestrians' ability to manoeuvre around in the environment. 
+Features such as 
+\emph{path finding} and \emph{lowered visibility} allowed the model to design 
+more complicated situation, other features such as \emph{communication 
+between pedestrians}, \emph{falling} and \emph{herding behaviour} can represent 
+more thorough psychological state. We will discuss these features one at a time.
 
-In real panic situations one could expect to see a series of events that our 
-model is incapable of simulating. Events such as people \emph{falling} or showing a 
-\emph{herding behavior}. We will discuss these features one at a time.
-
-\subsubsection{Path finding}
+\begin{itemize}
+\item {Path finding: } 
 In our model the pedestrians do not have path finding, which means that the model 
 can not simulate people escaping a complex environment with a lot of rooms 
 and corridors. A example of a social force model with pathfinding is the HiDAC 
 model\cite{HiDAC}.
 
-\subsubsection{Communication between pedestrians}
-In real panic situations it is not hard to imagine people communicating to help each other finding the exits or use alternative routes. This is 
-not something that our model is capable of. For a model with communication between 
-pedestrians see \cite{HiDAC}.
-
-\subsubsection{Lowered visibility}
+\item {Lowered visibility: }
 At the moment we can not simulate a situations where the visibility is very low 
 e.g. a room filled with smoke. In the model we have worked with The pedestrians always 
 have a waypoint to steer towards, but if the visibility only is 1 meter the 
-pedestrians can not necessarily see the waypoint \cite{HelbingNew}. This could be implemented by adding a tangential component to the force coming from the wall. Sow people will follow the wall when they get close to it.
+pedestrians can not necessarily see the waypoint \cite{HelbingNew}. This could be 
+implemented by adding a tangential component to the force coming from the wall. 
+Sow people will follow the wall when they get close to it.
 
-\subsubsection{Falling and injuries}
+\item {Communication between pedestrians: }
+In real panic situations it is not hard to imagine people communicating to help each 
+other finding the exits or use alternative routes. This is 
+not something that our model is capable of. For a model with communication between 
+pedestrians see \cite{HiDAC}.
+
+\item {Falling and injuries }
 In situations of crowd panic, people are often injured. This is either due to the 
 enormous pressure that can built up in a crowd or due to people falling and being stamped. Our 
 does not take into account these possibilities. In the HiDAC model people can 
 be injured and even fall and become obstacles for other pedestrians.\cite{HiDAC}
 
-\subsubsection{Herding}
-Other models take into account herding behaviour between the pedestrians \cite{helbing00}, so that some people have tendency to follow other pedestrians, while other pedestrians have a tendency to go their own way,  and by doing so explore the environment for possible exits.
+\item {Herding}
+Other models take into account herding behaviour between the pedestrians 
+\cite{helbing00}, so that some people have tendency to follow other pedestrians, 
+while other pedestrians have a tendency to go their own way,  and by doing so 
+explore the environment for possible exits.
 
-These features all add up to give a more realistic simulation of crowds but do simulation like these teach us anything about why a crowd behaves 
-as it does?
+\end{itemize}
+
+These features all add up to give a more realistic simulation of crowds, and 
+obviously there are many more features than those that people can think of 
+and could be solved. 
+Next we will refer to the governing assumption behind the social force
+model, where comes our biggest concern.
 
 \subsection{Inserting social force concept into classical mechanics}
 \label{subsec:development}
@@ -60,20 +78,45 @@ as it does?
 % cannot be solved easily.
 % Discussion about using physological concepts in the model.
 
-In the previous section we have seen some features that could improve the predictions made by the model.
+Previously we have seen some features that could improve the 
+predictions made by the model. However, there is a major problem that lies 
+in the model and can not be fixed by adding a new feature, when the social 
+force is added into the way of classical mechanic calculation.
 
-However, there is a major problem that lies in the model and can not be fixed by adding a new feature, when the social force is added into the way of classical mechanic calculation.
+In the early research for pedestrian behaviour, people try to apply the existing 
+models in the physical world to describe a crowd, but there is no term describing 
+a molecule's will in models like those. Therefore, in order to make the model 
+human, Helbing gets the revolutionary idea of measuring the psychological state 
+by a term called "social force", which is not a real force in the physical world 
+\cite{social-force}, but a representation of a desire to reach a given position. 
+Then the measurements of social and physical features of pedestrians (those 
+measurements are all put into the catalogue called "force") are gathered together 
+and calculated within the limit of classical mechanics, which is attacked by many 
+laws in the physical world, for example, Newton's third law and the conservation of 
+energy. Then this model is not a model in physics as it does not fit nicely in the 
+whole physical world. However, it insists in describing the physical behaviour, 
+because what we get directly from the model are the positions and velocities of 
+pedestrians. In general, the model grabs some ingredients from both social and 
+physical aspects, put them into the physics machine, and comes up with the 
+product that falls in the physics catalogue. In that manner, the model is not 
+convincing to us.
 
-In the early research for pedestrian behaviour, people try to apply the existing models in the physical world to describe a crowd, but there is no term describing 
-a molecule's will in models like those. Therefore, in order to make the model human, Helbing gets the revolutionary idea of measuring the psychological state 
-by a term called "social force", which is not a real force in the physical world \cite{social-force}, but a representation of a desire to reach a given position. Then the measurements of social and physical features of pedestrians (those measurements are all put into the catalogue called "force") are gathered together and calculated within the limit of classical mechanics, which destroys many laws in the physical world, for example, Newton's third law and the conservation of energy. Then this model is not a model in physics as it does not fit nicely in the whole physical world. However, it insists in describing the physical behaviour, because what we get directly from the model are the positions and velocities of pedestrians. In general, the model grabs some ingredients from both social and physical aspects, put them into the physics machine, and comes up with the product that falls in the physics catalogue. In that manner, the model is not convincing to us.
+The combination of actual physics and measure of psychology state gives 
+rise to some problems in application. For example, in order to measure the pressure 
+in a crowd simulated by such a model, it is not clear how to cut out the physical force 
+when the interactions between pedestrians are partly representing desires. 
 
-This conflict between actual physics and psychology gives rise to some interesting problems. Can one really measure the pressure in such a crowd when the interactions between pedestrians are governed by desires. It is not possible to empirically measure some ones desire nor transform this desire into an expression which tells you how fast this person will try to reach his or hers goal or is it?
-Throw experiments it has been shown that such an interpretation can make some rather realistic predictions about how the crowed moves.
-
-The inconsistency gives a challenging work to justify the model in general, because there is no governing theory that can do the job. The only way from Helbing 
-is by comparing the outcome of the model to the reality. In order to achieve the fitness, many parameters need to be adjusted at the same time, and we do not even know how to tune the parameters precisely, which makes the way to get the fitness tedious. Moreover, if the model is used to make predictions, the
+Besides, the inconsistency gives a challenging work to justify the model in general, 
+because there is no governing theory that can do the job. The only way from Helbing 
+is by comparing the outcome of the model to the reality. In order to achieve 
+the fitness, many parameters need to be adjusted at the same time, and we do 
+not even know how to tune the parameters precisely, which makes the way to 
+get the fitness tedious. Moreover, if the model is used to make predictions, the
 outcomes are not persuasive . 
+
+Therefore, the model is not qualified in making precise prediction in the classic 
+manner. however, it does give us some valuable idea about crowd behaviour, which 
+will be discussed next.
 
 \subsection{Comments on the state of the social force models}
 % This is sort of a conclusion on the last two sections. What have we 
@@ -83,12 +126,12 @@ outcomes are not persuasive .
 At this point we have got some understanding of the social force model, and 
 also given our opinion about the limitation of the model. We think it is 
 reasonable to consider what, if anything, the social force models have taught 
-us about crowd behavior and comment on the state of social force model. 
+us about crowd behaviour and comment on the state of social force model. 
 
 The social force model have been used to give both numerical predictions of 
 real life situations and it has been able to construct a series of phenomena 
 observed in reality such as lane formation and freezing by heating.
-However this kind of knowledge resembles the knowledge you can get from 
+However this kind of knowledge resembles the knowledge people can get from 
 the early model of the solar system. Some these model were quite sophisticated 
 such as Potlemy's epicycle model and they were used to correctly predict the 
 motion of the planets and describe (although incorrectly) phenomena such as 
@@ -96,11 +139,11 @@ solar eclipses.
 We think that the social force models are in the same state as those models, 
 they are of a predictive type rather than a explanatory type. They do not give 
 us any knowledge about the underlying mechanics of a crowd of pedestrians but 
-they can be used to successfully predict quantative behavior of the crowd such 
+they can be used to successfully predict quantitative behaviour of the crowd such 
 as flow rate. This information can be used to guide the construction of malls, 
 airports and other location where crowds gather.
 
-In the article \cite{self-org} you can read the following comment:
+In the article \cite{self-org}  we get the following comment:
 
 \begin{quote}
 	The advantage of the social-force-based simulation
@@ -112,3 +155,27 @@ In the article \cite{self-org} you can read the following comment:
 However in our case we have had to calibrate the parameters for each 
 situation. The parameters that work for the square scenario does not 
 necessarily work for the corridor case.  
+
+
+It is not 
+possible to empirically measure someone's desire or transform this desire 
+into an expression which tells us how fast this person will try to reach his 
+or hers goal, or is it?
+Through experiments it has been shown that such an interpretation can make 
+some rather realistic predictions about how the crowed moves.
+
+The Social Force Model tells us that the dynamics of a crowd do not
+relay upon complex individual decision making but rather on a set of
+fairly simple rules.
+
+A human desire to get from A to B is a very abstract quantity. A ton of
+different circumstances could effect the exact movement of this
+individual. But it has been shown that you can take this very abstract
+quantity and transform in into something very concrete with surprising
+succes.
+
+This could be a result of people going into auto pilot when moving
+through a crowed, something which you have learned through years. Often you
+see small children walk around without ever looking up, so they will
+obstruct other pedestrians, sow they have not yet learned how to move
+with in a crowd, but adults have.
