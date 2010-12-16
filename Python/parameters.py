@@ -40,18 +40,18 @@ scenarios = {
         }),
         'corridor': Scenario({
             'name'               : 'corridor',
-            'A'                  : 2.2,
+            'A'                  : 3.0,
             'B'                  : 0.2,
             'U'                  : 2.0,
-            'lambda'             : 0.1,
-            'initial_count'      : 20,
+            'lambda'             : 0.75,
+            'initial_count'      : 50,
             'start_areas'        : [
                                     (-10.0,-3.0,-1.0,3.0),
                                     (1.0,-3.0,10.0,3.0)
                                    ],
-            'velocity_mean'      : 0.74,
+            'velocity_mean'      : 1.34,
             'velocity_deviation' : 0.26,
-            'max_velocity_factor': 1.3,
+            'max_velocity_factor': 4.0,
             'radius_mean'        : 0.3,
             'radius_deviation'   : 0.01,
             'targets'            : [
@@ -60,12 +60,12 @@ scenarios = {
                                    ],
             'density_rectangle'  : (-1.0, -0.8, 1.0, 0.8),
             'flowrate_line'      : (0.0, -1.0, 0.0, 1.0),
-            'continuous_rate'    : 1,
+            'continuous_rate'    : 3,
             'continuous_start'   : [
                                     (-10.0, -0.7, -9.0, 0.7),
                                     (9.0, -0.7, 10.0, 0.7)
                                    ],
-            'stop_at'            : 50,
+            'stop_at'            : 60,
             'walls'              : [
                                     (-10.0,  3.0, 10.0,  3.0),
                                     (-10.0, -3.0, 10.0, -3.0)
