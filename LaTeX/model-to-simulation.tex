@@ -257,11 +257,10 @@ the wall. This is illustrated in figure~\ref{fig:doorways}.
 \begin{figure}[h]
     \centering
     \begin{tikzpicture}[scale=1.2]
-		\node (p) at (-0.2,1.5) [draw,circle,inner sep=2.5pt] {};
+		\node (p) at (-0.2,1.5) [draw,circle,inner sep=3pt] {};
 		\node (el) at (-0.5,2) [fill,circle,inner sep=1pt] {};
 		\node (er) at (0.5,2) [fill,circle,inner sep=1pt] {};
 
-		\draw (p) node [below,xshift=5pt] {$\alpha$};
         \draw [thick] (0.5,2) -- (2,2) -- (2,-1) -- (-2,-1) -- (-2,2) --(-0.5,2);
         \draw [dashed,opacity=0.4] (0.5,2.5) -- (0.5,-1)
         (-0.5,2.5) -- (-0.5,-1);
@@ -271,9 +270,10 @@ the wall. This is illustrated in figure~\ref{fig:doorways}.
     \end{tikzpicture}
 
     \caption[Preventing repulsion from doorways]{Preventing repulsion from 
-    doorways. Pedestrians between the dashed lines do not get repulsed from 
-    the marked endpoints unless the distance (indicated by the dotted lines) 
-    is smaller than the pedestrian's radius.}
+    doorways. To allow free passage through doorways, pedestrians between the 
+    dashed lines do not get repulsed from the marked endpoints unless the 
+    distance (indicated by the dotted lines) is smaller than the pedestrian's 
+    radius.}
     \label{fig:doorways}
 \end{figure}
 
