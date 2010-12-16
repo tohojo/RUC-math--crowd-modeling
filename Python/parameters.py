@@ -43,17 +43,17 @@ scenarios = {
             'A'                  : 3.0,
             'B'                  : 0.2,
             'U'                  : 2.0,
-            'lambda'             : 0.75,
+            'lambda'             : 0.1,
             'initial_count'      : 50,
             'start_areas'        : [
-                                    (-10.0,-3.0,-1.0,3.0),
-                                    (1.0,-3.0,10.0,3.0)
+                                    (-10.0,3.0,10.0,3.0),
+                                    (-10.0,-3.0,10.0,-3.0)
                                    ],
             'velocity_mean'      : 1.34,
             'velocity_deviation' : 0.26,
-            'max_velocity_factor': 4.0,
+            'max_velocity_factor': 1.3,
             'radius_mean'        : 0.3,
-            'radius_deviation'   : 0.01,
+            'radius_deviation'   : 0.05,
             'targets'            : [
                                     (500.0,0.0),
                                     (-500.0, 0.0)
@@ -73,7 +73,7 @@ scenarios = {
             'drawing_width'      : 750,
             'drawing_height'     : 350,
             'pixel_factor'       : 30,
-            'relax_time'         : 0.5,
+            'relax_time'         : 1.0,
             'vary_parameters'    : {
                                     #'A'            : (4.0, 6.0, 0.01),
                                     'velocity_mean': (1.5, 5.0, 0.5),
