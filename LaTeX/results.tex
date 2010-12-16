@@ -119,6 +119,27 @@ respectively $1,0$ and $0,5$.}
 \label{fig:freezingbyheating05}
 \end{figure}
 
+\subsubsection{Comparison between the relaxation time $1,0$ second and $0,5$ second}
+When simulating the corridor with the initial conditions and changing the relaxation time from $1,0 s$ to $0,5 s$,
+the pedestrians do not get stuck as easely when the relaxtion time is $0,5 s$ as they do when the relaxation time
+is $1,0 s$. This can be seen in figure \ref{fig:comparison_of_timestep}, that in (a), the density get high faster,
+while in (b) the density does not increase as fast as (a).
+When the relaxation time is $0,5 s$, the pedestrians reacts faster, in the sense that they speed up faster,
+after collisions with pedestrians walking in the other direction.
+
+\begin{figure}[h]
+\centering
+\subfloat[The figure show the density in corridor when the relaxation time is set to $1,0 s$]{\includegraphics[scale=0.45]{Figures/dens_init_relax1.pdf}}
+\subfloat[This figure shows the density in the corridor when the relaxation time is set to $0,5 s$]{\includegraphics[scale=0.45]{Figures/dens_init_relax05.pdf}}
+\caption{These figures show the difference of the density when changing the relaxation time of the model from $1,0 s$ to $0,5 s$.
+It is seen the the density is more steady when the relaxtion time is $0,5 s$ instead of $1,0 s$}
+\label{fig:comparison_of_timestep}
+\end{figure}
+
+A possible explanation of why the density is more steady through out the simulation when the relaxation time is $0,5 s$,
+is that the pedestrians reacts faster to changes of their velocity. Thus when they bump into each other, they speed up
+faster, and therefore avoid clogging up before more get in their path.
+
 \subsubsection{Freezing by heating effect}
 According to \cite{self-org} the freezing by heating effect should arise when the max desired velocity of the pedestrians was raised.
 That is that clogging should arise when raising the max velocity of the pedestrians, because more are ariving to the possible
