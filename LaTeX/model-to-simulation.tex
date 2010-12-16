@@ -254,6 +254,29 @@ between endpoints that are shared with other walls, and endpoints that are
 are closer to the pedestrian than its radius, i.e. if the pedestrian touches 
 the wall. This is illustrated in figure~\ref{fig:doorways}.
 
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[scale=1.2]
+		\node (p) at (-0.2,1.5) [draw,circle,inner sep=2.5pt] {};
+		\node (el) at (-0.5,2) [fill,circle,inner sep=1pt] {};
+		\node (er) at (0.5,2) [fill,circle,inner sep=1pt] {};
+
+		\draw (p) node [below,xshift=5pt] {$\alpha$};
+        \draw [thick] (0.5,2) -- (2,2) -- (2,-1) -- (-2,-1) -- (-2,2) --(-0.5,2);
+        \draw [dashed,opacity=0.4] (0.5,2.5) -- (0.5,-1)
+        (-0.5,2.5) -- (-0.5,-1);
+    	\draw [dotted,thin] (p) -- (el);
+		\draw [dotted,thin] (p) -- (er);
+		\draw [very thin, -latex] (p) -- (0,2.5);
+    \end{tikzpicture}
+
+    \caption[Preventing repulsion from doorways]{Preventing repulsion from 
+    doorways. Pedestrians between the dashed lines do not get repulsed from 
+    the marked endpoints unless the distance (indicated by the dotted lines) 
+    is smaller than the pedestrian's radius.}
+    \label{fig:doorways}
+\end{figure}
+
 \subsubsection{Algorithm for identifying wall repulsion points}
 \label{sec:repulsion-points-algorithm}
 Based on the description above, we have devised the following algorithm for 
