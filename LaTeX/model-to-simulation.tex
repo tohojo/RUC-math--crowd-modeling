@@ -1,34 +1,36 @@
 \section{From model to simulation}
 \label{sec:model-to-simulation}
-In this section we outline the things needed to turn the model as described in 
-section~\ref{sec:the-model} into a numerical simulation on a computer. This 
-includes clearing up ambiguities and filling in gaps in the model definition. 
-The goal is, of course, to actually create a working simulation of the model. 
-Some of the things described in this section we have come up with ourselves, 
-and other things we have collected from various other sources. References are 
+In this section we outline the additional assumptions and methods that are 
+needed to turn the model as described in section~\ref{sec:the-model} into a 
+numerical simulation on a computer. This includes clearing up ambiguities and 
+filling in gaps in the model definition.  The goal is, of course, to actually 
+create a working simulation of the model.  Some of the components described in 
+this section we have come up with ourselves, and others we have collected from 
+various other publications related to social force models. References are 
 noted were applicable.
 
-The things we discuss in this section are how to approximate the movement of 
-pedestrians, how to set initial conditions and constants and how to identify 
-the points on the walls to calculate repulsion from. Approximation of the 
-movement is needed when turning the model into a concrete numerical 
+The questions we resolve in this section are how to approximate the movement 
+of pedestrians, how to set initial conditions and constants and how to 
+identify the points on the walls to calculate repulsion from. Approximation of 
+the movement is needed when turning the model into a concrete numerical 
 simulation. Initial conditions are needed to set up the simulation, but not 
-all parameters are given in the articles. Finally, as is noted in 
-section~\ref{sec:wall-repulsion}, there are some edge cases that come into 
-play when determining which points to use in the calculation of the repulsion 
-from the walls. These problems are discussed in the following sections.
+all parameters are given in the articles. Finally, as it is noted in 
+section~\ref{sec:wall-repulsion}, in some geometrical cases, there are some 
+ambiguities that become apparent when determining which points to use in the 
+calculation of the repulsion from the walls. These problems are discussed in 
+the following sections.
 
 
 \subsection{Approximating continuous movement}
 The model can be viewed as representing $4n$ non-linear coupled differential 
 equations, where $n$ is the number of pedestrians. These differential 
 equations describe the positions and speed of movement of the pedestrians in 
-the $x$ and $y$ directions. Since we do not know the differential equations, 
-we will approximate them by doing numerical simulations in discrete time 
-steps. There are various ways of approximating differential equations such as 
-those represented by the model; we have chosen to use Euler's method as it 
-is simple to work with. Euler's method is given by a truncated Taylor 
-expansion \cite{MD}:
+the $x$ and $y$ directions. Since we cannot solve these equations 
+analytically, we will approximate them by doing numerical simulations in 
+discrete time steps. There are various ways of approximating differential 
+equations such as those represented by the model; we have chosen to use 
+Euler's method as it is simple to work with. Euler's method is given by a 
+truncated Taylor expansion \cite{MD}:
 
 \begin{equation}
     p(t+\Delta t)=p(t)+v(t)\Delta t + \frac{1}{2}f(t)\Delta t^2
@@ -43,30 +45,31 @@ Euler's method, while simple, is not a very precise way of estimating the
 equations, and is very sensitive to choosing a suitable time step. Various 
 more advanced methods of choosing the time step size as well as better 
 algorithms to estimate the equations exist \cite{MD}. However, these methods 
-are much more complicated to work with. Since Euler's method is specifically 
-mentioned as method used in \cite{ABconstant}, we have chosen to stick with 
-this method despite its disadvantages.
+are much more complicated to work with for a model as complex as ours. Since 
+Euler's method is specifically mentioned as method used in \cite{ABconstant}, 
+we have chosen to stick with this method despite its disadvantages.
 
 \subsubsection{Choosing the time step}
 \label{sec:choosing-timestep}
-Choosing a suitable time step size is important when applying Euler's method. 
+Choosing a suitable time step size is important when applying Euler's method.  
 There are two main trade-offs in selecting this step size: precision of the 
 approximation and numerical rounding errors. If the step size is too large, 
 Euler's method will yield an approximation that differ too much from the 
 actual values of the equations. In our case this would result in pedestrians 
 changing direction and velocity too slowly, making them e.g. move through a 
 wall between two time steps. However, lowering the time step size will, apart 
-from resulting in longer calculation sizes, potentially increase the error 
+from resulting in longer calculation times, potentially increase the error 
 introduced by rounding errors. Rounding errors occur because numerical 
-simulations have a finite precision and so have to be rounded. The more 
+simulations have a finite precision and so have to be truncated. The more 
 calculations occur, the larger this error becomes. This means that setting the 
 time step too low will result in too many errors from this source.
 
-Methods exist to iteratively adjust the precision of the approximations, such 
-as the Runge-Kutta method \cite{butcher2003}. However, from experimenting with 
-various time step values, we have found that setting a suitably small static 
-time step provides reasonable results, so we have chosen not to complicate our 
-simulation further by applying such methods.
+Methods for obtaining better approximations of differential equations exist, 
+e.g. the Runge-Kutta method \cite{butcher2003}. However, from experimenting 
+with various time step values, we have found that using Euler's method and 
+setting a suitably small static time step provides reasonable results, so we 
+have chosen not to complicate our simulation further by applying more advanced 
+methods.
 
 \subsection{Initial conditions and constants}
 \label{sec:init-cond}
@@ -78,15 +81,15 @@ describe how we have obtained their values.
 
 \subsubsection{A note on random numbers}
 Some of the initial conditions are set using random distributions, either 
-evenly or Gaussian distributed, in order to simulate national variations in 
+uniformly or Gaussian distributed, in order to simulate national variations in 
 e.g. the size of pedestrians.  These random numbers are created by the 
 pseudorandom number generator built in to the Python programming language.  
 This generator is an implementation of the Mersenne twister 
-generator\footnote{See \url{http://en.wikipedia.org/wiki/Mersenne\_twister}} and we 
-consider it sufficient for our purposes. This type of pseudorandom number 
-generator is deterministic for identical seed values, which means we can run 
-multiple simulations of the same initial conditions by fixing the seed of the 
-random number generator to the same value for each run.
+generator\footnote{See \url{http://en.wikipedia.org/wiki/Mersenne\_twister}} 
+and we consider it sufficient for our purposes. This type of pseudorandom 
+number generator is deterministic for identical seed values, which means we 
+can run multiple simulations of the same initial conditions by fixing the seed 
+of the random number generator to the same value for each run.
 
 Of course the use of (pseudo)random numbers may be a source of errors. We 
 discuss this further in section~\ref{sec:random-errors}.
@@ -259,7 +262,7 @@ repulsion force from walls.
 
 The algorithm is run for each pedestrian. Its input is the pedestrians 
 position, $p_\alpha$ and the set of starting points and endpoints of the 
-walls. The output is a set of points repulsion should be calculated from. A 
+walls. The output is the set of points from which repulsion should be calculated. A 
 set of endpoints that are already used and endpoints that are candidates for 
 repulsion are used during the operation of the algorithm.
 
