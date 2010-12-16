@@ -19,7 +19,7 @@ def generate_pedestrians(parameters, start_areas, num):
             parameters['velocity_deviation'], num)
 
     (v_max, v_min) = (max(velocities), min(velocities))
-    if abs(v_max-v_min) > 3*parameters['velocity_deviation']:
+    if abs(v_max-v_min) > 5*parameters['velocity_deviation']:
         print "Warning: Large velocity deviation (%.3f, min: %.3f, max: %.3f)" % (
                 abs(v_max-v_min), v_min, v_max)
 
