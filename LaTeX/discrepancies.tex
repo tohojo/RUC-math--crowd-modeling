@@ -1,6 +1,63 @@
-\section{Discrepancies between results}
+\section{Discussion of our results}
 \label{sec:discrepancies}
-Some of the results found through simulations are not consistent with the claims in the article \cite{self-org}. There is also some problems with is not at all addressed.
+As we have seen in section~\ref{sec:results}, we have not obtained the 
+expected results from our simulations in all cases. In this section we discuss 
+possible reasons for this discrepancy between the expected and actual results, 
+and some possible changes that we believe will fix these discrepancies.
+
+The section is divided into two parts: in the first we discuss possible errors 
+related to our implementation of the simulation, and in the second part we 
+discuss changes to the model that might fix some of the discrepancies.
+
+\subsection{Our implementation of the simulations}
+\label{sec:random-errors}
+We have attempted to implement the simulation of the model that is as close to 
+the description of the model as possible. However, as we have seen in 
+section~\ref{sec:model-to-simulation}, there has been some areas where we have 
+had to fill in some details that have not been explained in the articles 
+describing the model. Indeed, in the formulation of the model itself, we have 
+been forced to add features from different articles because the description in 
+the original article was insufficient. It is possible that some of these 
+necessary additions have been done differently than seen in the simulations 
+performed by the authors of the original articles, and that this contributes 
+to the discrepancies between the their results and ours.
+
+Of course we cannot completely rule out errors in our implementation either; 
+while we do not believe any obvious errors exist, we do not have anything to 
+compare it with that has the same level of detail. The only thing we have to 
+compare our implementation with, is the code underlying \cite{helbing00}, 
+which the authors have published on their website. However, this code is quite 
+inscrutable, so it would require considerable effort to analyse it and compare 
+it with our own. A cursory glance indicates that there are features in it that 
+we do not have in our implementation; whether these are vital or not we cannot 
+say.
+
+A final thing that relates to the implementation of the simulation is the 
+setting of parameters and initial conditions. The values for the different 
+parameters have not always been given along with their description in the 
+articles describing the model. This means we have had to find the values 
+elsewhere, and this mixing of parameters from different sources might also be 
+a source of errors. Finally, the use of random values for initial conditions 
+(in the setting of pedestrian starting positions, size and initial desired 
+speed) is a possible source of error. While we set a mean value and a standard 
+deviation on the generated values, in some cases extremely high or low values 
+are generated. An example of this is seen in figure~\ref{fig:random-seed}, 
+where one pedestrian starts out with a very low desired velocity, causing it 
+to move extremely slowly. The long leaving time is then not caused by clogging 
+of the exit, but simply by the delay from the time it takes the pedestrian to 
+cross the distance between its starting point and the exit.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/random-seed-variations.pdf}
+    \caption[Leaving time for different random seeds]{Leaving time for 
+    different random seeds. Results are dependent on random numbers; for a 
+    seed value of 48 (top-right corner), one pedestrian starts out walking 
+    very slowly impacting the total leaving time.}
+    \label{fig:random-seed}
+\end{figure}
+
+
 
 \subsection{Clogging in narrow places}
 The article \cite{self-org} claims that social force models are able to reproduce the clogging phenomena which arises when a large number of pedestrians try to pass a narrow passage. This phenomena is also know as the "faster is slower phenomena". Through our simulation this phenomena has not occurred.
@@ -10,7 +67,7 @@ The article \cite{self-org} claims that social force models are able to reproduc
 \subsection{Pedestrians overlapping and walking through walls}
 A problem we encountered during the simulation was pedestrians walking through walls and/or pedestrians overlapping. Both these scenarios are illustrated in figure \ref{fig:problemSenario}. This could be caused by the size of the time step see section \ref{constants}, but the time step can not always correct this problem.
 
-A person can have a resulting force which point towards the wall even as the distance to the wall approaches zero. This problem arise when pedestrians are moving fast and are unable to stop in time and occurs because the model do not take into account how fast pedestrians are approaching walls or other pedestrians.
+A person can have a resulting force which points towards the wall even as the distance to the wall approaches zero. This problem arise when pedestrians are moving fast and are unable to stop in time and occurs because the model do not take into account how fast pedestrians are approaching walls or other pedestrians.
 
 In other words, a pedestrian running towards a wall will decelerate at the same rate as a person walking towards the wall. One could argue that this is unrealistic behaviour because, the person running should start decelerating sooner than the person walking. A person which has a force towards the wall which exceed the force he feels from the wall, then he will always go through the wall. This phenomena is off course not dependent on the time step, since even with a infinity small time step this could occur. One way of elimination this problem is by making the force a pedestrian feel depend not only on the distance to the obstacle but also depend on the current speed towards this obstacle. Such a feature has been documented to improve the predictions of the model\cite{ABconstant}.
 \begin{figure}
@@ -68,5 +125,3 @@ A possible explanation of why the density is more steady through out the simulat
 is that the pedestrians reacts faster to changes of their velocity. Thus when they bump into each other, they speed up
 faster, and therefore avoid clogging up before more get in their path.
 
-\subsection{Errors from random initial conditions}
-\label{sec:random-errors}
