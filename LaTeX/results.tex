@@ -28,32 +28,39 @@ In the simulation the parameters are set after \cite{ABconstant} and
 \cite{self-org}, to see if we can replecate their simulations and results. 
 The general values we use are
 
-\begin{center}
 \begin{table}[ht]
-\begin{center}
-    \begin{tabular}{ | l | l | l |}
-    \hline
-       Describtion & Constants & Value \\ \hline \hline
-	Strenght of pedestrian repulsion & A & $3.0m/s$ \\ \hline	
-	Range of pestrian repulsion & B & $0.2$ \\ \hline
-	Anisotropic constant & $\lambda$ & $0.1$ \\ \hline
-	Wall constant & $U$ &  $2.0m^2/s^2$ \\ \hline
-	Mean desired velocity &  $\langle V^d \rangle$ &  $1.34 m/s$, deviation $0.26 m/s$ \\ \hline
-	Max velocity factor & - &  $1.3$ \\ \hline
-	Mean radius of pedestrians & R & $0.3 m$, deviation $0.05 m$\\ \hline
-	Relaxation time & $\tau$ & $1.0 s$\\ \hline
-    \end{tabular}
-\label{Table_constants}
-\end{center}
+    \begin{center}
+        \begin{tabular}{l c r}
+            \toprule
+            \textbf{Description} & \textbf{Symbol} & \textbf{Value} \\
+            \midrule
+            \multicolumn{3}{c}{\textsf{Constants}}\\
+            Interaction strength & A & $3,0$ \\
+            Interaction range & B & $0,2$ \\
+            Anisotropic constant & $\lambda$ & $0,1$ \\
+            Wall repulsion strength & $U$ &  $2,0$ \\
+            \midrule
+            \multicolumn{3}{c}{\textsf{Initial conditions}}\\
+            Mean pedestrian radius & $R_\alpha$ & $0,3 \pm 0,05 m$\\
+            Mean desired velocity &  $V^{Id}_\alpha$ &  $1,34 \pm 0,26 
+            \frac{m}{s}$ \\
+            Max velocity factor &  &  $1,3$ \\
+            Relaxation time & $\tau$ & $1,0 s$\\
+            \bottomrule
+        \end{tabular}
+        \caption[Constants and initial conditions]{Constants and initial 
+        conditions used for the simulations. $\pm$ indicates standard 
+        deviation in Gaussian distributed values.}
+        \label{tbl:parameter-settings}
+    \end{center}
 \end{table}
-\end{center}
 
 We will through the chapter mention when the values are changed for a specific case.  
 
 \subsection{The basics}
 Running the first simulations where all about to see if there where any 
 unatural behavior by the pedestrians, when using the parameters in table 
-\ref{Table_constants}. We checked for intersections between the pedestrians, 
+\ref{tbl:parameter-settings}. We checked for intersections between the pedestrians, 
 pedestrians crossing the walls and so on.
 
 \begin{figure}[h]
@@ -76,7 +83,7 @@ people going in a wrong direction or anything like that. So the most basic
 requirements of the model are fulfilled. 
 
 We do however see some unrealistic behavior when we change the values in 
-\ref{Table_constants} When looking at some of the different phenomenons, 
+\ref{tbl:parameter-settings} When looking at some of the different phenomenons, 
 we need to change certain values like the mean velocity. But when we do 
 this it starts to get unrealistic. When raising the desired velocity to 
 a speed like $2.5m/s$, we start to see people crossing each other and going 
@@ -137,7 +144,8 @@ we see that phenomena to some extent.
 % In this scenario we simulate pedestrians leaving a square room of 10 m by 
 % 10 m with a single $80cm$ wide door. 100 pedestrians are positioned randomly 
 % throughout the room. The second the simulation start all pedestrians head 
-% for the exit. The parameters for this simulation are as in \ref{Table_constants}
+% for the exit. The parameters for this simulation are as in 
+% \ref{tbl:parameter-settings}
 % 
 % First the claim of the "faster-is-slower" effect is tested.
 % \begin{quote}
@@ -162,7 +170,8 @@ we see that phenomena to some extent.
 % in a 2 m by 2 m area directly in front of the door is measured. We also measure 
 % the time it takes for all pedestrians to leave the room.
 % 
-% The parameters for this simulation are the ones shown in \ref{Table_constants}
+% The parameters for this simulation are the ones shown in 
+% \ref{tbl:parameter-settings}
 % 
 % % TODO: Add parameters that are varied.
 % 
@@ -186,7 +195,7 @@ we see that phenomena to some extent.
 % 
 % \subsubsection{Intial conditions and relaxation time $1,0$ second}
 % 
-% The parameters for this simulation are as in \ref{Table_constants} with the exception of the pedestrians
+% The parameters for this simulation are as in \ref{tbl:parameter-settings} with the exception of the pedestrians
 % \begin{itemize*}
 %     \item Number of pedestrians: $40$ starting, adding $3/s$.
 % \end{itemize*}
@@ -214,7 +223,7 @@ we see that phenomena to some extent.
 % and then change the relaxation time to $0,5$ as \cite{helbing00}. After the simulation with the initial conditions, we raise the
 % max desired velocity to see if we can replicate the freezing by heating effect.
 % 
-% The initial simulation has the values from \ref{Table_constants} with the exceptions:
+% The initial simulation has the values from \ref{tbl:parameter-settings} with the exceptions:
 % 
 % \begin{itemize*}
 %     \item Relaxation time: $0,5 s$.
