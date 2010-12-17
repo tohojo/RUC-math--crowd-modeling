@@ -53,7 +53,7 @@ class Plots:
         self.aggr_efficiencies.append(avg_velocity/desired_velocity)
 
         self.aggr_avg_velocities.append(avg_velocity)
-        self.aggr_flowrates.append(np.average(self.flowrates))
+        self.aggr_flowrates.append(np.average(self.flowrates, 0))
 
     def _create_plot(self, title, xlabel, ylabel):
         fig = plt.figure()
@@ -128,7 +128,14 @@ class Plots:
     def _aggr_flowrate_plot(self):
         fig = self._create_plot("Average flowrate", 
                 self.aggr_x_name, "pedestrians/second")
-        plt.plot(self.aggr_x_values, self.aggr_flowrates, label='flowrate')
+        for i in xrange(len(self.parameters["flowrate_lines"])):
+            fline = self.parameters["flowrate_lines"][i]
+            if len(fline) == 5:
+                name = fline[4]
+            else:
+                name = "flowline %d" % i
+            rates = [x[i] for x in self.aggr_flowrates]
+            plt.plot(self.aggr_x_values, rates, label=name)
         self._annotate_plot(fig)
         return fig
 
