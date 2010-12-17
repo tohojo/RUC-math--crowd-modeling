@@ -4,8 +4,18 @@ In this section we describe the results obtained from our simulations. We have s
 
 \subsection{Constants and scenarios}
 We will here shortly specify the values for the different constants we use in both of the scenarios and show screenshots of the scenarios we will use.
-In the simulation the parameters are set after \cite{ABconstant} and \cite{self-org}, to see if we can replecate their simulations and results.
-The general values we use are
+
+\begin{figure}[h]
+\centering
+\subfloat[]{\input{Figures/squareroomps.tex}}
+\subfloat[]{\input{Figures/normalcorridor.tex}}\\
+\subfloat[]{\input{Figures/bottleneckps.tex}}
+\subfloat[]{\input{Figures/widekinks.tex}}
+\caption{We simulate four different scenarios.}
+\label{fig:fourcases}
+\end{figure}
+
+In the simulation the parameters are set after \cite{ABconstant} and \cite{self-org}, to see if we can replecate their simulations and results. The general values we use are
 
 \begin{center}
 \begin{table}[ht]
@@ -29,11 +39,9 @@ The general values we use are
 
 We will through the chapter mention when the values are changed for a specific case.  
 
-
 \subsection{Startup}
 Running the first simulations where all about to see if there where any unatural behavior 
 by the pedestrians, when using the parameters in table \ref{Table_constants}. We checked for intersections between the pedestrians, pedestrians crossing the walls and so on.
-
 
 \begin{figure}[h]
 \centering
@@ -221,14 +229,6 @@ and overtake each other. To see if the flow rate is affected by the pedestrians
 who try to overtake each other we compare the flow rate with the wide space with 
 the flow rate from a normal corridor scenario. A screen shot from each simulation 
 can be seen in figure \ref{fig:widekink}.
-
-\begin{figure}[h]
-\centering
-\subfloat[A screen shot of the normal corridor.]{\includegraphics[scale=0.25]{Figures/normalcorridor.png}}
-\subfloat[A screen shot of the corridor with a wide space.]{\includegraphics[scale=0.25]{Figures/Widespace.png}}
-\caption{The two scenarios we want to compare to see the effect of the wide space.}
-\label{fig:chokepoint}
-\end{figure}
 
 We expected to see that the flow rate in the scenario shown in figure 
 \ref{fig:chokepoint} (b) would be lower than in the scenario (a). What we sat 
