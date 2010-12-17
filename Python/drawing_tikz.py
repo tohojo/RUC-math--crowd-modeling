@@ -47,7 +47,9 @@ class Canvas:
         self.output = []
 
     def _draw_circle(self, x, y, r, c):
-        if x > self.width or x < -self.width or y > self.height or y < -self.height:
+        max_x = self.width/2.0
+        max_y = self.height/2.0
+        if x > max_x or x < -max_x or y > max_y or y < -max_y:
             return
         self.output.append("\\draw[color=%s] (%.2f,%.2f) circle (%.2f);" % (c,x,y,r))
 
