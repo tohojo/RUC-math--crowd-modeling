@@ -1,6 +1,10 @@
 import optimised
 import constants, setup
-from drawing import Canvas
+
+if constants.drawing_mode == "images":
+    from drawing import Canvas
+else:
+    from drawing_tikz import Canvas
 from plotting import Plots
 
 import pprint, os, random
