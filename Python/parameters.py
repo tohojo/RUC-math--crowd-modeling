@@ -313,3 +313,6 @@ scenarios = {
                                    },
         }),
 }
+
+for i in scenarios:
+    scenarios[i].parameters["name"] = i
