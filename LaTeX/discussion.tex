@@ -64,8 +64,8 @@ figure~\ref{fig:extra-forces-behaviour}.
             \node (slow repulsion) [point, below=5mm of slow] {};
             \node (fast repulsion) [point, below=5mm of fast] {};
 
-            \node (wall start) [point,above left=of slow] {};
-            \node (wall end) [point,above right=of fast] {};
+            \node (wall start) [wall endpoint,above left=of slow] {};
+            \node (wall end) [wall endpoint,above right=of fast] {};
             \draw[wall] (wall start) -- (wall end);
 
             \draw[blue,->] (slow) -- (slow target);
