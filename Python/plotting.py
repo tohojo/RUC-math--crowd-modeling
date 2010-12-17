@@ -77,7 +77,14 @@ class Plots:
         if self.aggr_x_name != "lambda":
             param_text.append("$\lambda=%.2f$" % self.parameters['lambda'])
         if self.aggr_x_name != "velocity_mean":
-            param_text.append("mean velocity$=%.2f$" % self.parameters['velocity_mean'])
+            param_text.append(
+                    "initial desired velocity$=%.2f$" % self.parameters['velocity_mean'])
+        if self.aggr_x_name != "max_velocity_factor":
+            param_text.append(
+                    "max factor$=%.2f$" % self.parameters['max_velocity_factor'])
+        if self.aggr_x_name != "relax_time":
+            param_text.append(
+                    "relax time$=%.2f$" % self.parameters['relax_time'])
 
         leg = fig.gca().legend(loc='best')
 
