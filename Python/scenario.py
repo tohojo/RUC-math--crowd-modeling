@@ -1,10 +1,8 @@
 import optimised
 import constants, setup
 
-if constants.drawing_mode == "images":
-    from drawing import Canvas
-else:
-    from drawing_tikz import Canvas
+from drawing import Canvas as image_canvas
+from drawing_tikz import Canvas as tikz_canvas
 from plotting import Plots
 
 import pprint, os, random
@@ -82,15 +80,35 @@ class Scenario:
             self._run()
 
     def _init_drawing(self):
-        self.canvas = Canvas(
-                self.parameters['drawing_width'],
-                self.parameters['drawing_height'],
-                self.parameters['pixel_factor'],
-                os.path.join(constants.image_dir, self.parameters['name']),
-                )
+        if self.options.show_simulation:
+            self.show_canvas = image_canvas(
+                    self.parameters['drawing_width'],
+                    self.parameters['drawing_height'],
+                    self.parameters['pixel_factor'],
+                    os.path.join(constants.image_dir, self.parameters['name']),
+                    )
+        if self.options.create_images:
+            if self.options.tikz:
+                self.image_canvas = tikz_canvas(
+                        self.parameters['drawing_width'],
+                        self.parameters['drawing_height'],
+                        self.parameters['pixel_factor'],
+                        os.path.join(constants.image_dir, self.parameters['name']),
+                        )
+            else:
+                if self.options.show_simulation:
+                    self.image_canvas = self.show_canvas
+                else:
+                    self.image_canvas = image_canvas(
+                            self.parameters['drawing_width'],
+                            self.parameters['drawing_height'],
+                            self.parameters['pixel_factor'],
+                            os.path.join(constants.image_dir, self.parameters['name']),
+                            )
+
 
     def _uninit_drawing(self):
-        self.canvas.quit()
+        self._canvas("quit")
 
     def _init_images(self):
         pfile = open("%s-parameters" % os.path.join(constants.image_dir, 
@@ -118,7 +136,7 @@ class Scenario:
 
     def _tick(self):
         if self.drawing:
-            return self.canvas.tick(constants.framerate_limit)
+            return self._canvas("tick", constants.framerate_limit)
         return True
 
     def _plot_sample(self):
@@ -148,23 +166,29 @@ class Scenario:
                 velocities=velocities, 
                 flowrate=flowrates)
 
+    def _canvas(self, method, *args):
+        if self.options.show_simulation:
+            return getattr(self.show_canvas, method)(*args)
+        elif self.options.create_images:
+            return getattr(self.image_canvas, method)(*args)
+
     def _draw(self):
-        self.canvas.clear_screen()
+        self._canvas("clear_screen")
         for i in xrange(optimised.a_count):
             (x,y) = optimised.a_property(i, "position")
             r = optimised.a_property(i, "radius")
             t = optimised.a_property(i, "target")
-            self.canvas.draw_pedestrian(x,y,r,t)
+            self._canvas("draw_pedestrian", x,y,r,t)
 
-        self.canvas.draw_text("t = %.2f" % self.time, not self.create_images)
+        self._canvas("draw_text", "t = %.2f" % self.time, not self.create_images)
         for t in self.parameters['targets']:
-            self.canvas.draw_target(*t)
+            self._canvas("draw_target", *t)
         for w in self.parameters['walls']:
-            self.canvas.draw_wall(w)
+            self._canvas("draw_wall", w)
         if self.options.show_simulation:
-            self.canvas.update()
+            self.show_canvas.update()
         if self.create_images:
-            self.canvas.create_image(self.frames)
+            self.image_canvas.create_image(self.frames)
 
     def _aggregate(self, p_name, p_value):
         if self.create_plots:

@@ -54,9 +54,9 @@ scenarios = {
                                    ],
             'velocity_mean'      : 2.0,
             'velocity_deviation' : 0.26,
-            'max_velocity_factor': 3.0,
-            'radius_mean'        : 0.2,
-            'radius_deviation'   : 0.01,
+            'max_velocity_factor': 6.0,
+            'radius_mean'        : 0.3,
+            'radius_deviation'   : 0.05,
             'targets'            : [
                                     (500.0,0.0),
                                     (-500.0, 0.0)

@@ -13,8 +13,8 @@ class Canvas:
     """Class to manage a canvas and draw objects on it."""
 
     def __init__(self, width, height, factor, image_prefix):
-        self.width = width
-        self.height = height
+        self.width = width/float(factor)
+        self.height = height/float(factor)
         self.output = []
         self.image_prefix = image_prefix
         self.pixel_factor = factor
@@ -40,13 +40,15 @@ class Canvas:
 
         filename = "%s-%05d.tex" % (self.image_prefix, frames)
         fp = open(filename, "w")
-        fp.write("\\begin{tikzpicture}\n")
+        fp.write("\\begin{tikzpicture}[scale=0.2]\n")
         fp.write("\n".join(self.output))
         fp.write("\n\\end{tikzpicture}\n")
         fp.close()
         self.output = []
 
     def _draw_circle(self, x, y, r, c):
+        if x > self.width or x < -self.width or y > self.height or y < -self.height:
+            return
         self.output.append("\\draw[color=%s] (%.2f,%.2f) circle (%.2f);" % (c,x,y,r))
 
     def _draw_line(self, x1, y1, x2, y2, c):
@@ -70,18 +72,16 @@ class Canvas:
 
     def draw_target(self, x, y):
         (x,y) = self.screen_coords(x,y)
-        if x > self.width or x < -self.width or y > self.height or y < -self.height:
-            return
         self._draw_circle(x, y, self.screen_radius(0.2), TARGET_COLOUR)
 
     def draw_text(self, t, draw_fps):
-        x = self.width/2.0/self.pixel_factor
-        y = self.height/2.0/self.pixel_factor
+        x = self.width/2.0
+        y = self.height/2.0
         if draw_fps:
             text = "%s - %d fps" % (t, self.clock.get_fps())
         else:
             text = t
-        self.output.append("\\node at (%.2f, %.2f) {%s};" % (-x, y, text))
+        self.output.append("\\node at (%.2f, %.2f) [font=\\footnotesize] {%s};" % (-x, y, text))
 
         self.output.append("\\useasboundingbox (%.2f, %.2f) rectangle (%.2f, %.2f);" %(
             -x, -y, x, y))

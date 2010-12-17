@@ -20,6 +20,9 @@ parser.add_option("-p", "--create-plots",
 parser.add_option("-a", "--aggregate",
         default=False, action="store_true", dest="aggregate",
         help="aggregate from multiple runs (implies -p)")
+parser.add_option("-t", "--tikz",
+        default=False, action="store_true", dest="tikz",
+        help="Draw tikz images")
 parser.add_option("", "--profile",
         action="store_true", dest="profile", default=False,
         help="enable profiling of code")
