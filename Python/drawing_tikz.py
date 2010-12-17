@@ -40,7 +40,7 @@ class Canvas:
 
         filename = "%s-%05d.tex" % (self.image_prefix, frames)
         fp = open(filename, "w")
-        fp.write("\\begin{tikzpicture}[scale=0.2]\n")
+        fp.write("\\begin{tikzpicture}\n")
         fp.write("\n".join(self.output))
         fp.write("\n\\end{tikzpicture}\n")
         fp.close()
@@ -81,7 +81,7 @@ class Canvas:
             text = "%s - %d fps" % (t, self.clock.get_fps())
         else:
             text = t
-        self.output.append("\\node at (%.2f, %.2f) [font=\\footnotesize] {%s};" % (-x, y, text))
+        self.output.append("\\node at (%.2f, %.2f) {%s};" % (-x, y, text))
 
         self.output.append("\\useasboundingbox (%.2f, %.2f) rectangle (%.2f, %.2f);" %(
             -x, -y, x, y))
