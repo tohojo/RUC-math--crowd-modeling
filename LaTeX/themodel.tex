@@ -394,14 +394,18 @@ nearest point on the wall, $\overrightarrow{p_{\gamma \alpha}}$, is known.
 \begin{figure}[ht]
     \centering
     \begin{tikzpicture}
-        \draw [o-o,thick]  (-3,1) -- (3,1);
-        \node (pg) at (0.5,1) [draw,circle,inner sep=3pt,fill=red!80!black] {};
-        \node at (pg) [anchor=south west] {$\overrightarrow{p_{\gamma \alpha}}$};
-        \draw (0.5,-0.5) circle(0.5);
-        \draw [|-|,dashed] (0.5,1) -- (0.5,-0.5);
-        \node at (1.2,0.4) {$d_{\alpha \gamma}(t)$};
-        \node at (1.0,-1.0) [font=\Large] {$\alpha$};
-        \node at (-2.5,1.3) [font=\Large] {$\gamma$};
+        \node (p) [pedestrian, label=below:$\alpha$] {};
+        \node (pg) [marked point,above=of p, 
+                    label=above right:$\overrightarrow{p_\gamma \alpha}$] {};
+
+        \node (wall start) [wall endpoint,left=3cm of pg] {};
+        \node (wall end) [wall endpoint,right=2cm of pg] {};
+
+        \draw [wall] (wall start) 
+            to node[font=\huge,xshift=-1.5cm, above left] {$\gamma$} (wall end);
+
+        \draw [|-|,dashed] (p.center) 
+            to node[right] {$d_{\alpha \gamma}(t)$} (pg.center);
     \end{tikzpicture}
     %{\includegraphics[width=0.5\textwidth]{Figures/NotationOfWall.pdf}} 
     \caption[Notation for the interaction between pedestrians and 
