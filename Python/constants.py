@@ -9,3 +9,5 @@ framerate_limit       = int(round(1.0/timestep))
 
 plot_sample_frequency = 0.1
 flowrate_moving_avg   = 5.0
+
+drawing_mode          = "images" # "images" or "tikz"

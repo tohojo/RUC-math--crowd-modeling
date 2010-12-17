@@ -1,18 +1,18 @@
 \section{Social force models}
 \label{sec:social-forces}
-One would think that the motion and dynamics of a human crowd would be 
-governed by complex human decision making. However, the idea of social force 
-models is modelling the behaviour using only a set of simple forces to 
+One would think that the motion and dynamics of a human crowd would be
+governed by complex human decision making. However, the idea of social force
+models is modelling the behaviour using only a set of simple forces to
 describe the behaviour of the human pedestrians that comprise a crowd.
 
 This works by calculating a set of social forces affecting each pedestrian in the system.
-These forces are not real physical forces in the sense 
-that they follow Newton's laws of motion, but rather a measure of the pedestrians' 
-motivation for acting in specific ways. However the name \emph{social forces} 
-is not accidental: both notation and to some extent the interpretation is 
-borrowed from physics. 
+These forces are not real physical forces in the sense
+that they follow Newton's laws of motion, but rather a measure of the pedestrians'
+motivation for acting in specific ways. However the name \emph{social forces}
+is not accidental: both notation and to some extent the interpretation is
+borrowed from physics.
 
-Since social forces have so much in common with physical forces, it makes 
+Since social forces have so much in common with physical forces, it makes
 sense to go into a bit more detail about what separates the two. If a real
 force between pedestrians where to occur, the pedestrians would actually have
 to touch each other. The social force works on a distance so even though
@@ -21,9 +21,8 @@ would feel a pressure from the force and at one point the pressure could be
 so high that you could get hurt from it. This makes no sense and will of course
 never happens in real life as long as people are not touching. So like the name
 implies the social force is a force that comes from the social behavior of people
-trying to avoid each other and should not be confused as an actual force on a pedestrian,
-since it does not make any sense in a real physical context.  We will in a later chapter discus
- how we think this model should be interpret, when it is used to describe something real with unreal forces.   
+trying to avoid each other and should not be confused as an actual force on a pedestrian.
+We will in a later chapter discus how we think this model should be interpret, when it is used to describe something real with unreal forces.
 
 %TODO: Expand on the difference between social and physical forces.
 
@@ -32,40 +31,37 @@ In this sections we will briefly go through the forces that are used in the soci
 and mention some of the differences. This we will do to make an overview of the social force models
 and try to explain some things that you could use but is not included in the model that we have
 based this report on. We will not go into details with the equations at this point but just explain
-the main idea about how different interactions works. 
+the main idea about how different interactions works.
 
 The model(\cite{self-org}) that we work with consider people to be circular when calculating the forces.
 There are basically three different forces on a pedestrian $\alpha$. An attractive force from the
 desired point that $\alpha$ wants to reach, a force from each of the other pedestrians and
-a force from the nearest point on the each of the surrounding walls and obstacles, anaffected of
-$\alpha$'s walking direction.
-The force from the desired point and the wall are the same no matter the directions of $\alpha$.
-The force from other pedestrians has two parts, one part that depends on whether the pedestrians are
-in front or behind $\alpha$, and one part that is unchanged no matter the direction of the force.
-The force from pedestrians(when not looking at the angle) and walls only depends on the distance. 
+a force from the nearest point on each of the surrounding walls and obstacles.
 
-In some models they also includes tangential forces from pedestrians and walls. Then tangential force
-from pedestrians is said to be a friction force between pedestrians. The tangential force from the walls
-means a pedestrian will tend to follow the wall. It is described in \cite{helbing00},  and \cite{HelbingNew}.
+The force from the wall only depends on how far $\alpha$ is from the wall. The attractive force from the desired point only depends on how delayed $\alpha$ gets. Sow if $\alpha$ gets forced to move slower than he wishes he will get impatient and increase his speed and visa versa.
+The force from other pedestrians has two parts, one part that depends on how the pedestrian is situated compared to the direction $\alpha$ is facing. The force will be greatest if the other pedestrian is situated directly in front of $\alpha$ and smallest if he situated directly behind $\alpha$.
+
+In some models they also include friction between pedestrians and between pedestrians and walls. This is implemented as a tangential force. The friction between pedestrians results in clogging at doorways \cite{ABconstant}. The tangential force from the walls
+means a pedestrian will tend to follow the wall when there is no or low visibility. It is described in \cite{helbing00}, and \cite{HelbingNew}.
 So it is used both in older and a newer papers than the one we use.
 
-The force from pedestrians are also changed a little so that the whole force is dependent
+The force from pedestrians are also changed a little so that is is not split up in two parts but the whole force is dependent
 on whether another pedestrian comes from the front or from behind. This they use in \cite{ABconstant},
-\cite{HelbingNew} and  \cite{helbing00}. So it is as with the tangential forces, something that has been used from time to time. 
+\cite{HelbingNew} and  \cite{helbing00}. So it is as with the tangential forces, something that has been used from time to time.
 
 In some variations of the model they also have a more advanced force from other pedestrians.
 In the advanced form the force from other pedestrians depends on the speed of the pedestrians
 and also the shape of the pedestrian is made elliptical. This they use in \cite{HelbingNew} and \cite{ABconstant}.
 Both are papers newer than the one we use. In \cite{ABconstant} they claim that it gives a better fit when
 determining constants by making video tracking of real life situations, and when they use a speed dependent
-force rather than using a force that is given by distance alone. 
+force rather than using a force that is given by distance alone.
 
 It should be noted that even thought there are some changes in the forces throughout the different papers,
 they write in the article we use, \cite{self-org}:
 \begin{quote}
  One may, of
 course, take into account other details such as a velocity
-dependence of the forces and noncircular shaped
+dependence of the forces and non circular shaped
 pedestrian bodies, but this does not have qualitative
 effects on the dynamical phenomena resulting in the
 simulations. In fact, most observed self-organization
@@ -75,11 +71,11 @@ the quantitative results.
 \end{quote}
 
 So if this is correct, we should be able to limit ourself to the model that they have in the paper we use.
-Having said this we will now describe different phenomenons that the model can give in the right scenarios.  
+Having said this we will now describe different phenomenons that the model can give in the right scenarios.
 
 
-% TODO: This should contain an overview of the different social force models, 
-% starting with the one we picked to simulate, and explaining briefly how the 
+% TODO: This should contain an overview of the different social force models,
+% starting with the one we picked to simulate, and explaining briefly how the
 % others differ. With references for all of them.
 
 
@@ -89,14 +85,14 @@ explain the scenarios that we have chosen to simulate. The phenomenons will be i
 are easy to compare with the simulation results we get, since they require no independent calculations
 but can be seen directly when running the simulations. So we will have an easy measure to see if we
 are able to get our interpretation of the model to work the same ways as it is presented in the papers.
-The scenarios that we have chosen to work with is based on from which scenaros, should we be able
+The scenarios that we have chosen to work with is based on from which scenarios, should we be able
 to replicate the phenomenons we want to compare our results and the ones from \cite{self-org}.
 It should be noted that all the phenomenons are mentioned in our main article \cite{self-org}.
-So it should be possible to reproduce the results from the article using the model they present in the same article. 
+So it should be possible to reproduce the results from the article using the model they present in the same article.
 
 \subsubsection{Lane Formation}
-Lane formation can be seen in counterflow situation, pedestrians form lanes of walking 
-directions, which is thought as a result of the non-linear body interaction 
+Lane formation can be seen in counterflow situation, pedestrians form lanes of walking
+directions, which is thought as a result of the non-linear body interaction
 force. When groups of pedestrians move against each other they will line up behind other
 pedestrians going in the same direction as themselves and form lines throughout the corridor.
 This is seen in real life situations and is one of the situations that the model are able to reproduce \cite{self-org}.
@@ -104,8 +100,8 @@ The lane formations we will try to replicate in the corridor cases.
 
 \subsubsection{Freezing-by-Heating Effect}
 This phenomenon is characterized by a blockage caused by high velocity,
-that follows an increasing density. The precondition for this effect is the driving force from desired 
-velocity and actual velocity, and that the tangential term from the interaction 
+that follows an increasing density. The precondition for this effect is the driving force from desired
+velocity and actual velocity, and that the tangential term from the interaction
 force is not needed. The freezing by heating effect is directly connected to simulations in
 physics\cite{frebyheat}. It is a  phenomenon that is the opposite of what you would see in a
 normal microscopic simulation of particles. In physics you would normally expect that when
@@ -121,7 +117,7 @@ two groups going through a corridor in opposite directions where the pedestrians
 This we should be able to measure when simulating the corridor case, when we raise the max desired
 velocity the pedestrians should start clogging up, and we should be able to measure a high density as
 a result of the increasing velocity.
-        
+
 
 \subsubsection{Oscillatory Flows at Bottlenecks}
 This effect arise in situations of corridors with bidirectional flows, at bottlenecks in the corridor.
@@ -139,7 +135,7 @@ if you can reproduce the oscillatory flow.
 It should be reproducible by the model \cite{self-org}.
 
 \subsubsection{Faster-Is-Slower Effect}
-It has been observed in evacuations situations that some process takes more 
+It has been observed in evacuations situations that some process takes more
 time if it is performed at high speed. This is called the faster-is-slower effect. It comes
 in situations like when people are trying to leave a place through a door. When people are
 trying to move faster than normal they will actually start to move slower through the door.
@@ -159,11 +155,11 @@ flows at bottlenecks and faster-is-slower).
 After having gone through the phenomenons, three scenarios seems obvious to work with;
 People leaving a squared room, a corridor with bidirectional flow
 and a corridor with bydirectional flow and a bottleneck.
-This should makes us able to see if we can recreate the results seen in the literature.   
+This should makes us able to see if we can recreate the results seen in the literature.
 
 We have now explained the very basic idea of the model we use, and the variations there can be between
 the social-force models. These differences is claimed to have little effect on the qualitative results.
 Therefore we expect that the model we work with should have no problems replicating the different phenomenons
 that we just gave a brief explanation of. After having done this, we will now continue and go into
-details of the math involved in the model. 
+details of the math involved in the model.
 

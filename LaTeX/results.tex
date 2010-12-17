@@ -2,8 +2,8 @@
 \label{sec:results}
 In this section we describe the results obtained from our simulations. We have simulated two scenarios: A square room where the pedestrians exit through a single door, and pedestrians walking through a corridor where there is a bidirectional flow. For each scenario we describe the parameters we have set for the scenario, which features we found worth measuring for this scenario, the results we expected, and the results we obtained. Possible remedies for any discrepancies between the expected and the actual results are discussed in section~\ref{sec:discussion}.
 
-\subsection{Constants}
-We will here shortly specify the values for the different constants we use in both of the scenarios.
+\subsection{Constants and scenarios}
+We will here shortly specify the values for the different constants we use in both of the scenarios and show screenshots of the scenarios we will use.
 In the simulation the parameters are set after \cite{ABconstant} and \cite{self-org}, to see if we can replecate their simulations and results.
 The general values we use are
 
@@ -27,13 +27,37 @@ The general values we use are
 \end{table}
 \end{center}
 
-We will through the chapter mension when the values are changed for a specific case. 
+We will through the chapter mention when the values are changed for a specific case.  
+
 
 \subsection{Startup}
 Running the first simulations where all about to see if there where any unatural behavior 
 by the pedestrians, when using the parameters in table \ref{Table_constants}. We checked for intersections between the pedestrians, pedestrians crossing the walls and so on.
 
 
+\begin{figure}[h]
+\centering
+\subfloat[Pedestrians overlapping]{\includegraphics[scale=0.45]{Figures/pedestiranoverlapping.pdf}}
+\subfloat[Overlapping between pedestrians and a wall]{\includegraphics[scale=0.45]{Figures/walloverlaping.pdf}}
+\caption{The figure shows two simulations of the squared room. We see the overlapping that can occur between two pedestrians and between the walls and pedestrians. This kind of intersection is seen in most simulations, but they don't cross completely. The red dot on the figures are the desired locations}
+\label{fig:overlapping}
+\end{figure}
+
+In the figure \ref{fig:overlapping} the overlapping between pedestrians themselves and between walls and pedestrians. 
+We see that in some situations it is possible for the pedestrians to intersect quite alot, almost reaching eachothers
+ centers. The same thing is seen for the walls, where the wall can get quite close to the center of a pedestrians. 
+But inspite of this we don't, with the chosen constants, see that they actually do cross. So even though it might 
+look like they get sqiuzzed alot together, no completely unrealistic situations occur. Also we see no other strange
+ scenarios, like people going in a wrong direction or anything like that. So the most basic requirements of the model 
+are fulfil. 
+
+We do however see some unrealistic behavior when we change the values in \ref{Table_constants} When looking at some of
+ the different phenomenons, we need to change certain values like the mean velocity. But when we do this it starts to
+ get unrealistic. When raising the desired velocity to a speed like $2.5m/s$, we start to see people crossing eachother 
+and going up to $3.5m/s$ we start to see people crossing the walls. This is a problem since these results makes no sence to
+compares with. Lowering the timestep with $1/10$ doesn't change this result at all. So to solve this problem we have in some
+ cases raised the wallues of the wall constant $U$ and the pedestrains repulsion constant $A$. This makes the repulsions forces 
+big enough for the pedestrians to act 'noraml'. We will throughout the chapter mention when we change the values and how much it is changed.
 
 
 
@@ -83,7 +107,7 @@ of the agents.
 
 The parameters for this simulation are as in \ref{Table_constants} with the exception of the pedestrians
 \begin{itemize*}
-    \item Number of pedestrians: $50$ starting, adding $3/s$.
+    \item Number of pedestrians: $40$ starting, adding $3/s$.
 \end{itemize*}
 
 When running the simulation we observe lane formations, and they almost clog up
@@ -113,7 +137,7 @@ The initial simulation has the values from \ref{Table_constants} with the except
 
 \begin{itemize*}
     \item Relaxation time: $0,5 s$.
-    \item Number of pedestrians: $50$ starting, adding $3/s$.
+    \item Number of pedestrians: $40$ starting, adding $3/s$.
 \end{itemize*}
 
 The next simulation we keep the new relaxation time, but changes the max velocity factor set to $4.0$
