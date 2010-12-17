@@ -3,12 +3,16 @@
 As we have seen in section~\ref{sec:results}, we have not obtained the 
 expected results from our simulations in all cases. In this section we discuss 
 some possible changes that we believe will fix these discrepancies.
-
 The section is divided into three parts: A discussion of the effects of modifying  
 the interaction forces, a discussion of parameter values, and a 
 discussion of possible errors related to our implementation of the simulation.
 
 \subsection{Modifying interaction forces}
+An obvious possibility when discussing why we do not see the expected results, 
+is analysing the forces that comprise the model. Two things become apparent: 
+the forces in the model are simplistic, and none of them are dependent 
+on the current velocities of the pedestrians as they are only changing with the relative 
+positions (along the line connecting two points). 
 
 We speculate that the reason we do not see the faster-is-slower effect is 
 that we do not have a frictional component in the interaction force between pedestrians 
@@ -17,20 +21,17 @@ relative motion or a tendency to move. An expression of the frictional force is
 provided by the Helbing group in the article \cite{helbing00}, where the frictional component 
 depends on the distance of physical compression, the relative velocity difference in 
 the tangential direction. Figure  illustrate the interaction between two pedestrians 
-if the frictional component is considered.
+if the frictional component is considered. 
 
+Figure
 
 Then the interaction force between two pedestrians is the sum of the repulsive component 
 and the frictional component.
 
-An obvious possibility when discussing why we do not see the expected results, 
-is analysing the forces that comprise the model. Two things become apparent: 
-the forces in the model are simplistic, as they are only changing with the relative 
-positions (along the line connecting two points), and none of them are dependent 
-on the current velocities of the pedestrians. This gives rise to two types of 
-behaviour: pedestrians walking directly towards each other do not try to avoid 
-colliding, and pedestrians running towards a wall decelerate at the same rate 
-as pedestrians walking towards it. They are illustrated in 
+There are two types of behaviour in the simulation that we find contradicting 
+with common behaviour: pedestrians walking directly towards each other 
+do not try to avoid colliding, and pedestrians running towards a wall 
+decelerate at the same rate as pedestrians walking towards it. They are illustrated in 
 figure~\ref{fig:extra-forces-behaviour}.
 
 \begin{figure}[h]
@@ -72,6 +73,18 @@ figure~\ref{fig:extra-forces-behaviour}.
     equally (red arrows).}
     \label{fig:extra-forces-behaviour}
 \end{figure}
+
+The first strange behaviour could be solved by extending the range of 
+frictional force, so that the tangential component can come to play before 
+the physical contact. We have not find an accurate expression for this 
+proposal, but it is possible to implement and should have a similar expression 
+with the frictional component we talked before.
+
+The other discrepancy from reality could be fixed by adopting the elliptical 
+force field, in the model we use a circular one instead. 
+The elliptical specification has been talked a lot in the article \cite{ABconstant}, 
+and it is velocity dependent. The result is that a pedestrian moving with a 
+higher velocity to the wall will receive a greater repulsive force
 
 When pedestrians decelerate at the same rate no matter their velocities, they 
 will in certain extreme cases (i.e. when they are moving very fast) not 
