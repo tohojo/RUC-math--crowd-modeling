@@ -4,19 +4,33 @@ As we have seen in section~\ref{sec:results}, we have not obtained the
 expected results from our simulations in all cases. In this section we discuss 
 some possible changes that we believe will fix these discrepancies.
 
-The section is divided into three parts: A discussion of the effects of making 
-the interaction forces velocity dependent, a discussion of parameter values, and a 
+The section is divided into three parts: A discussion of the effects of modifying  
+the interaction forces, a discussion of parameter values, and a 
 discussion of possible errors related to our implementation of the simulation.
 
-\subsection{Adding additional forces}
+\subsection{Modifying interaction forces}
+
+We speculate that the reason we do not see the faster-is-slower effect is 
+that we do not have a frictional component in the interaction force between pedestrians 
+or between pedestrians and obstacles, when they are in physical contact and have a 
+relative motion or a tendency to move. An expression of the frictional force is 
+provided by the Helbing group in the article \cite{helbing00}, where the frictional component 
+depends on the distance of physical compression, the relative velocity difference in 
+the tangential direction. Figure  illustrate the interaction between two pedestrians 
+if the frictional component is considered.
+
+
+Then the interaction force between two pedestrians is the sum of the repulsive component 
+and the frictional component.
+
 An obvious possibility when discussing why we do not see the expected results, 
 is analysing the forces that comprise the model. Two things become apparent: 
 the forces in the model are simplistic, as they are only changing with the relative 
-positions (away from the point of repulsion), and none of them are dependent 
-on the current velocity of the pedestrians. This gives rise to two types of 
+positions (along the line connecting two points), and none of them are dependent 
+on the current velocities of the pedestrians. This gives rise to two types of 
 behaviour: pedestrians walking directly towards each other do not try to avoid 
 colliding, and pedestrians running towards a wall decelerate at the same rate 
-as pedestrians walking towards it. This is illustrated in 
+as pedestrians walking towards it. They are illustrated in 
 figure~\ref{fig:extra-forces-behaviour}.
 
 \begin{figure}[h]
@@ -52,14 +66,14 @@ figure~\ref{fig:extra-forces-behaviour}.
         \label{subfig:equal-repulsion}}
     \caption[Behaviour from simplistic forces]{Behaviour from simplistic 
     forces. \subref{subfig:colliding} Pedestrians walking towards each other 
-    do not divert to the side (top pair), even though doing to would avoid a 
+    do not divert to the side (top pair), even though doing so would avoid a 
     collision (bottom pair). \subref{subfig:equal-repulsion} Pedestrians 
     heading towards the wall at different speeds (blue arrows) are repulsed 
     equally (red arrows).}
     \label{fig:extra-forces-behaviour}
 \end{figure}
 
-When pedestrians decelerate at the same rate no matter their velocity, they 
+When pedestrians decelerate at the same rate no matter their velocities, they 
 will in certain extreme cases (i.e. when they are moving very fast) not 
 decelerate enough, and so will move through walls or even each other. Since 
 the repulsive forces are exponential in nature, lowering the time step size 

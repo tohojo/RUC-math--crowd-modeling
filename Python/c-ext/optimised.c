@@ -4,7 +4,9 @@
 
 static double A, B, U, lambda, timestep;
 
-static Vector flowline[2];
+static Wall * flowlines;
+static Py_ssize_t *new_flow_c;
+static Py_ssize_t fline_c;
 
 // Global objects to allow access from different threads
 static Pedestrian * pedestrians;
@@ -12,7 +14,6 @@ static Wall * walls;
 static Py_ssize_t a_count;
 static Py_ssize_t w_count;
 
-static Py_ssize_t new_flow_c;
 
 static PyObject * module_dict;
 
@@ -195,13 +196,7 @@ void update_position(Pedestrian * a)
 	a->velocity = new_v;
     a->time += timestep;
 
-	if(a->flowline_time < 0) {
-        if(vector_projection_distance(
-					flowline[0], flowline[1], a->position) < a->radius) {
-			a->flowline_time = a->time;
-			new_flow_c += 1;
-		}
-	}
+    check_flowlines(a);
 }
 
 static int is_escaped(Pedestrian * a)
@@ -212,6 +207,18 @@ static int is_escaped(Pedestrian * a)
             || a->position.y > ESCAPE_THRESHOLD || a->position.y < -ESCAPE_THRESHOLD)
         return 1;
     return 0;
+}
+
+static void check_flowlines(Pedestrian * a)
+{
+    int i;
+    for(i=0; i<fline_c;i++) {
+        if(!a->flowline[i] && vector_projection_distance(
+                    flowlines[i].start, flowlines[i].end, a->position) < a->radius) {
+            new_flow_c[i] += 1;
+            a->flowline[i] = 1;
+        }
+    }
 }
 
 
@@ -257,9 +264,13 @@ static PyObject * add_pedestrian(PyObject * self, PyObject * args)
 static PyObject * flow_count(PyObject * self, PyObject * args)
 {
 	PyObject * f_c;
+    Py_ssize_t i;
 
-	f_c = PyInt_FromSsize_t(new_flow_c);
-	new_flow_c = 0;
+    PyArg_ParseTuple(args, "i:flow_count", &i);
+    if(i > fline_c) Py_RETURN_NONE;
+
+	f_c = PyInt_FromSsize_t(new_flow_c[i]);
+	new_flow_c[i] = 0;
 	return f_c;
 }
 
@@ -283,8 +294,6 @@ static PyObject * a_property(PyObject * self, PyObject * args)
 		return PyFloat_FromDouble(pedestrians[i].radius);
 	} else if(strcmp(property, "velocity") == 0) {
 		return PyFloat_FromDouble(vector_length(pedestrians[i].velocity));
-	} else if(strcmp(property, "flowline_time") == 0) {
-		return PyFloat_FromDouble(pedestrians[i].flowline_time);
 	} else if(strcmp(property, "target") == 0) {
 		return Py_BuildValue("dd", 
 				pedestrians[i].target.x, pedestrians[i].target.y);
@@ -296,7 +305,7 @@ static PyObject * a_property(PyObject * self, PyObject * args)
 
 static PyObject * set_parameters(PyObject * self, PyObject * args)
 {
-	PyObject * o, * p_walls, *p_flowline;
+	PyObject * o, * p_walls, *p_flowlines;
     PyArg_ParseTuple(args, "O:set_parameters", &o);
 
     A           = double_from_attribute(o, "A");
@@ -306,14 +315,17 @@ static PyObject * set_parameters(PyObject * self, PyObject * args)
     timestep    = double_from_attribute(o, "timestep");
 
     p_walls     = PyDict_GetItemString(o, "walls");
-    p_flowline  = PyDict_GetItemString(o, "flowrate_line");
+    p_flowlines  = PyDict_GetItemString(o, "flowrate_lines");
 
-	flowline[0].x = PyFloat_AsDouble(PyTuple_GetItem(p_flowline, 0));
-	flowline[0].y = PyFloat_AsDouble(PyTuple_GetItem(p_flowline, 1));
-	flowline[1].x = PyFloat_AsDouble(PyTuple_GetItem(p_flowline, 2));
-	flowline[1].y = PyFloat_AsDouble(PyTuple_GetItem(p_flowline, 3));
+    fline_c = PyList_Size(p_flowlines);
+    flowlines   = PyMem_Realloc(flowlines, fline_c * sizeof(Wall));
+    new_flow_c  = PyMem_Realloc(new_flow_c, fline_c * sizeof(Py_ssize_t));
+    memset(new_flow_c, 0, fline_c * sizeof(Py_ssize_t));
+    init_walls(p_flowlines, flowlines, fline_c);
 
-    init_walls(p_walls);
+    w_count = PyList_Size(p_walls);
+    walls    = PyMem_Realloc(walls, w_count * sizeof(Wall));
+    init_walls(p_walls, walls, w_count);
 	update_a_count(0);
 
     Py_RETURN_NONE;
@@ -395,7 +407,7 @@ static void update_a_count(Py_ssize_t count)
 
 }
 
-static Pedestrian pedestrian_from_pyobject(PyObject * o, Pedestrian * a)
+static void pedestrian_from_pyobject(PyObject * o, Pedestrian * a)
 {
     a->radius                   = double_from_attribute(o, "radius");
     a->time                     = double_from_attribute(o, "time");
@@ -403,7 +415,7 @@ static Pedestrian pedestrian_from_pyobject(PyObject * o, Pedestrian * a)
     a->max_velocity             = double_from_attribute(o, "max_velocity");
     a->relax_time               = double_from_attribute(o, "relax_time");
 
-	a->flowline_time       = -1;
+	memset(&a->flowline, 0, 5*sizeof(int));
 
 
     a->position         = vector_from_attribute(o, "position");
@@ -435,6 +447,19 @@ static Vector vector_from_attribute(PyObject * o, char * name)
     Vector result = vector_from_pyobject(o2);
     return result;
 }
+
+static Wall wall_from_pyobject(PyObject *o)
+{
+    Wall w;
+    w.start.x = PyFloat_AsDouble(PyTuple_GetItem(o, 0));
+    w.start.y = PyFloat_AsDouble(PyTuple_GetItem(o, 1));
+    w.end.x   = PyFloat_AsDouble(PyTuple_GetItem(o, 2));
+    w.end.y   = PyFloat_AsDouble(PyTuple_GetItem(o, 3));
+    w.length  = vector_length(vector_sub(w.end, w.start));
+
+    return w;
+}
+
 
 static Vector vector_from_pyobject(PyObject * o)
 {
@@ -494,18 +519,13 @@ PyMODINIT_FUNC initoptimised(void)
 #endif
 }
 
-static void init_walls(PyObject * p_walls)
+static void init_walls(PyObject * p_walls, Wall * walls_p, Py_ssize_t w_count)
 {
     int i;
-    w_count = PyList_Size(p_walls);
-    walls    = PyMem_Realloc(walls, w_count * sizeof(Wall));
     for(i = 0; i < w_count; i++) {
         PyObject * p_w   = PyList_GetItem(p_walls, i);
-        walls[i].start.x = PyFloat_AsDouble(PyTuple_GetItem(p_w, 0));
-        walls[i].start.y = PyFloat_AsDouble(PyTuple_GetItem(p_w, 1));
-        walls[i].end.x   = PyFloat_AsDouble(PyTuple_GetItem(p_w, 2));
-        walls[i].end.y   = PyFloat_AsDouble(PyTuple_GetItem(p_w, 3));
-        walls[i].length  = vector_length(vector_sub(walls[i].end, walls[i].start));
+        Wall w = wall_from_pyobject(p_w);
+        walls_p[i] = w;
     }
 }
 

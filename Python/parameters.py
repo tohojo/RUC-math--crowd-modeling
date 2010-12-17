@@ -18,7 +18,10 @@ scenarios = {
             'radius_deviation'   : 0.01,
             'targets'            : [(0.0,6.0)],
             'density_rectangle'  : (-1.0, 3.0, 1.0, 5.0),
-            'flowrate_line'      : (-1.0, 5.1, 1.0, 5.1),
+            'flowrate_lines'     : [
+                                        (-1.0, 5.1, 1.0, 5.1, "outside door"), 
+                                        (-1.0, 4.9, 1.0, 4.9, "inside door"),
+                                   ],
             'continuous_rate'    : None,
             'continuous_start'   : [],
             'stop_at'            : None,
