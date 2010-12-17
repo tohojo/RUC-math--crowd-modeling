@@ -218,7 +218,7 @@ scenarios = {
 
         'bottleneckbidirec': Scenario({
             'name'               : 'corridor',
-            'A'                  : 15.0,
+            'A'                  : 12.0,
             'B'                  : 0.2,
             'U'                  : 22.0,
             'lambda'             : 1.0,
@@ -237,13 +237,16 @@ scenarios = {
                                     (-500.0, 0.0)
                                    ],
             'density_rectangle'  : (-1.0, -0.8, 1.0, 0.8),
-            'flowrate_line'      : (-11.0, -3.0, -11.0, 3.0),     
+            'flowrate_lines'      : [
+                                    (-11.0, -3.0, -11.0, 3.0,"Left flow"),     
+                                    (11.0, -3.0, 11.0, 3.0,"Right flow"),
+                                    ],
             'continuous_rate'    : 10,
             'continuous_start'   : [
                                     (-10.0, -1.0, -9.0, 1.0),
                                     (9.0, -1.0, 10.0, 1.0)
                                    ],
-            'stop_at'            : 75,
+            'stop_at'            : 300,
             'walls'              : [
                                     (-10.0,  3.0, -5.0,  3.0),
                                     (-10.0, -3.0, -5.0, -3.0),
