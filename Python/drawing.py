@@ -54,7 +54,7 @@ class Canvas:
         pygame.display.flip()
 
     def create_image(self, frames):
-        if pygame.version.vernum < (1,8,0):
+        if pygame.version.vernum < (1,8,0) or True:
             ext = "tga"
         else:
             ext = "png"
