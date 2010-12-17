@@ -6,15 +6,15 @@ that is they describe the system by looking at the behaviour of each agent or,
 in our case, pedestrian in the system.
 
 
-In this model the behaviour each pedestrian is defined by a series of social 
+In this model the behaviour of each pedestrian is defined by a series of social 
 forces. We will describe three main forces, that each represent a tendency of 
 the pedestrians. These forces are \emph{the desired movement force},  
 \emph{the interaction force} between pedestrians and \emph{the repulsive 
 force}  from the walls. The model also contains an attractive force, allowing 
 e.g. a group of pedestrians to stick together when moving around, and a 
-fluctuation term, adding a stochastic quality to the model. Both these forces, 
+fluctuation term, adding a stochastic quality to the model. Both of these forces, 
 however, are only mentioned in the article, and are not really used. We have 
-written the authors of the article asking about this, and they have replied 
+written to the authors of the article asking about this, and they have replied 
 that these parts of the model have not been used in practice, but that they 
 might be useful to include at a later point in time.  Because of this, we will 
 exclude these parts from the explanation of the model.
@@ -113,7 +113,7 @@ Here $V_{\alpha}^{d}(t)$ is the desired speed at time $t$,
 $\overrightarrow{e_{\alpha}}$ is the unit vector pointing towards the 
 pedestrian's target and  $\overrightarrow{V_{\alpha}}(t)$ is the actual 
 velocity of the pedestrian at time $t$. It is not clear from the article what 
-the initial velocity of the pedestrians is (i.e.  
+the initial velocity of the pedestrians are (i.e.  
 $\overrightarrow{V_\alpha}(0)$), so we have assumed it to be zero.
 
 
@@ -203,8 +203,8 @@ means that as the average speed goes up, the desired speed goes down.  When
 the desired speed is lower than the actual speed, this will result in a 
 negative desired movement force due to~\eqref{eqn:desired-force}, and vice 
 versa. The end result is that the desired movement force will act as a 
-stabilising force, that accelerates the pedestrian when it's moving slower 
-than its desired speed, and decelerate it when it's moving faster, but 
+stabilising force, that accelerates the pedestrian when it is moving slower 
+than its desired speed, and decelerate it when it is moving faster, but 
 allowing for movement of up to the maximum desired speed to ``make up'' for 
 lost time if the pedestrian has been slowed down by the other forces acting on 
 it.
@@ -501,7 +501,7 @@ order to create practical numerical simulations. We have already filled out
 some gaps by adding details from articles other than the original, but the 
 model as we have presented it in this article is still quite abstract. In the 
 following section, we outline the parts missing to turn the model into a 
-simulation, and how we've solved these problems.
+simulation, and how we have solved these problems.
 
 
 \begin{table}[h]

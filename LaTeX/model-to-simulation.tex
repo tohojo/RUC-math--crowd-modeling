@@ -66,7 +66,7 @@ from resulting in longer calculation times, potentially increase the error
 introduced by rounding errors. Rounding errors occur because numerical 
 simulations have a finite precision and so have to be truncated. The more 
 calculations occur, the larger this error becomes. This means that setting the 
-time step too low will result in too many errors from this source.
+time step too low will result in too many errors from this source \cite{RoundingError}.
 
 Methods for obtaining better approximations of differential equations exist, 
 e.g. the Runge-Kutta method \cite{butcher2003}. However, from experimenting 
@@ -77,7 +77,7 @@ methods.
 
 \subsection{Initial conditions and constants}
 \label{sec:init-cond}
-As seen in section~\ref{sec:the-model}, there are various parameters the must 
+As seen in section~\ref{sec:the-model}, there are various parameters that must 
 be set in order to simulate the model. Apart from this, there are also various 
 initial conditions (such as the pedestrians' starting position) that must be 
 set. In this section, we outline these parameters and initial conditions, and 
@@ -109,14 +109,14 @@ given in section~\ref{sec:results}. These parameters are:
 
 \begin{itemize}
     \item \textbf{Placement of walls:} The placement of the walls is described 
-        by defining the endpoints describing the lines segments that 
+        by defining the endpoints describing the line segments that 
         constitute each wall.
 
     \item \textbf{Pedestrian starting areas:} For each scenario we define one 
         or more areas in which the pedestrians start. The pedestrians are 
         distributed randomly within these areas, as described below.
 
-    \item \textbf{Pedestrian targets:}  Pedestrians move towards their 
+    \item \textbf{Pedestrian targets:}  Pedestrians move toward their 
         assigned target, as described in section~\ref{sec:desired-force}. 
         Targets do no differ between pedestrians, except that we assign a 
         target for each starting area to allow for simulating scenarios where 
