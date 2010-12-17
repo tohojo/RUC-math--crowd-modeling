@@ -28,17 +28,15 @@ Thrane, Troels Christensen, Wence Xiao}
 % captionpos=b,
  tabsize=4, frame=tb,
  morekeywords={Vector, Pedestrian}}
-\tikzset{
-    pedestrian/.style={circle,draw,minimum size=1cm},
-    point/.style={circle,inner sep=0pt, minimum size=0pt,fill=red},
-    wall endpoint/.style={draw,circle,minimum size=2.5mm,inner sep=0pt},
-    marked point/.style={circle,draw=black,fill=red!80!black,inner sep=0pt, minimum size=4mm},
-    vector/.style={->},
-    wall/.style={thick},
-    distance marker/.style={dashed,|-|},
-    >=latex,
-    node distance=1.5cm,
-}
+\tikzstyle{pedestrian} = [circle,draw,minimum size=1cm]
+\tikzstyle{point} = [circle,inner sep=0pt, minimum size=0pt,fill=red]
+\tikzstyle{marked point} = [circle,draw=black,fill=red!80!black,inner sep=0pt, minimum size=4mm]
+\tikzstyle{wall endpoint} = [draw,circle,minimum size=2.5mm,inner sep=0pt]
+\tikzstyle{vector} = [->]
+\tikzstyle{wall} = [thick]
+\tikzstyle{distance marker} = [dashed,|-|]
+\tikzset{>=latex, node distance=1.5cm}
+
 \begin{document}
 \hyphenation{
     de-pen-den-ce
