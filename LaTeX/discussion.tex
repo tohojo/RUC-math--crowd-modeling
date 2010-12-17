@@ -68,10 +68,10 @@ figure~\ref{fig:extra-forces-behaviour}.
             \node (wall end) [wall endpoint,above right=of fast] {};
             \draw[wall] (wall start) -- (wall end);
 
-            \draw[blue,->] (slow) -- (slow target);
-            \draw[blue,->] (fast) -- (fast target);
-            \draw[red,->] (slow) -- (slow repulsion);
-            \draw[red,->] (fast) -- (fast repulsion);
+            \draw[blue,vector] (slow) -- (slow target);
+            \draw[blue,vector] (fast) -- (fast target);
+            \draw[red,vector] (slow) -- (slow repulsion);
+            \draw[red,vector] (fast) -- (fast repulsion);
 
             \path [use as bounding box] (wall start) +(-1,0) (wall end) 
             +(1,0);
@@ -84,6 +84,27 @@ figure~\ref{fig:extra-forces-behaviour}.
     \subref{subfig:equal-repulsion} Pedestrians heading towards the wall at 
     different speeds (blue arrows) are repulsed equally (red arrows).}
     \label{fig:extra-forces-behaviour}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \node (p1) [pedestrian] {};
+        \node (p2) [pedestrian,above=0pt of p1] {};
+        \node (p1 target) [point,left=1cm of p2] {};
+        \node (p2 target) [point,left=1cm of p1] {};
+
+        \draw [blue,vector] (p1.north) -- +(1.0,0);
+        \draw [blue,vector] (p2.south) -- +(-1.0,0);
+        \draw [red,vector] (p1.south) -- +(0,-1.0);
+        \draw [red,vector] (p2.north) -- +(0,1.0);
+        \draw [vector] (p1) -- (p1 target);
+        \draw [vector] (p2) -- (p2 target);
+    \end{tikzpicture}
+    \caption[Friction forces]{Friction forces (blue) are perpendicular to the 
+    repulsive forces (red) between two pedestrians and make it harder for 
+    pedestrians to move in crowded areas.}
+    \label{fig:friction}
 \end{figure}
 
 The first strange behaviour could be solved by extending the range of 

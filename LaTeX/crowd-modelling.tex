@@ -30,10 +30,12 @@ Thrane, Troels Christensen, Wence Xiao}
  morekeywords={Vector, Pedestrian}}
 \tikzset{
     pedestrian/.style={circle,draw,minimum size=1cm},
-    point/.style={circle,inner sep=0pt, minimum size=2pt,fill=red},
-    wall/.style={thick},
+    point/.style={circle,inner sep=0pt, minimum size=0pt,fill=red},
     wall endpoint/.style={draw,circle,minimum size=2.5mm,inner sep=0pt},
     marked point/.style={circle,draw=black,fill=red!80!black,inner sep=0pt, minimum size=4mm},
+    vector/.style={->},
+    wall/.style={thick},
+    distance marker/.style={dashed,|-|},
     >=latex,
     node distance=1.5cm,
 }

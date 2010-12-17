@@ -282,18 +282,18 @@ the wall. This is illustrated in figure~\ref{fig:doorways}.
         \path [name intersections={of=wall and dotted l, by=dot 1}];
         \path [name intersections={of=wall and dotted r, by=dot r}];
 
-        \draw [dashed,opacity=0.4] 
+        \draw [dotted] 
                 (left endpoint) ++(0,0.5) -- (dot 1) 
                 (right endpoint) ++(0,0.5) -- (dot r);
 
-        \draw [dotted,thin,|-|] (p.center) -- (left endpoint);
+        \draw [distance marker] (p.center) -- (left endpoint);
 		\draw [vector] (p) -- (target);
     \end{tikzpicture}
 
     \caption[Preventing repulsion from doorways]{Preventing repulsion from 
     doorways. To allow free passage through doorways, pedestrians between the 
-    dashed lines do not get repulsed from the marked endpoints unless the 
-    distance (indicated by the dotted line) is smaller than the pedestrian's 
+    dotted lines do not get repulsed from the marked endpoints unless the 
+    distance (indicated by the dashed line) is smaller than the pedestrian's 
     radius.}
     \label{fig:doorways}
 \end{figure}
