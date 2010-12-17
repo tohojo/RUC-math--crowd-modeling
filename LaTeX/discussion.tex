@@ -36,41 +36,53 @@ figure~\ref{fig:extra-forces-behaviour}.
 
 \begin{figure}[h]
     \centering
-    \subfloat[Pedestrians walking towards each other.]{
-        \begin{tikzpicture}[scale=2,>=latex]
-             \node (p1) at (-0.5,0.5) [circle,draw] {};
-             \node (p2) at ( 0.5,0.5) [circle,draw] {};
-             \node (p3) at (-0.5,0) [circle,draw] {};
-             \node (p4) at ( 0.5,0) [circle,draw] {};
+    \subfloat[Pedestrian $\alpha$ walking towards $\beta$.]{
+        \begin{tikzpicture}
+            \node (p moving) [pedestrian,
+                              label=below:$\alpha$] {};
+            \node (p static) [pedestrian,right=of p moving,
+                              label=below:$\beta$] {};
+            \node (divert) [point,above right=5mm of p static] {};
+            \node (first) [point,left=5mm of p static] {};
 
-             \draw[->] (p1) -- +(0.5,0);
-             \draw[->] (p2) -- +(-0.5,0);
-             \draw[->] (p3) -- (0,0.1);
-             \draw[->] (p4) -- (0,-0.1);
+            \draw[->,dashed,red] (p moving) -- (p static);
+            \draw[->,dashed,blue] (p moving) -- (first) to[bend left] (divert) ;
 
-            \useasboundingbox (-2,-1) rectangle (2,1);
+            \path [use as bounding box] 
+                (p static) +(1.5,0) +(0,1.5) 
+                (p moving) +(-1.5,0) +(0,-1.5);
         \end{tikzpicture}
         \label{subfig:colliding}
         }
     \subfloat[Pedestrians running and walking towards a wall.]{
-        \begin{tikzpicture}[scale=2,>=latex]
-            \draw[o-o] (-1,1) -- (1,1);
-            \node (p1) at (-0.5,0) [circle,draw] {};
-            \node (p2) at ( 0.5,0) [circle,draw] {};
+        \begin{tikzpicture}
+            \node (slow) [pedestrian] {};
+            \node (fast) [pedestrian, right=of slow] {};
 
-            \draw[blue,->] (p1) -- +(0,0.5);
-            \draw[blue,->] (p2) -- +(0,0.75);
-            \draw[red,->] (p1) -- +(0,-0.25);
-            \draw[red,->] (p2) -- +(0,-0.25);
-            \useasboundingbox (-2,-1) rectangle (2,1);
+            \node (slow target) [point, above=4mm of slow] {};
+            \node (fast target) [point, above=8mm of fast] {};
+            \node (slow repulsion) [point, below=5mm of slow] {};
+            \node (fast repulsion) [point, below=5mm of fast] {};
+
+            \node (wall start) [point,above left=of slow] {};
+            \node (wall end) [point,above right=of fast] {};
+            \draw[wall] (wall start) -- (wall end);
+
+            \draw[blue,->] (slow) -- (slow target);
+            \draw[blue,->] (fast) -- (fast target);
+            \draw[red,->] (slow) -- (slow repulsion);
+            \draw[red,->] (fast) -- (fast repulsion);
+
+            \path [use as bounding box] (wall start) +(-1,0) (wall end) 
+            +(1,0);
         \end{tikzpicture}
         \label{subfig:equal-repulsion}}
     \caption[Behaviour from simplistic forces]{Behaviour from simplistic 
-    forces. \subref{subfig:colliding} Pedestrians walking towards each other 
-    do not divert to the side (top pair), even though doing so would avoid a 
-    collision (bottom pair). \subref{subfig:equal-repulsion} Pedestrians 
-    heading towards the wall at different speeds (blue arrows) are repulsed 
-    equally (red arrows).}
+    forces. \subref{subfig:colliding} A pedestrian, $\alpha$ walking towards 
+    another pedestrian, $\beta$, does not divert to the side (red line), even 
+    though doing so would avoid a collision (blue line). 
+    \subref{subfig:equal-repulsion} Pedestrians heading towards the wall at 
+    different speeds (blue arrows) are repulsed equally (red arrows).}
     \label{fig:extra-forces-behaviour}
 \end{figure}
 
