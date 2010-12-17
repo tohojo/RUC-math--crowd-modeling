@@ -45,12 +45,12 @@ scenarios = {
             'name'               : 'corridor',
             'A'                  : 12.0,
             'B'                  : 0.2,
-            'U'                  : 12.0,
-            'lambda'             : 1.0,
-            'initial_count'      : 1,
+            'U'                  : 2.0,
+            'lambda'             : 0.1,
+            'initial_count'      : 40,
             'start_areas'        : [
-                                    (-10.0,-0.7,-1.0,0.7),
-                                    (1.0,-0.7,10.0,0.7)
+                                    (-10.0,-3.0,-1.0,3.0),
+                                    (1.0,-3.0,10.0,3.0),
                                    ],
             'velocity_mean'      : 2.0,
             'velocity_deviation' : 0.26,
@@ -61,12 +61,12 @@ scenarios = {
                                     (500.0,0.0),
                                     (-500.0, 0.0)
                                    ],
-            'density_rectangle'  : (-1.0, -0.8, 1.0, 0.8),
-            'flowrate_line'      : (0.0, -1.0, 0.0, 1.0),
-            'continuous_rate'    : 10,
+            'density_rectangle'  : (-1.0, -3.0, 1.0, 3.0),
+            'flowrate_line'      : (0.0, -3.0, 0.0, 3.0),
+            'continuous_rate'    : 3,
             'continuous_start'   : [
-                                    (-10.0, -0.7, -9.0, 0.7),
-                                    (9.0, -0.7, 10.0, 0.7)
+                                    (-10.0, -3.0, -9.0, 3.0),
+                                    (9.0, -3.0, 10.0, 3.0),
                                    ],
             'stop_at'            : 50,
             'walls'              : [
@@ -76,7 +76,7 @@ scenarios = {
             'drawing_width'      : 750,
             'drawing_height'     : 350,
             'pixel_factor'       : 30,
-            'relax_time'         : 0.1,
+            'relax_time'         : 0.5,
             'vary_parameters'    : {
                                     #'A'            : (4.0, 6.0, 0.01),
                                     'velocity_mean': (1.5, 5.0, 0.5),
@@ -189,13 +189,14 @@ scenarios = {
                                     (500.0,0.0),
                                     (-500.0, 0.0)
                                    ],
-            'density_rectangle'  : (-1.0, -0.8, 1.0, 0.8),
-            'flowrate_line'      : (11.0, -3.0, 11.0, 3.0),
             'continuous_rate'    : 10,
+            'density_rectangle'  : (-1.0, -3.0, 1.0, 3.0),
+            'flowrate_line'      : (0.0, -1.0, 0.0, 1.0),
             'continuous_start'   : [
-                                    (-10.0, -0.7, -9.0, 0.7)
+                                    (-10.0,-3.0,-9.0,3.0),
+                                    (9.0,-3.0,10.0,3.0),
                                    ],
-            'stop_at'            : 75,
+            'stop_at'            : 60,
             'walls'              : [
                                     (-10.0,  0.7, -5.0,  0.7),
                                     (-10.0, -0.7, -5.0, -0.7),
