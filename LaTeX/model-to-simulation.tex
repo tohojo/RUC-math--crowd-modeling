@@ -263,17 +263,32 @@ the wall. This is illustrated in figure~\ref{fig:doorways}.
 
 \begin{figure}[h]
     \centering
-    \begin{tikzpicture}[scale=1.2]
-		\node (p) at (-0.2,1.5) [draw,circle,inner sep=3pt] {};
-		\node (el) at (-0.5,2) [fill,circle,inner sep=1pt] {};
-		\node (er) at (0.5,2) [fill,circle,inner sep=1pt] {};
+    \begin{tikzpicture}
+		\node (p)  [pedestrian] {};
+		\node (left endpoint) [wall endpoint,above left=3mm of p] {};
+		\node (right endpoint) [wall endpoint,right=of left endpoint] {};
+        \node (target) [point,above right=of left endpoint] {};
 
-        \draw [thick] (0.5,2) -- (2,2) -- (2,-1) -- (-2,-1) -- (-2,2) --(-0.5,2);
-        \draw [dashed,opacity=0.4] (0.5,2.5) -- (0.5,-1)
-        (-0.5,2.5) -- (-0.5,-1);
-    	\draw [dotted,thin] (p) -- (el);
-		\draw [dotted,thin] (p) -- (er);
-		\draw [very thin, -latex] (p) -- (0,2.5);
+        \node (top l) [point, left=of left endpoint] {};
+        \node (top r) [point, right=of right endpoint] {};
+        \node (bottom l) [point, below=3cm of top l] {};
+        \node (bottom r) [point, below=3cm of top r] {};
+
+        \draw [wall,name path=wall] (left endpoint) -- (top l) -- (bottom l) 
+            -- (bottom r) -- (top r) -- (right endpoint);
+
+        \path [name path=dotted l] (left endpoint) -- +(0,-3.1);
+        \path [name path=dotted r] (right endpoint) -- +(0,-3.1);
+        \path [name intersections={of=wall and dotted l, by=dot 1}];
+        \path [name intersections={of=wall and dotted r, by=dot r}];
+
+        \draw [dashed,opacity=0.4] 
+                (left endpoint) ++(0,0.5) -- (dot 1) 
+                (right endpoint) ++(0,0.5) -- (dot r);
+
+        \draw [dotted,thin,] (p) -- (left endpoint);
+		\draw [dotted,thin] (p) -- (right endpoint);
+		\draw [vector] (p) -- (target);
     \end{tikzpicture}
 
     \caption[Preventing repulsion from doorways]{Preventing repulsion from 
