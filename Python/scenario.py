@@ -43,6 +43,10 @@ class Scenario:
         self.parameters = parameters
         if not "random_seed" in self.parameters:
             self.parameters["random_seed"] = constants.random_seed
+
+        if not "flowrate_lines" in self.parameters:
+            self.parameters["flowrate_lines"] = [self.parameters["flowrate_line"]] 
+
         self.timestep = constants.timestep
         self.run_time = datetime.now()
         self.parameters['run_time'] = self.run_time.strftime("%Y-%m-%d %H:%M:%S")
@@ -128,14 +132,17 @@ class Scenario:
             if x+r >= x1 and x-r <= x2 and y+r >= y1 and y-r <= y2:
                 density_c += 1
 
-        flow_count = optimised.flow_count()
-        flowrate = flow_count/constants.plot_sample_frequency
+        flowrates = []
+        for i in xrange(len(self.parameters["flowrate_lines"])):
+            flow_count = optimised.flow_count(i)
+            flowrate = flow_count/constants.plot_sample_frequency
+            flowrates.append(flowrate)
 
         density = density_c / density_area
         self.plots.add_sample(self.time, 
                 density=density,
                 velocities=velocities, 
-                flowrate=flowrate)
+                flowrate=flowrates)
 
     def _draw(self):
         self.canvas.clear_screen()

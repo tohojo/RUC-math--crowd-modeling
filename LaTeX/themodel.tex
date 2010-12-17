@@ -35,13 +35,13 @@ figure~\ref{pedestrian-notation}.
 \begin{figure}[ht]
     \centering
     \subfloat[Notation of pedestrian properties.]{
-        \includegraphics[height=6cm]{Figures/NotationOfPedestrian.pdf}
+        \includegraphics[width=0.40\textwidth]{Figures/NotationOfPedestrian.pdf}
         \label{subfig:notation}
     }
     \subfloat[Main forces acting on a pedestrian.]{
-        \includegraphics[height=6cm]{Figures/ForceModel.pdf}
-        \label{subfig:forces}
-    }
+        \includegraphics[width=0.45\textwidth]{Figures/ForceModel.pdf}
+        \label{subfig:forces}    
+}
     \caption[Notation for pedestrians]{Notation for a pedestrian.  
     \subref{subfig:notation} The notation for pedestrian properties. Position 
     vector ($ \overrightarrow{p_{\alpha}} $), velocity vector ($ 
@@ -157,7 +157,7 @@ illustration of this interpretation is given in figure~\ref{impatience}.
 
 \begin{figure}[ht]
     \centering
-    {\includegraphics[width=0.5\textwidth]{Figures/NotationOfPedestrian2.pdf}} 
+    {\includegraphics[width=0.5\textwidth]{Figures/impatience.pdf}} 
     \caption[Our interpretation of the average velocity]{Our interpretation of 
     the average velocity. The vector pointing from the pedestrian's initial 
     position, $p^i_\alpha$, is projected onto the vector pointing from 
@@ -397,12 +397,9 @@ nearest point on the wall, $\overrightarrow{p_{\gamma \alpha}}$, is known.
         \draw [o-o,thick]  (-3,1) -- (3,1);
         \node (pg) at (0.5,1) [draw,circle,inner sep=3pt,fill=red!80!black] {};
         \node at (pg) [anchor=south west] {$\overrightarrow{p_{\gamma \alpha}}$};
-
-        \draw (0.5,-0.5) circle[radius=0.5];
+        \draw (0.5,-0.5) circle(0.5);
         \draw [|-|,dashed] (0.5,1) -- (0.5,-0.5);
-
         \node at (1.2,0.4) {$d_{\alpha \gamma}(t)$};
-
         \node at (1.0,-1.0) [font=\Large] {$\alpha$};
         \node at (-2.5,1.3) [font=\Large] {$\gamma$};
     \end{tikzpicture}
