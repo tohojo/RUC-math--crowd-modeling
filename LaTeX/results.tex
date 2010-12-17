@@ -1,17 +1,29 @@
 \section{Results}
 \label{sec:results}
-In this section we describe the results obtained from our simulations. We have simulated two scenarios: A square room where the pedestrians exit through a single door, and pedestrians walking through a corridor where there is a bidirectional flow. For each scenario we describe the parameters we have set for the scenario, which features we found worth measuring for this scenario, the results we expected, and the results we obtained. Possible remedies for any discrepancies between the expected and the actual results are discussed in section~\ref{sec:discrepancies}.
+In this section we describe the results obtained from our simulations. We have simulated two scenarios: A square room where the pedestrians exit through a single door, and pedestrians walking through a corridor where there is a bidirectional flow. For each scenario we describe the parameters we have set for the scenario, which features we found worth measuring for this scenario, the results we expected, and the results we obtained. Possible remedies for any discrepancies between the expected and the actual results are discussed in section~\ref{sec:discussion}.
 
-\subsection{The square room scenario}
-In this scenario we simulate pedestrians leaving a square room of 10 m by 10 m with a single $80cm$ wide door. 100 pedestrians are positioned randomly throughout the room. The second the simulation start all pedestrians head for the exit. The parameters for this simulation are as follows:
-% TODO: Hints about the constants - do not repeat parameter definitions
+\subsection{Constants}
+We will here shortly specify the values for the different constants we use in both of the scenarios.
+In the simulation the parameters are set after \cite{ABconstant} and \cite{self-org}, to see if we can replecate their simulations and results.
+The general values we use are
+
+
 \begin{itemize*}
-    \item $A: 2,2$, $B: 0,2$, $U: 2.0$, $\lambda: 0,1$.
+    \item Strenght of pedestrian repulsion $A= 3,0$. 
+    \item Range of pestrian repulsion $B: 0,2$.  
+    \item Anisotropic constant $\lambda: 0,1$.
+    \item Wall constant $U: 2.0$.
     \item Mean desired velocity: $1,34 m/s$, deviation $0,26 m/s$. Max velocity factor $1,3$.
-    \item Radius mean $0,3 m$, deviation $0,01 m$.
+    \item Mean radius of pedestrians $0,3 m$, deviation $0,05 m$.
     \item Relaxation time: $1,0 s$.
     \item Number of pedestrians: $100$.
+\label{Table_constants}
 \end{itemize*}
+
+We will through the chapter mension when the values are changed for a specific case. 
+
+\subsection{The square room scenario}
+In this scenario we simulate pedestrians leaving a square room of 10 m by 10 m with a single $80cm$ wide door. 100 pedestrians are positioned randomly throughout the room. The second the simulation start all pedestrians head for the exit. The parameters for this simulation are as in \ref{Table_constants}
 
 First the claim of the "faster-is-slower" effect is tested.
 \begin{quote}
@@ -30,7 +42,7 @@ The larger the nervousness the faster is the evacuation. We have increased the m
 
 Pedestrian flow rate is measure in the door opening, and the density of pedestrians in a 2 m by 2 m area directly in front of the door is measured. We also measure the time it takes for all pedestrians to leave the room.
 
-The parameters for this simulation are as follows:
+The parameters for this simulation are the ones shown in \ref{Table_constants}
 
 % TODO: Add parameters that are varied.
 
@@ -52,73 +64,45 @@ We expect to see lane formations through out our simulations
 and the freezing by heating effect when we start raising the mean velocity
 of the agents.
 
-\subsubsection{Intial conditions and relaxation time $1,0$}
-In the first simulation the parameters are set after \cite{ABconstant} and
-\cite{self-org}, to see if we can replecate their simulations and results.
-The parameters for this simulation are as follows:
+\subsubsection{Intial conditions and relaxation time $1,0$ second}
 
+The parameters for this simulation are as in \ref{Table_constants} with the exception of the pedestrians
 \begin{itemize*}
-    \item $A: 2,2$, $B: 0,2$, $U: 2,0$, $\lambda: 0,1$.
-    \item Mean desired velocity: $0,74 m/s$, deviation $0,26 m/s$. Max 
-        velocity factor $1,3$.
-    \item Radius mean $0,3 m$, deviation $0,01 m$.
-    \item Relaxation time: $1,0 s$.
-    \item Number of pedestrians: $20$ starting, adding $1/s$.
+    \item Number of pedestrians: $50$ starting, adding $3/s$.
 \end{itemize*}
 
 When running the simulation we observe lane formations, and they almost clog up
 in the corridor.
 
-\begin{itemize*}
-    \item $A: 2,2$, $B: 0,2$, $U: 2,0$, $\lambda: 0,1$.
-    \item Mean desired velocity: $0,74 m/s$, deviation $0,26 m/s$. Max 
-        velocity factor $4,0$.
-    \item Radius mean $0,3 m$, deviation $0,01 m$.
-    \item Relaxation time: $1,0 s$.
-    \item Number of pedestrians: $20$ starting, adding $1/s$.
-\end{itemize*}
-
-When we do a simulation with the max velocity factor set to $4.0$, the clogging
+When we do a simulation with the max velocity factor set to $4.0$, instead of the normal $1.3$, the clogging
 that occurs in the beginning eases up, and the pedestrians relatively fast
 get out of the clogging and continuous toward their target. In this simulation
 we also observe lane formations.
 
 \begin{figure}[h]
 \centering
-\subfloat[The figure show the density in corridor when the parameters are set as \cite{ABconstant} and \cite{self-org}.]{\includegraphics[scale=0.45]{Figures/dens_init_20.pdf}}
-\subfloat[This figure shows the density in the corridor when the max velocity factor is set to $4.0$, and the other parameters as figure a.]{\includegraphics[scale=0.45]{Figures/dens_mvel4_20.pdf}}
+\subfloat[The figure show the density in corridor when the parameters are set as \cite{ABconstant} and \cite{self-org}.]{\includegraphics[scale=0.45]{Figures/dens_init_relax1.pdf}}
+\subfloat[This figure shows the density in the corridor when the max velocity factor is set to $4.0$, and the other parameters as figure a.]{\includegraphics[scale=0.45]{Figures/dens_mvel4_relax1.pdf}}
 \caption{These figures was made to see if the freezing by heating effect when raising the max velocity factor. As seen in the figures, the
 density does not increase when the max desired velocity is increased. When raising the max desired velocity the density gets lower because
 the pedestrians more easely get through the crowd.}
 \label{fig:freezingbyheating1}
 \end{figure}
 
-\subsubsection{Intial conditions and relaxation time $0,5$}
+\subsubsection{Intial conditions and relaxation time $0,5$ second}
 \cite{helbing00} set the relaxation time to $0,5$. As the first corridor simulations we set the parameters as \cite{ABconstant}
 and then change the relaxation time to $0,5$ as \cite{helbing00}. After the simulation with the initial conditions, we raise the
 max desired velocity to see if we can replicate the freezing by heating effect.
 
-The initial simulation has the following parameters:
+The initial simulation has the values from \ref{Table_constants} with the exceptions:
 
 \begin{itemize*}
-    \item $A: 2,2$, $B: 0,2$, $U: 2,0$, $\lambda: 0,1$.
-    \item Mean desired velocity: $0,74 m/s$, deviation $0,26 m/s$. Max 
-        velocity factor $1,3$.
-    \item Radius mean $0,3 m$, deviation $0,01 m$.
     \item Relaxation time: $0,5 s$.
-    \item Number of pedestrians: $20$ starting, adding $1/s$.
+    \item Number of pedestrians: $50$ starting, adding $3/s$.
 \end{itemize*}
 
-The next simulation the parameters are as follows:
+The next simulation we keep the new relaxation time, but changes the max velocity factor set to $4.0$
 
-\begin{itemize*}
-    \item $A: 2,2$, $B: 0,2$, $U: 2,0$, $\lambda: 0,1$.
-    \item Mean desired velocity: $0,74 m/s$, deviation $0,26 m/s$. Max 
-        velocity factor $4,0$.
-    \item Radius mean $0,3 m$, deviation $0,01 m$.
-    \item Relaxation time: $0,5 s$.
-    \item Number of pedestrians: $20$ starting, adding $1/s$.
-\end{itemize*}
 
 When comparing the simulations we do not see the freezing by heating effect.
 Instead we see that the pedestrians more easely escape the clogging, and the flow in each directions
@@ -126,13 +110,45 @@ gets more steady. In both simulations we observed lane formation.
 
 \begin{figure}[h]
 \centering
-\subfloat[The figure show the density in corridor when the parameters are set as \cite{ABconstant} and \cite{helbing00}.]{\includegraphics[scale=0.45]{Figures/dens_relax05_20.pdf}}
-\subfloat[This figure shows the density in the corridor when the max velocity factor is set to $4.0$ and the max desired velocity is set to $4,0$, and the other parameters as figure a.]{\includegraphics[scale=0.45]{Figures/dens_relax05_mvel4_20.pdf}}
+\subfloat[The figure show the density in corridor when the parameters are set as \cite{ABconstant} and \cite{helbing00}.]{\includegraphics[scale=0.45]{Figures/dens_init_relax05.pdf}}
+\subfloat[This figure shows the density in the corridor when the max velocity factor is set to $4.0$ and the max desired velocity is set to $4,0$, and the other parameters as figure a.]{\includegraphics[scale=0.45]{Figures/dens_mvel4_relax05.pdf}}
 \caption{These figures was made to see if the freezing by heating effect when raising the max velocity factor. As seen in the figures, the
 density does not increase when the max desired velocity is increased. When raising the max desired velocity the density gets lower because
-the pedestrians more easely get through the crowd.}
+the pedestrians more easely get through the crowd. The difference between figure \ref{fig:freezingbyheating1} and this is the relation time,
+respectively $1,0$ and $0,5$.}
 \label{fig:freezingbyheating05}
 \end{figure}
+
+\subsubsection{Comparison between the relaxation time $1,0$ second and $0,5$ second}
+When simulating the corridor with the initial conditions and changing the relaxation time from $1,0 s$ to $0,5 s$,
+the pedestrians do not get stuck as easely when the relaxtion time is $0,5 s$ as they do when the relaxation time
+is $1,0 s$. This can be seen in figure \ref{fig:comparison_of_timestep}, that in (a), the density get high faster,
+while in (b) the density does not increase as fast as (a).
+When the relaxation time is $0,5 s$, the pedestrians reacts faster, in the sense that they speed up faster,
+after collisions with pedestrians walking in the other direction.
+
+\begin{figure}[h]
+\centering
+\subfloat[The figure show the density in corridor when the relaxation time is set to $1,0 s$]{\includegraphics[scale=0.45]{Figures/dens_init_relax1.pdf}}
+\subfloat[This figure shows the density in the corridor when the relaxation time is set to $0,5 s$]{\includegraphics[scale=0.45]{Figures/dens_init_relax05.pdf}}
+\caption{These figures show the difference of the density when changing the relaxation time of the model from $1,0 s$ to $0,5 s$.
+It is seen the the density is more steady when the relaxtion time is $0,5 s$ instead of $1,0 s$}
+\label{fig:comparison_of_timestep}
+\end{figure}
+
+A possible explanation of why the density is more steady through out the simulation when the relaxation time is $0,5 s$,
+is that the pedestrians reacts faster to changes of their velocity. Thus when they bump into each other, they speed up
+faster, and therefore avoid clogging up before more get in their path.
+
+\subsubsection{Freezing by heating effect}
+According to \cite{self-org} the freezing by heating effect should arise when the max desired velocity of the pedestrians was raised.
+That is that clogging should arise when raising the max velocity of the pedestrians, because more are ariving to the possible
+clogging area, and thus have more trouble getting through the crowd. 
+We tried to raise the max velocity, see figure \ref{fig:freezingbyheating1} and figure \ref{fig:freezingbyheating05}, but instead of observing the freezing by heating effect, we saw that the pedestrians
+got through the corridor more easely, and that the density in the corridor was lower when the max velocity was high.
+We think that there are more explations to this result. For the first the pedestrian $\alpha$'s force toward the target
+is higher when $\alpha$'s velocity gets higher, and therefore he more easely pushes his way through the crowd. For the second
+there are no friction between the pedestrians to slow $\alpha$ speed down, besides the social sphere.
 
 \subsection{The bottleneck}
 In this scenario we wanted to the the oscillitory flows that is reported 
