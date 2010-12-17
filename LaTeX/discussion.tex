@@ -120,7 +120,7 @@ the model, the pedestrians in the simulation will be more like human beings.
 At the same time, there could be some other parts that might cause strange 
 behaviour in the simulation, and the problems we may have observed or may not, 
 but right now we have less chance to remedy them due to the nature of these 
-problems.
+source of errors.
 
 \subsection{Parameter values}
 The magnitude of the forces in the model depends heavily on the values of the 
@@ -170,7 +170,8 @@ setting of parameters and initial conditions. The values for the different
 parameters have not always been given along with their description in the 
 articles describing the model. This means we have had to find the values 
 elsewhere, and this mixing of parameters from different sources might also be 
-a source of errors. Finally, the use of random values for initial conditions 
+a source of errors. 
+Finally, the use of random values for initial conditions 
 (in the setting of pedestrian starting positions, size and initial desired 
 speed) is a possible source of error. While we set a mean value and a standard 
 deviation on the generated values, in some cases extremely high or low values 
@@ -195,7 +196,7 @@ numbers.
 
 
 \subsection{Summary}
-We have discussed several possible cause for errors in our model, and possible 
+We have discussed several possible cause for discrepancies in our model, and possible 
 remedies. The forces in the model have a simplistic nature in that they only 
 have one direction, corresponding to the direction between the repulsion 
 points, and they are not adjusted by pedestrian walking speed. This could be 
@@ -209,5 +210,6 @@ extremely small or large random numbers used when setting initial conditions.
 This can be somewhat mitigated by testing the implementation, and by 
 discarding very small or large random numbers.
 
-In the next section we asses social force models based on our results and the 
-error sources discussed in this section.
+In the next section we will assess social force models in a more general sense, 
+by putting the social force model in a physical and historical context, and give 
+our opinion of the state of social force model.
