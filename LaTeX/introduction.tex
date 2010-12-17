@@ -1,105 +1,104 @@
 % vim:ft=tex
 \section{Introduction}
-When a lot of people are gathered in a confined space, it is not immediately 
-obvious how they behave when moving around. It is also not obvious how to 
-design buildings and other areas where many people gather to allow for optimal 
-passage of crowds without jamming and related problems (such as inconvenience 
-for pedestrians and even injuries). It is cumbersome, or even dangerous, to 
-gather many people together to do experiments, especially if one wishes to 
-simulate a panic situation (which cannot necessarily be induced artificially).  
-It would thus be useful to be able to model a crowd of pedestrians and their 
+When a lot of people are gathered in a confined space, it is not immediately
+obvious how they behave when moving around. It is also not obvious how to
+design buildings and other areas where many people gather to allow for optimal
+passage of crowds without jamming and related problems (such as inconvenience
+for pedestrians and even injuries). It is cumbersome, or even dangerous, to
+gather many people together to do experiments, especially if one wishes to
+simulate a panic situation (which cannot necessarily be induced artificially).
+It would thus be useful to be able to model a crowd of pedestrians and their
 movement.
 
-A crowd of many people is a very complex system. One of the approaches to 
-handling this complexity is by using a computer simulation of a model derived 
-from the behaviour of individual pedestrians, and through the outcome of this 
-simulation be able to say something meaningful about the whole system. This 
-approach to modelling complex systems is called agent-based modelling and is 
-used in many different and diverse subject areas, including molecular biology, 
+A crowd of many people is a very complex system. One of the approaches to
+handling this complexity is by using a computer simulation of a model derived
+from the behaviour of individual pedestrians, and through the outcome of this
+simulation be able to say something meaningful about the whole system. This
+approach to modelling complex systems is called agent-based modelling and is
+used in many different and diverse subject areas, including molecular biology,
 economics and physics.
 
-Within the field of crowd simulations, there  are various ways of formulating 
-such an agent-based model; we have chosen to focus on an approach that models 
-pedestrian behaviour using a concept called ``social forces'' 
-\cite{social-force}. This type of model describes individual behaviour 
-borrowing concepts and notation from physics, by defining  virtual ``forces'' 
-representing desired movement as well as the tendency to avoid obstacles, 
-other people etc. Through computer simulations this can be used to say 
-something about the whole system of moving pedestrians.
+Within the field of crowd simulations, there  are various ways of formulating
+such an agent-based model; we have chosen to focus on an approach that models
+pedestrian behaviour using a concept called ``social forces''
+\cite{social-force}. This type of model describes individual behaviour
+borrowing concepts and notation from physics, by defining  virtual ``forces''
+representing desired movement as well as the tendency to avoid obstacles,
+other people etc.
 
-Since the original formulation of the social force concept, it has been 
-revised several times (e.g.  \cite{helbing00}). For this project we base our 
-analysis on the  version presented in \cite{self-org}, as this article goes 
-into a reasonable level of detail. We will, however, also include other 
-variants where necessary.  Our chosen model, and others like it, describe a 
-set of properties of crowd behaviour that has been seen in observations of 
-actual crowds as well as replicated in computer simulations.  We think it will 
-be interesting to go into detail with this type of model and look into how 
-they work and what they can tell us about crowds. This brings us to our 
+Since the original formulation of the social force concept, it has been
+revised several times (e.g.  \cite{helbing00}). For this project we base our
+analysis on the  version presented in \cite{self-org}, as this article goes
+into a reasonable level of detail. We will, however, also include other
+variants where necessary.  Our chosen model, and others like it, describe a
+set of properties of crowd behaviour that has been seen in observations of
+actual crowds as well as replicated in computer simulations.  We think it will
+be interesting to go into detail with this type of model and look into how
+they work and what they can tell us about crowds. This brings us to our
 problem formulation:
 
 \subsection{Problem formulation}
 \begin{quote}
     How do social force models work and what do they say about crowds?
 
-    What are the assumptions underlying social force models, and what are 
+    What are the assumptions underlying social force models, and what are
     their strengths and limitations?
 \end{quote}
 
-Our problem is exemplary to mathematical modelling for several reasons. First 
-of all, it is an example of applying mathematical theory to a field outside of 
-mathematics itself. The field we are working with (crowd simulation) is 
-relatively new, but has some established research\footnote{See the overview of 
-the field in section~\ref{sec:social-forces}.}. The model itself contains a 
-non-trivial application of mathematics and is an example of a type of model 
-(agent-based models) used in many cases to study a complex system of 
-interacting pedestrians by describing the individual behaviour of the pedestrians and 
-using simulations to derive meaningful properties for the whole system. These 
+Our problem is exemplary to mathematical modelling for several reasons. First
+of all, it is an example of applying mathematical theory to a field outside of
+mathematics itself. The field we are working with (crowd simulation) is
+relatively new, but has some established research\footnote{See the overview of
+the field in section~\ref{sec:social-forces}.}. The model itself contains a
+non-trivial application of mathematics and is an example of a type of model
+(agent-based models) used in many cases to study a complex system of
+interacting pedestrians by describing the individual behaviour of the pedestrians and
+using simulations to derive meaningful properties for the whole system. These
 factors combined makes our problem exemplary.
 % TODO: References for agent-based models.
 
 \subsection{Target audience}
-The target audience of this report is comprised of students of mathematics on 
-a level of education similar to our own. This means that we consider 
-mathematical concepts and theory that is covered in the bachelor courses at 
-the mathematics department at RUC as known subject matter, and will therefore 
-not explain these concepts in detail. Concepts that are beyond this are 
-explained as necessary. In the description of the simulation program code, 
-some familiarity with basic constructs of computer programming is assumed, and 
+The target audience of this report is comprised of students of mathematics on
+a level of education similar to our own. This means that we consider
+mathematical concepts and theory that is covered in the bachelor courses at
+the mathematics department at RUC as known subject matter, and will therefore
+not explain these concepts in detail. Concepts that are beyond this are
+explained as necessary. In the description of the simulation program code,
+some familiarity with basic constructs of computer programming is assumed, and
 are thus not explained.
 
 \subsection{Approach to answering the problem formulation}
-To answer the problem formulation, it is first necessary to establish the 
-concept of social force models in more detail, as well as give an overview 
-over the work in the field. This is presented in 
-section~\ref{sec:social-forces}, where we also present the model we have chosen 
+
+To answer the problem formulation, it is first necessary to establish the
+concept of social force models in more detail, as well as give an overview
+over the work in the field. This is presented in
+section~\ref{sec:social-forces}, where we also present the model we have chosen
 to focus on, including the results presented in it.
 
-In order to better understand the model, we are going to make our own computer 
-simulation of it. To do so, we will first describe the model thoroughly. In 
-section~\ref{sec:the-model}, we will go over the different parts and 
-parameters of the model, and point out parts that are ambiguous or missing 
-from the article presenting the model.  Based on this description, we will 
-discuss what is needed to turn the model into a numerical simulation, and how 
-we have done so, in section~\ref{sec:model-to-simulation}.
+In order to better understand the model, we are going to make our own computer
+simulation of it. To do so, we will first describe the model thoroughly. In
+section~\ref{sec:the-model}, we will go over the different parts and
+parameters of the model, and point out parts that are ambiguous or missing
+from the article presenting the model. Based on this description, we will
+discuss what is missing from the description of the model and how we have
+filled these gaps in section~\ref{sec:model-to-simulation}.
 
-Based on our analysis of the model, we will construct a computer simulation of 
-it, modelling cases analogous to those presented in 
-section~\ref{sec:social-forces}. Our implementation of the 
-simulation is discussed in section~\ref{sec:simulation}, including set up of 
-parameters and initial conditions, the structure of our simulation and how we 
+Based on our analysis of the model, we will construct a computer simulation of
+it, modelling cases analogous to those presented in
+section~\ref{sec:social-forces}. Our implementation of the simulation is discussed in section~\ref{sec:simulation}, including set up of
+parameters and initial conditions, the structure of our simulation and how we
 obtain results from it.
 
-The actual results of the simulation is addressed in 
-section~\ref{sec:results}. Here we present the outcome of our simulation, and 
-whether or not we have been able to replicate the results we were aiming for.  
-Based on this presentation, we discuss in section~\ref{sec:discussion} 
-possible reasons for any discrepancies between our own results and the results 
-we are trying to replicate, as well as which alterations of the model would 
+The actual results of the simulation is addressed in
+section~\ref{sec:results}. Here we present the outcome of our simulation, and
+whether or not we have been able to replicate the results we were aiming for.
+Based on this presentation, we discuss in section~\ref{sec:discrepancies}
+possible reasons for any discrepancies between our own results and the results
+we are trying to replicate, as well as which alterations of the model would
 be needed to fix them.
 
-Based on our results and the proposed changes to the model, we will assess 
-social force models in general in section~\ref{sec:assessment}, giving an 
-overview of the strengths and weaknesses of this modelling approach. Finally, 
-we will give a summary of our findings and an overview of the whole project in 
+Based on our results and the proposed changes to the model, we will assess
+social force models in general in section~\ref{sec:assessment}, giving an
+overview of the strengths and weaknesses of this modelling approach. Finally,
+we will give a summary of our findings and an overview of the whole project in
 section~\ref{sec:conclusion}.
