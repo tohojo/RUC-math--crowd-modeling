@@ -13,7 +13,7 @@ typedef struct {
     double initial_desired_velocity;
     double max_velocity;
     double relax_time;
-	double flowline_time;
+	int flowline[5];
     Vector position;
 	Vector prev_position;
     Vector initial_position;
@@ -38,6 +38,7 @@ static int find_repultion_points(Pedestrian * a, Vector repulsion_points[]);
 static Vector calculate_wall_repulsion(Pedestrian * a, Vector repulsion_point);
 static void update_position(Pedestrian * a);
 static int is_escaped(Pedestrian * a);
+static void check_flowlines(Pedestrian * a);
 
 #define ESCAPE_THRESHOLD 50
 
@@ -55,14 +56,15 @@ static PyObject * add_pedestrian(PyObject * self, PyObject * args);
 static PyObject * a_property(PyObject * self, PyObject * args);
 static PyObject * set_parameters(PyObject * self, PyObject * args);
 static PyObject * flow_count(PyObject * self, PyObject * args);
-static Pedestrian pedestrian_from_pyobject(PyObject * o, Pedestrian * a);
+static void pedestrian_from_pyobject(PyObject * o, Pedestrian * a);
+static Wall wall_from_pyobject(PyObject * o);
 static Py_ssize_t ssize_t_from_attribute(PyObject * o, char * name);
 static double double_from_attribute(PyObject * o, char * name);
 static Vector vector_from_attribute(PyObject * o, char * name);
 static Vector vector_from_pyobject(PyObject * o);
 static void cleanup();
 static void init_threads();
-static void init_walls(PyObject * p_walls);
+static void init_walls(PyObject * p_walls, Wall * walls, Py_ssize_t w_count);
 static void destroy_threads();
 static void do_calculations();
 static void do_calculation_part(Part * p);
