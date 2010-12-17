@@ -81,7 +81,7 @@ scenarios = {
         }),
 
         'widekinksbidirec': Scenario({
-            'name'               : 'corridor',
+            'name'               : 'widekinksbidirec',
             'A'                  : 12.0,
             'B'                  : 0.2,
             'U'                  : 12.0,
@@ -128,7 +128,7 @@ scenarios = {
                                    },
         }),
         'widekinksunidirec': Scenario({
-            'name'               : 'corridor',
+            'name'               : 'widekinksunidirec',
             'A'                  : 12.0,
             'B'                  : 0.2,
             'U'                  : 12.0,
@@ -175,7 +175,7 @@ scenarios = {
         }),
 
         'bottleneckbidirec': Scenario({
-            'name'               : 'corridor',
+            'name'               : 'bottleneckbidirec',
             'A'                  : 12.0,
             'B'                  : 0.2,
             'U'                  : 12.0,
@@ -223,7 +223,7 @@ scenarios = {
         }),
 
         'bottleneckunidirec': Scenario({
-            'name'               : 'corridor',
+            'name'               : 'bottleneckunidirec',
             'A'                  : 12.0,
             'B'                  : 0.2,
             'U'                  : 12.0,
