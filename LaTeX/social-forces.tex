@@ -92,28 +92,22 @@ So it should be possible to reproduce the results from the article using the mod
 
 \subsubsection{Lane Formation}
 Lane formation can be seen in counterflow situation, pedestrians form lanes of walking
-directions, which is thought as a result of the non-linear body interaction
-force. When groups of pedestrians move against each other they will line up behind other
+directions, which is thought as a result of the body interaction force. When groups of pedestrians move against each other they will line up behind other
 pedestrians going in the same direction as themselves and form lines throughout the corridor.
 This is seen in real life situations and is one of the situations that the model are able to reproduce \cite{self-org}.
 The lane formations we will try to replicate in the corridor cases.
-
 \subsubsection{Freezing-by-Heating Effect}
 This phenomenon is characterized by a blockage caused by high velocity,
 that follows an increasing density. The precondition for this effect is the driving force from desired
-velocity and actual velocity, and that the tangential term from the interaction
-force is not needed. The freezing by heating effect is directly connected to simulations in
-physics\cite{frebyheat}. It is a  phenomenon that is the opposite of what you would see in a
-normal microscopic simulation of particles. In physics you would normally expect that when
-temperature rises in a liquid, i.e. when the particles move faster, then the particles will
-start reach a transition state at which it becomes a gas. So your density would fall an
-particles would be able to move more freely around.
-But in the model presented by \cite{self-org} and more thorough explained in \cite{frebyheat}
-it does not happen like that for the social-force model. What you actually see is that when the
+velocity and actual velocity. The freezing by heating effect is directly connected to simulations in
+physics\cite{frebyheat}. In a
+normal microscopic simulation of particles, you would see particles moving more freely around as the temperature rises. A liquet being heated would at some point turn into a gas and therefore the presume would decrease.
+But in the model presented by \cite{self-org} and more thoroughly explained in \cite{frebyheat}
+it does not happen. When working with the social force model what you actually see is that, when the
 particles/pedestrians start to move at a higher speed, they will start to blockage each other.
 That is they will transit to at solid state and the density will rise and they will a some point
 completely stop moving. This is found to happen in simulations with bidirectional flow, like
-two groups going through a corridor in opposite directions where the pedestrians has a high desired velocity.
+two groups going through a corridor in opposite directions.
 This we should be able to measure when simulating the corridor case, when we raise the max desired
 velocity the pedestrians should start clogging up, and we should be able to measure a high density as
 a result of the increasing velocity.
@@ -121,14 +115,8 @@ a result of the increasing velocity.
 
 \subsubsection{Oscillatory Flows at Bottlenecks}
 This effect arise in situations of corridors with bidirectional flows, at bottlenecks in the corridor.
-The bottleneck makes it impossible for the pedestrians
-to pass each other the same way as with the lane formations, because at bottlenecks they will
-start to block for pedestrians going in the other direction.
-So what happens is that people start to slow down and oscillatory
-flow arises. The oscillatory flow is a flow that for some time will go in one direction through
-the bottleneck, and then at some point it will change and go the other way. The typical way of
-the oscillatory flow is that a small group of pedestrians will go through at a time, and then
-a small group walking through in the other direction.
+It is not possible for groups of pedestrians to pass each other at the bottleneck. Some pedestrians will have to wait for others to pass but while waiting they will get impatient and eventually push throw and then the others will have to wait. This results in a oscillatory flow.
+The typical way of the oscillatory flow is that a small group of pedestrians will go through in one direction, and then a small group will go throw in the other direction.
 Not so often you see single individuals passing through one at a time.
 This is seen in real life experiments and therefore makes the simulations more realistic
 if you can reproduce the oscillatory flow.
@@ -154,7 +142,7 @@ different phenomenons that we just went through(Lane formation, freezing-by-heat
 flows at bottlenecks and faster-is-slower).
 After having gone through the phenomenons, three scenarios seems obvious to work with;
 People leaving a squared room, a corridor with bidirectional flow
-and a corridor with bydirectional flow and a bottleneck.
+and a corridor with bidirectional flow and a bottleneck.
 This should makes us able to see if we can recreate the results seen in the literature.
 
 We have now explained the very basic idea of the model we use, and the variations there can be between
