@@ -167,10 +167,11 @@ class Scenario:
                 flowrate=flowrates)
 
     def _canvas(self, method, *args):
-        if self.options.show_simulation:
-            return getattr(self.show_canvas, method)(*args)
-        elif self.options.create_images:
-            return getattr(self.image_canvas, method)(*args)
+        if self.options.create_images:
+            retval = getattr(self.image_canvas, method)(*args)
+        if self.options.show_simulation and self.options.tikz:
+            return getattr(self.show_canvas, method)(*args) and retval
+        return retval
 
     def _draw(self):
         self._canvas("clear_screen")
