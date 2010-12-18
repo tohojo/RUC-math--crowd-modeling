@@ -10,81 +10,24 @@ discussion of possible errors related to our implementation of the simulation.
 \subsection{Modifying interaction forces}
 An obvious possibility when discussing why we do not see the expected results, 
 is analysing the forces that comprise the model. Two things become apparent: 
-the forces in the model are simplistic, and none of them are dependent 
-on the current velocities of the pedestrians as they are only changing with the relative 
-positions (along the line connecting two points). 
+none of the forces in the model are dependent on the current velocities of the 
+pedestrians and they all operate only in a straight line between repulsion 
+points. 
 
-We speculate that the reason we do not see the faster-is-slower effect is 
-that we do not have a frictional component in the interaction force between pedestrians 
-or between pedestrians and obstacles, when they are in physical contact and have a 
-relative motion or a tendency to move. An expression of the frictional force is 
-provided by the Helbing group in the article \cite{helbing00}, where the frictional component 
-depends on the distance of physical compression, the relative velocity difference in 
-the tangential direction. Figure  illustrate the interaction between two pedestrians 
-if the frictional component is considered. 
-
-Figure
-
-Then the interaction force between two pedestrians is the sum of the repulsive component 
-and the frictional component.
-
-There are two types of behaviour in the simulation that we find contradicting 
-with common behaviour: pedestrians walking directly towards each other 
-do not try to avoid colliding, and pedestrians running towards a wall 
-decelerate at the same rate as pedestrians walking towards it. They are illustrated in 
-figure~\ref{fig:extra-forces-behaviour}.
-
-\begin{figure}[h]
-    \centering
-    \subfloat[Pedestrian $\alpha$ walking towards $\beta$.]{
-        \begin{tikzpicture}
-            \node (p moving) [pedestrian,
-                              label=below:$\alpha$] {};
-            \node (p static) [pedestrian,right=of p moving,
-                              label=below:$\beta$] {};
-            \node (divert) [point,above right=5mm of p static] {};
-            \node (first) [point,left=5mm of p static] {};
-
-            \draw[->,dashed,red] (p moving) -- (p static);
-            \draw[->,dashed,blue] (p moving) -- (first) to[bend left] (divert) ;
-
-            \path [use as bounding box] 
-                (p static) +(1.5,0) +(0,1.5) 
-                (p moving) +(-1.5,0) +(0,-1.5);
-        \end{tikzpicture}
-        \label{subfig:colliding}
-        }
-    \subfloat[Pedestrians running and walking towards a wall.]{
-        \begin{tikzpicture}
-            \node (slow) [pedestrian] {};
-            \node (fast) [pedestrian, right=of slow] {};
-
-            \node (slow target) [point, above=4mm of slow] {};
-            \node (fast target) [point, above=8mm of fast] {};
-            \node (slow repulsion) [point, below=5mm of slow] {};
-            \node (fast repulsion) [point, below=5mm of fast] {};
-
-            \node (wall start) [wall endpoint,above left=of slow] {};
-            \node (wall end) [wall endpoint,above right=of fast] {};
-            \draw[wall] (wall start) -- (wall end);
-
-            \draw[blue,vector] (slow) -- (slow target);
-            \draw[blue,vector] (fast) -- (fast target);
-            \draw[red,vector] (slow) -- (slow repulsion);
-            \draw[red,vector] (fast) -- (fast repulsion);
-
-            \path [use as bounding box] (wall start) +(-1,0) (wall end) 
-            +(1,0);
-        \end{tikzpicture}
-        \label{subfig:equal-repulsion}}
-    \caption[Behaviour from simplistic forces]{Behaviour from simplistic 
-    forces. \subref{subfig:colliding} A pedestrian, $\alpha$ walking towards 
-    another pedestrian, $\beta$, does not divert to the side (red line), even 
-    though doing so would avoid a collision (blue line). 
-    \subref{subfig:equal-repulsion} Pedestrians heading towards the wall at 
-    different speeds (blue arrows) are repulsed equally (red arrows).}
-    \label{fig:extra-forces-behaviour}
-\end{figure}
+We speculate that one reason we do not see the faster-is-slower effect is that 
+we do not have a frictional component in the interaction force between 
+pedestrians or between pedestrians and obstacles when they are in physical 
+contact with each other. An expression of the frictional force is provided in 
+\cite{helbing00}, where it is expressed as a force that is perpendicular to 
+the direction of the repulsive forces, as illustrated in 
+figure~\ref{fig:friction}. The magnitude of the frictional component depends 
+on both the distance and the relative velocity between the two pedestrians and 
+would make it harder for pedestrians to move in dense crowds. We believe 
+adding such forces would enable us to see the faster-is-slower effect in our 
+simulation. This is corroborated by the fact that other articles that include 
+this effect incorporate just such a frictional force \cite{helbing00}.  Other 
+effects related to clogging of passages, such as the freezing by heating 
+effect might also be more apparent given frictional forces.
 
 \begin{figure}
     \centering
@@ -107,53 +50,89 @@ figure~\ref{fig:extra-forces-behaviour}.
     \label{fig:friction}
 \end{figure}
 
-The first strange behaviour could be solved by extending the range of 
-frictional force, so that the tangential component can come to play before 
-the physical contact. We have not find an accurate expression for this 
-proposal, but it is possible to implement and should have a similar expression 
-with the frictional component we talked before.
-Such a force would be a way to avoid having pedestrians that 
-head for a collision (as we have seen examples of in our simulations) 
-and instead make them sidestep each other, as illustrated in 
+There are two types of behaviour that we find presents us with problems: 
+pedestrians walking directly towards each other do not try to avoid colliding, 
+and pedestrians running towards a wall decelerate at the same rate as 
+pedestrians walking towards it. This behaviour are illustrated in 
+figure~\ref{fig:extra-forces-behaviour}.
+
+\begin{figure}[h]
+    \centering
+    \subfloat[Pedestrian $\alpha$ walking towards pedestrian $\beta$.]{
+        \begin{tikzpicture}
+            \node (p moving) [pedestrian,
+                              label=below:$\alpha$] {};
+            \node (p static) [pedestrian,right=of p moving,
+                              label=below:$\beta$] {};
+            \node (divert) [point,above right=5mm of p static] {};
+            \node (first) [point,left=5mm of p static] {};
+
+            \draw[->,dashed,red] (p moving) -- (p static);
+            \draw[->,dashed,blue] (p moving) -- (first) to[bend left] (divert) ;
+
+            \path [use as bounding box] 
+                (p static) +(1.5,0) +(0,1.5) 
+                (p moving) +(-1.5,0) +(0,-1.5);
+        \end{tikzpicture}
+        \label{subfig:colliding}
+        }
+    \subfloat[Pedestrians moving towards a wall at different speeds.]{
+        \begin{tikzpicture}
+            \node (slow) [pedestrian] {};
+            \node (fast) [pedestrian, right=of slow] {};
+
+            \node (slow target) [point, above=4mm of slow] {};
+            \node (fast target) [point, above=8mm of fast] {};
+            \node (slow repulsion) [point, below=5mm of slow] {};
+            \node (fast repulsion) [point, below=5mm of fast] {};
+
+            \node (wall start) [wall endpoint,above left=of slow] {};
+            \node (wall end) [wall endpoint,above right=of fast] {};
+            \draw[wall] (wall start) -- (wall end);
+
+            \draw[blue,vector] (slow) -- (slow target);
+            \draw[blue,vector] (fast) -- (fast target);
+            \draw[red,vector] (slow) -- (slow repulsion);
+            \draw[red,vector] (fast) -- (fast repulsion);
+
+            \path [use as bounding box] (wall start) +(-1,0) (wall end) 
+            +(1,0);
+        \end{tikzpicture}
+        \label{subfig:equal-repulsion}}
+    \caption[Problematic behaviour]{Problematic behaviour. 
+    \subref{subfig:colliding} A pedestrian, $\alpha$ walking towards another 
+    pedestrian, $\beta$, does not divert to the side (red line), even though 
+    doing so would avoid a collision (blue line).  
+    \subref{subfig:equal-repulsion} Pedestrians heading towards the wall at 
+    different speeds (blue arrows) are repulsed equally (red arrows).}
+    \label{fig:extra-forces-behaviour}
+\end{figure}
+
+
+Making pedestrians avoid colliding with each other could be achieved by adding 
+a force that is perpendicular to the direction of other pedestrians, much like 
+the friction forces, but weaker and with a longer range. This might allow 
+pedestrians to sidestep each other, as illustrated in 
 figure~\ref{subfig:colliding}. We believe this would improve the results from 
-the simulations of corridors that have pedestrians walking in both directions. 
+the simulations of corridors that have pedestrians walking in both directions.  
 It could also enable pedestrians to navigate around static obstacles, such as 
 pillars. While we have not done any simulations involving such obstacles, this 
-has been seen in e.g. \cite{tang}. Finally, a tangential force might allow 
+has been seen in e.g. \cite{tang}. Finally, a perpendicular force might allow 
 pedestrians to navigate along a wall if its target is on the other side of it; 
 this could be used to simulate pedestrians trapped in a smoke-filled room 
 where the exits are not visible.
-Another improvement of adding tangential forces comes from the similarities 
-between such forces and frictional forces seen in real life. This would make 
-it harder for pedestrians to move through a densely packed crowd, and we 
-believe adding such forces would enable us to see the faster-is-slower effect 
-in our simulation. This is corroborated by the fact that other articles that 
-include this effect incorporate just such a tangential force \cite{helbing00}. 
-Other effects related to clogging of passages, such as the freezing by heating 
-effect might also be more apparent given tangential forces.
 
-The other discrepancy from reality could be fixed by adopting the elliptical 
-force field around a pedestrian, in the model we use a circular one instead. 
 When pedestrians decelerate at the same rate no matter their velocities, they 
 will in certain extreme cases (i.e. when they are moving very fast) not 
 decelerate enough, and so will move through walls or even each other. Since 
 the repulsive forces are exponential in nature, lowering the time step size 
 enough for the increasing forces to take effect as the distance becomes 
 shorter somewhat mitigates the tendency to walk through walls; however, it is 
-not always enough. Adding a velocity-dependent term to the repulsive forces 
-could be a remedy for this behaviour. Indeed, adding such a force has been 
-seen to improve model predictions when compared to data from real life 
+not always enough. Adding a velocity-dependent term to the repulsive forces so 
+that pedestrians moving faster will be repulsed stronger or at a greater 
+range, could be a remedy for this behaviour. Indeed, adding such a force has 
+been seen to improve model predictions when compared to data from real life 
 situations \cite{ABconstant}.
-The result of adding this velocity dependent feature is that when two pedestrians 
-have the same distance to a wall the one moving with a 
-higher velocity to the wall will receive a greater repulsive force.
-
-If we are able to add the above modifications to to the interaction force in 
-the model, the pedestrians in the simulation will be more like human beings. 
-At the same time, there could be some other parts that might cause strange 
-behaviour in the simulation, and the problems we may have observed or may not, 
-but right now we have less chance to remedy them due to the nature of these 
-source of errors.
 
 \subsection{Parameter values}
 The magnitude of the forces in the model depends heavily on the values of the 
