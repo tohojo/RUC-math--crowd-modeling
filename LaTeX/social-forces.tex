@@ -84,74 +84,86 @@ discussed further in sections~\ref{sec:results} and \ref{sec:discussion}.
 
 
 \subsection{Results obtained from the models}
-In this section we will go through different phenomenons that occurs in different scenarios and then
-explain the scenarios that we have chosen to simulate. The phenomenons will be interesting since they
-are easy to compare with the simulation results we get, since they require no independent calculations
-but can be seen directly when running the simulations. So we will have an easy measure to see if we
-are able to get our interpretation of the model to work the same ways as it is presented in the papers.
-The scenarios that we have chosen to work with is based on from which scenarios, should we be able
-to replicate the phenomenons we want to compare our results and the ones from \cite{self-org}.
-It should be noted that all the phenomenons are mentioned in our main article \cite{self-org}.
-So it should be possible to reproduce the results from the article using the model they present in the same article.
+To have something to compare our own simulation results with, we are going to 
+attempt to replicate some of the results obtained from other social force 
+model simulations. In this section we present the different results and their 
+sources. We also list the scenarios we are going to simulate to replicate the 
+results.
 
-\subsubsection{Lane Formation}
-Lane formation can be seen in counterflow situation, pedestrians form lanes of walking
-directions, which is thought as a result of the body interaction force. When groups of pedestrians move against each other they will line up behind other
-pedestrians going in the same direction as themselves and form lines throughout the corridor.
-This is seen in real life situations and is one of the situations that the model are able to reproduce \cite{self-org}.
-The lane formations we will try to replicate in the corridor cases.
-\subsubsection{Freezing-by-Heating Effect}
-This phenomenon is characterized by a blockage caused by high velocity,
-that follows an increasing density. The precondition for this effect is the driving force from desired
-velocity and actual velocity. The freezing by heating effect is directly connected to simulations in
-physics\cite{frebyheat}. In a
-normal microscopic simulation of particles, you would see particles moving more freely around as the temperature rises. A liquet being heated would at some point turn into a gas and therefore the presume would decrease.
-But in the model presented by \cite{self-org} and more thoroughly explained in \cite{frebyheat}
-it does not happen. When working with the social force model what you actually see is that, when the
-particles/pedestrians start to move at a higher speed, they will start to blockage each other.
-That is they will transit to at solid state and the density will rise and they will a some point
-completely stop moving. This is found to happen in simulations with bidirectional flow, like
-two groups going through a corridor in opposite directions.
-This we should be able to measure when simulating the corridor case, when we raise the max desired
-velocity the pedestrians should start clogging up, and we should be able to measure a high density as
-a result of the increasing velocity.
+There are four main results we are going to attempt to replicate: lane 
+formation, the ``freezing-by-heating effect'', oscillatory flows at 
+bottlenecks and the ``faster-is-slower effect''.
 
+\begin{itemize}
+    \item \textbf{The ``faster-is-slower effect''.}  This effect appears when 
+        a crowd of pedestrians try to exit through a narrow passageway, such 
+        as a door leading out from a room. It has been observed that when 
+        pedestrians attempt to move faster (e.g. in panic situations) it will 
+        actually result in a \emph{longer} time for all pedestrians to leave 
+        the room, because pedestrians block each other on the way out 
+        \cite{helbing00}. This effect can also occur when pedestrians are 
+        walking along a passageway that widens and then narrows again; faster 
+        pedestrians will try to overtake the slower, causing a jam when the 
+        passageway narrows \cite{self-org}.
 
-\subsubsection{Oscillatory Flows at Bottlenecks}
-This effect arise in situations of corridors with bidirectional flows, at bottlenecks in the corridor.
-It is not possible for groups of pedestrians to pass each other at the bottleneck. Some pedestrians will have to wait for others to pass but while waiting they will get impatient and eventually push throw and then the others will have to wait. This results in a oscillatory flow.
-The typical way of the oscillatory flow is that a small group of pedestrians will go through in one direction, and then a small group will go throw in the other direction.
-Not so often you see single individuals passing through one at a time.
-This is seen in real life experiments and therefore makes the simulations more realistic
-if you can reproduce the oscillatory flow.
-It should be reproducible by the model \cite{self-org}.
+    \item \textbf{Lane Formation} occurs when pedestrians are walking towards 
+        each other from opposite directions. The effect is caused by 
+        pedestrians walking in the same direction lining up behind each other 
+        and walking behind each other in lanes. This effect is seen in 
+        simulations as well as in observations of real-life crowd behaviour 
+        and is obvious when viewing drawings of the simulation 
+        \cite{self-org}.
+        
+    \item \textbf{The ``freezing-by-heating effect''.} This phenomenon also 
+        occurs when pedestrians are walking towards each other from opposite 
+        directions. The effect is seen as a clogging up of the passageway when 
+        pedestrians try to move past each other. When exhibiting this effect, 
+        the clogging is more pronounced when pedestrian velocities increase, 
+        which gives rise to the name, that refers to the states of physical 
+        matter. Normally higher energy (faster movement of particles) in 
+        matter increases the entropy of the matter, (i.e.  heating a liquid 
+        turns it into gas), but in this case (when viewing pedestrians as 
+        particles and the crowd as matter) the opposite is seen: increasing 
+        the energy (velocity) makes pedestrians stand still, corresponding to 
+        freezing of matter \cite{frebyheat}.
+        
+    \item \textbf{Oscillatory Flows at Bottlenecks.}
+        This effect arises when pedestrians are moving in opposite directions 
+        and pass through a bottleneck, i.e. a narrowing of the passageway.  
+        When it is not possible for groups of pedestrians to pass each other 
+        at the bottleneck, crowds will line up on both sides of the 
+        bottleneck, trying to push through.This results in an oscillatory flow 
+        when small groups of pedestrians will pass through in one direction, 
+        making room for a small group to pass through in the other, and so on.
+        This can be seen as oscillations in the measured flow rate in each 
+        direction and has been seen in both simulations and real life 
+        observations \cite{self-org}.
+\end{itemize}
 
-\subsubsection{Faster-Is-Slower Effect}
-It has been observed in evacuations situations that some process takes more
-time if it is performed at high speed. This is called the faster-is-slower effect. It comes
-in situations like when people are trying to leave a place through a door. When people are
-trying to move faster than normal they will actually start to move slower through the door.
-This is according to \cite{self-org} also one of the things that the models captures. When simulations
-of pedestrians leaving a room one should see that the time it takes to empty the room will take longer time
-when the max desired velocity is big. In some sense the faster-is-slower effect is the same as the
-freezing-by-heating effect just in a different scenario. The freezing-by-heating effect is not contained
-in the bidirectional flow and people would not stop completely by the effect,
-but both occurs when the desired speed is growing.
-When raising the max desired velocity we should be able to see the effect, as the time it takes to
-empty the room will increase as the max desired velocity is increasing.
+\subsection{Simulation scenarios}
+To attempt to replicate the results presented in the preceding section, we 
+will simulate two main scenarios: a square room and a corridor, with a few 
+variations.
 
-\subsubsection{The scenarios}
-The scenarios that we will work with is chosen so that we should be able to observe the four
-different phenomenons that we just went through(Lane formation, freezing-by-heating, oscillatory
-flows at bottlenecks and faster-is-slower).
-After having gone through the phenomenons, three scenarios seems obvious to work with;
-People leaving a squared room, a corridor with bidirectional flow
-and a corridor with bidirectional flow and a bottleneck.
-This should makes us able to see if we can recreate the results seen in the literature.
+To try to replicate the faster-is-slower effect, we will simulate 
+a square room filled with pedestrians, that all try to exit through the same 
+exit. To replicate the other effects, we will simulate a corridor in several 
+variations. In the simple case, we will simulate a plain corridor with 
+pedestrians walking in both directions, and see if we get lane formation and 
+freezing by heating. We will simulate a corridor with a narrowing in the 
+middle to simulate the oscillatory flows at bottlenecks, and finally we will 
+simulate a corridor with a widening in the middle to try to replicate the 
+faster-is-slower effect in the corridor case as well. The results from our 
+simulations are presented in section~\ref{sec:results} and discussed in 
+section~\ref{sec:discussion}.
 
-We have now explained the very basic idea of the model we use, and the variations there can be between
-the social-force models. These differences is claimed to have little effect on the qualitative results.
-Therefore we expect that the model we work with should have no problems replicating the different phenomenons
-that we just gave a brief explanation of. After having done this, we will now continue and go into
-details of the math involved in the model.
+\subsection{Summary}
+In this section we have presented the concept of social force models, and how 
+social forces differ from physical forces. We have given an overview of the 
+variations of social force models presented in the literature, and we have 
+presented four results that we will attempt to replicate: the faster-is-slower 
+effect, lane formation, freezing by heating and oscillatory flows at 
+bottlenecks. Finally, we have presented the scenarios we will simulate to try 
+to replicate the results.
 
+In the next section, we will present the model we are simulating in detail.
