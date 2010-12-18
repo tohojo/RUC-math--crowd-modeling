@@ -108,7 +108,7 @@ scenarios = {
             'continuous_start'   : [
                                     (-10.0, -0.7, -9.0, 0.7),
                                    ],
-            'stop_at'            : 75,
+            'stop_at'            : 30,
             'walls'              : [
                                     (-10.0,  1.0, 10.0,  1.0),
                                     (-10.0, -1.0, 10.0, -1.0)
@@ -313,6 +313,3 @@ scenarios = {
                                    },
         }),
 }
-
-for i in scenarios:
-    scenarios[i].parameters["name"] = i
