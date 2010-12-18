@@ -16,11 +16,11 @@ we will use.
 
 \begin{figure}[h]
 \centering
-\subfloat[A screenshot of the square room.]{\resizebox{7cm}{!}{\input{Figures/squareroomps.tex}}}
-\subfloat[A screenshot of the corridor.]{\resizebox{7cm}{!}{\input{Figures/normalcorridorps.tex}}}\\
-\subfloat[A screenshot of the bottleneck.]{\resizebox{7cm}{!}{\input{Figures/bottleneckps.tex}}}
-\subfloat[A screenshot of the corridor with an opening.]{\resizebox{7cm}{!}{\input{Figures/widekinksps.tex}}}
-\caption{We simulate four different scenarios.}
+\subfloat[The square room.]{\resizebox{5cm}{!}{\input{Figures/squareroomps.tex}}}
+\subfloat[The bottleneck.]{\resizebox{7cm}{!}{\input{Figures/bottleneckps.tex}}}\\
+\subfloat[The corridor.]{\resizebox{7cm}{!}{\input{Figures/normalcorridorps.tex}}}
+\subfloat[The corridor with an opening.]{\resizebox{7cm}{!}{\input{Figures/widekinkps.tex}}}
+\caption{Screen shots of our four different scenarios.}
 \label{fig:fourcases}
 \end{figure}
 
@@ -139,6 +139,8 @@ easely pushes his way through the crowd. For the second there are no
 friction between the pedestrians to slow $\alpha$ speed down, besides 
 the social sphere.
 
+\subsubsection{Lane formation}
+
 \subsubsection{The Oscillatory flow}
 The oscillatory flow is expected to arise in the case of bidirectional 
 flow through a bottleneck. As indicated in figure \ref{fig:oscillitoryflow} 
@@ -146,10 +148,12 @@ we see that phenomena to some extent.
 
 \begin{figure}[h]
 \centering
-{\includegraphics[scale=0.5]{Figures/bottleneck-flowrate-2.pdf}}
-\caption{A screen shot of the bottleneck simulation.}
+\subfloat[A screen shot of bidirectional flow in the bottlenck]{\resizebox{7cm}{!}{\input{Figures/bidirecbottleneck.tex}}}
+\subfloat[Plot of the flow rate beyond each end of the corridor.]{\includegraphics[scale=0.5]{Figures/bottleneck-flowrate-2.pdf}}
+\caption{}
 \label{fig:oscillitoryflow}
 \end{figure}
+
 
 % \subsection{The square room scenario}
 % In this scenario we simulate pedestrians leaving a square room of 10 m by 
