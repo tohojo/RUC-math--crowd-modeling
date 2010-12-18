@@ -100,14 +100,22 @@ tried to replicate the the phenomena reported in our main
 article.
 
 \subsubsection{The faster-is-slower effect}
-The faster-is-slower was expected to be seen in every scenario.
-In the square room scenario we have look at how the time to leave 
-a room changes as the average velocity increases. In all the corridor 
-cases (i.e. normal corridor, bottleneck and corridor with free space) 
-we look at how the flow rate at the end of the corridor is 
-affected by an increasing average velocity. In all the scenarios 
-we look at mean velocities from 1.5 to 5 with steps of 0.5. The 
-results are presented in figure \ref{fig:isfasterslower}.
+The faster-is-slower was expected to be seen in the square room scenario.
+To see if this effects occurs we have looked at the leaving time as a function 
+of the desired velocity of the pedestrains. We made simulations with a desired velocity
+going from $1.5m/s$ to $5m/s$ with steps of 0.1. The results are presented in figure 
+\ref{fig:isfasterslower}. We see some fluctutation on the graph, but the overall picture 
+of the leaving time decreasing when the desired velocity goes up is clear. So there no sign of an increase of 
+the leaving time and therefore no faster is slower. The only thing we see is that the negative slope is decreasing, meaning
+ that if the pedestrians moves twice as fast, they don't clear the room in half the time. 
+
+%TODO: We should make runs with the desired velcity. This is what they compare with in the letters to nature article. 
+% In all the corridor 
+%cases (i.e. normal corridor, bottleneck and corridor with free space) 
+%we look at how the flow rate at the end of the corridor is 
+%affected by an increasing average velocity. In all the scenarios 
+%we look at mean velocities from 1.5 to 5 with steps of 0.5. The 
+%results are presented in figure \ref{fig:isfasterslower}.
 
 \begin{figure}[h]
 \centering
@@ -119,27 +127,28 @@ results are presented in figure \ref{fig:isfasterslower}.
 \label{fig:isfasterslower}
 \end{figure}
 
-We did not observe the faster-is-slower effect in any of our 
-scenarios. However the flow rate does not increase linearly 
-with the average velocity so the interactions between agents 
-and walls does have an effect.
+%We did not observe the faster-is-slower effect in any of our 
+%scenarios. However the flow rate does not increase linearly 
+%with the average velocity so the interactions between agents 
+%and walls does have an effect.
 
 \subsubsection{Freezing by heating effect}
 According to \cite{self-org} the freezing by heating effect should 
-arise when the max desired velocity of the pedestrians was raised.
-That is that clogging should arise when raising the max velocity of 
-the pedestrians, because more are ariving to the possible clogging area, 
-and thus have more trouble getting through the crowd. We tried to raise 
-the max velocity, see figure \ref{fig:freezingbyheating1} and figure 
+arise when the max desired velocity of the pedestrians is raised in situations where there is biderectional flow.
+We however does not experience this in any of our simulations of the corridor. 
+We tried to raise the max velocity, see figure \ref{fig:freezingbyheating1} and figure 
 \ref{fig:freezingbyheating05}, but instead of observing the freezing 
-by heating effect, we saw that the pedestrians got through the corridor 
-more easely, and that the density in the corridor was lower when the 
-max velocity was high. We think that there are more explations to this 
-result. For the first the pedestrian $\alpha$'s force toward the target
-is higher when $\alpha$'s velocity gets higher, and therefore he more 
-easely pushes his way through the crowd. For the second there are no 
-friction between the pedestrians to slow $\alpha$ speed down, besides 
-the social sphere.
+by heating effect, we actually saw that the pedestrians got through the corridor 
+more easily, and that the density in the corridor was lower when the 
+max velocity was high. So like the faster is slower effect again we see no sign of a high desired velocity decreasing/stopping
+ the movement of the pedestrians. 
+
+%We think that there are more explations to this 
+%result. For the first the pedestrian $\alpha$'s force toward the target
+%is higher when $\alpha$'s velocity gets higher, and therefore he more 
+%easely pushes his way through the crowd. For the second there are no 
+%friction between the pedestrians to slow $\alpha$ speed down, besides 
+%the social sphere.
 
 \subsubsection{Lane formation}
 Lane formation was expected to happen in the case of bidirectional 
