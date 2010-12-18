@@ -140,11 +140,26 @@ friction between the pedestrians to slow $\alpha$ speed down, besides
 the social sphere.
 
 \subsubsection{Lane formation}
+Lane formation was expected to be happen in the case of bidirectional 
+flow in corridors. Since we have three different corridor cases we have 
+looked for lane formation in all of them. The results are presented in 
+figure \ref{fig:laneformation}
+
+\begin{figure}[h]
+\centering
+\subfloat[Lanes in the normal corridor,]{\includegraphics{\resizebox{7cm}{!}{\input{Figures/bidirecbottleneck.tex}}}
+\subfloat[Lanes in the corridor with wide space.]{\includegraphics{\resizebox{7cm}{!}{\input{Figures/bidirecbottleneck.tex}}}\\
+\subfloat[Lanes in the bottleneck.]{\includegraphics{\resizebox{7cm}{!}{\input{Figures/bidirecbottleneck.tex}}}
+\caption{}
+\label{fig:laneformation}
+\end{figure}
+
+Lane formation is observed in every case.
 
 \subsubsection{The Oscillatory flow}
 The oscillatory flow is expected to arise in the case of bidirectional 
-flow through a bottleneck. As indicated in figure \ref{fig:oscillitoryflow} 
-we see that phenomena to some extent.
+flow through a bottleneck. The results are presented in table
+\ref{fig:oscillitoryflow}.
 
 \begin{figure}[h]
 \centering
@@ -154,6 +169,12 @@ we see that phenomena to some extent.
 \label{fig:oscillitoryflow}
 \end{figure}
 
+When looking at the simulation while it is running it is not 
+immediately clear that the oscillatory flow occurs. Clogging 
+appears in both ends of the bottleneck and people are sometimes 
+squeezed through the bottleneck. The graph presented in 
+\ref{fig:oscillitoryflow} does indicate that the oscillatory 
+flow occurs to some extent.
 
 % \subsection{The square room scenario}
 % In this scenario we simulate pedestrians leaving a square room of 10 m by 
