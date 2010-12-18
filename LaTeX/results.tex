@@ -99,17 +99,28 @@ chapter mention when we change the values and how much it is changed.
 
 \subsubsection{The faster-is-slower effect}
 The faster-is-slower was expected to be seen in every scenario.
-However this is not the case.
+In the square room scenario we have look at how the time to leave 
+a room changes as the average velocity increases. In all the corridor 
+cases (i.e. normal corridor, bottleneck and corridor with free space) 
+we look at how the flow rate at the end of the corridor is 
+affected by an increasing average velocity. In all the scenarios 
+we look at mean velocities from 1.5 to 5 with steps of 0.5. The 
+results are presented in figure \ref{fig:isfasterslower}.
 
 \begin{figure}[h]
 \centering
-\subfloat[]{\includegraphics[scale=0.45]{Figures/fastIsSlowNot.pdf}}
-\subfloat[]{\includegraphics[scale=0.45]{Figures/fastIsSlowNot.pdf}}\\
-\subfloat[]{\includegraphics[scale=0.45]{Figures/fastIsSlowNot.pdf}}
-\subfloat[]{\includegraphics[scale=0.45]{Figures/Wide-kink-one-directional-flowrate-agg.pdf}}
-\caption{}
-\label{fig:effect-of-widespace}
+\subfloat[Attempt to see the faster-is-slower effect in the square room.]{\includegraphics[scale=0.45]{Figures/fastIsSlowNot.pdf}}
+\subfloat[Attempt to see the faster-is-slower effect in the normal corridor case.]{\includegraphics[scale=0.45]{Figures/corridor-flowrate-aggr-velocity_mean.pdf}}\\
+\subfloat[Attempt to see the faster-is-slower effect in the bottleneck scenario.]{\includegraphics[scale=0.45]{Figures/bottleneck-flowrate-aggr-velocity_mean.pdf}}
+\subfloat[Attempt to see the faster-is-slower efffect in the corridor with a wide space.]{\includegraphics[scale=0.45]{Figures/Wide-kink-one-directional-flowrate-agg.pdf}}
+\caption{There is no evidence of the-faster-is slower effect, however it does seem that we see a faster-is-only-slightly-faster effect.}
+\label{fig:isfasterslower}
 \end{figure}
+
+We did not observe the faster-is-slower effect in any of our 
+scenarios. However the flow rate does not increase linearly 
+with the average velocity so the interactions between agents 
+and walls does have an effect.
 
 \subsubsection{Freezing by heating effect}
 According to \cite{self-org} the freezing by heating effect should 
