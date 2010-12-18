@@ -1,13 +1,11 @@
 \section{Results}
 \label{sec:results}
 In this section we describe the results obtained from our simulations. 
-We have simulated two scenarios: A square room where the pedestrians 
-exit through a single door, and pedestrians walking through a corridor 
-where there is a bidirectional flow. For each scenario we describe the 
-parameters we have set for the scenario, which features we found worth 
-measuring for this scenario, the results we expected, and the results 
-we obtained. Possible remedies for any discrepancies between the expected 
-and the actual results are discussed in section~\ref{sec:discussion}.
+We have simulated four scenarios: A square room where the pedestrians 
+exit through a single door, and three different corridor cases with  
+the possibility of bidirectional pedestiran flow. Possible remedies 
+for any discrepancies between the expected and the actual results are 
+discussed in section~\ref{sec:discussion}.
 
 \subsection{Constants and scenarios}
 We will here shortly specify the values for the different constants 
@@ -25,7 +23,7 @@ we will use.
 \end{figure}
 
 In the simulation the parameters are set after \cite{ABconstant} and 
-\cite{self-org}, to see if we can replecate their simulations and results. 
+\cite{self-org}, to see if we can replicate their simulations and results. 
 The general values we use are
 
 \begin{table}[ht]
@@ -55,13 +53,14 @@ The general values we use are
     \end{center}
 \end{table}
 
-We will through the chapter mention when the values are changed for a specific case.  
+We will through the chapter mention when the values are changed for a 
+specific case.  
 
 \subsection{The basics}
-Running the first simulations where all about to see if there where any 
-unatural behavior by the pedestrians, when using the parameters in table 
-\ref{tbl:parameter-settings}. We checked for intersections between the pedestrians, 
-pedestrians crossing the walls and so on.
+In this section we make some general comments on which cases we simulated 
+and how the most basic parts of the simulation went. We checked for 
+intersections between the pedestrians, pedestrians crossing the walls 
+and so on. We used the parameters in table \ref{tbl:parameter-settings}. 
 
 \begin{figure}[h]
 \centering
@@ -95,7 +94,10 @@ pedestrains repulsion constant $A$. This makes the repulsions forces
 big enough for the pedestrians to act 'noraml'. We will throughout the 
 chapter mention when we change the values and how much it is changed.
 
-\subsection{The phenonema}
+\subsection{The phenomena}
+In this section we present the results we obtained when we 
+tried to replicate the the phenomena reported in our main 
+article.
 
 \subsubsection{The faster-is-slower effect}
 The faster-is-slower was expected to be seen in every scenario.
@@ -140,17 +142,25 @@ friction between the pedestrians to slow $\alpha$ speed down, besides
 the social sphere.
 
 \subsubsection{Lane formation}
-Lane formation was expected to be happen in the case of bidirectional 
-flow in corridors. Since we have three different corridor cases we have 
+Lane formation was expected to happen in the case of bidirectional 
+flow in corridors. In our main article you see the following statement:
+
+\begin{quote}
+If pedestrians crowds moving in opposite directions meet each other, 
+they form small \emph{channels} in the beginning, but these channels 
+later merge to produce wide lanes
+\end{quote}
+
+Since we have three different corridor cases we have 
 looked for lane formation in all of them. The results are presented in 
 figure \ref{fig:laneformation}
 
 \begin{figure}[h]
 \centering
-\subfloat[Lanes in the normal corridor,]{\resizebox{7cm}{!}{\input{Figures/bidireccorridorlane.tex}}}
-\subfloat[Lanes in the corridor with wide space.]{\resizebox{7cm}{!}{\input{Figures/widekinksbidirec.tex}}}\\
-\subfloat[Lanes in the bottleneck.]{\resizebox{7cm}{!}{\input{Figures/bidirecbottleneck.tex}}}
-\caption{}
+\subfloat[]{\resizebox{5cm}{!}{\input{Figures/bidireccorridorlane.tex}}}
+\subfloat[]{\resizebox{5cm}{!}{\input{Figures/widekinksbidirec.tex}}}
+\subfloat[]{\resizebox{5cm}{!}{\input{Figures/bidirecbottleneck.tex}}}
+\caption{Lane formation in the different corridors.}
 \label{fig:laneformation}
 \end{figure}
 
@@ -158,7 +168,7 @@ Lane formation is observed in every case.
 
 \subsubsection{The Oscillatory flow}
 The oscillatory flow is expected to arise in the case of bidirectional 
-flow through a bottleneck. The results are presented in table
+flow through a bottleneck. The results are presented in figure
 \ref{fig:oscillitoryflow}.
 
 \begin{figure}[h]
