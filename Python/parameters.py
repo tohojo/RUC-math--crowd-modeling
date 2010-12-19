@@ -5,16 +5,17 @@ from scenario import Scenario
 scenarios = {
         'square_room': Scenario({
             'name'               : 'square_room',
-            'A'                  : 8.0,
+            'A'                  : 3.0,
             'B'                  : 0.2,
-            'U'                  : 12.0,
+            'U'                  : 5.0,
+
             'lambda'             : 1.0,
-            'initial_count'      : 65,
+            'initial_count'      : 100,
             'start_areas'        : [(-5.0,-5.0,5.0,5.0)],
-            'velocity_mean'      : 2.0,
+            'velocity_mean'      : 1.3,
             'velocity_deviation' : 0.26,
             'max_velocity_factor': 1.3,
-            'radius_mean'        : 0.2,
+            'radius_mean'        : 0.3,
             'radius_deviation'   : 0.01,
             'targets'            : [(-0.2,6.0)],
             'density_rectangle'  : (-1.0, 3.0, 1.0, 5.0),
@@ -37,8 +38,10 @@ scenarios = {
             'pixel_factor'       : 30,
             'relax_time'         : 1.0,
             'vary_parameters'    : {
+
                                     #'A'            : (1.0, 3.0, 0.1),
                                     'velocity_mean': (1.5, 5.0, 0.5),
+
                                    },
         }),
         'corridorbidirec': Scenario({
@@ -52,11 +55,11 @@ scenarios = {
                                     (-10.0,-1.0,-1.0,1.0),
                                     (1.0,-1.0,10.0,1.0),
                                    ],
-            'velocity_mean'      : 2.0,
+            'velocity_mean'      : 1.3,
             'velocity_deviation' : 0.26,
             'max_velocity_factor': 1.3,
-            'radius_mean'        : 0.2,
-            'radius_deviation'   : 0.001,
+            'radius_mean'        : 0.3,
+            'radius_deviation'   : 0.02,
             'targets'            : [
                                     (500.0,0.0),
                                     (-500.0, 0.0)
@@ -71,10 +74,10 @@ scenarios = {
                                     (-10.0, -1.0, -8.0, 1.0),
                                     (8.0, -1.0, 10.0, 1.0)
                                    ],
-            'stop_at'            : 300,
+            'stop_at'            : 75,
             'walls'              : [
-                                    (-10.0,  1.0, 10.0,  1.0),
-                                    (-10.0, -1.0, 10.0, -1.0)
+                                    (-10.0,  2.5, 10.0,  2.5),
+                                    (-10.0, -2.5, 10.0, -2.5)
                                    ],
             'drawing_width'      : 750,
             'drawing_height'     : 350,
@@ -215,7 +218,8 @@ scenarios = {
             'relax_time'         : 0.1,
             'vary_parameters'    : {
                                     #'A'            : (4.0, 6.0, 0.01),
-                                    'velocity_mean': (1.5, 5.0, 0.5),
+                                    #'velocity_mean': (1.5, 5.0, 0.5),
+                                    'velocity_max': (1.0, 5.0, 0.5),
                                    },
         }),
 
@@ -266,7 +270,8 @@ scenarios = {
             'relax_time'         : 0.1,
             'vary_parameters'    : {
                                     #'A'            : (4.0, 6.0, 0.01),
-                                    'velocity_mean': (1.0, 4.0, 0.5),
+                                    #'velocity_mean': (1.0, 4.0, 0.5),
+                                    'velocity_max': (1.0, 5.0, 0.5),
                                    },
         }),
 
