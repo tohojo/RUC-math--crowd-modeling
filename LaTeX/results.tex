@@ -38,6 +38,8 @@ scenario are presented in figure \ref{fig:fourcases}.
 In the simulation the parameters are set after \cite{ABconstant} and 
 \cite{self-org}, to see if we can replicate their simulations and results. 
 The general values we use are presented in table \ref{tbl:parameter-settings}.
+We will through the chapter mention when the values are changed for a
+specific case.
 
 \begin{table}[ht]
     \begin{center}
@@ -53,21 +55,18 @@ The general values we use are presented in table \ref{tbl:parameter-settings}.
             \midrule
             \multicolumn{3}{c}{\textsf{Initial conditions}}\\
             Mean pedestrian radius & $R_\alpha$ & $0,3 \pm 0,05 m$\\
-            Mean desired velocity &  $V^{Id}_\alpha$ &  $1,34 \pm 0,26 
+            Mean desired velocity &  $V^{Id}_\alpha$ &  $1,34 \pm 0,26
             \frac{m}{s}$ \\
             Max velocity factor &  &  $1,3$ \\
             Relaxation time & $\tau$ & $1,0 s$\\
             \bottomrule
         \end{tabular}
-        \caption[Constants and initial conditions]{Constants and initial 
-        conditions used for the simulations. $\pm$ indicates standard 
+        \caption[Constants and initial conditions]{Constants and initial
+        conditions used for the simulations. $\pm$ indicates standard
         deviation in Gaussian distributed values.}
         \label{tbl:parameter-settings}
     \end{center}
 \end{table}
-
-We will through the chapter mention when the values are changed for a 
-specific case.  
 
 \subsubsection{General behavior}
 In this section we make some comments on the general behavior of 
@@ -84,53 +83,48 @@ be relevant for the further investigations. We used the parameters in table
 \label{fig:overlapping}
 \end{figure}
 
-In the figure \ref{fig:overlapping} the overlapping between pedestrians 
-themselves and between walls and pedestrians. We see that in some situations 
-it is possible for the pedestrians to intersect quite alot, almost reaching 
-each others centers. The same thing is seen for the walls, where the wall 
-can get quite close to the center of a pedestrians. But inspite of this 
-we don't, with the chosen constants, see that they actually do cross. So 
-even though it might look like they get sqiuzzed alot together, no completely 
-unrealistic situations occur. Also we see no other strange scenarios, like 
-people going in a wrong direction or anything like that. So the most basic 
-requirements of the model are fulfilled. 
+In the figure \ref{fig:overlapping} the overlapping between pedestrians
+themselves and between walls and pedestrians. We see that in some situations
+it is possible for the pedestrians to intersect quite alot, almost reaching
+each others centers. The same thing is seen for the walls, where the wall
+can get quite close to the center of a pedestrians. But inspite of this
+we don't, with the chosen constants, see that they actually do cross. So
+even though it might look like they get sqiuzzed alot together, no completely
+unrealistic situations occur. Also we see no other strange scenarios, like
+people going in a wrong direction or anything like that. So the most basic
+requirements of the model are fulfilled.
 
-We do however see some unrealistic behavior when we change the values in 
-\ref{tbl:parameter-settings} When looking at some of the different phenomenons, 
-we need to change certain values like the mean velocity. But when we do 
-this it starts to get unrealistic. When raising the desired velocity to 
-a speed like $2.5m/s$, we start to see people crossing each other and going 
-up to $3.5m/s$ we start to see people crossing the walls. This is a problem 
-since these results makes no sence to compares with. Lowering the timestep 
-with $1/10$ doesn't change this result at all. So to solve this problem we 
-have in some cases raised the wallues of the wall constant $U$ and the 
-pedestrains repulsion constant $A$. This makes the repulsions forces 
-big enough for the pedestrians to act 'noraml'. We will throughout the 
+We do however see some unrealistic behavior when we change the values in
+\ref{tbl:parameter-settings} When looking at some of the different phenomenons,
+we need to change certain values like the mean velocity. But when we do
+this it starts to get unrealistic. When raising the desired velocity to
+a speed like $2.5m/s$, we start to see people crossing each other and going
+up to $3.5m/s$ we start to see people crossing the walls. This is a problem
+since these results makes no sence to compares with. Lowering the timestep
+with $1/10$ doesn't change this result at all. So to solve this problem we
+have in some cases raised the wallues of the wall constant $U$ and the
+pedestrains repulsion constant $A$. This makes the repulsions forces
+big enough for the pedestrians to act 'noraml'. We will throughout the
 chapter mention when we change the values and how much it is changed.
 
-\subsection{The phenomena}
+\subsection{The phenomena}\label{subsec:ThePhenomena}
 In this section we present the results we obtained from our attempts 
 to replicate the the phenomena presented in \cite{self-org}.
 
 \subsubsection{The faster-is-slower effect}
 The faster-is-slower was expected to be seen in the square room scenario.
-To see if this effects occurs we have looked at the leaving time as a function 
+To see if this effects occurs we have looked at the leaving time as a function
 of the desired velocity of the pedestrains. We made simulations with a desired 
 velocitygoing from $1.5m/s$ to $5m/s$ with steps of 0.1. The results are presented 
-in figure \ref{fig:isfasterslower}. We see some fluctutation on the graph, but 
-the overall picture of the leaving time decreasing when the desired velocity 
-goes up is clear. So there no sign of an increase of the leaving time and 
-therefore no faster is slower. The only thing we see is that the negative slope 
-is decreasing, meaning that if the pedestrians moves twice as fast, they don't 
-clear the room in half the time.\\
+in figure \ref{fig:isfasterslower}. We see some fluctutation on the graph, but the 
+overall pictureof the leaving time decreasing when the desired velocity goes up is 
+clear. So there no sign of an increase of the leaving time and therefore no faster 
+is slower. The only thing we see is that the negative slope is decreasing, meaning 
+that if the pedestrians moves twice as fast, they don't clear the room in half the 
+time.
 
-%TODO: We should make runs with the desired velcity. This is what they compare with in the letters to nature article. 
-% In all the corridor 
-%cases (i.e. normal corridor, bottleneck and corridor with free space) 
-%we look at how the flow rate at the end of the corridor is 
-%affected by an increasing average velocity. In all the scenarios 
-%we look at mean velocities from 1.5 to 5 with steps of 0.5. The 
-%results are presented in figure \ref{fig:isfasterslower}.
+%TODO: We should make runs with the desired velcity. 
+%This is what they compare with in the letters to nature article. 
 
 \begin{figure}[h]
 \centering
@@ -161,8 +155,8 @@ flow in corridors. In the article \ref{self-org} you read the following
 statement:
 
 \begin{quote}
-If pedestrians crowds moving in opposite directions meet each other, 
-they form small \emph{channels} in the beginning, but these channels 
+If pedestrians crowds moving in opposite directions meet each other,
+they form small \emph{channels} in the beginning, but these channels
 later merge to produce wide lanes
 \end{quote}
 
@@ -181,7 +175,7 @@ and they are of the nature described in \cite{self-org}.\\
 \end{figure}
 
 \subsubsection{The Oscillatory flow}
-The oscillatory flow is expected to arise in the case of bidirectional 
+The oscillatory flow is expected to arise in the case of bidirectional
 flow through a bottleneck. The results are presented in figure
 \ref{fig:oscillitoryflow}.\\
 
@@ -193,9 +187,14 @@ flow through a bottleneck. The results are presented in figure
 \label{fig:oscillitoryflow}
 \end{figure}
 
-When looking at the simulation while it is running it is not 
-immediately clear that the oscillatory flow occurs. Clogging 
-appears in both ends of the bottleneck and people are sometimes 
-squeezed through the bottleneck. The graph presented in 
-\ref{fig:oscillitoryflow} does indicate that the oscillatory 
+When looking at the simulation while it is running it is not
+immediately clear that the oscillatory flow occurs. Clogging
+appears in both ends of the bottleneck and people are sometimes
+squeezed through the bottleneck. The graph presented in
+\ref{fig:oscillitoryflow} does indicate that the oscillatory
 flow occurs to some extent.
+
+\subsection{Summery}
+Our simulation run with only few unexpected behaviors.Lane formation 
+is observed in every all corridor cases and oscillatory flow is 
+observed to some extent.
