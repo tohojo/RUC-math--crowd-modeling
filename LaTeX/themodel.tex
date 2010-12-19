@@ -46,12 +46,15 @@ figure~\ref{pedestrian-notation}.
     \subref{subfig:notation} A pedestrian is described by a position
     vector ($ \overrightarrow{p_{\alpha}} $), a velocity vector ($
     \overrightarrow{V_{\alpha}} $), a vector pointing towards the target
-    ($\overrightarrow{e_{\alpha}}$)  and a radius ($ R_{\alpha} $). The velocity is governed by the forces action upon the pedestrian.\\
+    ($\overrightarrow{e_{\alpha}}$)  and a radius ($ R_{\alpha} $). The 
+    velocity is determined from the forces action upon the pedestrian.\\
     %
     \subref{subfig:forces} The forces acting on a pedestrian $\alpha$ is the
     interaction force from pedestrian $\beta$
-    ($\overrightarrow{f_{\alpha\beta}}$), the repulsive force from wall $\gamma$
-    ($\overrightarrow{f_{\alpha \gamma}}$) and the force pointing toward the target ($\overrightarrow{f^{d}_{\alpha}}$).}
+    ($\overrightarrow{f_{\alpha\beta}}$), the repulsive force from wall 
+    $\gamma$
+    ($\overrightarrow{f_{\alpha \gamma}}$) and the force towards the target 
+    ($\overrightarrow{f^{d}_{\alpha}}$).}
 
     \label{pedestrian-notation}
 \end{figure}
@@ -149,29 +152,27 @@ pedestrian and is given by:
 where $\langle V_{\alpha}(t) \rangle$ is the average speed in the desired
 direction for all times $0\dots t$. It is not clear from the article exactly
 how this average speed is calculated. We have defined it by projecting the
-vector pointing from the pedestrian's initial position $p^i_\alpha$ to the final 
-position $p^f_\alpha$, 
-%show in the drawing
-onto the vector
-pointing from $p^i_\alpha$ to the pedestrian's target. The length of this
-projection is divided by the time to yield the average speed. An
-illustration of this interpretation is given in figure~\ref{impatience}.
+vector pointing from the pedestrian's initial position $p^i_\alpha$ to the 
+current   position $p_\alpha$,  onto the vector pointing from $p^i_\alpha$ to 
+the pedestrian's target. The length of this projection is divided by the time 
+to yield the average speed. An illustration of this interpretation is given in 
+figure~\ref{impatience}.
 
 \begin{figure}[ht]
     \centering
     {\includegraphics[width=0.5\textwidth]{Figures/impatience.pdf}}
     \caption[Our interpretation of the average velocity]{Our interpretation of
     the average velocity. The vector pointing from the pedestrian's initial
-    position $p^i_\alpha$ to the final position $p^f_\alpha$, 
-    is projected onto the vector pointing from
-    $p^i_\alpha$ to the pedestrian's target. The length of this projection is
-    divided by the time to yield the average speed towards the target.}
+    position $p^i_\alpha$ to the current position $p_\alpha$, is projected 
+    onto the vector pointing from $p^i_\alpha$ to the pedestrian's target. The 
+    length of this projection is divided by the time to yield the average 
+    speed towards the target.}
     \label{impatience}
 \end{figure}
 
-$V^d_\alpha(t)$ is undefined at $t=0$, so that would probably result in a
-division by zero. We complete
-this by defining $V^d_\alpha(0)=V^{Id}_\alpha$. This means that $V^d_\alpha(t)$
+$V^d_\alpha(t)$ is undefined at $t=0$, so that would result in a
+division by zero. We complete the definition by defining 
+$V^d_\alpha(0)=V^{Id}_\alpha$. This means that $V^d_\alpha(t)$
 is defined as follows:
 
 \begin{equation}\label{eqn:cond-define}
