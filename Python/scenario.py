@@ -169,9 +169,10 @@ class Scenario:
                 flowrate=flowrates)
 
     def _canvas(self, method, *args):
+        retval = True
         if self.options.create_images:
             retval = getattr(self.image_canvas, method)(*args)
-        if self.options.show_simulation and self.options.tikz:
+        if self.options.show_simulation and (self.options.tikz or not self.options.create_images):
             return getattr(self.show_canvas, method)(*args) and retval
         return retval
 
