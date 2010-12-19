@@ -217,8 +217,6 @@ from these points. The force from the repulsion points is calculated in the
 function \texttt{calculate\_wall\_repulsion} that is called for each repulsion 
 point. This calculation corresponds to equation~\eqref{eqn:wall-repulsion}.
 
-% TODO: Change this code to match the changed way of doing stuff.
-
 \begin{lstlisting}[caption={Calculating the repulsion from the 
     walls.},label=lst:wall-repulsion]
 void add_wall_repulsion(Pedestrian * a)
@@ -338,21 +336,12 @@ int find_repultion_points(Pedestrian * a, Vector repulsion_points[])
 \subsubsection{Updating position and velocity}
 After every pedestrian has been updated with a resulting acceleration vector from 
 the current simulation step, all pedestrians update their position and velocity.  
-The position is updated by calculating a displacement vector as follows:
+The position is updated by calculating a displacement vector as explained in 
+section~\ref{sec:continuous-movement}.
 
-\begin{equation}
-    \Delta p = (v_x \Delta t + \frac{1}{2}a_x \Delta t^2, v_y \Delta t + 
-    \frac{1}{2}a_y \Delta t^2)
-\end{equation}
-% TODO: Viggo had question marks around parts of this equation. Look into why.
-
-Where $v_x$ and $v_y$ are the $x$ and $y$ components of the velocity vector, 
-$a_x$ and $a_y$ are the $x$ and $y$ components of the acceleration vector, and 
-$\Delta t$ is the time step.
-
-After updating the position, the pedestrian's velocity is updated by adding the 
-acceleration vector, to be used for the next simulation step. The code that 
-does this is seen in code segment~\ref{lst:update-position}. Lines 14-19 are 
+After updating the position, the pedestrian's velocity is updated by adding 
+the acceleration vector, to be used for the next simulation step. The code 
+that does this is seen in code segment~\ref{lst:update-position}. Lines 14 is 
 related to the measuring of data for plotting, and will be explained in 
 section~\ref{sec:measurement}.
 
@@ -371,13 +360,7 @@ void update_position(Pedestrian * a)
 			vector_mul(a->acceleration, timestep));
     a->time += timestep;
 
-	if(a->flowline_time < 0) {
-        if(vector_projection_distance(
-					flowline[0], flowline[1], a->position) < a->radius) {
-			a->flowline_time = a->time;
-			new_flow_c += 1;
-		}
-	}
+    check_flowlines(a);
 }
 \end{lstlisting}
 
