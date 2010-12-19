@@ -6,14 +6,15 @@ models is modelling the behaviour using only a set of simple forces to
 describe the behaviour of the human pedestrians that comprise a crowd.
 
 This works by calculating a set of social forces affecting each pedestrian in 
-the system.  These forces are not real physical forces in the sense that they 
-follow Newton's laws of motion, but rather a measure of the  pedestrians' 
+the system.  These forces are not real physical forces 
+but rather a measure of the  pedestrians' 
 motivation for acting in specific ways. However the name \emph{social forces}
 is not accidental: both notation and to some extent the interpretation is
 borrowed from physics.
 
-Borrowing the concept of forces from physics allows social force models to 
-calculate pedestrian movement using already established methods. This means 
+Borrowing the concept of forces from physics 
+means that pedestrian movement is calculated from the social forces using 
+established methods from physics, i.e. equations of motion. This means 
 that forces can be summed to generate a resulting force for a pedestrian, and 
 that this resulting force can be used to describe an acceleration, and thus 
 affect the movement of the pedestrian.
@@ -21,16 +22,16 @@ affect the movement of the pedestrian.
 However, social forces differ from physical forces in key areas. Social forces 
 are a way to estimate a pedestrian's behaviour and tendency to move in a 
 certain direction. As such they do not deal with the physical effects of the 
-environment the pedestrian is in, but rather the pedestrians perception of 
-this environment. For example, pedestrians attempt to avoid colliding with 
+environment the pedestrian is in, but rather the pedestrian's perception of 
+this environment. For example, pedestrian's attempt to avoid colliding with 
 each other, which is modelled as a repulsive force between them. This means 
 that the forces are not bound by the laws of physics; they can affect 
 pedestrians over a distance, whereas a physical force between two pedestrians 
 only occur when they are touching. Also, the forces do not obey Newton's third 
 law of motion, since they do not represent an actual interaction between 
 pedestrians, but only a desire to move in a certain direction. Finally, it 
-doesn't make sense to talk about the results of the forces in terms of 
-physical forces.  This mean that it doesn't make sense to talk about, e.g., 
+does not make sense to talk about the results of the forces in terms of 
+physical forces. This means that it does not make sense to talk about, e.g., 
 pressure by measuring the magnitude of the forces a pedestrian is subjected 
 to.
 
