@@ -1,16 +1,28 @@
 \section{Results}
 \label{sec:results}
-In this section we describe the results obtained from our simulations. 
-We have simulated four scenarios: A square room where the pedestrians 
-exit through a single door, and three different corridor cases with  
-the possibility of bidirectional pedestiran flow. Possible remedies 
-for any discrepancies between the expected and the actual results are 
+In this section we describe the results obtained from our simulations.
+The section is devided into two parts. The first part presents the 
+constants we use and the scenarios that we simulate and comment on 
+the general success of our implementation of the model. We looked 
+for unrealistic or unexpected behavior in our simulations. In the 
+last part we present the results from our attempts to replicate 
+the phenomena presented in \cite{self-org}.Possible remedies for 
+any discrepancies between the expected and the actual results are 
 discussed in section~\ref{sec:discussion}.
 
-\subsection{Constants and scenarios}
-We will here shortly specify the values for the different constants 
-we use in both of the scenarios and show screenshots of the scenarios 
-we will use.
+\subsection{The basics}
+This section is devided into three parts. First we present the 
+scenarios that we have simulated, then we present the constants 
+used in the simulations. We then move on to comment on the 
+general behavior of the pedestrians in our simulations.
+
+\subsubsection{Scenarios}
+We simulate four different scenarios, a rectangle shaped room with a 
+door in the middle of one of the walls, and three different variations 
+of corridors; a normal corridor, a corridor with a bottleneck in the 
+middle and a corridor with a sudden open space. In the corridors we have 
+the opportunity to make bidirectional flow. Screen shots from each 
+scenario are presented in figure \ref{fig:fourcases}.
 
 \begin{figure}[h]
 \centering
@@ -22,9 +34,10 @@ we will use.
 \label{fig:fourcases}
 \end{figure}
 
+\subsubsection{Constants}
 In the simulation the parameters are set after \cite{ABconstant} and 
 \cite{self-org}, to see if we can replicate their simulations and results. 
-The general values we use are
+The general values we use are presented in table \ref{tbl:parameter-settings}.
 
 \begin{table}[ht]
     \begin{center}
@@ -56,11 +69,12 @@ The general values we use are
 We will through the chapter mention when the values are changed for a 
 specific case.  
 
-\subsection{The basics}
-In this section we make some general comments on which cases we simulated 
-and how the most basic parts of the simulation went. We checked for 
-intersections between the pedestrians, pedestrians crossing the walls 
-and so on. We used the parameters in table \ref{tbl:parameter-settings}. 
+\subsubsection{General behavior}
+In this section we make some comments on the general behavior of 
+the pedestrians in the simulations. We checked for intersections between 
+the pedestrians, pedestrians crossing the walls and other bahavior that might 
+be relevant for the further investigations. We used the parameters in table 
+\ref{tbl:parameter-settings}.\\
 
 \begin{figure}[h]
 \centering
@@ -95,19 +109,20 @@ big enough for the pedestrians to act 'noraml'. We will throughout the
 chapter mention when we change the values and how much it is changed.
 
 \subsection{The phenomena}
-In this section we present the results we obtained when we 
-tried to replicate the the phenomena reported in our main 
-article.
+In this section we present the results we obtained from our attempts 
+to replicate the the phenomena presented in \cite{self-org}.
 
 \subsubsection{The faster-is-slower effect}
 The faster-is-slower was expected to be seen in the square room scenario.
 To see if this effects occurs we have looked at the leaving time as a function 
-of the desired velocity of the pedestrains. We made simulations with a desired velocity
-going from $1.5m/s$ to $5m/s$ with steps of 0.1. The results are presented in figure 
-\ref{fig:isfasterslower}. We see some fluctutation on the graph, but the overall picture 
-of the leaving time decreasing when the desired velocity goes up is clear. So there no sign of an increase of 
-the leaving time and therefore no faster is slower. The only thing we see is that the negative slope is decreasing, meaning
- that if the pedestrians moves twice as fast, they don't clear the room in half the time. 
+of the desired velocity of the pedestrains. We made simulations with a desired 
+velocitygoing from $1.5m/s$ to $5m/s$ with steps of 0.1. The results are presented 
+in figure \ref{fig:isfasterslower}. We see some fluctutation on the graph, but 
+the overall picture of the leaving time decreasing when the desired velocity 
+goes up is clear. So there no sign of an increase of the leaving time and 
+therefore no faster is slower. The only thing we see is that the negative slope 
+is decreasing, meaning that if the pedestrians moves twice as fast, they don't 
+clear the room in half the time.\\
 
 %TODO: We should make runs with the desired velcity. This is what they compare with in the letters to nature article. 
 % In all the corridor 
@@ -142,7 +157,8 @@ the movement of the pedestrians.
 
 \subsubsection{Lane formation}
 Lane formation was expected to happen in the case of bidirectional 
-flow in corridors. In our main article you see the following statement:
+flow in corridors. In the article \ref{self-org} you read the following 
+statement:
 
 \begin{quote}
 If pedestrians crowds moving in opposite directions meet each other, 
@@ -150,25 +166,24 @@ they form small \emph{channels} in the beginning, but these channels
 later merge to produce wide lanes
 \end{quote}
 
-Since we have three different corridor cases we have 
-looked for lane formation in all of them. The results are presented in 
-figure \ref{fig:laneformation}
+Since we have three different corridor cases we have looked for lane 
+formation in all of them. The results are presented in figure 
+\ref{fig:laneformation}. Lane formation is observed in every case 
+and they are of the nature described in \cite{self-org}.\\
 
 \begin{figure}[h]
 \centering
-\subfloat[]{\resizebox{5cm}{!}{\input{Figures/bidireccorridorlane.tex}}}
-\subfloat[]{\resizebox{5cm}{!}{\input{Figures/widekinksbidirec.tex}}}
-\subfloat[]{\resizebox{5cm}{!}{\input{Figures/bidirecbottleneck.tex}}}
+\subfloat[]{\resizebox{8cm}{!}{\input{Figures/bidireccorridorlane.tex}}}
+\subfloat[]{\resizebox{8cm}{!}{\input{Figures/widekinksbidirec.tex}}}\\
+\subfloat[]{\resizebox{8cm}{!}{\input{Figures/bidirecbottleneck.tex}}}
 \caption{Lane formation in the different corridors.}
 \label{fig:laneformation}
 \end{figure}
 
-Lane formation is observed in every case.
-
 \subsubsection{The Oscillatory flow}
 The oscillatory flow is expected to arise in the case of bidirectional 
 flow through a bottleneck. The results are presented in figure
-\ref{fig:oscillitoryflow}.
+\ref{fig:oscillitoryflow}.\\
 
 \begin{figure}[h]
 \centering
