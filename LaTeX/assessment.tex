@@ -1,76 +1,64 @@
 \section{Assessment of social force models}
 \label{sec:assessment}
-
-% TODO: What is good about social force models.
-% TODO: What can we use the model for, provided it works.
-% TODO: Now what? perspektivering.
-    % Path finding
-    % Tangential forces
-
-The social force model we emphasized on in our report is good enough to demonstrate 
-the social force concept. In this section we will first introduce some additional features 
-, which differ from the ones outlined in section \ref{sec:model-to-simulation} and 
-\ref{sec:discussion} in the way that they are not features that are needed to 
-replicate the results from the articles, but are extensions to the model.
-Later we will point out our major concern about social force model, even if 
-such features are inserted. At last, give our opinion about the current state of 
-social force models in general and what social force model is good at.
+In this section we will present our assessment of social force models in 
+general, based on our work with the specific model and the results we have 
+obtained. To expand the scope of the discussion, we will first outline various 
+extensions to social force models that are presented elsewhere, which 
+introduce some features into the models that are lacking in the version we 
+have worked with. Based on our results and these extensions, we will then 
+outline the advantages and weaknesses of social force models in general, and 
+conclude by assessing the state of these types of models.
 
 \subsection{Extensions of the model}
-% TODO: This section is about minor limitations to our model that have 
-% been solved by others.
-During the analyses and simulation of the model we have encountered 
-several minor limitations. In this section we discuss these limitations, 
-some of which have been solved by others in the field. 
+There are several features that might be added to the social force model we 
+have worked with, that will widen the scope of scenarios for which the model 
+is useful. As mentioned in section~\ref{sec:variants}, there already exists 
+models that incorporate some of these features. In this section we will 
+outline some of these features, go give a broader view of what is possible 
+with social force-based models.
 
-The variety of situations the model can handle is greatly affected by the 
-pedestrians' ability to manoeuvre around in the environment. 
-Features such as 
-\emph{path finding} and \emph{lowered visibility} allowed the model to design 
-more complicated situation, other features such as \emph{communication 
-between pedestrians}, \emph{falling} and \emph{herding behaviour} can represent 
-more thorough psychological state. We will discuss these features one at a time.
+The features we will look at are \emph{path finding}, which will allow the 
+model to simulate more complicated scenarios, and \emph{communication between 
+pedestrians}, \emph{falling} and \emph{handling lowered visibility} that can 
+add types of pedestrian behaviour that is not handled well in our version of 
+the model.
 
 \begin{itemize}
-\item {Path finding: } 
-In our model the pedestrians do not have path finding, which means that the model 
-can not simulate people escaping a complex environment with a lot of rooms 
-and corridors. A example of a social force model with pathfinding is the HiDAC 
-model\cite{HiDAC}.
+    \item \textbf{Path finding:} Our model does not incorporate path 
+        finding, i.e. pedestrians only move towards one fixed target. Adding 
+        path finding would allow the model to simulate people moving in more 
+        complex environments than what is possible with our model. There 
+        exists various models that incorporate this feature \cite{HiDAC}.
+ 
+    \item \textbf{Communication between pedestrians:} Adding an ability for 
+        pedestrians to communicate would enable us to make simulations of 
+        cases where groups of pedestrians follow each other (such as a 
+        family), and it would enable pedestrians to cooperate in finding 
+        alternative routes. Models adding communication are also seen in the 
+        literature \cite{HiDAC}.
 
-\item {Lowered visibility: }
-At the moment we can not simulate a situations where the visibility is very low 
-e.g. a room filled with smoke. In the model we have worked with The pedestrians always 
-have a waypoint to steer towards, but if the visibility only is 1 meter the 
-pedestrians can not necessarily see the waypoint \cite{HelbingNew}. This could be 
-implemented by adding a tangential component to the force coming from the wall. 
-Sow people will follow the wall when they get close to it.
+    \item \textbf{Falling and injuries:} In situations of crowd panic, people 
+        are often injured. This is either due to the enormous pressure that 
+        can built up in a crowd or due to people falling and being trampled.  
+        Our does not take into account these possibilities, but other models 
+        do \cite{HiDAC}.
 
-\item {Communication between pedestrians: }
-In real panic situations it is not hard to imagine people communicating to help each 
-other finding the exits or using alternative routes. This is 
-not something that our model is capable of. For a model with communication between 
-pedestrians see \cite{HiDAC}.
-
-\item {Falling and injuries }
-In situations of crowd panic, people are often injured. This is either due to the 
-enormous pressure that can built up in a crowd or due to people falling and being stamped. Our 
-does not take into account these possibilities. In the HiDAC model people can 
-be injured and even fall and become obstacles for other pedestrians.\cite{HiDAC}
-
-\item {Herding}
-Other models take into account herding behaviour between the pedestrians 
-\cite{helbing00}, so that some people have tendency to follow other pedestrians, 
-while other pedestrians have a tendency to go their own way,  and by doing so 
-explore the environment for possible exits.
-
+    \item \textbf{Lowered visibility:} Our model assumes that pedestrians can 
+        identify their target and move towards it. This means that we cannot 
+        simulate scenarios where pedestrians do not know in which direction 
+        they want to move, e.g. a room filled with smoke. Adding alternative 
+        mechanisms for pedestrian movement, such as having pedestrians close 
+        to walls moving along them, would allow us to simulate pedestrian 
+        movement in cases of lowered visibility \cite{HelbingNew}.
 \end{itemize}
 
-These features all add up to give a more realistic simulation of crowds, and 
-obviously there are many more features than those that people can think of 
-and could be solved. 
-Next we will refer to the governing assumption behind the social force
-model, where comes our biggest concern.
+These features allows the social force models to simulate more complex cases 
+than what is possible using our model, and since they have been incorporated 
+into other models, we will include them in our assessment of the pros and cons 
+of social force models.
+
+\subsection{Advantages of social force models}
+\subsection{Weaknesses of social force models}
 
 \subsection{Inserting social force concept into classical mechanics}
 \label{subsec:development}
