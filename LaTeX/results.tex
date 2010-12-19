@@ -1,15 +1,15 @@
 \section{Results}
 \label{sec:results}
-In this section we describe the results obtained from our simulations. 
-We have simulated four scenarios: A square room where the pedestrians 
-exit through a single door, and three different corridor cases with  
-the possibility of bidirectional pedestiran flow. Possible remedies 
-for any discrepancies between the expected and the actual results are 
+In this section we describe the results obtained from our simulations.
+We have simulated four scenarios: A square room where the pedestrians
+exit through a single door, and three different corridor cases with
+the possibility of bidirectional pedestiran flow. Possible remedies
+for any discrepancies between the expected and the actual results are
 discussed in section~\ref{sec:discussion}.
 
 \subsection{Constants and scenarios}
-We will here shortly specify the values for the different constants 
-we use in both of the scenarios and show screenshots of the scenarios 
+We will here shortly specify the values for the different constants
+we use in both of the scenarios and show screenshots of the scenarios
 we will use.
 
 \begin{figure}[h]
@@ -22,8 +22,8 @@ we will use.
 \label{fig:fourcases}
 \end{figure}
 
-In the simulation the parameters are set after \cite{ABconstant} and 
-\cite{self-org}, to see if we can replicate their simulations and results. 
+In the simulation the parameters are set after \cite{ABconstant} and
+\cite{self-org}, to see if we can replicate their simulations and results.
 The general values we use are
 
 \begin{table}[ht]
@@ -40,27 +40,27 @@ The general values we use are
             \midrule
             \multicolumn{3}{c}{\textsf{Initial conditions}}\\
             Mean pedestrian radius & $R_\alpha$ & $0,3 \pm 0,05 m$\\
-            Mean desired velocity &  $V^{Id}_\alpha$ &  $1,34 \pm 0,26 
+            Mean desired velocity &  $V^{Id}_\alpha$ &  $1,34 \pm 0,26
             \frac{m}{s}$ \\
             Max velocity factor &  &  $1,3$ \\
             Relaxation time & $\tau$ & $1,0 s$\\
             \bottomrule
         \end{tabular}
-        \caption[Constants and initial conditions]{Constants and initial 
-        conditions used for the simulations. $\pm$ indicates standard 
+        \caption[Constants and initial conditions]{Constants and initial
+        conditions used for the simulations. $\pm$ indicates standard
         deviation in Gaussian distributed values.}
         \label{tbl:parameter-settings}
     \end{center}
 \end{table}
 
-We will through the chapter mention when the values are changed for a 
-specific case.  
+We will through the chapter mention when the values are changed for a
+specific case.
 
 \subsection{The basics}
-In this section we make some general comments on which cases we simulated 
-and how the most basic parts of the simulation went. We checked for 
-intersections between the pedestrians, pedestrians crossing the walls 
-and so on. We used the parameters in table \ref{tbl:parameter-settings}. 
+In this section we make some general comments on which cases we simulated
+and how the most basic parts of the simulation went. We checked for
+intersections between the pedestrians, pedestrians crossing the walls
+and so on. We used the parameters in table \ref{tbl:parameter-settings}.
 
 \begin{figure}[h]
 \centering
@@ -70,51 +70,51 @@ and so on. We used the parameters in table \ref{tbl:parameter-settings}.
 \label{fig:overlapping}
 \end{figure}
 
-In the figure \ref{fig:overlapping} the overlapping between pedestrians 
-themselves and between walls and pedestrians. We see that in some situations 
-it is possible for the pedestrians to intersect quite alot, almost reaching 
-each others centers. The same thing is seen for the walls, where the wall 
-can get quite close to the center of a pedestrians. But inspite of this 
-we don't, with the chosen constants, see that they actually do cross. So 
-even though it might look like they get sqiuzzed alot together, no completely 
-unrealistic situations occur. Also we see no other strange scenarios, like 
-people going in a wrong direction or anything like that. So the most basic 
-requirements of the model are fulfilled. 
+In the figure \ref{fig:overlapping} the overlapping between pedestrians
+themselves and between walls and pedestrians. We see that in some situations
+it is possible for the pedestrians to intersect quite alot, almost reaching
+each others centers. The same thing is seen for the walls, where the wall
+can get quite close to the center of a pedestrians. But inspite of this
+we don't, with the chosen constants, see that they actually do cross. So
+even though it might look like they get sqiuzzed alot together, no completely
+unrealistic situations occur. Also we see no other strange scenarios, like
+people going in a wrong direction or anything like that. So the most basic
+requirements of the model are fulfilled.
 
-We do however see some unrealistic behavior when we change the values in 
-\ref{tbl:parameter-settings} When looking at some of the different phenomenons, 
-we need to change certain values like the mean velocity. But when we do 
-this it starts to get unrealistic. When raising the desired velocity to 
-a speed like $2.5m/s$, we start to see people crossing each other and going 
-up to $3.5m/s$ we start to see people crossing the walls. This is a problem 
-since these results makes no sence to compares with. Lowering the timestep 
-with $1/10$ doesn't change this result at all. So to solve this problem we 
-have in some cases raised the wallues of the wall constant $U$ and the 
-pedestrains repulsion constant $A$. This makes the repulsions forces 
-big enough for the pedestrians to act 'noraml'. We will throughout the 
+We do however see some unrealistic behavior when we change the values in
+\ref{tbl:parameter-settings} When looking at some of the different phenomenons,
+we need to change certain values like the mean velocity. But when we do
+this it starts to get unrealistic. When raising the desired velocity to
+a speed like $2.5m/s$, we start to see people crossing each other and going
+up to $3.5m/s$ we start to see people crossing the walls. This is a problem
+since these results makes no sence to compares with. Lowering the timestep
+with $1/10$ doesn't change this result at all. So to solve this problem we
+have in some cases raised the wallues of the wall constant $U$ and the
+pedestrains repulsion constant $A$. This makes the repulsions forces
+big enough for the pedestrians to act 'noraml'. We will throughout the
 chapter mention when we change the values and how much it is changed.
 
-\subsection{The phenomena}
-In this section we present the results we obtained when we 
-tried to replicate the the phenomena reported in our main 
+\subsection{The phenomena}\label{subsec:ThePhenomena}
+In this section we present the results we obtained when we
+tried to replicate the the phenomena reported in our main
 article.
 
 \subsubsection{The faster-is-slower effect}
 The faster-is-slower was expected to be seen in the square room scenario.
-To see if this effects occurs we have looked at the leaving time as a function 
+To see if this effects occurs we have looked at the leaving time as a function
 of the desired velocity of the pedestrains. We made simulations with a desired velocity
-going from $1.5m/s$ to $5m/s$ with steps of 0.1. The results are presented in figure 
-\ref{fig:isfasterslower}. We see some fluctutation on the graph, but the overall picture 
-of the leaving time decreasing when the desired velocity goes up is clear. So there no sign of an increase of 
+going from $1.5m/s$ to $5m/s$ with steps of 0.1. The results are presented in figure
+\ref{fig:isfasterslower}. We see some fluctutation on the graph, but the overall picture
+of the leaving time decreasing when the desired velocity goes up is clear. So there no sign of an increase of
 the leaving time and therefore no faster is slower. The only thing we see is that the negative slope is decreasing, meaning
- that if the pedestrians moves twice as fast, they don't clear the room in half the time. 
+ that if the pedestrians moves twice as fast, they don't clear the room in half the time.
 
-%TODO: We should make runs with the desired velcity. This is what they compare with in the letters to nature article. 
-% In all the corridor 
-%cases (i.e. normal corridor, bottleneck and corridor with free space) 
-%we look at how the flow rate at the end of the corridor is 
-%affected by an increasing average velocity. In all the scenarios 
-%we look at mean velocities from 1.5 to 5 with steps of 0.5. The 
+%TODO: We should make runs with the desired velcity. This is what they compare with in the letters to nature article.
+% In all the corridor
+%cases (i.e. normal corridor, bottleneck and corridor with free space)
+%we look at how the flow rate at the end of the corridor is
+%affected by an increasing average velocity. In all the scenarios
+%we look at mean velocities from 1.5 to 5 with steps of 0.5. The
 %results are presented in figure \ref{fig:isfasterslower}.
 
 \begin{figure}[h]
@@ -127,41 +127,41 @@ the leaving time and therefore no faster is slower. The only thing we see is tha
 \label{fig:isfasterslower}
 \end{figure}
 
-%We did not observe the faster-is-slower effect in any of our 
-%scenarios. However the flow rate does not increase linearly 
-%with the average velocity so the interactions between agents 
+%We did not observe the faster-is-slower effect in any of our
+%scenarios. However the flow rate does not increase linearly
+%with the average velocity so the interactions between agents
 %and walls does have an effect.
 
 \subsubsection{Freezing by heating effect}
-According to \cite{self-org} the freezing by heating effect should 
+According to \cite{self-org} the freezing by heating effect should
 arise when the max desired velocity of the pedestrians is raised in situations where there is biderectional flow.
-We however does not experience this in any of our simulations of the corridor. 
-We tried to raise the max velocity, see figure \ref{fig:freezingbyheating1} and figure 
-\ref{fig:freezingbyheating05}, but instead of observing the freezing 
-by heating effect, we actually saw that the pedestrians got through the corridor 
-more easily, and that the density in the corridor was lower when the 
+We however does not experience this in any of our simulations of the corridor.
+We tried to raise the max velocity, see figure \ref{fig:freezingbyheating1} and figure
+\ref{fig:freezingbyheating05}, but instead of observing the freezing
+by heating effect, we actually saw that the pedestrians got through the corridor
+more easily, and that the density in the corridor was lower when the
 max velocity was high. So like the faster is slower effect again we see no sign of a high desired velocity decreasing/stopping
- the movement of the pedestrians. 
+ the movement of the pedestrians.
 
-%We think that there are more explations to this 
+%We think that there are more explations to this
 %result. For the first the pedestrian $\alpha$'s force toward the target
-%is higher when $\alpha$'s velocity gets higher, and therefore he more 
-%easely pushes his way through the crowd. For the second there are no 
-%friction between the pedestrians to slow $\alpha$ speed down, besides 
+%is higher when $\alpha$'s velocity gets higher, and therefore he more
+%easely pushes his way through the crowd. For the second there are no
+%friction between the pedestrians to slow $\alpha$ speed down, besides
 %the social sphere.
 
 \subsubsection{Lane formation}
-Lane formation was expected to happen in the case of bidirectional 
+Lane formation was expected to happen in the case of bidirectional
 flow in corridors. In our main article you see the following statement:
 
 \begin{quote}
-If pedestrians crowds moving in opposite directions meet each other, 
-they form small \emph{channels} in the beginning, but these channels 
+If pedestrians crowds moving in opposite directions meet each other,
+they form small \emph{channels} in the beginning, but these channels
 later merge to produce wide lanes
 \end{quote}
 
-Since we have three different corridor cases we have 
-looked for lane formation in all of them. The results are presented in 
+Since we have three different corridor cases we have
+looked for lane formation in all of them. The results are presented in
 figure \ref{fig:laneformation}
 
 \begin{figure}[h]
@@ -176,7 +176,7 @@ figure \ref{fig:laneformation}
 Lane formation is observed in every case.
 
 \subsubsection{The Oscillatory flow}
-The oscillatory flow is expected to arise in the case of bidirectional 
+The oscillatory flow is expected to arise in the case of bidirectional
 flow through a bottleneck. The results are presented in figure
 \ref{fig:oscillitoryflow}.
 
@@ -188,20 +188,20 @@ flow through a bottleneck. The results are presented in figure
 \label{fig:oscillitoryflow}
 \end{figure}
 
-When looking at the simulation while it is running it is not 
-immediately clear that the oscillatory flow occurs. Clogging 
-appears in both ends of the bottleneck and people are sometimes 
-squeezed through the bottleneck. The graph presented in 
-\ref{fig:oscillitoryflow} does indicate that the oscillatory 
+When looking at the simulation while it is running it is not
+immediately clear that the oscillatory flow occurs. Clogging
+appears in both ends of the bottleneck and people are sometimes
+squeezed through the bottleneck. The graph presented in
+\ref{fig:oscillitoryflow} does indicate that the oscillatory
 flow occurs to some extent.
 
 % \subsection{The square room scenario}
-% In this scenario we simulate pedestrians leaving a square room of 10 m by 
-% 10 m with a single $80cm$ wide door. 100 pedestrians are positioned randomly 
-% throughout the room. The second the simulation start all pedestrians head 
-% for the exit. The parameters for this simulation are as in 
+% In this scenario we simulate pedestrians leaving a square room of 10 m by
+% 10 m with a single $80cm$ wide door. 100 pedestrians are positioned randomly
+% throughout the room. The second the simulation start all pedestrians head
+% for the exit. The parameters for this simulation are as in
 % \ref{tbl:parameter-settings}
-% 
+%
 % First the claim of the "faster-is-slower" effect is tested.
 % \begin{quote}
 % Even counterintuitive
@@ -215,54 +215,54 @@ flow occurs to some extent.
 % \caption{Fast is not slow}
 % \label{FastIsSlow}
 % \end{figure}
-% 
-% The larger the nervousness the faster is the evacuation. We have increased 
-% the max-velocity factor sow much that people eventually move through the walls. 
-% This start occurring around max-velocity-factor = 2.5, and measurements beyond 
+%
+% The larger the nervousness the faster is the evacuation. We have increased
+% the max-velocity factor sow much that people eventually move through the walls.
+% This start occurring around max-velocity-factor = 2.5, and measurements beyond
 % this point are neglected.
-% 
-% Pedestrian flow rate is measure in the door opening, and the density of pedestrians 
-% in a 2 m by 2 m area directly in front of the door is measured. We also measure 
+%
+% Pedestrian flow rate is measure in the door opening, and the density of pedestrians
+% in a 2 m by 2 m area directly in front of the door is measured. We also measure
 % the time it takes for all pedestrians to leave the room.
-% 
-% The parameters for this simulation are the ones shown in 
+%
+% The parameters for this simulation are the ones shown in
 % \ref{tbl:parameter-settings}
-% 
+%
 % % TODO: Add parameters that are varied.
-% 
-% 
+%
+%
 % \subsection{The corridor scenario}
-% In this scenario we simulate pedestrians walking in both directions along a 20 
-% m long and six metres wide corridor. The pedestrians are divided into two 
-% groups, starting in opposite ends of the corridor and moving towards each 
-% other. The targets the pedestrians move towards are set 500 metres to each 
-% side, to make pedestrians walk in almost a straight line instead of converging 
-% towards the middle of the corridor. Flow rate is measured in the middle of the 
-% corridor, as is density. We start out with 100 pedestrians, adding a 
-% continuous inflow of three pedestrians per second, to simulate people arriving 
-% from outside the simulated area. Both the initial placement and the inflow of 
-% pedestrians are distributed randomly (i.e. approximately evenly) between the 
+% In this scenario we simulate pedestrians walking in both directions along a 20
+% m long and six metres wide corridor. The pedestrians are divided into two
+% groups, starting in opposite ends of the corridor and moving towards each
+% other. The targets the pedestrians move towards are set 500 metres to each
+% side, to make pedestrians walk in almost a straight line instead of converging
+% towards the middle of the corridor. Flow rate is measured in the middle of the
+% corridor, as is density. We start out with 100 pedestrians, adding a
+% continuous inflow of three pedestrians per second, to simulate people arriving
+% from outside the simulated area. Both the initial placement and the inflow of
+% pedestrians are distributed randomly (i.e. approximately evenly) between the
 % two ends of the corridor.
-% 
+%
 % We expect to see lane formations through out our simulations
 % and the freezing by heating effect when we start raising the mean velocity
 % of the agents.
-% 
+%
 % \subsubsection{Intial conditions and relaxation time $1,0$ second}
-% 
+%
 % The parameters for this simulation are as in \ref{tbl:parameter-settings} with the exception of the pedestrians
 % \begin{itemize*}
 %     \item Number of pedestrians: $40$ starting, adding $3/s$.
 % \end{itemize*}
-% 
+%
 % When running the simulation we observe lane formations, and they almost clog up
 % in the corridor.
-% 
-% When we do a simulation with the max velocity factor set to $4.0$, instead 
-% of the normal $1.3$, the clogging that occurs in the beginning eases up, 
-% and the pedestrians relatively fast get out of the clogging and continuous 
+%
+% When we do a simulation with the max velocity factor set to $4.0$, instead
+% of the normal $1.3$, the clogging that occurs in the beginning eases up,
+% and the pedestrians relatively fast get out of the clogging and continuous
 % toward their target. In this simulation we also observe lane formations.
-% 
+%
 % \begin{figure}[h]
 % \centering
 % \subfloat[The figure show the density in corridor when the parameters are set as \cite{ABconstant} and \cite{self-org}.]{\includegraphics[scale=0.45]{Figures/dens_init_relax1.pdf}}
@@ -272,27 +272,27 @@ flow occurs to some extent.
 % the pedestrians more easely get through the crowd.}
 % \label{fig:freezingbyheating1}
 % \end{figure}
-% 
+%
 % \subsubsection{Intial conditions and relaxation time $0,5$ second}
 % \cite{helbing00} set the relaxation time to $0,5$. As the first corridor simulations we set the parameters as \cite{ABconstant}
 % and then change the relaxation time to $0,5$ as \cite{helbing00}. After the simulation with the initial conditions, we raise the
 % max desired velocity to see if we can replicate the freezing by heating effect.
-% 
+%
 % The initial simulation has the values from \ref{tbl:parameter-settings} with the exceptions:
-% 
+%
 % \begin{itemize*}
 %     \item Relaxation time: $0,5 s$.
 %     \item Number of pedestrians: $40$ starting, adding $3/s$.
 % \end{itemize*}
-% 
+%
 % The next simulation we keep the new relaxation time, but changes the max velocity factor set to $4.0$
-% 
-% 
+%
+%
 % When comparing the simulations we do not see the freezing by heating effect.
-% Instead we see that the pedestrians more easely escape the clogging, and the 
-% flow in each directionsgets more steady. In both simulations we observed lane 
+% Instead we see that the pedestrians more easely escape the clogging, and the
+% flow in each directionsgets more steady. In both simulations we observed lane
 % formation.
-% 
+%
 % \begin{figure}[h]
 % \centering
 % \subfloat[The figure show the density in corridor when the parameters are set as \cite{ABconstant} and \cite{helbing00}.]{\includegraphics[scale=0.45]{Figures/dens_init_relax05.pdf}}
@@ -303,18 +303,18 @@ flow occurs to some extent.
 % respectively $1,0$ and $0,5$.}
 % \label{fig:freezingbyheating05}
 % \end{figure}
-% 
+%
 % \subsubsection{Comparison between the relaxation time $1,0$ second and $0,5$ second}
-% When simulating the corridor with the initial conditions and changing 
-% the relaxation time from $1,0 s$ to $0,5 s$, the pedestrians do not get 
-% stuck as easely when the relaxtion time is $0,5 s$ as they do when the 
-% relaxation time is $1,0 s$. This can be seen in figure 
-% \ref{fig:comparison_of_timestep}, that in (a), the density get high faster, 
-% while in (b) the density does not increase as fast as (a). When the 
-% relaxation time is $0,5 s$, the pedestrians reacts faster, in the sense 
-% that they speed up faster, after collisions with pedestrians walking in 
+% When simulating the corridor with the initial conditions and changing
+% the relaxation time from $1,0 s$ to $0,5 s$, the pedestrians do not get
+% stuck as easely when the relaxtion time is $0,5 s$ as they do when the
+% relaxation time is $1,0 s$. This can be seen in figure
+% \ref{fig:comparison_of_timestep}, that in (a), the density get high faster,
+% while in (b) the density does not increase as fast as (a). When the
+% relaxation time is $0,5 s$, the pedestrians reacts faster, in the sense
+% that they speed up faster, after collisions with pedestrians walking in
 % the other direction.
-% 
+%
 % \begin{figure}[h]
 % \centering
 % \subfloat[The figure show the density in corridor when the relaxation time is set to $1,0 s$]{\includegraphics[scale=0.45]{Figures/dens_init_relax1.pdf}}
@@ -323,51 +323,51 @@ flow occurs to some extent.
 % It is seen the the density is more steady when the relaxtion time is $0,5 s$ instead of $1,0 s$}
 % \label{fig:comparison_of_timestep}
 % \end{figure}
-% 
-% A possible explanation of why the density is more steady through out 
-% the simulation when the relaxation time is $0,5 s$, is that the 
-% pedestrians reacts faster to changes of their velocity. Thus when they 
-% bump into each other, they speed up faster, and therefore avoid 
+%
+% A possible explanation of why the density is more steady through out
+% the simulation when the relaxation time is $0,5 s$, is that the
+% pedestrians reacts faster to changes of their velocity. Thus when they
+% bump into each other, they speed up faster, and therefore avoid
 % clogging up before more get in their path.
-% 
+%
 % \subsubsection{Freezing by heating effect}
-% According to \cite{self-org} the freezing by heating effect should 
+% According to \cite{self-org} the freezing by heating effect should
 % arise when the max desired velocity of the pedestrians was raised.
-% That is that clogging should arise when raising the max velocity of 
-% the pedestrians, because more are ariving to the possible clogging area, 
-% and thus have more trouble getting through the crowd. We tried to raise 
-% the max velocity, see figure \ref{fig:freezingbyheating1} and figure 
-% \ref{fig:freezingbyheating05}, but instead of observing the freezing 
-% by heating effect, we saw that the pedestrians got through the corridor 
-% more easely, and that the density in the corridor was lower when the 
-% max velocity was high. We think that there are more explations to this 
+% That is that clogging should arise when raising the max velocity of
+% the pedestrians, because more are ariving to the possible clogging area,
+% and thus have more trouble getting through the crowd. We tried to raise
+% the max velocity, see figure \ref{fig:freezingbyheating1} and figure
+% \ref{fig:freezingbyheating05}, but instead of observing the freezing
+% by heating effect, we saw that the pedestrians got through the corridor
+% more easely, and that the density in the corridor was lower when the
+% max velocity was high. We think that there are more explations to this
 % result. For the first the pedestrian $\alpha$'s force toward the target
-% is higher when $\alpha$'s velocity gets higher, and therefore he more 
-% easely pushes his way through the crowd. For the second there are no 
-% friction between the pedestrians to slow $\alpha$ speed down, besides 
+% is higher when $\alpha$'s velocity gets higher, and therefore he more
+% easely pushes his way through the crowd. For the second there are no
+% friction between the pedestrians to slow $\alpha$ speed down, besides
 % the social sphere.
-% 
+%
 % \subsection{The bottleneck}
-% In this scenario we wanted to the the oscillitory flows that is reported 
-% in \cite{self-org} to happen when you have a bidirectional flaw through a 
+% In this scenario we wanted to the the oscillitory flows that is reported
+% in \cite{self-org} to happen when you have a bidirectional flaw through a
 % bottleneck.
-% 
+%
 % \subsubsection{The Oscillitory flow}
-% 
+%
 % \begin{figure}[h]
 % \centering
 % {\includegraphics[scale=0.5]{Figures/bottleneck-flowrate-2.pdf}}
 % \caption{A screen shot of the bottleneck simulation.}
 % \label{fig:oscillitoryflow}
 % \end{figure}
-% 
+%
 % \subsection{The corridor with open space}
-% In this scenario we wanted to reproduce the results that people start to 
-% clock up in a corridor if there is a sudden area that allow pedestrians to try 
-% and overtake each other. To see if the flow rate is affected by the pedestrians 
-% who try to overtake each other we compare the flow rate with the wide space with 
+% In this scenario we wanted to reproduce the results that people start to
+% clock up in a corridor if there is a sudden area that allow pedestrians to try
+% and overtake each other. To see if the flow rate is affected by the pedestrians
+% who try to overtake each other we compare the flow rate with the wide space with
 % the flow rate from a normal corridor scenario.
-% 
+%
 % \begin{figure}[h]
 % \centering
 % \subfloat[A graph of the mean velocity of the pedestrians in normal corridor]{\includegraphics[scale=0.45]{Figures/normalcorridor-velocity.pdf}}
@@ -377,5 +377,5 @@ flow occurs to some extent.
 % \caption{There is a lowering of the average velocity of the pedestrians due to the bottleneck. We see that there is no consistent lowering of the flowrate due to the bottleneck. What we see is that the flowrate is varying more over time.}
 % \label{fig:effect-of-widespace}
 % \end{figure}
-% 
+%
 % % TODO: Add parameters that are varied.
