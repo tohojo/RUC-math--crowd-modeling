@@ -148,7 +148,7 @@ class Plots:
     def _flowrate_plot(self):
         # Convert flowrate graph into a moving average
         average_count = int(round(constants.flowrate_moving_avg / constants.plot_sample_frequency))
-        fig = self._create_plot("Flow rate (%.1f second average)" % constants.flowrate_moving_avg, "t", "pedestrians/second")
+        fig = self._create_plot("Flow rate (%.1f second average)" % constants.flowrate_moving_avg, "t", "pedestrians/second/metre")
         for i in xrange(len(self.parameters["flowrate_lines"])):
             rates = [x[i] for x in self.flowrates]
             flowrates = []

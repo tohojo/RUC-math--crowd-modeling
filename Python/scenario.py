@@ -5,7 +5,7 @@ from drawing import Canvas as image_canvas
 from drawing_tikz import Canvas as tikz_canvas
 from plotting import Plots
 
-import pprint, os, random
+import pprint, os, random, math
 from datetime import datetime
 from time import time
 import numpy as np
@@ -156,8 +156,10 @@ class Scenario:
 
         flowrates = []
         for i in xrange(len(self.parameters["flowrate_lines"])):
+            (x1,y1,x2,y2) = self.parameters["flowrate_lines"][i][:4]
+            flow_length = math.sqrt(x1*x2+y1*y2)
             flow_count = optimised.flow_count(i)
-            flowrate = flow_count/constants.plot_sample_frequency
+            flowrate = flow_count/constants.plot_sample_frequency/flow_length
             flowrates.append(flowrate)
 
         density = density_c / density_area
