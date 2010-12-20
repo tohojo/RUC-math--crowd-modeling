@@ -340,10 +340,10 @@ figure~\ref{subfig:interaction-relation}. The force increases exponentially
 the closer $\alpha$ gets to $\beta$. This means that the force will hardly be
 noticeable for pedestrians that are far away from each other, but is strong
 enough when they are close to each other to prevent them from colliding,
-without adding any physical interaction forces. The threshold for when the
-force becomes large enough to have an impact on the movement of $\alpha$ (the
-range of the force) depends on the parameter $B$. The strength of the force
-depends on the parameter $A$.
+without adding any physical interaction forces. The parameter $B$ determines 
+how fast the force decreases with respect to the distance between the 
+pedestrians, and with a big value of $B$ the force decrease slowly. The 
+strength of the force depends on the parameter $A$.
 
 \begin{table}
     \centering
@@ -366,8 +366,9 @@ depends on the parameter $A$.
 
 \subsection{Repulsion from the walls}
 \label{sec:wall-repulsion}
-The \emph{repulsive force} from the walls is the force that prevents
-pedestrians form walking into, or even through, walls in the simulation. As
+The \emph{repulsive force} from the walls is the force that measures the 
+pedestrian's desire to avoid the wall, and prevents
+pedestrians from walking into, or even through, walls in the simulation. As
 with the interaction force between pedestrians, the repulsive force from the
 walls functions without taking into account the physical forces between walls
 and pedestrians.
@@ -460,9 +461,9 @@ towards one as the distance decreases. This means that $0 < |f_{\alpha
 the distance between the pedestrian and the wall decreases. Similar to the
 interaction force between pedestrians, this means the repulsion from the walls
 is negligeble when the distance is large, but strong enough to prevent
-pedestrians from walking into or through walls even when no physical forces
-are present. The model parameter, $U$, determines exactly how strong this
-repulsive force is.
+pedestrians from walking into or through walls even when no physical forces 
+between them are present. The model parameter, $U$, determines exactly 
+how strong this repulsive force is.
 
 The parameters for the wall repulsion is summarised in
 table~\ref{tbl:wall-repulsion}.
@@ -487,13 +488,12 @@ table~\ref{tbl:wall-repulsion}.
 \subsection{Summary}
 As we have seen, the model consists of three main parts: the desired movement
 force, the interaction force between agents and the repulsive force from
-walls. The desired movement force represents the pedestrians desire to move at
-a certain speed, given as a model parameter. The force accelerates the
-pedestrian to this speed, even allowing the pedestrian to exceed this speed to
-catch up to lost time in the event of a slowdown. The interaction force
+walls. The desired movement force represents the pedestrians desire to move with
+a certain velocity. The force accelerates the
+pedestrian to this velocity. The interaction force
 prevents pedestrians from walking into each other. It is a repulsive force
-between pedestrians that decreases exponentially with the distance to each
-other. Model parameters determines the magnitude and range of the force.
+between pedestrians that decreases exponentially with the distance between them. 
+Model parameters determines the magnitude and range of the force.
 Finally, the repulsive force from the walls prevents pedestrians from bumping
 into and walking through walls. This force, like the interaction force,
 decreases exponentially with distance, and its magnitude is determined by a
@@ -505,7 +505,7 @@ table~\ref{tbl:model-summary}.
 Our review of the model has revealed various areas that we need to address in
 order to create practical numerical simulations. We have already filled out
 some gaps by adding details from articles other than the original, but the
-model as we have presented it in this article is still quite abstract. In the
+model as we have presented in this article is still quite abstract. In the
 following section, we outline the parts missing to turn the model into a
 simulation, and how we have solved these problems.
 
