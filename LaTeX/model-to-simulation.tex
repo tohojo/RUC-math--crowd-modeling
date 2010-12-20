@@ -20,7 +20,6 @@ ambiguities that become apparent when determining which points to use in the
 calculation of the repulsion from the walls. These problems are discussed in 
 the following sections.
 
-
 \subsection{Approximating continuous movement}
 \label{sec:continuous-movement}
 The model can be viewed as representing $4n$ non-linear coupled differential 
@@ -182,22 +181,41 @@ vary between the pedestrians, but are fixed for the whole simulation. They are:
 
 \begin{itemize}
     \item \textbf{Time step size:} We have experimented with various time step 
-        sizes, and have found that with a fixed value of $0,01$ seconds, we 
+        sizes, and have found that with a fixed value of $0.01$ seconds, we 
         get reasonable results from our simulation.
 
-    \item \textbf{$A$, $B$:} We set $A=3,0$ and $B=0,2$, taken from  
+    \item \textbf{$A$, $B$:} We set $A=3.0$ and $B=0.2$, taken from  
         \cite{ABconstant}.
         % TODO: Update with actual values
 
-    \item \textbf{$U$:} In \cite{social-force} they set $U$ to be $10,0 m^2 s^{-2}$.
+    \item \textbf{$U$:} In \cite{social-force} they set $U$ to be $10.0 m^2 s^{-2}$.
 	Since this gave a bad result, meaning the force from the wall was too high
 	when simulating, we experimentedg with different values, and found tha
-	a value of $U=2,0 m^2 s^{-2}$ gives reasonable results.
+	a value of $U=2.0 m^2 s^{-2}$ gives reasonable results.
  
  
-        \item \textbf{$\lambda$:} We set $\lambda=0,1$, from 
+        \item \textbf{$\lambda$:} We set $\lambda=0.1$, from 
             \cite{ABconstant}.
 \end{itemize}
+
+When varying the constants and parameters in the simulation we have 
+decided not to make a systemmatic varying of all the parameters. We 
+have choosen no to do so because this would require one of two things. 
+Either we would have to inspect all the simulations personally to make 
+sure that the pedestrians dont go through each other and the wall, which 
+would be a very time comsuming and tedious task or we would have to 
+write a lot of code checkking for such errors and discarding the 
+simulations with erros. However since there are a lot of things that 
+can go wrong in the simulations such code would non-trivial to 
+write and it would take a lot of time to do so. 
+
+Furthermore we have no objective measure for whether or 
+not a given simulation gives meaningfull results that reflect 
+what one would expect to see in nature. Our only guidance in 
+this regard is our intuition. Therefore we have decided to start 
+the constant and paramaters off as in the \cite{self-org} and 
+\cite{ABconstant} and do the varying manually to find the values 
+that make the simulations look realistic.
 
 \subsection{Finding the nearest point on a wall}
 \label{sec:repulsion-points}
