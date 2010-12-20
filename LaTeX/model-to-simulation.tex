@@ -22,6 +22,7 @@ the following sections.
 
 
 \subsection{Approximating continuous movement}
+\label{sec:continuous-movement}
 The model can be viewed as representing $4n$ non-linear coupled differential 
 equations, where $n$ is the number of pedestrians. These differential 
 equations describe the positions and speed of movement of the pedestrians in 
@@ -35,8 +36,6 @@ truncated Taylor expansion \cite{MD}:
 \begin{equation}
     p(t+\Delta t)=p(t)+v(t)\Delta t + \frac{1}{2}f(t)\Delta t^2
 \end{equation}     
-
-% TODO: Add equation for velocity
 
 Here $p$ is the position, $v$ is the velocity, $f$ is the force and $\Delta t$ 
 is the time step. Similar we have the velocity given as:

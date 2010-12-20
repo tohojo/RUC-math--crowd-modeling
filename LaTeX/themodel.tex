@@ -42,19 +42,17 @@ figure~\ref{pedestrian-notation}.
         \includegraphics[width=0.45\textwidth]{Figures/ForceModel.pdf}
         \label{subfig:forces}
 }
-    \caption[Notation for pedestrians]{
-    \subref{subfig:notation} A pedestrian is described by a position
-    vector ($ \overrightarrow{p_{\alpha}} $), a velocity vector ($
-    \overrightarrow{V_{\alpha}} $), a vector pointing towards the target
-    ($\overrightarrow{e_{\alpha}}$)  and a radius ($ R_{\alpha} $). The 
-    velocity is determined from the forces action upon the pedestrian.\\
-    %
+    \caption[Notation for pedestrians]{Notation for pedestrians.  
+    \subref{subfig:notation} A pedestrian is described by a position vector 
+    ($\overrightarrow{p_{\alpha}}$), a velocity vector 
+    ($\overrightarrow{V_{\alpha}}$), a vector pointing towards the target 
+    ($\overrightarrow{e_{\alpha}}$)  and a radius ($R_{\alpha}$). The velocity 
+    is determined from the forces action upon the pedestrian.  
     \subref{subfig:forces} The forces acting on a pedestrian $\alpha$ is the
-    interaction force from pedestrian $\beta$
-    ($\overrightarrow{f_{\alpha\beta}}$), the repulsive force from wall 
-    $\gamma$
-    ($\overrightarrow{f_{\alpha \gamma}}$) and the force towards the target 
-    ($\overrightarrow{f^{d}_{\alpha}}$).}
+    interaction force from pedestrian $\beta$ 
+    ($\overrightarrow{f_{\alpha\beta}}$), the repulsive force from wall  
+    $\gamma$ ($\overrightarrow{f_{\alpha \gamma}}$) and the force towards the 
+    target ($\overrightarrow{f^{d}_{\alpha}}$).}
 
     \label{pedestrian-notation}
 \end{figure}
@@ -192,7 +190,6 @@ desired speed, since $\eta_\alpha(t)\rightarrow0$ for $\langle V_\alpha(t)
 \rangle \rightarrow V^{Id}_\alpha$ which makes $V^d_\alpha(t)$ be dominated by
 $V^{Id}_\alpha$.
 
-% more clear?
 If $\eta_\alpha(t)$ is considered as a function of the average velocity
 instead of the time, it is monotonously decreasing. This means that
 $V^d_\alpha(t)$ considered as a function of the average velocity is
@@ -327,9 +324,15 @@ figure~\ref{subfig:notation-interaction}.
         \label{subfig:interaction-relation}
     }
     \caption[Interaction between two
-    pedestrians.]{Figure \subref{subfig:notation-interaction} shows that the interaction between two pedestrians is governed by the distance between pedestrians $d_{\alpha \beta}$, the unit vector $\overrightarrow{u_{\beta \alpha}}$ pointing from $\beta$ to $\alpha$, and the angle $\theta$ between $\alpha$'s direction of movement and the vector pointing from $\alpha$ to
-    $\beta$.\\
-Figure \subref{subfig:interaction-relation} shows the repulsive force away from $\beta$ increases exponentially the closer $\alpha$ gets to $\beta$.} \label{fig:pedestrian-interaction}
+    pedestrians.]{Interaction between two pedestrians.  
+    \subref{subfig:notation-interaction} The interaction between two  
+    pedestrians is governed by the distance between pedestrians $d_{\alpha 
+    \beta}$, the unit vector $\overrightarrow{u_{\beta \alpha}}$ pointing from 
+    $\beta$ to $\alpha$, and the angle $\theta$ between $\alpha$'s direction 
+    of movement and the vector pointing from $\alpha$ to $\beta$.  
+    \subref{subfig:interaction-relation} the repulsive force away from $\beta$ 
+    increases exponentially the closer $\alpha$ gets to $\beta$.} 
+    \label{fig:pedestrian-interaction}
 \end{figure}
 
 The relation between the repulsive force from $\beta$ to $\alpha$ is seen in

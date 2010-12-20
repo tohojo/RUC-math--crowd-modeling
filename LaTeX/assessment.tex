@@ -2,60 +2,9 @@
 \label{sec:assessment}
 In this section we will present our assessment of social force models in 
 general, based on our work with the specific model and the results we have 
-obtained. To expand the scope of the discussion, we will first outline various 
-extensions to social force models that are presented elsewhere, which 
-introduce some features into the models that are lacking in the version we 
-have worked with. Based on our results and these extensions, we will then 
-outline the advantages and weaknesses of social force models in general, and 
-conclude by assessing the state of these types of models.
-
-\subsection{Extensions of the model}
-There are several features that might be added to the social force model we 
-have worked with, that will widen the scope of scenarios for which the model 
-is useful. As mentioned in section~\ref{sec:variants}, there already exists 
-models that incorporate some of these features. In this section we will 
-outline some of these features, go give a broader view of what is possible 
-with social force-based models.
-
-The features we will look at are \emph{path finding}, which will allow the 
-model to simulate more complicated scenarios, and \emph{communication between 
-pedestrians}, \emph{falling} and \emph{handling lowered visibility} that can 
-add types of pedestrian behaviour that is not handled well in our version of 
-the model.
-
-\begin{itemize}
-    \item \textbf{Path finding:} Our model does not incorporate path 
-        finding, i.e. pedestrians only move towards one fixed target. Adding 
-        path finding would allow the model to simulate people moving in more 
-        complex environments than what is possible with our model. There 
-        exists various models that incorporate this feature \cite{HiDAC}.
- 
-    \item \textbf{Communication between pedestrians:} Adding an ability for 
-        pedestrians to communicate would enable us to make simulations of 
-        cases where groups of pedestrians follow each other (such as a 
-        family), and it would enable pedestrians to cooperate in finding 
-        alternative routes. Models adding communication are also seen in the 
-        literature \cite{HiDAC}.
-
-    \item \textbf{Falling and injuries:} In situations of crowd panic, people 
-        are often injured. This is either due to the enormous pressure that 
-        can built up in a crowd or due to people falling and being trampled.  
-        Our does not take into account these possibilities, but other models 
-        do \cite{HiDAC}.
-
-    \item \textbf{Lowered visibility:} Our model assumes that pedestrians can 
-        identify their target and move towards it. This means that we cannot 
-        simulate scenarios where pedestrians do not know in which direction 
-        they want to move, e.g. a room filled with smoke. Adding alternative 
-        mechanisms for pedestrian movement, such as having pedestrians close 
-        to walls moving along them, would allow us to simulate pedestrian 
-        movement in cases of lowered visibility \cite{HelbingNew}.
-\end{itemize}
-
-These features allows the social force models to simulate more complex cases 
-than what is possible using our model, and since they have been incorporated 
-into other models, we will include them in our assessment of the advantages 
-and weaknesses  of social force models.
+obtained. Based on our results, we will outline the advantages and weaknesses 
+of social force models in general, and conclude by assessing the state of 
+these types of models.
 
 \subsection{Advantages of social force models}
 The main advantage of using social force models for modelling crowds is 
@@ -82,14 +31,21 @@ simulations this has been most apparent in the need to implement the
 calculation-intensive parts of the model in the C programming language, to be 
 able to achieve reasonable computation times.
 
+Another advantage of the simulations we get from the model, is that it is very 
+straight forward to inspect the results visually, because it is possible to 
+create drawings of the simulation steps. This means that comparing the 
+simulations to e.g. videos of real-life crowds, and spotting effects such as 
+the lane formation becomes trivial. It is also an advantage that simulations 
+can be run in real time, so making visual assessments of results is easy.
+
 Of course having a simple model that is practical to implement is of no use if 
 it does not give useful results. Empirical studies have shown that social 
 force models are able to show phenomena that correspond to real crowds, and as 
 such do provide meaningful results in some cases. However, while parameters 
 may not need to be calibrated for each situation, as the quote above says, 
 calibration is required, and doing so is non-trivial. This means that we have 
-not been able identify parameters for our simulations that work across all the 
-different scenarios.
+not been able to identify parameters for our simulations that work across all 
+the different scenarios.
 
 \subsection{Weaknesses of social force models}
 While social force models in some cases have been shown to give results that 
@@ -118,19 +74,17 @@ behaviour of crowds very well.
 
 Further compounding these uncertainties is the fact that the model is 
 formulated in a way that is counter-intuitive to the way human behaviour is 
-normally perceived. That human behaviour is reducible to simple 
-one-dimensional repulsive forces is counter to what we believe is reasonable 
-to expect. This means that if this is indeed the case, strong evidence is 
-needed to convince us, which is not currently provided.
+normally perceived. That human behaviour is reducible to simple repulsive 
+forces is counter to what we believe is reasonable to expect. This means that 
+if this is indeed the case, strong evidence is needed to convince us, which is 
+not currently provided.
 
 One of the reasons we are sceptic that these forces are able to completely 
 explain human behaviour, is that they pertain to behaviour of objects in a 
 physical world, but they do not obey the traditional physical laws of motion.  
 It is clear that the idea of using forces to describe movement has its origins 
 in physics, but excluding some of the properties of physical forces seems 
-arbitrary. This is especially the case when physical properties (such as 
-pressure) is measured using forces that are by definition not physical in 
-nature.
+arbitrary.
 
 Finally, the fact that different variants of social force models use 
 completely different parameters and formulations of the different forces, 
