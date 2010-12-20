@@ -41,11 +41,11 @@ can be run in real time, so making visual assessments of results is easy.
 Of course having a simple model that is practical to implement is of no use if 
 it does not give useful results. Empirical studies have shown that social 
 force models are able to show phenomena that correspond to real crowds, and as 
-such do provide meaningful results in some cases. However, while parameters 
-may not need to be calibrated for each situation, as the quote above says, 
-calibration is required, and doing so is non-trivial. This means that we have 
-not been able to identify parameters for our simulations that work across all 
-the different scenarios.
+such do provide meaningful results in some cases \cite{self-org,HelbingNew}. 
+However, while parameters may not need to be calibrated for each situation, as 
+the quote above says, calibration is required, and doing so is non-trivial. 
+This means that we have not been able to identify parameters for our 
+simulations that work across all the different scenarios.
 
 \subsection{Weaknesses of social force models}
 While social force models in some cases have been shown to give results that 
@@ -62,15 +62,29 @@ of some part of it. Especially precise results of simulations have been
 difficult to find, and as has been shown in 
 section~\ref{sec:model-to-simulation}, we have had to fill in several details 
 ourselves. As mentioned above, the difficulty in estimating parameters has 
-also provided a barrier in this respect.
+also provided a barrier in this respect. In addition, as mentioned in 
+section~\ref{sec:varying-constants}, it is difficult to assess whether a 
+simulation run provides meaningful results, so determining which parameter 
+values work further adds to the difficulty of evaluating the model.
 
 Setting aside the difficulties in finding detailed information about the 
 model, it is readily apparent that social force models are in a relatively 
-early state of development. This means that the amount of empirical data 
-available to assess the quality of the models' predictions is quite low. This 
-means that even if the social force models have shown some promising results, 
-it is impossible to say with confidence that they do indeed predict the actual 
+early state of development, so the amount of empirical data available to 
+assess the quality of the models' predictions is quite low. This means that 
+even if the social force models have shown some promising results, it is 
+impossible to say with confidence that they do indeed predict the actual 
 behaviour of crowds very well.
+
+Using the distinction between simulation-based models and theoretical models 
+laid out in \cite{imfufa-tekst}, it is clear that social force models belong 
+in the category of simulation-based models. That is, even though the notation 
+and concepts are borrowed from physics, there is no underlying theory behind 
+the formulation of social force models; nothing unrelated to the behaviour of 
+crowds has to be re-evaluated if social force models do not provide good 
+results. This means that in order to be able to instil confidence in the 
+model's ability to provide useful results, it has to be shown to conform to 
+empirical data with a high confidence. Something that these models have not 
+achieved, at least so far.
 
 Further compounding these uncertainties is the fact that the model is 
 formulated in a way that is counter-intuitive to the way human behaviour is 
@@ -86,7 +100,8 @@ It is clear that the idea of using forces to describe movement has its origins
 in physics, but excluding some of the properties of physical forces seems 
 arbitrary.
 
-Finally, the fact that different variants of social force models use 
+Finally, further cementing the social force models' status as simulation type 
+models, is the fact that different variants of social force models use 
 completely different parameters and formulations of the different forces, 
 sometimes even contradicting each other, makes it seem as though the models 
 are changed in arbitrary ways to accommodate empirical observations. This 
@@ -98,11 +113,11 @@ replicate already observed behaviour.
 Weighing the advantages and disadvantages of social force models against each 
 other, it is quite apparent that the models do not instil a strong sense of 
 confidence in their predictions. However, the crucial advantage that these 
-models have, is that they are able to do \emph{some} predictions of crowd 
-behaviour, that no other models have been able to. This means that while 
-social force models are far from perfect, they are in many ways the best 
-available way of evaluating e.g. a new building's suitability for efficient 
-crowd movement. And while the models may not be able to provide any underlying 
-mechanisms or reasons for crowd behaviour, in practice they may, given further 
-adjustments and experiments with real life observations, be a substantial 
-improvement over today's standards.
+models have, is that they are able to provide \emph{some} predictions of crowd 
+behaviour, that no other models (that we have seen) have been able to. This 
+means that while social force models are far from perfect, they are in many 
+ways the best available way of evaluating e.g. a new building's suitability 
+for efficient crowd movement. And while the models may not be able to provide 
+any underlying theory or reason for the crowd's behaviour, in practice they 
+may, given further adjustments and experiments with real life observations, be 
+a substantial improvement over today's standards.
