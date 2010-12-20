@@ -185,40 +185,47 @@ effect again we see no sign of a high desired velocity decreasing/stopping
 the movement of the pedestrians.
 
 \subsubsection{Lane formation}
-Lane formation was expected to happen in the case of bidirectional
-flow in corridors. In the article \ref{self-org} you read the following
-statement:
+Lane formation happens when the simulation contains bidirectional flow in 
+corridors. As stated in \ref{self-org}:
 
 \begin{quote}
-If pedestrians crowds moving in opposite directions meet each other,
-they form small \emph{channels} in the beginning, but these channels
-later merge to produce wide lanes
+    If pedestrians crowds moving in opposite directions meet each other, they 
+    form small \emph{channels} in the beginning, but these channels later 
+    merge to produce wide lanes
 \end{quote}
 
+An illustration of this phenomenon from \cite{lanes} can be seen in 
+figure~\ref{fig:lanes-literature}. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/flow_lanes_litterature.png}
+    \caption[Lane formation from \cite{lanes}]{Lane formation from 
+    \cite{lanes}. Pedestrians through a corridor form alternating lanes of 
+    pedestrians going in each direction.}
+    \label{fig:lanes-literature}
+\end{figure}
+
 Since we have three different corridor cases we have looked for lane
-formation in all of them. The results are presented in figurewhereas
-\ref{fig:laneformation}. Lane formation is observed in every case
-and they are of the nature described in \cite{self-org}.\\
+formation in all of them. As can be seen in figure~\ref{fig:laneformation}, 
+the lane formation occurs in all of the cases.
 
 \begin{figure}[h]
-\centering
-\subfloat[Bidirectional flow in corridor.]{\resizebox{8cm}{!}{\input{Figures/corridor-01012.tex}}}
-\subfloat[Bidirectional flow in bottleneck.]{\resizebox{8cm}{!}{\input{Figures/corridor-01899.tex}}}\\
-\subfloat[Bidirectional flow in corridor with an open space.]{\resizebox{8cm}{!}{\input{Figures/corridor-01999.tex}}}
-\caption{Lane formation in the different corridors.}
-\label{fig:laneformation}
+    \centering
+    \subfloat[Bidirectional flow in corridor.]{
+        \resizebox{0.45\textwidth}{!}{\input{Figures/corridor-01012.tex}}
+    }
+    \subfloat[Bidirectional flow in bottleneck.]{
+        \resizebox{0.45\textwidth}{!}{\input{Figures/corridor-01899.tex}}
+    }\\
+    \subfloat[Bidirectional flow in corridor with an open space.]{
+        \resizebox{0.45\textwidth}{!}{\input{Figures/corridor-01999.tex}}
+    }
+    \caption[Lane formation in corridor simulations]{Lane formation in 
+    corridor simulations. The colours indicate the direction the pedestrians 
+    are moving in. Lane formation can be seen in all three cases.}
+    \label{fig:laneformation}
 \end{figure}
-
-From the litterature we can see that they present figures of lane formations
- that looks like what we are seeing. They do how ever manily stick with the normal corridor. One of these results are shown in \cite{lanes}, which can be seen on figure \ref{fig:laneformation_litterature}
-\begin{figure}[h]
-\centering
-\subfloat[]{\includegraphics[width=8cm]{Figures/flow_lanes_litterature.png}}
-\caption{Lane formation through a corridor. Taken from \cite{lanes}.}
-\label{fig:laneformation_litterature}
-\end{figure}
- 
-
 
 \subsubsection{The Oscillatory flow}
 The oscillatory flow is expected to arise in the case of bidirectional
@@ -244,11 +251,13 @@ presentations of the oscillatory flow from \cite{oscil}. This describtions
 fits with what we ourself experince through simulations of the model too.
 
 \begin{figure}[h]
-\centering
-\subfloat[Screen shot of oscillatory flow from 
-\cite{oscil}]{\includegraphics[width=0.5\textwidth]{Figures/oscil_flow.png}}
-\caption{Here one can see that some black pedestrians that already have slip through and now the white pedestrians going in the other direction a passing through the bottleneck.}
-\label{fig:oscillitoryflow_litterature}
+    \centering
+    \includegraphics[width=0.5\textwidth]{Figures/oscil_flow.png}
+    \caption[Oscillatory flow from \cite{oscil}]{Here one can see that some 
+    black pedestrians that already have slip through and now the white 
+    pedestrians going in the other direction a passing through the 
+    bottleneck.}
+    \label{fig:oscillitoryflow_litterature}
 \end{figure}
 
 
