@@ -1,45 +1,56 @@
 \section{Results}
 \label{sec:results}
-In this section we describe the results obtained from our simulations.
-The section is devided into two parts. The first part presents the
-constants we use and the scenarios that we simulate and comment on
-the general success of our implementation of the model. We looked
-for unrealistic or unexpected behavior in our simulations. In the
-last part we present the results from our attempts to replicate
-the phenomena presented in \cite{self-org}.Possible remedies for
-any discrepancies between the expected and the actual results are
-discussed in section~\ref{sec:discussion}.
+In this section we describe the results obtained from our simulations.  The 
+section is divided into two parts. In the first part we present some general 
+results of our simulations, reviewing the general behaviour of our 
+simulations. In the second part we present the results of our attempts to 
+replicate the phenomena outlined in section~\ref{sec:article-results}. A 
+discussion of these results is presented in section~\ref{sec:discussion}.
 
 \subsection{The basics}
-This section is devided into three parts. First we present the
-scenarios that we have simulated, then we present the constants
-used in the simulations. We then move on to comment on the
-general behavior of the pedestrians in our simulations.
+In this section we describe some general results of our simulations and the 
+behaviour of our model. First we present the scenarios that we have simulated, 
+and the parameters used in the simulations. We then move on to comment on the 
+general behaviour of the pedestrians in our simulations and within which 
+limits the simulations give reasonable results.
 
 \subsubsection{Scenarios}
-We simulate four different scenarios, a rectangle shaped room with a
-door in the middle of one of the walls, and three different variations
-of corridors; a normal corridor, a corridor with a bottleneck in the
-middle and a corridor with a sudden open space. In the corridors we have
-the opportunity to make bidirectional flow. Screen shots from each
-scenario are presented in figure \ref{fig:fourcases}.
+As outlined in section~\ref{sec:scenario-presentation}, we will simulate two 
+different main scenarios, a square room and a corridor, with some variations 
+of the latter. Counting these variations, we simulate four different 
+scenarios: A rectangle shaped room with a door in the middle of one of the 
+walls, and a normal corridor, a corridor with a bottleneck in the middle and a 
+corridor with a sudden open space. In the corridors we do simulations of both 
+uni-- and birectional flow. Images of each of these scenarios are presented in 
+figure \ref{fig:fourcases}.
 
 \begin{figure}[h]
 \centering
-\subfloat[Square room.]{\resizebox{4cm}{!}{\input{Figures/squareroomps.tex}}}
-\subfloat[Bottleneck.]{\resizebox{7cm}{!}{\input{Figures/bottleneckps.tex}}}\\
-\subfloat[Corridor.]{\resizebox{7cm}{!}{\input{Figures/normalcorridorps.tex}}}
-\subfloat[Corridor with an opening.]{\resizebox{7cm}{!}{\input{Figures/widekinksps.tex}}}
-\caption{Screen shots of our four different scenarios.}
+\begin{minipage}{0.45\textwidth}
+    \centering
+    \subfloat[Square room.]{\resizebox{0.7\textwidth}{!}{\input{Figures/squareroomps.tex}}} 
+    \\
+    \subfloat[Corridor.]{\resizebox{\textwidth}{!}{\input{Figures/normalcorridorps.tex}}}
+\end{minipage}
+\begin{minipage}{0.45\textwidth}
+    \centering
+    \vspace{1.4cm}
+    \subfloat[Bottleneck.]{\resizebox{\textwidth}{!}{\input{Figures/bottleneckps.tex}}} 
+    \\
+    \vspace{6mm}
+    \subfloat[Corridor with an opening.]{\resizebox{\textwidth}{!}{\input{Figures/widekinksps.tex}}}
+\end{minipage}
+\caption{Images of the four scenarios we simulate.}
 \label{fig:fourcases}
 \end{figure}
 
-\subsubsection{Constants}
-In the simulation the parameters are set after \cite{ABconstant} and
-\cite{self-org}, to see if we can replicate their simulations and results.
-The general values we use are presented in table \ref{tbl:parameter-settings}.
-We will through the chapter mention when the values are changed for a
-specific case.
+\subsubsection{Parameters}
+As explained in section~\ref{sec:varying-constants}, we start out with the 
+model parameters outlined in section~\ref{sec:init-cond} and vary them when 
+necessary to get useful results from the simulations.  The values we use 
+initially are summarised in table \ref{tbl:parameter-settings}. Whenever a 
+parameter is changed from these values, we will point it out and explain why 
+the change has been necessary.
 
 \begin{table}[ht]
     \begin{center}
@@ -61,63 +72,43 @@ specific case.
             Relaxation time & $\tau$ & $1,0 s$\\
             \bottomrule
         \end{tabular}
-        \caption[Constants and initial conditions]{Constants and initial
-        conditions used for the simulations. $\pm$ indicates standard
-        deviation in Gaussian distributed values.}
+        \caption[Model parameters]{Model parameters used for the simulations.  
+        $\pm$ indicates standard deviation in Gaussian distributed values.}
         \label{tbl:parameter-settings}
     \end{center}
 \end{table}
 
-\subsubsection{General behavior}
-In this section we make some comments on the general behavior of
-the pedestrians in the simulations. We checked for intersections between
-the pedestrians, pedestrians crossing the walls and other bahavior that might
-be relevant for the further investigations. We used the parameters in table
-\ref{tbl:parameter-settings}.\\
+\subsubsection{General behaviour of the model}
+Our simulations have shown that it is indeed possible to create simulations 
+that upon visual inspection show reasonable behaviour of the pedestrians. That 
+is, pedestrians move through the scenarios without passing through walls or 
+each other, and we see clogging of exits as we expected. However, the 
+behaviour is very much dependent on the parameter values. This means that if, 
+for example, the mean initial desired velocity for the pedestrians is 
+increased, pedestrians will start walking through each other and the walls.  
+This can be remedied by also increasing the parameters controlling the 
+magnitude of the repulsive forces, which indicates that there is some 
+interdependence of the parameters. We have not done a detailed analysis of 
+this, though.
 
-\begin{figure}[h]
-\centering
-\subfloat[Pedestrians overlapping]{\includegraphics[scale=0.45]{Figures/pedestiranoverlapping.pdf}}
-\subfloat[Overlapping between pedestrians and a wall]{\includegraphics[scale=0.45]{Figures/walloverlapping.pdf}}
-\caption{The figure shows two simulations of the squared room. We see the overlapping that can occur between two pedestrians and between the walls and pedestrians. This kind of intersection is seen in most simulations, but they don't cross completely. The red dot on the figures are the desired locations}
-\label{fig:overlapping}
-\end{figure}
+For examples of simulations we've made films available along with the source 
+code for the simulations\footnote{See 
+\url{http://akira.ruc.dk/~tohojo/crowd-modelling}.}.
 
-In the figure \ref{fig:overlapping} the overlapping between pedestrians
-themselves and between walls and pedestrians. We see that in some situations
-it is possible for the pedestrians to intersect quite alot, almost reaching
-each others centers. The same thing is seen for the walls, where the wall
-can get quite close to the center of a pedestrians. But inspite of this
-we don't, with the chosen constants, see that they actually do cross. So
-even though it might look like they get sqiuzzed alot together, no completely
-unrealistic situations occur. Also we see no other strange scenarios, like
-people going in a wrong direction or anything like that. So the most basic
-requirements of the model are fulfilled.
-
-We do however see some unrealistic behavior when we change the values in
-\ref{tbl:parameter-settings} When looking at some of the different phenomenons,
-we need to change certain values like the mean velocity. But when we do
-this it starts to get unrealistic. When raising the desired velocity to
-a speed like $2.5m/s$, we start to see people crossing each other and going
-up to $3.5m/s$ we start to see people crossing the walls. This is a problem
-since these results makes no sence to compares with. Lowering the timestep
-with $1/10$ doesn't change this result at all. So to solve this problem we
-have in some cases raised the wallues of the wall constant $U$ and the
-pedestrains repulsion constant $A$. This makes the repulsions forces
-big enough for the pedestrians to act 'noraml'. We will throughout the
-chapter mention when we change the values and how much it is changed.
-
-\subsection{The phenomena}\label{subsec:ThePhenomena}
+\subsection{The results from the literature}\label{subsec:ThePhenomena}
 In this section we present the results we obtained from our attempts
-to replicate the phenomenons presented in \cite{self-org}. These phenomenos are described in section 
-\ref{phenomenon}. We will include figure from vairious articles to having something concrete to compare
-our results with. The reason we use different articles is because there is not one single article that contains figure of all the scenarios at once. 
+to replicate the results from the literature outlined in 
+section~\ref{sec:article-results}.  For each of the results we will go into a 
+bit more detail on the phenomenon we seek to replicate, and then present how 
+well our results match the expected. The results we replicate are presented in 
+detail in several different articles, but according to \cite{self-org}, they 
+should all be possible to see using the model we are simulating.
 
 \subsubsection{The faster-is-slower effect}
 The faster-is-slower was expected to be seen in the square room scenario.
 To see if this effects occurs we have looked at the leaving time as a function
 of the desired velocity of the pedestrains. We made simulations with a desired
-velocitygoing from $1.5m/s$ to $5m/s$ with steps of 0.1. The results are presented
+velocity going from $1.5m/s$ to $5m/s$ with steps of 0.1. The results are presented
 in figure \ref{fig:isfasterslower}. We see some fluctutation on the graph, but the
 overall picture of the leaving time decreasing when the desired velocity goes up is
 clear. So there no sign of an increase of the leaving time and therefore no faster
@@ -126,19 +117,19 @@ that if the pedestrians moves twice as fast, they don't clear the room in half t
 time.
 
 \begin{figure}[h]
-\centering
-\subfloat[Attempt to see the faster-is-slower effect in the square 
-room.]{\includegraphics[scale=0.45]{Figures/fastIsSlowNot.pdf}}
-\subfloat[Attempt to see the faster-is-slower effect in the normal corridor 
-case.]{\includegraphics[scale=0.45]{Figures/corridor-flowrate-aggr-velocity_mean.pdf}}\\
-\subfloat[Attempt to see the faster-is-slower effect in the bottleneck 
-scenario.]{\includegraphics[scale=0.45]{Figures/bottleneck-flowrate-aggr-velocity_mean.pdf}}
-\subfloat[Attempt to see the faster-is-slower efffect in the corridor with a 
-wide 
-space.]{\includegraphics[scale=0.45]{Figures/Wide-kink-one-directional-flowrate-agg.pdf}}
-\caption{There is no evidence of the-faster-is slower effect, however it does 
-seem that we see a faster-is-only-slightly-faster effect.}
-\label{fig:isfasterslower}
+    \centering
+    \subfloat[Attempt to see the faster-is-slower effect in the square 
+    room.]{\includegraphics[scale=0.45]{Figures/fastIsSlowNot.pdf}}
+    \subfloat[Attempt to see the faster-is-slower effect in the normal corridor 
+    case.]{\includegraphics[scale=0.45]{Figures/corridor-flowrate-aggr-velocity_mean.pdf}}\\
+    \subfloat[Attempt to see the faster-is-slower effect in the bottleneck 
+    scenario.]{\includegraphics[scale=0.45]{Figures/bottleneck-flowrate-aggr-velocity_mean.pdf}}
+    \subfloat[Attempt to see the faster-is-slower efffect in the corridor with a 
+    wide 
+    space.]{\includegraphics[scale=0.45]{Figures/Wide-kink-one-directional-flowrate-agg.pdf}}
+    \caption{There is no evidence of the-faster-is slower effect, however it does 
+    seem that we see a faster-is-only-slightly-faster effect.}
+    \label{fig:isfasterslower}
 \end{figure}
 %TODO: We should make runs with the desired velcity.
 %This is what they compare with in the letters to nature article.
