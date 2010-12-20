@@ -25,23 +25,34 @@ uni-- and birectional flow. Images of each of these scenarios are presented in
 figure \ref{fig:fourcases}.
 
 \begin{figure}[h]
-\centering
-\begin{minipage}{0.45\textwidth}
     \centering
-    \subfloat[Square room.]{\resizebox{0.7\textwidth}{!}{\input{Figures/squareroomps.tex}}} 
-    \\
-    \subfloat[Corridor.]{\resizebox{\textwidth}{!}{\input{Figures/normalcorridorps.tex}}}
-\end{minipage}
-\begin{minipage}{0.45\textwidth}
-    \centering
-    \vspace{1.4cm}
-    \subfloat[Bottleneck.]{\resizebox{\textwidth}{!}{\input{Figures/bottleneckps.tex}}} 
-    \\
-    \vspace{6mm}
-    \subfloat[Corridor with an opening.]{\resizebox{\textwidth}{!}{\input{Figures/widekinksps.tex}}}
-\end{minipage}
-\caption{Images of the four scenarios we simulate.}
-\label{fig:fourcases}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \subfloat[Square room.]{
+        \resizebox{0.7\textwidth}{!}{\input{Figures/squareroomps.tex}}
+        \label{subfig:image-square-room}
+        } 
+        \\
+        \subfloat[Corridor.]{
+        \resizebox{\textwidth}{!}{\input{Figures/normalcorridorps.tex}}
+        \label{subfig:image-corridor}
+        }
+    \end{minipage}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \vspace{1.4cm}
+        \subfloat[Bottleneck.]{
+            \resizebox{\textwidth}{!}{\input{Figures/bottleneckps.tex}}
+            \label{subfig:image-bottleneck}
+        }\\
+        \vspace{6mm}
+        \subfloat[Corridor with an opening.]{
+            \resizebox{\textwidth}{!}{\input{Figures/widekinksps.tex}}
+            \label{subfig:image-widekinks}
+        }
+    \end{minipage}
+    \caption{Images of the four scenarios we simulate.}
+    \label{fig:fourcases}
 \end{figure}
 
 \subsubsection{Parameters}
@@ -114,7 +125,7 @@ clogging occurs at the doorway (figure~\ref{subfig:fast-slow-clogging}),
 leading to a longer time to clear the room for desired velocities above 
 $1,5m/s$ (figure~\ref{subfig:fast-slow-graph}).
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \subfloat[Clogging at the exit.]{
         \includegraphics[width=0.45\textwidth]{Figures/square_room_letters.png}
@@ -124,43 +135,30 @@ $1,5m/s$ (figure~\ref{subfig:fast-slow-graph}).
         \includegraphics[width=0.45\textwidth]{Figures/leaving_time.png}
         \label{subfig:fast-slow-graph}
     }
-    \caption{This is the reuslts for the leaving time as a function of the desired 
-    velocity. The results are made for a squared romm of $15m*15m$ and $200$ 
-    pedestrians leaving the room. It is very clear to see that they get the 
-    faster-is-slower effect.}
+    \caption[Faster-is-slower effect from \cite{helbing00}]{Faster-is-slower 
+    effect from \cite{helbing00}. \subref{subfig:fast-slow-clogging} Clogging 
+    occurs at doorways. \subref{subfig:fast-slow-graph} Fast desired 
+    velocities leads to slower emptying of the room.}
     \label{fig:LtNFasterIsSlower}
 \end{figure}
 
-The faster-is-slower was expected to be seen in the square room scenario.
-To see if this effects occurs we have looked at the leaving time as a function
-of the desired velocity of the pedestrains. We made simulations with a desired
-velocity going from $1.5m/s$ to $5m/s$ with steps of 0.1. The results are presented
-in figure \ref{fig:isfasterslower}. We see some fluctutation on the graph, but the
-overall picture of the leaving time decreasing when the desired velocity goes up is
-clear. So there no sign of an increase of the leaving time and therefore no faster
-is slower. The only thing we see is that the negative slope is decreasing, meaning
-that if the pedestrians moves twice as fast, they don't clear the room in half the
-time.
+In our simulations of the square room scenario we have clogging in the 
+doorways as expected (see figure~\ref{subfig:image-square-room}). We have 
+plotted the time to leave the room as a function of the initial desired 
+velocity with values from $0,5$ to $5,0$. As can be seen in 
+figure~\ref{fig:square-room-leaving}, we do not see the increasing leaving 
+time, although it is not a linear relationship between the velocity and 
+leaving time either. Looking at the results, we conclude that we  do not see 
+the faster-is-slower effect.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
-    \subfloat[Attempt to see the faster-is-slower effect in the square 
-    room.]{\includegraphics[scale=0.45]{Figures/fastIsSlowNot.pdf}}
-    \subfloat[Attempt to see the faster-is-slower effect in the normal corridor 
-    case.]{\includegraphics[scale=0.45]{Figures/corridor-flowrate-aggr-velocity_mean.pdf}}\\
-    \subfloat[Attempt to see the faster-is-slower effect in the bottleneck 
-    scenario.]{\includegraphics[scale=0.45]{Figures/bottleneck-flowrate-aggr-velocity_mean.pdf}}
-    \subfloat[Attempt to see the faster-is-slower efffect in the corridor with a 
-    wide 
-    space.]{\includegraphics[scale=0.45]{Figures/Wide-kink-one-directional-flowrate-agg.pdf}}
-    \caption{There is no evidence of the-faster-is slower effect, however it does 
-    seem that we see a faster-is-only-slightly-faster effect.}
-    \label{fig:isfasterslower}
+    \includegraphics[width=0.8\textwidth]{Figures/fastIsSlowNot.pdf}
+    \caption[Leaving time for the square room]{Leaving time for the square 
+    room. While there is not a linear relation between velocity and leaving 
+    time, we do not see the increase in leaving time we expected.}
+    \label{fig:square-room-leaving}
 \end{figure}
-%TODO: We should make runs with the desired velcity.
-%This is what they compare with in the letters to nature article.
-
-
 
 \subsubsection{Freezing by heating effect}
 According to \cite{self-org} the freezing by heating effect should
