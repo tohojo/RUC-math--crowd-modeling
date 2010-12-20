@@ -212,13 +212,13 @@ the lane formation occurs in all of the cases.
 
 \begin{figure}[h]
     \centering
-    \subfloat[Bidirectional flow in corridor.]{
+    \subfloat[Bidirectional flow in a corridor.]{
         \resizebox{0.45\textwidth}{!}{\input{Figures/corridor-01012.tex}}
     }
-    \subfloat[Bidirectional flow in bottleneck.]{
+    \subfloat[Bidirectional flow in a corridor with a bottleneck.]{
         \resizebox{0.45\textwidth}{!}{\input{Figures/corridor-01899.tex}}
     }\\
-    \subfloat[Bidirectional flow in corridor with an open space.]{
+    \subfloat[Bidirectional flow in a corridor with a widening.]{
         \resizebox{0.45\textwidth}{!}{\input{Figures/corridor-01999.tex}}
     }
     \caption[Lane formation in corridor simulations]{Lane formation in 
@@ -227,44 +227,46 @@ the lane formation occurs in all of the cases.
     \label{fig:laneformation}
 \end{figure}
 
-\subsubsection{The Oscillatory flow}
-The oscillatory flow is expected to arise in the case of bidirectional
-flow through a bottleneck. The results are presented in figure
-\ref{fig:oscillitoryflow}.\\
-
-When looking at the simulation while it is running it is not
-immediately clear that the oscillatory flow occurs. Clogging
-appears in both ends of the bottleneck and people are sometimes
-squeezed through the bottleneck. The graph presented in
-\ref{fig:oscillitoryflow} does indicate that the oscillatory
-flow occurs.
-
-In the article \cite{oscil}, they show a figure of the oscillatory flow. They 
-don't show any graph of the flow in different directions or anything like 
-that, but basicly just shows a screen shot giving some idea about the 
-phenomena along with a discribtion of the phenomena. They describe it as the 
-pressure building up from one side and the at some point a small group of 
-pedestrians slip through. When that happens the pressure on the other side 
-builds up and then at some time some pedestrians from that side slips through 
-and so on. Figure \ref{fig:oscillitoryflow_litterature} shows the 
-presentations of the oscillatory flow from \cite{oscil}. This describtions 
-fits with what we ourself experince through simulations of the model too.
+\subsubsection{Oscillating flows}
+Oscillating flows occur when clogging occurs at a bottleneck, and small groups 
+of pedestrians from each direction alternate in getting through the 
+bottleneck. The effect is described in \cite{oscil}, but it is not clear how 
+they measure it. Figure~\ref{fig:oscillitoryflow_litterature} shows the 
+illustration from the article that explains the effect.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.5\textwidth]{Figures/oscil_flow.png}
-    \caption[Oscillatory flow from \cite{oscil}]{Here one can see that some 
-    black pedestrians that already have slip through and now the white 
-    pedestrians going in the other direction a passing through the 
-    bottleneck.}
+    \includegraphics[width=0.4\textwidth]{Figures/oscil_flow.png}
+    \caption[Illustration of oscillating flow from \cite{oscil}]{Illustration 
+    of oscillating flow from \cite{oscil}. A small group of pedestrians 
+    slipping through the bottleneck passes through the bottleneck in one 
+    direction. Oscillations occur when pedestrians alternately pass through 
+    the bottleneck from each direction.}
     \label{fig:oscillitoryflow_litterature}
 \end{figure}
 
+When looking at the simulation while it is running it is not immediately clear 
+whether the oscillatory flow occurs. Clogging appears in both ends of the 
+bottleneck and people are sometimes squeezed through the bottleneck. To get a 
+better indication of whether or not oscillation occurs, we have graphed the 
+flow rate in each direction. This graph is seen in 
+figure~\ref{fig:oscillitoryflow}. The graph does not show a clear indication 
+of oscillating flows, however a possible source of error is that the flow rate 
+is measure at the ends of the corridor, which may dilute the effect as 
+pedestrians are passing through the crowd after having passed through the 
+bottleneck. However, in the way our simulation is implemented, it is not 
+possible to distinguish between pedestrians moving in different directions 
+when measuring the flow rate in the middle of the bottleneck.
 
-\subsection{Summery}
-We have been able to get a working simulation of the social force model 
-presented in \cite{self-org} with components taken from \cite{ABconstant}. 
-The most basic dynamics og the simulations seems to be running like as it 
-should and our simulations show lane formation in bidirectional flow. We also  
-see oscillatory flow at bottlenecks however freezin-by-heating 
-and faster-is-slower effect is not observed at all.
+In conclusion, we may be able to replicate the oscillating flows, but the 
+results are not completely clear.
+
+
+\subsection{Summary}
+We have seen that our simulation is able to show reasonable results of 
+pedestrians moving through our chosen scenarios. We have simulated four 
+different scenarios, and tried to replicate the results presented in the 
+literature. We have not been able to replicate either the faster-is-slower 
+effect or freezing by heating. Lane formation we do see, and it is unclear 
+whether oscillatory flows are seen, perhaps partly because our way of 
+measuring this is not very good.
