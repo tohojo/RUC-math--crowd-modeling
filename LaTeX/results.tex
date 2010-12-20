@@ -161,27 +161,28 @@ the faster-is-slower effect.
 \end{figure}
 
 \subsubsection{Freezing by heating effect}
-According to \cite{self-org} the freezing by heating effect should
-arise when the max desired velocity of the pedestrians is raised in
-situations where there is biderectional flow. We however does not
-experience this in any of our simulations of the corridor. We tried
-to raise the max velocity, see figure \ref{fig:freezingbyheating1} and
-figure \ref{fig:freezingbyheating05}, but instead of observing the
-freezing by heating effect, we actually saw that the pedestrians got
-through the corridor more easily, and that the density in the corridor
-was lower when the max velocity was high. So like the faster is slower
-effect again we see no sign of a high desired velocity decreasing/stopping
-the movement of the pedestrians.
-
-From the litteratture they show the freezing by heating by showing figures of a complete blocking of the pedestrians. An example of the can be seen on \cite{oscil}, which i shown on figure \ref{fig:freezing_by_heating_litterature}
+The freezing by heating effect occurs when pedestrians are moving in opposite 
+directions and they block each other when the velocity increases (see 
+section~\ref{sec:article-results}). The illustration of this effect as 
+presented in \cite{oscil} can be seen in 
+figure~\ref{fig:freezing_by_heating_litterature}.
 
 \begin{figure}[h]
-\centering
-\subfloat[]{\includegraphics[width=0.45\textwidth]{Figures/heatfreeze.png}}
-\caption{Here we can see the pedestrians blocking each other as a result of the freezing by heating. Taken from \cite{oscil}.}
-\label{fig:freezing_by_heating_litterature}
+    \centering
+    \subfloat[]{\includegraphics[width=0.45\textwidth]{Figures/heatfreeze.png}}
+    \caption[Freezing by heating effect from \cite{oscil}]{Freezing by heating 
+    effect from \cite{oscil}. Pedestrians block each other as a result of the 
+    freezing by heating.}
+    \label{fig:freezing_by_heating_litterature}
 \end{figure}
 
+During our simulations we have not been able to reproduce this effect at all.  
+Although we have seen clogging of corridors, it only occurs at low velocities, 
+and so does not increase with the velocity as we expected. Instead, when 
+pedestrians move faster, they are more likely to be able to pass each other 
+even in corridors with high densities. So like the faster is slower
+effect again we see no sign of a high desired velocity decreasing/stopping
+the movement of the pedestrians.
 
 \subsubsection{Lane formation}
 Lane formation was expected to happen in the case of bidirectional
