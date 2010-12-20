@@ -197,27 +197,27 @@ vary between the pedestrians, but are fixed for the whole simulation. They are:
 
 \subsubsection{Varying the parameters}
 \label{sec:varying-constants}
-A way of analysing the behaviour of the model would be to systematically vary 
-the different parameters to assess how this affects model behaviour and to 
+A way of analysing the behaviour of the model would be systematically varying 
+different parameters to assess how this affects the model behaviour and to 
 find out which parameter values makes the model break down. However, since we 
 have several parameters that could be varied (11 in total, not counting the 
 scenario geometry), it is impractical to do this manually. Doing it 
 automatically would require us to develop measures of simulation viability 
-that can be measured automatically; and since our assessment of which 
-simulations are useful very much rely on visual inspection (e.g. if actors 
-walk through walls a simulation is considered invalid), we would have to come 
+that can be measured automatically, and since our assessment of which 
+simulations are valid very much relies on visual inspection (e.g. if pedestrians 
+walk through walls then the simulation is considered invalid), we would have to come 
 up with an exhaustive set of tests that would tell us whether or not 
 simulations are valid. Our cursory testing of arbitrarily chosen parameter 
 values indicates that there are several ways in which simulations can be 
-invalid, so we have deemed it out of scope of this project to develop such 
-tests, and so we have chosen instead to abandon the attempt to do systematic 
+invalid, so we have deemed them out of scope of this project to develop such 
+tests, and we have chosen instead to abandon the attempt to do systematic 
 parameter variations.
 
 Instead, we have started running our simulations using the parameter values 
-outlined above, and then only vary parameters when these values do not work. 
-While this does not give us an exhaustive overview of the model behaviour, it 
-is sufficient to test whether or not we see the phenomena we are trying to 
-reproduce.
+outlined above, and then only vary parameters when the simulation does not 
+look realistic. While this does not give us an exhaustive overview of the model 
+behaviour, it is sufficient to test whether or not we see the phenomena we are 
+trying to reproduce.
 
 \subsection{Finding the nearest point on a wall}
 \label{sec:repulsion-points}
