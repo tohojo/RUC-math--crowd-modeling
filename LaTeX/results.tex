@@ -109,7 +109,9 @@ chapter mention when we change the values and how much it is changed.
 
 \subsection{The phenomena}\label{subsec:ThePhenomena}
 In this section we present the results we obtained from our attempts
-to replicate the the phenomena presented in \cite{self-org}.
+to replicate the phenomenons presented in \cite{self-org}. These phenomenos are described in section 
+\ref{phenomenon}. We will include figure from vairious articles to having something concrete to compare
+our results with. The reason we use different articles is because there is not one single article that contains figure of all the scenarios at once. 
 
 \subsubsection{The faster-is-slower effect}
 The faster-is-slower was expected to be seen in the square room scenario.
@@ -117,14 +119,11 @@ To see if this effects occurs we have looked at the leaving time as a function
 of the desired velocity of the pedestrains. We made simulations with a desired
 velocitygoing from $1.5m/s$ to $5m/s$ with steps of 0.1. The results are presented
 in figure \ref{fig:isfasterslower}. We see some fluctutation on the graph, but the
-overall pictureof the leaving time decreasing when the desired velocity goes up is
+overall picture of the leaving time decreasing when the desired velocity goes up is
 clear. So there no sign of an increase of the leaving time and therefore no faster
 is slower. The only thing we see is that the negative slope is decreasing, meaning
 that if the pedestrians moves twice as fast, they don't clear the room in half the
 time.
-
-%TODO: We should make runs with the desired velcity.
-%This is what they compare with in the letters to nature article.
 
 \begin{figure}[h]
 \centering
@@ -135,6 +134,18 @@ time.
 \caption{There is no evidence of the-faster-is slower effect, however it does seem that we see a faster-is-only-slightly-faster effect.}
 \label{fig:isfasterslower}
 \end{figure}
+%TODO: We should make runs with the desired velcity.
+%This is what they compare with in the letters to nature article.
+If we compare with the litterature they show a graph of the leaving time in \cite{helbing00}. This graph can be seen on figure \ref{fig:LtNFasterIsSlower}. Here it is clearly seen that the leaving time is going up when the desired velocity is going up. Quite the opposite result of what we are getting. It should be noted that the article these results are from, includes tangential forces between the pedestrians. Whereas we do only include the repulsion directly away form the pedstrians. In our main article \{self-org} though, they specific mention the tangential force as making a little to none difference in the results. This claim is quoted in section \ref{sec:social-forces}.
+\begin{figure}[h]
+\centering
+\subfloat[Square room from case from \cite{helbing00}.]{\includegraphics[scale=0.35]{Figures/square_room_letters.png}}
+\subfloat[Graph of the leaving time for the squared room as a function of max. desired velocity]{\includegraphics[scale=0.35]{Figures/leaving_time.png}}
+\caption{This is the reuslts for the leaving time as a function of the desired velocity. The results are made for a squared romm of $15m*15m$ and $200$ pedestrians leaving the room. It is very clear to see that they get the faster-is-slower effect.}
+\label{fig:LtNFasterIsSlower}
+\end{figure}
+
+
 
 \subsubsection{Freezing by heating effect}
 According to \cite{self-org} the freezing by heating effect should
@@ -149,6 +160,15 @@ was lower when the max velocity was high. So like the faster is slower
 effect again we see no sign of a high desired velocity decreasing/stopping
 the movement of the pedestrians.
 
+From the litteratture they show the freezing by heating by showing figures of a complete blocking of the pedestrians. An example of the can be seen on \cite{oscil}, which i shown on figure \ref{fig:freezing_by_heating_litterature}
+
+\centering
+\subfloat[]{\resizebox{8cm}{!}{\input{Figures/heatfreeze.png}}}
+\caption{Here we can see the pedestrians blocking each other as a result of the freezing by heating. Taken from \cite{oscil}.}
+\label{fig:freezing_by_heating_litterature}
+\end{figure}
+
+
 \subsubsection{Lane formation}
 Lane formation was expected to happen in the case of bidirectional
 flow in corridors. In the article \ref{self-org} you read the following
@@ -161,7 +181,7 @@ later merge to produce wide lanes
 \end{quote}
 
 Since we have three different corridor cases we have looked for lane
-formation in all of them. The results are presented in figure
+formation in all of them. The results are presented in figurewhereas
 \ref{fig:laneformation}. Lane formation is observed in every case
 and they are of the nature described in \cite{self-org}.\\
 
@@ -173,6 +193,17 @@ and they are of the nature described in \cite{self-org}.\\
 \caption{Lane formation in the different corridors.}
 \label{fig:laneformation}
 \end{figure}
+
+From the litterature we can see that they present figures of lane formations
+ that looks like what we are seeing. They do how ever manily stick with the normal corridor. One of these results are shown in \cite{lanes}, which can be seen on figure \ref{fig:laneformation_litterature}
+\begin{figure}[h]
+\centering
+\subfloat[]{\resizebox{8cm}{!}{\input{Figures/flow_lanes_litterature.png}}}
+\caption{Lane formation through a corridor. Taken from \cite{lanes}.}
+\label{fig:laneformation_litterature}
+\end{figure}
+ 
+
 
 \subsubsection{The Oscillatory flow}
 The oscillatory flow is expected to arise in the case of bidirectional
@@ -192,7 +223,16 @@ immediately clear that the oscillatory flow occurs. Clogging
 appears in both ends of the bottleneck and people are sometimes
 squeezed through the bottleneck. The graph presented in
 \ref{fig:oscillitoryflow} does indicate that the oscillatory
-flow occurs to some extent.
+flow occurs.
+
+In the article \cite{oscil}, they show a figure of the oscillatory flow. They don't show any graph of the flow in different directions or anything like that, but basicly just shows a screen shot giving some idea about the phenomena along with a discribtion of the phenomena. They describe it as the pressure building up from one side and the at some point a small group of pedestrians slip through. When that happens the pressure on the other side builds up and then at some time some pedestrians from that side slips through and so on. Figure \ref{fig:oscillitoryflow_litterature} shows the presentations of the oscillatory flow from \cite{oscil}. This describtions fits with what we ourself experince through simulations of the model too.
+\begin{figure}[h]
+\centering
+\subfloat[Sreen shot of oscillatory flow from \cite{oscil}]{\includegraphics[scale=0.45]{Figures/oscil_flow.png}}
+\caption{Here one can see that some black pedestrians that already have slip through and now the white pedestrians going in the other direction a passing through the bottleneck.}
+\label{fig:oscillitoryflow_litterature}
+\end{figure}
+
 
 \subsection{Summery}
 We have been able to get a working simulation of the social force model 
