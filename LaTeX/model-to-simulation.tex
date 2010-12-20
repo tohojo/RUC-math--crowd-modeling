@@ -78,8 +78,9 @@ methods.
 As seen in section~\ref{sec:the-model}, there are various parameters that must 
 be set in order to simulate the model. Apart from this, there are also various 
 initial conditions (such as the pedestrians' starting position) that must be 
-set. In this section, we outline these parameters and initial conditions, and 
-describe how we have obtained their values.
+set. In this section, we outline these parameters and initial conditions, 
+describe how we have obtained their values and how we plan to vary them 
+when we run the simulations.
 
 \subsubsection{A note on random numbers}
 Some of the initial conditions are set using random distributions, either 
@@ -198,24 +199,30 @@ vary between the pedestrians, but are fixed for the whole simulation. They are:
             \cite{ABconstant}.
 \end{itemize}
 
+\subsubsection{Varying the constants and parameters}\label{sec:varying-constants}
 When varying the constants and parameters in the simulation we have 
 decided not to make a systemmatic varying of all the parameters. We 
 have choosen no to do so because this would require one of two things. 
 Either we would have to inspect all the simulations personally to make 
-sure that the pedestrians dont go through each other and the wall, which 
+sure that the pedestrians don't go through each other or the wall, which 
 would be a very time comsuming and tedious task or we would have to 
-write a lot of code checkking for such errors and discarding the 
+write a lot of code checking for such errors and discarding the 
 simulations with erros. However since there are a lot of things that 
 can go wrong in the simulations such code would non-trivial to 
 write and it would take a lot of time to do so. 
 
 Furthermore we have no objective measure for whether or 
-not a given simulation gives meaningfull results that reflect 
+not a given simulation give meaningfull results that reflect 
 what one would expect to see in nature. Our only guidance in 
 this regard is our intuition. Therefore we have decided to start 
 the constant and paramaters off as in the \cite{self-org} and 
 \cite{ABconstant} and do the varying manually to find the values 
 that make the simulations look realistic.
+
+Also, the results that we wish to replicate are often given as 
+screen shots so we are not interesten in know what paramaters 
+that give the best laneformation or oscillatory flow, were 
+just interested in actually seeing the phenonema.
 
 \subsection{Finding the nearest point on a wall}
 \label{sec:repulsion-points}
