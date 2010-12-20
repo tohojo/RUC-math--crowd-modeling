@@ -62,7 +62,7 @@ the change has been necessary.
             Interaction strength & A & $3,0$ \\
             Interaction range & B & $0,2$ \\
             Anisotropic constant & $\lambda$ & $0,75$ \\
-            Wall repulsion strength & $U$ &  $2,0$ \\
+            Wall repulsion strength & $U$ &  $10,0$ \\
             \midrule
             \multicolumn{3}{c}{\textsf{Initial conditions}}\\
             Mean pedestrian radius & $R_\alpha$ & $0,3 \pm 0,05 m$\\
@@ -105,6 +105,32 @@ detail in several different articles, but according to \cite{self-org}, they
 should all be possible to see using the model we are simulating.
 
 \subsubsection{The faster-is-slower effect}
+As mentioned in section~\ref{sec:article-results}, the faster-is-slower effect 
+is seen when pedestrians leave a room. The effect is that faster desired 
+movement speeds yield a longer time to empty the room, contrary to what might 
+be expected. The results from \cite{helbing00} where this effect is described 
+can be seen in figure~\ref{fig:LtNFasterIsSlower}. Here it is apparent that 
+clogging occurs at the doorway (figure~\ref{subfig:fast-slow-clogging}), 
+leading to a longer time to clear the room for desired velocities above 
+$1,5m/s$ (figure~\ref{subfig:fast-slow-graph}).
+
+\begin{figure}[h]
+    \centering
+    \subfloat[Clogging at the exit.]{
+        \includegraphics[width=0.45\textwidth]{Figures/square_room_letters.png}
+        \label{subfig:fast-slow-clogging}
+    }
+    \subfloat[Leaving time versus desired velocity.]{
+        \includegraphics[width=0.45\textwidth]{Figures/leaving_time.png}
+        \label{subfig:fast-slow-graph}
+    }
+    \caption{This is the reuslts for the leaving time as a function of the desired 
+    velocity. The results are made for a squared romm of $15m*15m$ and $200$ 
+    pedestrians leaving the room. It is very clear to see that they get the 
+    faster-is-slower effect.}
+    \label{fig:LtNFasterIsSlower}
+\end{figure}
+
 The faster-is-slower was expected to be seen in the square room scenario.
 To see if this effects occurs we have looked at the leaving time as a function
 of the desired velocity of the pedestrains. We made simulations with a desired
@@ -133,28 +159,6 @@ time.
 \end{figure}
 %TODO: We should make runs with the desired velcity.
 %This is what they compare with in the letters to nature article.
-If we compare with the litterature they show a graph of the leaving time in 
-\cite{helbing00}. This graph can be seen on figure 
-\ref{fig:LtNFasterIsSlower}. Here it is clearly seen that the leaving time is 
-going up when the desired velocity is going up. Quite the opposite result of 
-what we are getting. It should be noted that the article these results are 
-from, includes tangential forces between the pedestrians. Whereas we do only 
-include the repulsion directly away form the pedstrians. In our main article 
-\cite{self-org} though, they specific mention the tangential force as making a 
-little to none difference in the results. This claim is quoted in section 
-\ref{sec:social-forces}.
-\begin{figure}[h]
-\centering
-\subfloat[Square room from case from 
-\cite{helbing00}.]{\includegraphics[width=0.45\textwidth]{Figures/square_room_letters.png}}
-\subfloat[Graph of the leaving time for the squared room as a function of max. 
-desired velocity]{\includegraphics[width=0.45\textwidth]{Figures/leaving_time.png}}
-\caption{This is the reuslts for the leaving time as a function of the desired 
-velocity. The results are made for a squared romm of $15m*15m$ and $200$ 
-pedestrians leaving the room. It is very clear to see that they get the 
-faster-is-slower effect.}
-\label{fig:LtNFasterIsSlower}
-\end{figure}
 
 
 
