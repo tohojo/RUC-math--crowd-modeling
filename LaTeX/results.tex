@@ -1,27 +1,27 @@
 \section{Results}
 \label{sec:results}
 In this section we describe the results obtained from our simulations.
-The section is devided into two parts. The first part presents the 
-constants we use and the scenarios that we simulate and comment on 
-the general success of our implementation of the model. We looked 
-for unrealistic or unexpected behavior in our simulations. In the 
-last part we present the results from our attempts to replicate 
-the phenomena presented in \cite{self-org}.Possible remedies for 
-any discrepancies between the expected and the actual results are 
+The section is devided into two parts. The first part presents the
+constants we use and the scenarios that we simulate and comment on
+the general success of our implementation of the model. We looked
+for unrealistic or unexpected behavior in our simulations. In the
+last part we present the results from our attempts to replicate
+the phenomena presented in \cite{self-org}.Possible remedies for
+any discrepancies between the expected and the actual results are
 discussed in section~\ref{sec:discussion}.
 
 \subsection{The basics}
-This section is devided into three parts. First we present the 
-scenarios that we have simulated, then we present the constants 
-used in the simulations. We then move on to comment on the 
+This section is devided into three parts. First we present the
+scenarios that we have simulated, then we present the constants
+used in the simulations. We then move on to comment on the
 general behavior of the pedestrians in our simulations.
 
 \subsubsection{Scenarios}
-We simulate four different scenarios, a rectangle shaped room with a 
-door in the middle of one of the walls, and three different variations 
-of corridors; a normal corridor, a corridor with a bottleneck in the 
-middle and a corridor with a sudden open space. In the corridors we have 
-the opportunity to make bidirectional flow. Screen shots from each 
+We simulate four different scenarios, a rectangle shaped room with a
+door in the middle of one of the walls, and three different variations
+of corridors; a normal corridor, a corridor with a bottleneck in the
+middle and a corridor with a sudden open space. In the corridors we have
+the opportunity to make bidirectional flow. Screen shots from each
 scenario are presented in figure \ref{fig:fourcases}.
 
 \begin{figure}[h]
@@ -35,8 +35,8 @@ scenario are presented in figure \ref{fig:fourcases}.
 \end{figure}
 
 \subsubsection{Constants}
-In the simulation the parameters are set after \cite{ABconstant} and 
-\cite{self-org}, to see if we can replicate their simulations and results. 
+In the simulation the parameters are set after \cite{ABconstant} and
+\cite{self-org}, to see if we can replicate their simulations and results.
 The general values we use are presented in table \ref{tbl:parameter-settings}.
 We will through the chapter mention when the values are changed for a
 specific case.
@@ -69,10 +69,10 @@ specific case.
 \end{table}
 
 \subsubsection{General behavior}
-In this section we make some comments on the general behavior of 
-the pedestrians in the simulations. We checked for intersections between 
-the pedestrians, pedestrians crossing the walls and other bahavior that might 
-be relevant for the further investigations. We used the parameters in table 
+In this section we make some comments on the general behavior of
+the pedestrians in the simulations. We checked for intersections between
+the pedestrians, pedestrians crossing the walls and other bahavior that might
+be relevant for the further investigations. We used the parameters in table
 \ref{tbl:parameter-settings}.\\
 
 \begin{figure}[h]
@@ -108,23 +108,23 @@ big enough for the pedestrians to act 'noraml'. We will throughout the
 chapter mention when we change the values and how much it is changed.
 
 \subsection{The phenomena}\label{subsec:ThePhenomena}
-In this section we present the results we obtained from our attempts 
+In this section we present the results we obtained from our attempts
 to replicate the the phenomena presented in \cite{self-org}.
 
 \subsubsection{The faster-is-slower effect}
 The faster-is-slower was expected to be seen in the square room scenario.
 To see if this effects occurs we have looked at the leaving time as a function
-of the desired velocity of the pedestrains. We made simulations with a desired 
-velocitygoing from $1.5m/s$ to $5m/s$ with steps of 0.1. The results are presented 
-in figure \ref{fig:isfasterslower}. We see some fluctutation on the graph, but the 
-overall pictureof the leaving time decreasing when the desired velocity goes up is 
-clear. So there no sign of an increase of the leaving time and therefore no faster 
-is slower. The only thing we see is that the negative slope is decreasing, meaning 
-that if the pedestrians moves twice as fast, they don't clear the room in half the 
+of the desired velocity of the pedestrains. We made simulations with a desired
+velocitygoing from $1.5m/s$ to $5m/s$ with steps of 0.1. The results are presented
+in figure \ref{fig:isfasterslower}. We see some fluctutation on the graph, but the
+overall pictureof the leaving time decreasing when the desired velocity goes up is
+clear. So there no sign of an increase of the leaving time and therefore no faster
+is slower. The only thing we see is that the negative slope is decreasing, meaning
+that if the pedestrians moves twice as fast, they don't clear the room in half the
 time.
 
-%TODO: We should make runs with the desired velcity. 
-%This is what they compare with in the letters to nature article. 
+%TODO: We should make runs with the desired velcity.
+%This is what they compare with in the letters to nature article.
 
 \begin{figure}[h]
 \centering
@@ -137,21 +137,21 @@ time.
 \end{figure}
 
 \subsubsection{Freezing by heating effect}
-According to \cite{self-org} the freezing by heating effect should 
-arise when the max desired velocity of the pedestrians is raised in 
-situations where there is biderectional flow. We however does not 
-experience this in any of our simulations of the corridor. We tried 
-to raise the max velocity, see figure \ref{fig:freezingbyheating1} and 
-figure \ref{fig:freezingbyheating05}, but instead of observing the 
-freezing by heating effect, we actually saw that the pedestrians got 
-through the corridor more easily, and that the density in the corridor 
-was lower when the max velocity was high. So like the faster is slower 
-effect again we see no sign of a high desired velocity decreasing/stopping 
-the movement of the pedestrians. 
+According to \cite{self-org} the freezing by heating effect should
+arise when the max desired velocity of the pedestrians is raised in
+situations where there is biderectional flow. We however does not
+experience this in any of our simulations of the corridor. We tried
+to raise the max velocity, see figure \ref{fig:freezingbyheating1} and
+figure \ref{fig:freezingbyheating05}, but instead of observing the
+freezing by heating effect, we actually saw that the pedestrians got
+through the corridor more easily, and that the density in the corridor
+was lower when the max velocity was high. So like the faster is slower
+effect again we see no sign of a high desired velocity decreasing/stopping
+the movement of the pedestrians.
 
 \subsubsection{Lane formation}
-Lane formation was expected to happen in the case of bidirectional 
-flow in corridors. In the article \ref{self-org} you read the following 
+Lane formation was expected to happen in the case of bidirectional
+flow in corridors. In the article \ref{self-org} you read the following
 statement:
 
 \begin{quote}
@@ -160,16 +160,16 @@ they form small \emph{channels} in the beginning, but these channels
 later merge to produce wide lanes
 \end{quote}
 
-Since we have three different corridor cases we have looked for lane 
-formation in all of them. The results are presented in figure 
-\ref{fig:laneformation}. Lane formation is observed in every case 
+Since we have three different corridor cases we have looked for lane
+formation in all of them. The results are presented in figure
+\ref{fig:laneformation}. Lane formation is observed in every case
 and they are of the nature described in \cite{self-org}.\\
 
 \begin{figure}[h]
 \centering
-\subfloat[]{\resizebox{8cm}{!}{\input{Figures/bidireccorridorlane.tex}}}
-\subfloat[]{\resizebox{8cm}{!}{\input{Figures/widekinksbidirec.tex}}}\\
-\subfloat[]{\resizebox{8cm}{!}{\input{Figures/bidirecbottleneck.tex}}}
+\subfloat[]{\resizebox{8cm}{!}{\input{Figures/corridor-01012.tex}}}
+\subfloat[]{\resizebox{8cm}{!}{\input{Figures/corridor-01012.tex}}}\\
+\subfloat[]{\resizebox{8cm}{!}{\input{Figures/corridor-01012.tex}}}
 \caption{Lane formation in the different corridors.}
 \label{fig:laneformation}
 \end{figure}
@@ -181,7 +181,7 @@ flow through a bottleneck. The results are presented in figure
 
 \begin{figure}[h]
 \centering
-\subfloat[A screen shot of bidirectional flow in the bottlenck]{\resizebox{7cm}{!}{\input{Figures/bidirecbottleneck.tex}}}
+\subfloat[A screen shot of bidirectional flow in the bottlenck]{\resizebox{7cm}{!}{\input{Figures/corridor-01012.tex}}}
 \subfloat[Plot of the flow rate beyond each end of the corridor.]{\includegraphics[scale=0.5]{Figures/bottleneck-flowrate-2.pdf}}
 \caption{}
 \label{fig:oscillitoryflow}
@@ -195,6 +195,9 @@ squeezed through the bottleneck. The graph presented in
 flow occurs to some extent.
 
 \subsection{Summery}
-Our simulation run with only few unexpected behaviors.Lane formation 
-is observed in every all corridor cases and oscillatory flow is 
-observed to some extent.
+We have been able to get a working simulation of the social force model 
+presented in \cite{self-org} with components taken from \cite{ABconstant}. 
+The most basic dynamics og the simulations seems to be running like as it 
+should and our simulations show lane formation in bidirectional flow. We also  
+see oscillatory flow at bottlenecks however freezin-by-heating 
+and faster-is-slower effect is not observed at all.
