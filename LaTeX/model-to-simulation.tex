@@ -7,7 +7,7 @@ filling in gaps in the model definition.  The goal is, of course, to actually
 create a working simulation of the model.  Some of the components described in 
 this section we have come up with ourselves, and others we have collected from 
 various other publications related to social force models. References are 
-noted were applicable.
+noted where applicable.
 
 The questions we resolve in this section are how to approximate the movement 
 of pedestrians, how to set initial conditions and constants and how to 
@@ -22,7 +22,7 @@ the following sections.
 
 \subsection{Approximating continuous movement}
 \label{sec:continuous-movement}
-The model can be viewed as representing $4n$ non-linear coupled differential 
+The model can be viewed as representing $4n$ coupled differential 
 equations, where $n$ is the number of pedestrians. These differential 
 equations describe the positions and speed of movement of the pedestrians in 
 the $x$ and $y$ directions. Since we cannot solve these equations 
@@ -33,14 +33,14 @@ Euler's method as it is simple to work with. Euler's method is given by a
 truncated Taylor expansion \cite{MD}:
 
 \begin{equation}
-    p(t+\Delta t)=p(t)+v(t)\Delta t + \frac{1}{2}f(t)\Delta t^2
+    p(t+\Delta t)=p(t)+V(t)\Delta t + \frac{1}{2}f(t)\Delta t^2
 \end{equation}     
 
-Here $p$ is the position, $v$ is the velocity, $f$ is the force and $\Delta t$ 
+Here $p$ is the position, $V$ is the velocity, $f$ is the total force and $\Delta t$ 
 is the time step. Similar we have the velocity given as:
 
 \begin{equation}
-    v(t+\Delta t)=v(t)+f(t)\Delta t
+    V(t+\Delta t)=V(t)+f(t)\Delta t
 \end{equation}    
 
 Euler's method, while simple, is not a very precise way of estimating the 
@@ -85,7 +85,7 @@ when we run the simulations.
 \subsubsection{A note on random numbers}
 Some of the initial conditions are set using random distributions, either 
 uniformly or Gaussian distributed, in order to simulate national variations in 
-e.g. the size of pedestrians.  These random numbers are created by the 
+e.g. the radius of pedestrians.  These random numbers are created by the 
 pseudorandom number generator built in to the Python programming language.  
 This generator is an implementation of the Mersenne twister 
 generator\footnote{See \url{http://en.wikipedia.org/wiki/Mersenne\_twister}} 
@@ -117,7 +117,7 @@ given in section~\ref{sec:results}. These parameters are:
 
     \item \textbf{Pedestrian targets:}  Pedestrians move toward their 
         assigned target, as described in section~\ref{sec:desired-force}. 
-        Targets do no differ between pedestrians, except that we assign a 
+        Targets do not differ between pedestrians, except that we assign a 
         target for each starting area to allow for simulating scenarios where 
         pedestrians move towards each other in groups.
 
@@ -188,35 +188,36 @@ vary between the pedestrians, but are fixed for the whole simulation. They are:
     \item \textbf{$A$, $B$:} We set $A=3.0$ and $B=0.2$, taken from  
         \cite{self-org}.
 
-    \item \textbf{$U$:} Is not given in \cite{self-org} so istead we have taken 
+    \item \textbf{$U$:} Is not given in \cite{self-org} so instead we have taken 
  			it from \cite{social-force} where they set $U$ to be $10.0 m^2 s^{-2}$.
 
     \item \textbf{$\lambda$:} We set $\lambda=0.75$, from 
             \cite{self-org}.
 \end{itemize}
 
-\subsubsection{Varying the constants and 
-parameters}\label{sec:varying-constants}
-When varying the constants and parameters in the simulation we have decided 
-not to make a systematic varying of all the parameters. We have chosen no to 
-do so because this would require one of two things.  Either we would have to 
-inspect all the simulations personally to make sure that the pedestrians don't 
-go through each other or the wall, which would be a very time consuming and 
-tedious task or we would have to write a lot of code checking for such errors 
-and discarding the simulations with errors. However since there are a lot of 
-things that can go wrong in the simulations such code would non-trivial to 
-write and it would take a lot of time to do so. 
+\subsubsection{Varying the parameters}
+\label{sec:varying-constants}
+A way of analysing the behaviour of the model would be systematically varying 
+different parameters to assess how this affects the model behaviour and to 
+find out which parameter values makes the model break down. However, since we 
+have several parameters that could be varied (10 in total, not counting the 
+scenario geometry), it is impractical to do this manually. Doing it 
+automatically would require us to develop measures of simulation viability 
+that can be measured automatically, and since our assessment of which 
+simulations are valid very much relies on visual inspection (e.g. if pedestrians 
+walk through walls then the simulation is considered invalid), we would have to come 
+up with an exhaustive set of tests that would tell us whether or not 
+simulations are valid. Our cursory testing of arbitrarily chosen parameter 
+values indicates that there are several ways in which simulations can be 
+invalid, so we have deemed them out of scope of this project to develop such 
+tests, and we have chosen instead to abandon the attempt to do systematic 
+parameter variations.
 
-Furthermore we have no objective measure for whether or not a given simulation 
-give meaningful results that reflect what one would expect to see in nature. 
-Our only guidance in this regard is our intuition. Therefore we have decided 
-to start the constant and parameters off as in the \cite{self-org} and 
-\cite{ABconstant} and do the varying manually to find the values that make the 
-simulations look realistic.
-
-The results that we wish to replicate are often given as screen shots so we 
-are not interesting in know what parameters that give the best lane formation 
-or oscillatory flow, were just interested in actually seeing the phenomena.
+Instead, we have started running our simulations using the parameter values 
+outlined above, and then only vary parameters when the simulation does not 
+look realistic. While this does not give us an exhaustive overview of the model 
+behaviour, it is sufficient to test whether or not we see the phenomena we are 
+trying to reproduce.
 
 \subsection{Finding the nearest point on a wall}
 \label{sec:repulsion-points}
@@ -249,8 +250,8 @@ $\gamma_1$. A pedestrian in area B will be repulsed from both walls at the
 endpoint shared between $\gamma_1$ and $\gamma_2$. Both these situations will 
 result in an extra repulsion that is the result of the way walls are 
 represented (as line segments), and not a part of the model. To avoid this, 
-the algorithm for selecting which points to calculate wall repulsion from has 
-to take this into account.
+the algorithm in \ref{sec:repulsion-points-algorithm} for selecting which points 
+to calculate wall repulsion from has to take this into account.
 
 \begin{figure}[h]
     \centering
@@ -267,7 +268,7 @@ to take this into account.
 Another problem occurs at doorways: if the wall repulsion points are set to be 
 the nearest endpoints of wall segments, a pedestrian passing through a doorway 
 would be repulsed by both sides of this doorway, creating an unwanted barrier 
-for passing through it. In simulations, this appears as a weak invisible force 
+for passing through it. In simulations, this appears as a force 
 that pedestrians have to overcome to escape through doorways.
 
 To solve this problem, the algorithm for selecting which points on the walls 

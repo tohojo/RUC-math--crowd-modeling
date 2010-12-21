@@ -2,10 +2,34 @@
 \section{Conclusion}
 \label{sec:conclusion}
 
+To answer the problem formulation, we have worked with the 
+concept of social force models in thorough details. 
+
+Based on our analysis of the model, we have constructed a computer simulation of
+the model analogou to what is presented in section~\ref{sec:social-forces}.
+Our implementation of the simulation is discussed in section~\ref{sec:simulation}, 
+including set up of parameters and initial conditions, 
+the structure of our simulation and how we obtain results from it.
+
+We have been able to get a working simulation of the social force model 
+presented in \cite{self-org} with components taken from \cite{ABconstant}. 
+The most basic dynamics og the simulations seems to be running like as it 
+should and our simulations show lane formation in bidirectional flow. We also  
+see oscillatory flow at bottlenecks however freezin-by-heating 
+and faster-is-slower effect is not observed at all.
+
+We have discussed several possible cause for discrepancies in our model, and 
+possible remedies. This can be narrowed down to two possibilities. 
+One is that there is a lag of features in the model, like frictional forces and ect. 
+The other possibility is the implementation of the model 
+has been done wrongly and therefore errors occur throughout the simulations. 
+
 \subsection{Further work}
 Since the simulation we present in the report did't reproduce all the phenomena described in
 section \ref{subsec:ThePhenomena}, if given more time our group would like to solve the discrepancies and add the possible solutions that has been talked about in section~\ref{sec:discussion}. The first thing we would implement into the model would be the frictional force, and make the frictional and repulsive forces velocity dependent. This should possibly give rise to the slow-is-faster effect and the freezing-by-heating effect, further more is should make the predictions made by the model more precise.
 One could add path finding, enabling the model to simulate complex environments.
+
+The interaction between the different parameters is interesting to learn more about. Our simulations shows us that changing one parameter, like the mean velocity, implies a change in the constants controlling interaction between pedestrians and interaction with walls. It is not at the moment completely clear how this interaction works. Also a more systematic work with the different constants could be interesting in learning the limitations of the model.  
 
 It would be interesting to examen how large an error occur due to the euler approximation and if this error is of any significants to the predictions made by the model. If sow would some other method of approximation give rise to any significant improvements.
 

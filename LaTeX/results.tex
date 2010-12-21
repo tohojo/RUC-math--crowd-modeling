@@ -1,45 +1,67 @@
 \section{Results}
 \label{sec:results}
-In this section we describe the results obtained from our simulations.
-The section is devided into two parts. The first part presents the
-constants we use and the scenarios that we simulate and comment on
-the general success of our implementation of the model. We looked
-for unrealistic or unexpected behavior in our simulations. In the
-last part we present the results from our attempts to replicate
-the phenomena presented in \cite{self-org}.Possible remedies for
-any discrepancies between the expected and the actual results are
-discussed in section~\ref{sec:discussion}.
+In this section we describe the results obtained from our simulations.  The 
+section is divided into two parts. In the first part we present some general 
+results of our simulations, reviewing the general behaviour of our 
+simulations. In the second part we present the results of our attempts to 
+replicate the phenomena outlined in section~\ref{sec:article-results}. A 
+discussion of these results is presented in section~\ref{sec:discussion}.
 
 \subsection{The basics}
-This section is devided into three parts. First we present the
-scenarios that we have simulated, then we present the constants
-used in the simulations. We then move on to comment on the
-general behavior of the pedestrians in our simulations.
+In this section we describe some general results of our simulations and the 
+behaviour of our model. First we present the scenarios that we have simulated, 
+and the parameters used in the simulations. We then move on to comment on the 
+general behaviour of the pedestrians in our simulations and within which 
+limits the simulations give reasonable results.
 
 \subsubsection{Scenarios}
-We simulate four different scenarios, a rectangle shaped room with a
-door in the middle of one of the walls, and three different variations
-of corridors; a normal corridor, a corridor with a bottleneck in the
-middle and a corridor with a sudden open space. In the corridors we have
-the opportunity to make bidirectional flow. Screen shots from each
-scenario are presented in figure \ref{fig:fourcases}.
+As outlined in section~\ref{sec:scenario-presentation}, we will simulate two 
+different main scenarios, a square room and a corridor, with some variations 
+of the latter. Counting these variations, we simulate four different 
+scenarios: A rectangle shaped room with a door in the middle of one of the 
+walls, and a normal corridor, a corridor with a bottleneck in the middle and a 
+corridor with a sudden open space. In the corridors we do simulations of both 
+uni-- and birectional flow. Images of each of these scenarios are presented in 
+figure \ref{fig:fourcases}.
 
 \begin{figure}[h]
-\centering
-\subfloat[Square room.]{\resizebox{4cm}{!}{\input{Figures/squareroomps.tex}}}
-\subfloat[Bottleneck.]{\resizebox{7cm}{!}{\input{Figures/bottleneckps.tex}}}\\
-\subfloat[Corridor.]{\resizebox{7cm}{!}{\input{Figures/normalcorridorps.tex}}}
-\subfloat[Corridor with an opening.]{\resizebox{7cm}{!}{\input{Figures/widekinksps.tex}}}
-\caption{Screen shots of our four different scenarios.}
-\label{fig:fourcases}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \subfloat[Square room.]{
+        \resizebox{0.7\textwidth}{!}{\input{Figures/squareroomps.tex}}
+        \label{subfig:image-square-room}
+        } 
+        \\
+        \subfloat[Corridor.]{
+        \resizebox{\textwidth}{!}{\input{Figures/normalcorridorps.tex}}
+        \label{subfig:image-corridor}
+        }
+    \end{minipage}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \vspace{1.4cm}
+        \subfloat[Bottleneck.]{
+            \resizebox{\textwidth}{!}{\input{Figures/bottleneckps.tex}}
+            \label{subfig:image-bottleneck}
+        }\\
+        \vspace{6mm}
+        \subfloat[Corridor with an opening.]{
+            \resizebox{\textwidth}{!}{\input{Figures/widekinksps.tex}}
+            \label{subfig:image-widekinks}
+        }
+    \end{minipage}
+    \caption{Images of the four scenarios we simulate.}
+    \label{fig:fourcases}
 \end{figure}
 
-\subsubsection{Constants}
-In the simulation the parameters are set after \cite{ABconstant} and
-\cite{self-org}, to see if we can replicate their simulations and results.
-The general values we use are presented in table \ref{tbl:parameter-settings}.
-We will through the chapter mention when the values are changed for a
-specific case.
+\subsubsection{Parameters}
+As explained in section~\ref{sec:varying-constants}, we start out with the 
+model parameters outlined in section~\ref{sec:init-cond} and vary them when 
+necessary to get useful results from the simulations.  The values we use 
+initially are summarised in table \ref{tbl:parameter-settings}. Whenever a 
+parameter is changed from these values, we will point it out and explain why 
+the change has been necessary.
 
 \begin{table}[ht]
     \begin{center}
@@ -50,8 +72,8 @@ specific case.
             \multicolumn{3}{c}{\textsf{Constants}}\\
             Interaction strength & A & $3,0$ \\
             Interaction range & B & $0,2$ \\
-            Anisotropic constant & $\lambda$ & $0,1$ \\
-            Wall repulsion strength & $U$ &  $2,0$ \\
+            Anisotropic constant & $\lambda$ & $0,75$ \\
+            Wall repulsion strength & $U$ &  $10,0$ \\
             \midrule
             \multicolumn{3}{c}{\textsf{Initial conditions}}\\
             Mean pedestrian radius & $R_\alpha$ & $0,3 \pm 0,05 m$\\
@@ -61,215 +83,190 @@ specific case.
             Relaxation time & $\tau$ & $1,0 s$\\
             \bottomrule
         \end{tabular}
-        \caption[Constants and initial conditions]{Constants and initial
-        conditions used for the simulations. $\pm$ indicates standard
-        deviation in Gaussian distributed values.}
+        \caption[Model parameters]{Model parameters used for the simulations.  
+        $\pm$ indicates standard deviation in Gaussian distributed values.}
         \label{tbl:parameter-settings}
     \end{center}
 \end{table}
 
-\subsubsection{General behavior}
-In this section we make some comments on the general behavior of
-the pedestrians in the simulations. We checked for intersections between
-the pedestrians, pedestrians crossing the walls and other bahavior that might
-be relevant for the further investigations. We used the parameters in table
-\ref{tbl:parameter-settings}.\\
+\subsubsection{General behaviour of the model}
+Our simulations have shown that it is indeed possible to create simulations 
+that upon visual inspection show reasonable behaviour of the pedestrians. That 
+is, pedestrians move through the scenarios without passing through walls or 
+each other, and we see clogging of exits as we expected. However, the 
+behaviour is very much dependent on the parameter values. This means that if, 
+for example, the mean initial desired velocity for the pedestrians is 
+increased, pedestrians will start walking through each other and the walls.  
+This can be remedied by also increasing the parameters controlling the 
+magnitude of the repulsive forces, which indicates that there is some 
+interdependence of the parameters. We have not done a detailed analysis of 
+this, though.
 
-\begin{figure}[h]
-\centering
-\subfloat[Pedestrians overlapping]{\includegraphics[scale=0.45]{Figures/pedestiranoverlapping.pdf}}
-\subfloat[Overlapping between pedestrians and a wall]{\includegraphics[scale=0.45]{Figures/walloverlapping.pdf}}
-\caption{The figure shows two simulations of the squared room. We see the overlapping that can occur between two pedestrians and between the walls and pedestrians. This kind of intersection is seen in most simulations, but they don't cross completely. The red dot on the figures are the desired locations}
-\label{fig:overlapping}
-\end{figure}
+For examples of simulations we've made films available along with the source 
+code for the simulations\footnote{See 
+\url{http://akira.ruc.dk/~tohojo/crowd-modelling}.}.
 
-In the figure \ref{fig:overlapping} the overlapping between pedestrians
-themselves and between walls and pedestrians. We see that in some situations
-it is possible for the pedestrians to intersect quite alot, almost reaching
-each others centers. The same thing is seen for the walls, where the wall
-can get quite close to the center of a pedestrians. But inspite of this
-we don't, with the chosen constants, see that they actually do cross. So
-even though it might look like they get sqiuzzed alot together, no completely
-unrealistic situations occur. Also we see no other strange scenarios, like
-people going in a wrong direction or anything like that. So the most basic
-requirements of the model are fulfilled.
-
-We do however see some unrealistic behavior when we change the values in
-\ref{tbl:parameter-settings} When looking at some of the different phenomenons,
-we need to change certain values like the mean velocity. But when we do
-this it starts to get unrealistic. When raising the desired velocity to
-a speed like $2.5m/s$, we start to see people crossing each other and going
-up to $3.5m/s$ we start to see people crossing the walls. This is a problem
-since these results makes no sence to compares with. Lowering the timestep
-with $1/10$ doesn't change this result at all. So to solve this problem we
-have in some cases raised the wallues of the wall constant $U$ and the
-pedestrains repulsion constant $A$. This makes the repulsions forces
-big enough for the pedestrians to act 'noraml'. We will throughout the
-chapter mention when we change the values and how much it is changed.
-
-\subsection{The phenomena}\label{subsec:ThePhenomena}
+\subsection{The results from the literature}\label{subsec:ThePhenomena}
 In this section we present the results we obtained from our attempts
-to replicate the phenomenons presented in \cite{self-org}. These phenomenos are described in section 
-\ref{phenomenon}. We will include figure from vairious articles to having something concrete to compare
-our results with. The reason we use different articles is because there is not one single article that contains figure of all the scenarios at once. 
+to replicate the results from the literature outlined in 
+section~\ref{sec:article-results}.  For each of the results we will go into a 
+bit more detail on the phenomenon we seek to replicate, and then present how 
+well our results match the expected. The results we replicate are presented in 
+detail in several different articles, but according to \cite{self-org}, they 
+should all be possible to see using the model we are simulating.
 
 \subsubsection{The faster-is-slower effect}
-The faster-is-slower was expected to be seen in the square room scenario.
-To see if this effects occurs we have looked at the leaving time as a function
-of the desired velocity of the pedestrains. We made simulations with a desired
-velocitygoing from $1.5m/s$ to $5m/s$ with steps of 0.1. The results are presented
-in figure \ref{fig:isfasterslower}. We see some fluctutation on the graph, but the
-overall picture of the leaving time decreasing when the desired velocity goes up is
-clear. So there no sign of an increase of the leaving time and therefore no faster
-is slower. The only thing we see is that the negative slope is decreasing, meaning
-that if the pedestrians moves twice as fast, they don't clear the room in half the
-time.
+As mentioned in section~\ref{sec:article-results}, the faster-is-slower effect 
+is seen when pedestrians leave a room. The effect is that faster desired 
+movement speeds yield a longer time to empty the room, contrary to what might 
+be expected. The results from \cite{helbing00} where this effect is described 
+can be seen in figure~\ref{fig:LtNFasterIsSlower}. Here it is apparent that 
+clogging occurs at the doorway (figure~\ref{subfig:fast-slow-clogging}), 
+leading to a longer time to clear the room for desired velocities above 
+$1,5m/s$ (figure~\ref{subfig:fast-slow-graph}).
 
-\begin{figure}[h]
-\centering
-\subfloat[Attempt to see the faster-is-slower effect in the square 
-room.]{\includegraphics[scale=0.45]{Figures/fastIsSlowNot.pdf}}
-\subfloat[Attempt to see the faster-is-slower effect in the normal corridor 
-case.]{\includegraphics[scale=0.45]{Figures/corridor-flowrate-aggr-velocity_mean.pdf}}\\
-\subfloat[Attempt to see the faster-is-slower effect in the bottleneck 
-scenario.]{\includegraphics[scale=0.45]{Figures/bottleneck-flowrate-aggr-velocity_mean.pdf}}
-\subfloat[Attempt to see the faster-is-slower efffect in the corridor with a 
-wide 
-space.]{\includegraphics[scale=0.45]{Figures/Wide-kink-one-directional-flowrate-agg.pdf}}
-\caption{There is no evidence of the-faster-is slower effect, however it does 
-seem that we see a faster-is-only-slightly-faster effect.}
-\label{fig:isfasterslower}
-\end{figure}
-%TODO: We should make runs with the desired velcity.
-%This is what they compare with in the letters to nature article.
-If we compare with the litterature they show a graph of the leaving time in 
-\cite{helbing00}. This graph can be seen on figure 
-\ref{fig:LtNFasterIsSlower}. Here it is clearly seen that the leaving time is 
-going up when the desired velocity is going up. Quite the opposite result of 
-what we are getting. It should be noted that the article these results are 
-from, includes tangential forces between the pedestrians. Whereas we do only 
-include the repulsion directly away form the pedstrians. In our main article 
-\cite{self-org} though, they specific mention the tangential force as making a 
-little to none difference in the results. This claim is quoted in section 
-\ref{sec:social-forces}.
-\begin{figure}[h]
-\centering
-\subfloat[Square room from case from 
-\cite{helbing00}.]{\includegraphics[width=0.45\textwidth]{Figures/square_room_letters.png}}
-\subfloat[Graph of the leaving time for the squared room as a function of max. 
-desired velocity]{\includegraphics[width=0.45\textwidth]{Figures/leaving_time.png}}
-\caption{This is the reuslts for the leaving time as a function of the desired 
-velocity. The results are made for a squared romm of $15m*15m$ and $200$ 
-pedestrians leaving the room. It is very clear to see that they get the 
-faster-is-slower effect.}
-\label{fig:LtNFasterIsSlower}
+\begin{figure}[ht]
+    \centering
+    \subfloat[Clogging at the exit.]{
+        \includegraphics[width=0.45\textwidth]{Figures/square_room_letters.png}
+        \label{subfig:fast-slow-clogging}
+    }
+    \subfloat[Leaving time versus desired velocity.]{
+        \includegraphics[width=0.45\textwidth]{Figures/leaving_time.png}
+        \label{subfig:fast-slow-graph}
+    }
+    \caption[Faster-is-slower effect from \cite{helbing00}]{Faster-is-slower 
+    effect from \cite{helbing00}. \subref{subfig:fast-slow-clogging} Clogging 
+    occurs at doorways. \subref{subfig:fast-slow-graph} Fast desired 
+    velocities leads to slower emptying of the room.}
+    \label{fig:LtNFasterIsSlower}
 \end{figure}
 
+In our simulations of the square room scenario we have clogging in the 
+doorways as expected (see figure~\ref{subfig:image-square-room}). We have 
+plotted the time to leave the room as a function of the initial desired 
+velocity with values from $0,5$ to $5,0$. As can be seen in 
+figure~\ref{fig:square-room-leaving}, we do not see the increasing leaving 
+time, although it is not a linear relationship between the velocity and 
+leaving time either. Looking at the results, we conclude that we  do not see 
+the faster-is-slower effect.
 
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/fastIsSlowNot.pdf}
+    \caption[Leaving time for the square room]{Leaving time for the square 
+    room. While there is not a linear relation between velocity and leaving 
+    time, we do not see the increase in leaving time we expected.}
+    \label{fig:square-room-leaving}
+\end{figure}
 
 \subsubsection{Freezing by heating effect}
-According to \cite{self-org} the freezing by heating effect should
-arise when the max desired velocity of the pedestrians is raised in
-situations where there is biderectional flow. We however does not
-experience this in any of our simulations of the corridor. We tried
-to raise the max velocity, see figure \ref{fig:freezingbyheating1} and
-figure \ref{fig:freezingbyheating05}, but instead of observing the
-freezing by heating effect, we actually saw that the pedestrians got
-through the corridor more easily, and that the density in the corridor
-was lower when the max velocity was high. So like the faster is slower
+The freezing by heating effect occurs when pedestrians are moving in opposite 
+directions and they block each other when the velocity increases (see 
+section~\ref{sec:article-results}). The illustration of this effect as 
+presented in \cite{oscil} can be seen in 
+figure~\ref{fig:freezing_by_heating_litterature}.
+
+\begin{figure}[h]
+    \centering
+    \subfloat[]{\includegraphics[width=0.45\textwidth]{Figures/heatfreeze.png}}
+    \caption[Freezing by heating effect from \cite{oscil}]{Freezing by heating 
+    effect from \cite{oscil}. Pedestrians block each other as a result of the 
+    freezing by heating.}
+    \label{fig:freezing_by_heating_litterature}
+\end{figure}
+
+During our simulations we have not been able to reproduce this effect at all.  
+Although we have seen clogging of corridors, it only occurs at low velocities, 
+and so does not increase with the velocity as we expected. Instead, when 
+pedestrians move faster, they are more likely to be able to pass each other 
+even in corridors with high densities. So like the faster is slower
 effect again we see no sign of a high desired velocity decreasing/stopping
 the movement of the pedestrians.
 
-From the litteratture they show the freezing by heating by showing figures of a complete blocking of the pedestrians. An example of the can be seen on \cite{oscil}, which i shown on figure \ref{fig:freezing_by_heating_litterature}
-
-\begin{figure}[h]
-\centering
-\subfloat[]{\includegraphics[width=0.45\textwidth]{Figures/heatfreeze.png}}
-\caption{Here we can see the pedestrians blocking each other as a result of the freezing by heating. Taken from \cite{oscil}.}
-\label{fig:freezing_by_heating_litterature}
-\end{figure}
-
-
 \subsubsection{Lane formation}
-Lane formation was expected to happen in the case of bidirectional
-flow in corridors. In the article \ref{self-org} you read the following
-statement:
+Lane formation happens when the simulation contains bidirectional flow in 
+corridors. As stated in \ref{self-org}:
 
 \begin{quote}
-If pedestrians crowds moving in opposite directions meet each other,
-they form small \emph{channels} in the beginning, but these channels
-later merge to produce wide lanes
+    If pedestrians crowds moving in opposite directions meet each other, they 
+    form small \emph{channels} in the beginning, but these channels later 
+    merge to produce wide lanes
 \end{quote}
 
+An illustration of this phenomenon from \cite{lanes} can be seen in 
+figure~\ref{fig:lanes-literature}. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/flow_lanes_litterature.png}
+    \caption[Lane formation from \cite{lanes}]{Lane formation from 
+    \cite{lanes}. Pedestrians through a corridor form alternating lanes of 
+    pedestrians going in each direction.}
+    \label{fig:lanes-literature}
+\end{figure}
+
 Since we have three different corridor cases we have looked for lane
-formation in all of them. The results are presented in figurewhereas
-\ref{fig:laneformation}. Lane formation is observed in every case
-and they are of the nature described in \cite{self-org}.\\
+formation in all of them. As can be seen in figure~\ref{fig:laneformation}, 
+the lane formation occurs in all of the cases.
 
 \begin{figure}[h]
-\centering
-\subfloat[]{\resizebox{8cm}{!}{\input{Figures/corridor-01012.tex}}}
-\subfloat[]{\resizebox{8cm}{!}{\input{Figures/corridor-01012.tex}}}\\
-\subfloat[]{\resizebox{8cm}{!}{\input{Figures/corridor-01012.tex}}}
-\caption{Lane formation in the different corridors.}
-\label{fig:laneformation}
+    \centering
+    \subfloat[Bidirectional flow in a corridor.]{
+        \resizebox{0.45\textwidth}{!}{\input{Figures/corridor-01012.tex}}
+    }
+    \subfloat[Bidirectional flow in a corridor with a bottleneck.]{
+        \resizebox{0.45\textwidth}{!}{\input{Figures/corridor-01899.tex}}
+    }\\
+    \subfloat[Bidirectional flow in a corridor with a widening.]{
+        \resizebox{0.45\textwidth}{!}{\input{Figures/corridor-01999.tex}}
+    }
+    \caption[Lane formation in corridor simulations]{Lane formation in 
+    corridor simulations. The colours indicate the direction the pedestrians 
+    are moving in. Lane formation can be seen in all three cases.}
+    \label{fig:laneformation}
 \end{figure}
 
-From the litterature we can see that they present figures of lane formations
- that looks like what we are seeing. They do how ever manily stick with the normal corridor. One of these results are shown in \cite{lanes}, which can be seen on figure \ref{fig:laneformation_litterature}
-\begin{figure}[h]
-\centering
-\subfloat[]{\includegraphics[width=8cm]{Figures/flow_lanes_litterature.png}}
-\caption{Lane formation through a corridor. Taken from \cite{lanes}.}
-\label{fig:laneformation_litterature}
-\end{figure}
- 
-
-
-\subsubsection{The Oscillatory flow}
-The oscillatory flow is expected to arise in the case of bidirectional
-flow through a bottleneck. The results are presented in figure
-\ref{fig:oscillitoryflow}.\\
-
-\begin{figure}[h]
-\centering
-\subfloat[A screen shot of bidirectional flow in the bottlenck]{\resizebox{7cm}{!}{\input{Figures/corridor-01012.tex}}}
-\subfloat[Plot of the flow rate beyond each end of the corridor.]{\includegraphics[scale=0.5]{Figures/bottleneck-flowrate-2.pdf}}
-\caption{}
-\label{fig:oscillitoryflow}
-\end{figure}
-
-When looking at the simulation while it is running it is not
-immediately clear that the oscillatory flow occurs. Clogging
-appears in both ends of the bottleneck and people are sometimes
-squeezed through the bottleneck. The graph presented in
-\ref{fig:oscillitoryflow} does indicate that the oscillatory
-flow occurs.
-
-In the article \cite{oscil}, they show a figure of the oscillatory flow. They 
-don't show any graph of the flow in different directions or anything like 
-that, but basicly just shows a screen shot giving some idea about the 
-phenomena along with a discribtion of the phenomena. They describe it as the 
-pressure building up from one side and the at some point a small group of 
-pedestrians slip through. When that happens the pressure on the other side 
-builds up and then at some time some pedestrians from that side slips through 
-and so on. Figure \ref{fig:oscillitoryflow_litterature} shows the 
-presentations of the oscillatory flow from \cite{oscil}. This describtions 
-fits with what we ourself experince through simulations of the model too.
+\subsubsection{Oscillating flows}
+Oscillating flows occur when clogging occurs at a bottleneck, and small groups 
+of pedestrians from each direction alternate in getting through the 
+bottleneck. The effect is described in \cite{oscil}, but it is not clear how 
+they measure it. Figure~\ref{fig:oscillitoryflow_litterature} shows the 
+illustration from the article that explains the effect.
 
 \begin{figure}[h]
-\centering
-\subfloat[Screen shot of oscillatory flow from 
-\cite{oscil}]{\includegraphics[width=0.8\textwidth]{Figures/oscil_flow.png}}
-\caption{Here one can see that some black pedestrians that already have slip through and now the white pedestrians going in the other direction a passing through the bottleneck.}
-\label{fig:oscillitoryflow_litterature}
+    \centering
+    \includegraphics[width=0.4\textwidth]{Figures/oscil_flow.png}
+    \caption[Illustration of oscillating flow from \cite{oscil}]{Illustration 
+    of oscillating flow from \cite{oscil}. A small group of pedestrians 
+    slipping through the bottleneck passes through the bottleneck in one 
+    direction. Oscillations occur when pedestrians alternately pass through 
+    the bottleneck from each direction.}
+    \label{fig:oscillitoryflow_litterature}
 \end{figure}
 
+When looking at the simulation while it is running it is not immediately clear 
+whether the oscillatory flow occurs. Clogging appears in both ends of the 
+bottleneck and people are sometimes squeezed through the bottleneck. To get a 
+better indication of whether or not oscillation occurs, we have graphed the 
+flow rate in each direction. This graph is seen in 
+figure~\ref{fig:oscillitoryflow}. The graph does not show a clear indication 
+of oscillating flows, however a possible source of error is that the flow rate 
+is measure at the ends of the corridor, which may dilute the effect as 
+pedestrians are passing through the crowd after having passed through the 
+bottleneck. However, in the way our simulation is implemented, it is not 
+possible to distinguish between pedestrians moving in different directions 
+when measuring the flow rate in the middle of the bottleneck.
 
-\subsection{Summery}
-We have been able to get a working simulation of the social force model 
-presented in \cite{self-org} with components taken from \cite{ABconstant}. 
-The most basic dynamics og the simulations seems to be running like as it 
-should and our simulations show lane formation in bidirectional flow. We also  
-see oscillatory flow at bottlenecks however freezin-by-heating 
-and faster-is-slower effect is not observed at all.
+In conclusion, we may be able to replicate the oscillating flows, but the 
+results are not completely clear.
+
+
+\subsection{Summary}
+We have seen that our simulation is able to show reasonable results of 
+pedestrians moving through our chosen scenarios. We have simulated four 
+different scenarios, and tried to replicate the results presented in the 
+literature. We have not been able to replicate either the faster-is-slower 
+effect or freezing by heating. Lane formation we do see, and it is unclear 
+whether oscillatory flows are seen, perhaps partly because our way of 
+measuring this is not very good.
