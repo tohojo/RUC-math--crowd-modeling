@@ -113,17 +113,26 @@ $1,5m/s$ (figure~\ref{subfig:fast-slow-graph}).
 \begin{figure}[ht]
     \centering
     \subfloat[Clogging at the exit.]{
-        \includegraphics[width=0.45\textwidth]{Figures/square_room_letters.png}
+        \includegraphics[width=0.4\textwidth]{Figures/square_room_letters.png}
         \label{subfig:fast-slow-clogging}
     }
     \subfloat[Leaving time versus desired velocity.]{
         \includegraphics[width=0.45\textwidth]{Figures/leaving_time.png}
         \label{subfig:fast-slow-graph}
+    }\\
+    \subfloat[Image from our simulations simulation]{
+        \resizebox{0.3\textwidth}{!}{\input{Figures/time-to-clear-room.tex}}
+        \label{subfig:clear-room-ours}
     }
-    \caption[Faster-is-slower effect from \cite{helbing00}]{Faster-is-slower 
-    effect from \cite{helbing00}. \subref{subfig:fast-slow-clogging} Clogging 
-    occurs at doorways. \subref{subfig:fast-slow-graph} Fast desired 
-    velocities leads to slower emptying of the room.}
+    \subfloat[Time to clear the room as a function of mean desired velocity.]{
+        \includegraphics[width=0.6\textwidth]{Figures/time-to-clear.pdf}
+        \label{subfig:time-to-clear-plot}
+    }
+    \caption[Faster-is-slower effect]{Faster-is-slower 
+    effect. \subref{subfig:fast-slow-clogging} and 
+    \subref{subfig:fast-slow-graph}  from \cite{helbing00}, 
+    \subref{subfig:clear-room-ours} and \subref{subfig:time-to-clear-plot} the 
+    corresponding data from our simulation.}
     \label{fig:LtNFasterIsSlower}
 \end{figure}
 
@@ -149,9 +158,9 @@ low initial desired velocity which resulted in extremely high leaving times
 
 When we plot the time to leave the room as a function of the initial desired 
 velocity with values from $0,75$ to $3,0$, as shown in 
-figure~\ref{fig:square-room-leaving}, we do not see the leaving time increase 
-with initial desired speed within any specific interval.  Looking at the 
-results, we conclude that we do not see the faster-is-slower effect.
+figure~\ref{subfig:time-to-clear-plot}, we do not see the leaving time 
+increase with initial desired speed within any specific interval.  Looking at 
+the results, we conclude that we do not see the faster-is-slower effect.
 
 We choose to stop the initial desired speed at $3.0 \text{m}/\text{s}$ because 
 if you increase it beyond this value people will start going through the walls 
@@ -161,19 +170,6 @@ the article. How they have managed to run model simulations with the initial
 desired velocity set to $10.0 \text{m}/\text{s}$ without seeing these errors 
 is not clear.
 
-\begin{figure}[ht]
-    \centering
-    \subfloat[Screen shot taken from the simulation]{
-        \resizebox{0.35\textwidth}{!}{\input{Figures/time-to-clear-room.tex}}
-    }
-    \subfloat[Time to clear the room as a function of mean desired velocity.]{
-        \includegraphics[width=0.65\textwidth]{Figures/time-to-clear.pdf}
-    }
-    \caption[Leaving time for the square room]{Leaving time for the square 
-    room. We do not see the increase in leaving time as we increase the 
-    initial desired speed.}
-    \label{fig:square-room-leaving}
-\end{figure}
 
 \subsubsection{Lane formation}
 Lane formation happens when the simulation contains bidirectional flow in 
@@ -244,7 +240,7 @@ the effect in our simulations.
 Oscillating flows occur when clogging occurs at a bottleneck, and small groups 
 of pedestrians from each direction alternate in getting through the 
 bottleneck. The effect is described in \cite{oscil}, but it is not clear how 
-they measure it. Figure~\ref{fig:oscillitoryflow_litterature} shows the 
+they measure it. Figure~\vref{fig:oscillitoryflow_litterature} shows the 
 illustration from the article that explains the effect.
 
 When looking at the simulation, it is apparent that clogging appears in both 
