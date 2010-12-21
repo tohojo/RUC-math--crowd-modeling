@@ -132,8 +132,8 @@ There are a number of parameters that relate to the pedestrians. They are:
 
 \begin{itemize}
     \item \textbf{Pedestrians' radii:} The radii of the pedestrians, 
-        $R_\alpha$, is drawn from a Gaussian distribution with a mean of $0,3$ 
-        meters and a standard deviation of $0,05$ meters. This is done to 
+        $R_\alpha$, is drawn from a Gaussian distribution with a mean of $0.3$ 
+        meters and a standard deviation of $0.05$ meters. This is done to 
         simulate a natural variety in the width of human shoulders, and to 
         avoid deadlocks caused by perfectly symmetrical forces that might 
         otherwise occur. This method of assigning pedestrian radii is taken 
@@ -163,12 +163,12 @@ There are a number of parameters that relate to the pedestrians. They are:
 
     \item \textbf{Initial desired speed:} The initial desired speed, 
         $V^{Id}_\alpha$, for the pedestrians is set to be Gaussian 
-        distributed with a mean of $1,3$ and a standard deviation of $0,3$.
+        distributed with a mean of $1.3$ and a standard deviation of $0.3$.
 	These values are taken from \cite{self-org}. 
 
 
     \item \textbf{Maximum desired speed :} The maximum desired speed is set to 
-        $V_{\alpha}^{max}=1,3V^{Id}_\alpha$.
+        $V_{\alpha}^{max}=1.3V^{Id}_\alpha$.
 	As the initial desired speed this value is also taken from \cite{social-force}.
       
         
@@ -182,16 +182,16 @@ vary between the pedestrians, but are fixed for the whole simulation. They are:
 
 \begin{itemize}
     \item \textbf{Time step size:} We have experimented with various time step 
-        sizes, and have found that with a fixed value of $0,01$ seconds, we 
+        sizes, and have found that with a fixed value of $0.01$ seconds, we 
         get reasonable run times and results from our simulation.
 
-    \item \textbf{$A$, $B$:} We set $A=3,0$ and $B=0,2$, taken from  
+    \item \textbf{$A$, $B$:} We set $A=3.0$ and $B=0.2$, taken from  
         \cite{self-org}.
 
     \item \textbf{$U$:} Is not given in \cite{self-org}, so instead we have 
         taken it from \cite{social-force} where it is set to be $10$.
 
-    \item \textbf{$\lambda$:} We set $\lambda=0,75$, from \cite{self-org}.
+    \item \textbf{$\lambda$:} We set $\lambda=0.75$, from \cite{self-org}.
 \end{itemize}
 
 \subsubsection{Varying the parameters}
