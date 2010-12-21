@@ -2,7 +2,7 @@ This project tracks the modelling project at RUC mathematics, fall 2010.
 
 The subject of the project is crowd modelling. It is written by:
 
-* Toke HÃ¸iland-JÃ¸rgensen (tohojo at ruc)
+* Toke Høiland-Jørgensen (tohojo at ruc)
 * Mikkel Hartmann (mihaje at ruc)
 * Dan Albrechtsen (danalb at ruc)
 * Malik Thrane (lmrt at ruc)
