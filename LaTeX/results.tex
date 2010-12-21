@@ -161,30 +161,6 @@ the faster-is-slower effect.
     \label{fig:square-room-leaving}
 \end{figure}
 
-\subsubsection{Freezing by heating effect}
-The freezing by heating effect occurs when pedestrians are moving in opposite 
-directions and they block each other when the initial desired velocity increases (see 
-section~\ref{sec:article-results}). The illustration of this effect as 
-presented in \cite{oscil} can be seen in 
-figure~\ref{fig:freezing_by_heating_litterature}.
-
-\begin{figure}[h]
-    \centering
-    \subfloat[]{\includegraphics[width=0.45\textwidth]{Figures/heatfreeze.png}}
-    \caption[Freezing by heating effect from \cite{oscil}]{Freezing by heating 
-    effect from \cite{oscil}. Pedestrians block each other when the 
-    freezing by heating phenomenon occurs.}
-    \label{fig:freezing_by_heating_litterature}
-\end{figure}
-
-During our simulations we have not been able to reproduce this effect at all.  
-Although we have seen clogging of corridors, it only occurs at low velocities, 
-and so does not increase with the velocity as we expected. Instead, when 
-pedestrians move faster, they are more likely to be able to pass each other 
-even in corridors with high densities. So like the faster is slower
-effect again we see no sign of a high desired velocity decreasing/stopping
-the movement of the pedestrians.
-
 \subsubsection{Lane formation}
 Lane formation happens when the simulation contains bidirectional flow in 
 corridors. As stated in \ref{self-org}:
@@ -228,6 +204,25 @@ the lane formation occurs in all of the cases.
     are walking to the right. Lane formation can be seen in all three cases. }
     \label{fig:laneformation}
 \end{figure}
+
+\subsubsection{Freezing by heating effect}
+The freezing by heating effect occurs when the lane formations break 
+down due to extreme densities. This results in a clogging that brings 
+the pedestrians to a complete halt (see section~\ref{sec:article-results}). 
+The illustration of this effect as presented in \cite{oscil} can be seen in 
+figure~\ref{fig:freezing_by_heating_litterature}.
+
+\begin{figure}[h]
+    \centering
+    \subfloat[Freezing by heating effect from \cite{oscil}.]{\includegraphics[width=0.45\textwidth]{Figures/heatfreeze.png}}
+	\subfloat[Freezing-by-heating effect from our simulation.]\resizebox{0.45\textwidth}{!}{\input{Figures/freezing-by-heating.tex}}
+    \caption[Comparison of Freezing-by-heating effect from \cite{oscil} with our own.]{Comparison of Freezing-by-heating effect from \cite{oscil} (a) with our own (b). Pedestrians block each other when the lanes break down.}
+    \label{fig:freezing_by_heating_litterature}
+\end{figure}
+
+During our simulations we have been able to reproduce the freezing-by-heating 
+effect. Actually it has been a task not to produce the effect when running 
+simulations with high density.  
 
 \subsubsection{Oscillating flows}
 Oscillating flows occur when clogging occurs at a bottleneck, and small groups 
