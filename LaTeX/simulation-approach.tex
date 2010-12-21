@@ -103,7 +103,7 @@ repulsive force from each wall. The resulting vectors are added to yield the
 total acceleration for each pedestrian.
 
 After this is calculated for all pedestrians, their velocities and positions are 
-updated in a separate step. Each of these four steps are described in detail 
+updated in separate steps. Each of these four steps are described in detail 
 in the following. The code calling the other parts of the calculation can be 
 seen in code segment~\ref{lst:calling}. This function is called once for each 
 pedestrian (index \texttt{i}) for each simulation step.
@@ -126,7 +126,7 @@ void calculate_forces(Py_ssize_t i)
 
 \subsubsection{Calculating the desired force}
 The function for calculating the desired force can be seen in code 
-listing~\ref{lst:desired-force}. Of note is the implementation on lines 7-19 
+segment~\ref{lst:desired-force}. Of note is the implementation on lines 7-19 
 of the conditional definition of $V_\alpha^0(t)$ given in 
 equation~\eqref{eqn:cond-define} and the creation of a unit vector in lines 
 20-21 to add the direction to the desired velocity.
@@ -210,7 +210,7 @@ void add_repulsion(Pedestrian * a, Pedestrian * b)
 
 \subsubsection{Repulsion from walls}
 The code for adding the repulsion from the walls is shown in code 
-listing~\ref{lst:wall-repulsion}. The \texttt{add\_wall\_repulsion} function 
+segment~\ref{lst:wall-repulsion}. The \texttt{add\_wall\_repulsion} function 
 is called for each pedestrian and consists of two parts: Finding the points on the 
 walls where repulsion should be calculated from, and calculating the repulsion 
 from these points. The force from the repulsion points is calculated in the 
@@ -366,7 +366,7 @@ void update_position(Pedestrian * a)
 
 \subsection{Obtaining results}
 \label{sec:measurement}
-There are to ways we obtain results from the simulation: through the drawings 
+There are two ways we obtain results from the simulation: through the drawings 
 of the simulations themselves, and through graphs of various measurements made 
 during the simulation. In this section we describe the mechanisms for 
 obtaining these results. Which results are used for which scenarios are 
