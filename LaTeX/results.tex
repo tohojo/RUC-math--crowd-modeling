@@ -238,7 +238,7 @@ whether the oscillatory flow occurs. Clogging appears in both ends of the
 bottleneck and people are sometimes squeezed through the bottleneck. To get a 
 better indication of whether or not oscillation occurs, we have graphed the 
 flow rate in each direction. This graph is seen in 
-figure~\ref{fig:oscillitoryflow}. The graph does not show a clear indication 
+figure~\ref{fig:oscillatory-flow}. The graph does not show a clear indication 
 of oscillating flows, however a possible source of error is that the flow rate 
 is measure at the ends of the corridor, which may dilute the effect as 
 pedestrians are passing through the crowd after having passed through the 
@@ -261,15 +261,21 @@ results are not completely clear.
 
 \begin{figure}[h]
     \centering
-    \subfloat[Bidirectional flow in a corridor.]{\includegraphics[width=0.45\textwidth]{Figures/flowrateBiDirecBottle.pdf}}
-    \subfloat[Bidirectional flow in a corridor with a bottleneck.]{
+    \subfloat[Flowrates measured at each end of the corridor]{
+        \includegraphics[width=0.45\textwidth]{Figures/flowrateBiDirecBottle.pdf}
+        \label{subfig:flow-graph}
+    }
+    \subfloat[Clogging of a bottleneck]{
         \resizebox{0.45\textwidth}{!}{\input{Figures/corridorbottleBiClog.tex}}
+        \label{subfig:bottleneck}
     }\\
     
-    \caption[Lane formation in corridor simulations]{Lane formation in 
-    corridor simulations. The colours indicate the direction the pedestrians 
-    are moving in. Lane formation can be seen in all three cases.}
-    \label{fig:laneformation}
+    \caption[Oscillatory flow simulations]{Oscillatory flow simulations. 
+    \subref{subfig:flow-graph} Flowrates measured at each end of the corridor 
+    of a simulation. While there is some alternating behaviour it is not clear 
+    whether oscillatory flow occurs. \subref{subfig:bottleneck} Clogging at a 
+    bottleneck when pedestrians approach it from both directions.}
+    \label{fig:oscillatory-flow}
 \end{figure}
 
 \subsection{Summary}
