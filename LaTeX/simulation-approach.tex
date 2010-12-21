@@ -9,7 +9,6 @@ go into more detail on the parts specific to the calculations of the model
 parameters. The full source code is available online\footnote{See 
 \url{http://akira.ruc.dk/~tohojo/crowd-modelling}.}.
 
-
 Our simulation is implemented in the Python programming language, with the 
 calculation intensive parts implemented in C for performance reasons. We 
 assume a virtual coordinate system using meters as a base unit, and with the 
@@ -415,3 +414,13 @@ are used for both modes. The properties we measure are:
         where pedestrians are added continuously, or where they never reach their 
         target) do not measure this property.
 \end{itemize}
+
+\subsection{Summary}
+In this section we have described our implementation of the simulation. The 
+program is split up into three parts: setting up the simulation with 
+parameters and initial conditions, the calculations of the model itself, and 
+measurements of the results. The first and last parts are implemented in the 
+Python programming language, while the calculations themselves are implemented 
+in C for performance reasons. The measurements of simulation results include 
+drawing of pictures of the simulation, and graphs of the flow rate and the 
+time it takes all pedestrians to leave a room.
