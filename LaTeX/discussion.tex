@@ -1,6 +1,6 @@
 \section{Discussion of our results}
 \label{sec:discussion}
-We have seen in section~\ref{sec:results}, that when implementing the model presented in \cite{selv-org} as accurate as possible, we can't reproduce the results. Throw our study of social force models we have come across a wide variety of different improvements. We believe that some of these improvements might be able to solve the discrepancies between our results and the results in \cite{selv-org}.
+We have seen in section~\ref{sec:results}, that when implementing the model presented in \cite{self-org} as accurate as possible, we can't reproduce the results. Throw our study of social force models we have come across a wide variety of different improvements. We believe that some of these improvements will be able to solve the discrepancies between our results and the results in \cite{self-org}.
  
 The section is divided into three parts: A discussion of the effects of modifying  
 the interaction forces, a discussion of parameter values, and a 
@@ -13,18 +13,10 @@ none of the forces in the model are dependent on the current velocities of the
 pedestrians and they all operate only in a straight line between repulsion 
 points. 
 
-We speculate that one reason we do not see the faster-is-slower effect is that 
-we do not have a frictional component in the interaction force between 
-pedestrians or between pedestrians and obstacles when they are in physical 
-contact with each other. An expression of the frictional force is provided in 
-\cite{helbing00}, where it is expressed as a force that is perpendicular to 
-the direction of the repulsive forces, as illustrated in 
+We speculate that the reason that we do not see the faster-is-slower effect is that our model do not take into account friction between pedestrians. Such a force has been suggested to give rise to the faster is slower effect in \ref{HelbingNew} and a term for the frictional force is given in \cite{helbing00}, here they reproduce the faster-is-slower effect through simulations. The friction force is given as a force which is perpendicular to the direction of the repulsive force, as illustrated in 
 figure~\ref{fig:friction}. The magnitude of the frictional component depends 
 on both the distance and the relative velocity between the two pedestrians and 
-would make it harder for pedestrians to move in dense crowds. We believe 
-adding such forces would enable us to see the faster-is-slower effect in our 
-simulation. This is corroborated by the fact that other articles that include 
-this effect incorporate just such a frictional force \cite{helbing00}.  Other 
+would make it harder for pedestrians to move in dense crowds.  Other 
 effects related to clogging of passages, such as the freezing by heating 
 effect might also be more apparent given frictional forces.
 
@@ -107,7 +99,6 @@ figure~\ref{fig:extra-forces-behaviour}.
     \label{fig:extra-forces-behaviour}
 \end{figure}
 
-
 Making pedestrians avoid colliding with each other could be achieved by adding 
 a force that is perpendicular to the direction of other pedestrians, much like 
 the friction forces, but weaker and with a longer range. This might allow 
@@ -123,11 +114,7 @@ where the exits are not visible.
 
 When pedestrians decelerate at the same rate no matter their velocities, they 
 will in certain extreme cases (i.e. when they are moving very fast) not 
-decelerate enough, and so will move through walls or even each other. Since 
-the repulsive forces are exponential in nature, lowering the time step size 
-enough for the increasing forces to take effect as the distance becomes 
-shorter somewhat mitigates the tendency to walk through walls; however, it is 
-not always enough. Adding a velocity-dependent term to the repulsive forces so 
+decelerate enough, and so will move through walls or even each other. One could speculate that this is cause by a to large time step but it turns out that this can happen independent of the time step. To avoid this we either have to recalibrate the constants i.e. increasing the wall potential. A more efficient way of solving this problem is by adding a velocity-dependent term to the repulsive forces so 
 that pedestrians moving faster will be repulsed stronger or at a greater 
 range, could be a remedy for this behaviour. Indeed, adding such a force has 
 been seen to improve model predictions when compared to data from real life 
@@ -137,10 +124,10 @@ situations \cite{ABconstant}.
 The magnitude of the forces in the model depends heavily on the values of the 
 various constants that are set as model parameters. This means that choosing 
 proper model parameters is important to get good results.
-The value of the parameters parameters we have 
-used are obtained from several different articles, and so we cannot be sure 
-that our starting point has been a good one. Especially since the parameters 
-vary wildly between articles, when they are at all comparable. We have 
+The value of the parameters we have 
+used are obtained from \cite{self-org}, but they do no mention the size of the
+max desired velocity and the wall potential. We have found these in the article \cite{social-force} so we cannot be completely sure that these are of the right size.
+There has been a tendency that the parameters vary wildly between articles which are comparable \cite{frebyheat} \cite{} \cite{}. We have 
 attempted to adjust some of the parameters when we have seen strange 
 behaviour, such as pedestrians walking through walls. The fact remains, 
 though, that we cannot be sure that the parameters we have ended up using are 
@@ -156,10 +143,10 @@ continues to be a possible source of errors for our simulations.
 
 \subsection{Our implementation of the simulations}
 \label{sec:random-errors}
-We have attempted to implement the simulation of the model that is as close to 
+We have implemented the simulation of the model as closely to 
 the description of the model as possible. However, as we have seen in 
 section~\ref{sec:model-to-simulation}, there has been some areas where we have 
-had to fill in some details that have not been explained in the articles 
+had to fill in details that have not been explained in the articles 
 describing the model. Indeed, in the formulation of the model itself, we have 
 been forced to add features from different articles because the description in 
 the original article was insufficient. It is possible that some of these 
