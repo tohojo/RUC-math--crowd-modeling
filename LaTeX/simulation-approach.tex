@@ -82,8 +82,8 @@ pedestrians, splitting the calculations this way enables us to do the
 calculations of pedestrians in any order, and even parallel. The drawback 
 is that the pedestrians are only affected by the movement and positions of 
 other pedestrians as they were at the end of the last simulation step. This 
-means that the time step has to be small enough that this doesn't matter in 
-practice.
+means that the time step has to be chosen appropriately, as explained in 
+section~\ref{sec:continuous-movement}.
 
 The acceleration vectors for each pedestrian, $\alpha$, is calculated in three 
 steps, corresponding to the parts $\overrightarrow{f_\alpha^d}$, 
