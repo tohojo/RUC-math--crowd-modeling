@@ -146,15 +146,15 @@ In our simulations of the square room scenario we have clogging in the
 doorways as expected (see figure~\ref{subfig:image-square-room}). 
 
 It has been nesecarry to lower the relaxation time of the pedestrians, 
-$\tau$, when doing these simulation because with $\tau = 1$ the 
-pedestrians would hit a equlibrium formation at the end of the 
-simulation. That is when there were about three to four pedestrians 
-left they would lock into position where all the forces acting on 
-them resulted in zero. In this case we would expect the impatience 
-factor to kick in after a  while but sometimes the pedestrians stand 
-still for more than $100$ seconds and we have had to shut down the simulation. 
-With a lower $\tau$ we avoid this because it makes the impatience 
-factor have a stronger effect.
+$\tau$, from $1$ to $0.95$ when doing these simulation because 
+with $\tau = 1$ the pedestrians would hit a equlibrium formation at 
+the end of the simulation. That is when there were about three to four 
+pedestrians left they would lock into position where all the forces 
+acting on them resulted in zero. In this case we would expect the 
+impatience factor to kick in after a  while but sometimes the pedestrians 
+stand still for more than $100$ seconds and we have had to shut down 
+the simulation. With a lower $\tau$ we avoid this because it makes 
+the impatience factor have a stronger effect.
 
 When we plot the time to leave the room as a function of the initial 
 desired velocity with values from $0,75$ to $3,0$. As shown in 
@@ -165,14 +165,14 @@ leaving time either. Looking at the results, we conclude that we
 do not see the faster-is-slower effect.
 
 But we do see that the time to leave the room in the interval 
-from $0.75$ to $1.5$ is close the the time preented in \cite{helbing00}
+from $0.25$ to $1.5$ is close the the time presented in \cite{helbing00}. 
 
 \begin{figure}[ht]
     \centering
     \subfloat[Screen shot taken from the simulation]{
-	\resizebox{0.45\textwidth}{!}{\input{Figures/time-to-clear.tex}}
+	\resizebox{0.35\textwidth}{!}{\input{Figures/time-to-clear-room.tex}}
     	}
-	\subfloat[Graph of the time to clear the room as a function of mean desired velocity.]{\includegraphics[width=0.8\textwidth]{Figures/time-to-clear.pdf}}
+	\subfloat[Graph of the time to clear the room as a function of mean desired velocity.]{\includegraphics[width=0.65\textwidth]{Figures/time-to-clear.pdf}}
 \caption[Leaving time for the square room]{Leaving time for the square 
     room. We do not see the increase in leaving time as we increase the initial 
     desired speed.}
