@@ -7,6 +7,7 @@ the interaction forces, a discussion of parameter values, and a
 discussion of possible errors related to our implementation of the simulation.
 
 \subsection{Modifying interaction forces}
+\label{sec:new-forces}
 An obvious possibility when discussing why we do not see the expected results, 
 is analysing the forces that comprise the model. Two things become apparent: 
 none of the forces in the model are dependent on the current velocities of the 
@@ -20,7 +21,7 @@ would make it harder for pedestrians to move in dense crowds.  Other
 effects related to clogging of passages, such as the freezing by heating 
 effect might also be more apparent given frictional forces.
 
-\begin{figure}
+\begin{figure}[hb]
     \centering
     \begin{tikzpicture}
         \node (p1) [pedestrian] {};

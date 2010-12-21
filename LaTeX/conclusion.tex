@@ -2,35 +2,76 @@
 \section{Conclusion}
 \label{sec:conclusion}
 
-To answer the problem formulation, we have worked with the 
-concept of social force models in thorough details. 
+We have created a computer simulation of a social force model in order to 
+study social force models in general and find out what they can tell us about 
+crowds, which assumptions underlie these types of models and what their 
+strengths and weaknesses are.
 
-Based on our analysis of the model, we have constructed a computer simulation of
-the model analogou to what is presented in section~\ref{sec:social-forces}.
-Our implementation of the simulation is discussed in section~\ref{sec:simulation}, 
-including set up of parameters and initial conditions, 
-the structure of our simulation and how we obtain results from it.
+In order to create this simulation, we have first examined the field of social 
+force modelling and presented the variations that exist, as well as some of 
+the results that are presented in the literature. We have picked an exemplary 
+model that is described in detail in the article that presents it, and 
+analysed it in detail. In this process we have had to fill in details from 
+articles other than the one that presents our chosen model.
 
-We have been able to get a working simulation of the social force model 
-presented in \cite{self-org} with components taken from \cite{ABconstant}. 
-The most basic dynamics og the simulations seems to be running like as it 
-should and our simulations show lane formation in bidirectional flow. We also  
-see oscillatory flow at bottlenecks however freezin-by-heating 
-and faster-is-slower effect is not observed at all.
+Based on the analysis of the model, we have implemented our simulation of the 
+model. While doing this, we have had to fill in some details in order to go 
+from the abstract model formulation to a concrete numerical simulation. These 
+details include how to approximate the movement of pedestrians, how to set 
+initial conditions and values, and how to implement the interaction between 
+pedestrians and walls in practice.
 
-We have discussed several possible cause for discrepancies in our model, and 
-possible remedies. This can be narrowed down to two possibilities. 
-One is that there is a lag of features in the model, like frictional forces and ect. 
-The other possibility is the implementation of the model 
-has been done wrongly and therefore errors occur throughout the simulations. 
+From our results, it is clear that we have successfully implemented a running 
+model simulation, that (with the right parameters) exhibits reasonable 
+pedestrian behaviour upon visual inspection. We have not done an exhaustive 
+review of the different parameters' effect on the simulations, however, since 
+we have deemed doing so manually impractical, and we have not been able to 
+come up with a way to automate it. As such, we are not able to say anything 
+conclusive about the parameters' effect on model results.
+
+We have attempted to replicate the results we have seen in the literature.  
+While some results have been successfully replicated, other effects do not 
+manifest themselves in our results. We have discussed several reasons for this 
+discrepancy, including features that are lagging from the model, parameter 
+values, effects of using random numbers to generate the initial conditions and 
+possible errors in our implementation of the model.
+
+Based on the results of our own simulations and our review of the social force 
+modelling field, we have assessed social force models and their strengths and 
+weaknesses. We conclude that social force models are not built on any theories 
+for the behaviour of crowds, but are created to replicate a set of 
+observations. As such, any confidence in their predictions must come from a 
+record of producing results fitting observations; and since the field is 
+relatively new, they have not yet reached this state. Social force models do, 
+however, provide a practical way to simulate something that would otherwise be 
+impossible to simulate. As such, they are the best available way to provide 
+e.g. guidance when designing facilities that must accommodate many 
+pedestrians, and given time the accuracy of their predictions will probably 
+increase.
+
 
 \subsection{Further work}
-Since the simulation we present in the report did't reproduce all the phenomena described in
-section \ref{subsec:ThePhenomena}, if given more time our group would like to solve the discrepancies and add the possible solutions that has been talked about in section~\ref{sec:discussion}. The first thing we would implement into the model would be the frictional force, and make the frictional and repulsive forces velocity dependent. This should possibly give rise to the slow-is-faster effect and the freezing-by-heating effect, further more is should make the predictions made by the model more precise.
-One could add path finding, enabling the model to simulate complex environments.
+We see three main directions our work could be continued in: adding new 
+features to the model, examining parameter interdependence and the effects of 
+different parameter values on the model behaviour and testing our model 
+implementation on real world observations.
 
-The interaction between the different parameters is interesting to learn more about. Our simulations shows us that changing one parameter, like the mean velocity, implies a change in the constants controlling interaction between pedestrians and interaction with walls. It is not at the moment completely clear how this interaction works. Also a more systematic work with the different constants could be interesting in learning the limitations of the model.  
+In section~\ref{sec:new-forces}, we discuss features that we believe would 
+improve the results obtained from the simulations if added to the model. A 
+possible avenue for further work would be adding some of these features and 
+examining what impact, if any, they have on the model behaviour. Among the 
+evaluated features could be substituting another way to approximate pedestrian 
+movement than using Euler's method as we do.
 
-It would be interesting to examen how large an error occur due to the euler approximation and if this error is of any significants to the predictions made by the model. If sow would some other method of approximation give rise to any significant improvements.
+Another possible expansion of our work is coming up with a way to 
+automatically test whether a simulation run is viable (i.e. doesn't break down 
+due to pedestrians walking through walls etc.), and using this to test 
+different parameter settings to discover which parameters are interdependent, 
+and how different parameter setting affect the viability of the simulations.
 
-Another interesting investigation could consist of making predictions and evaluating actual designs such ass malls, theaters etc. Then investigate the predictions made by the model, compared to the fire marshals actual recommendations concerning the number of people allowed in the room, the number of fire exists, how much time should it take to clear the room, etc. Does the predictions made by the models correspond to real life recommendations?
+Finally, we think it would be interesting to compare the results of our 
+simulations with real world observations. While some articles compare 
+the results of simulations with real world observations, these comparisons are 
+specific to the simulation implementations used in the article (the details of 
+which are not always available). We think it would be interesting to test our 
+implementation of the simulation against real world observations.

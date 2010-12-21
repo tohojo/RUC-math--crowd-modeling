@@ -146,8 +146,9 @@ In our simulations of the square room scenario we have clogging in the
 doorways as expected (see figure~\ref{subfig:image-square-room}). We have 
 plotted the time to leave the room as a function of the initial desired 
 velocity with values from $0,5$ to $5,0$. As can be seen in 
-figure~\ref{fig:square-room-leaving}, we do not see the increasing leaving 
-time, although it is not a linear relationship between the velocity and 
+figure~\ref{fig:square-room-leaving}, we do not see the leaving 
+time increase with initial desired speed within any specific interval, although 
+it is not a linear relationship between the velocity and 
 leaving time either. Looking at the results, we conclude that we  do not see 
 the faster-is-slower effect.
 
@@ -155,13 +156,14 @@ the faster-is-slower effect.
     \centering
     \includegraphics[width=0.8\textwidth]{Figures/timetoclearroom.pdf}
     \caption[Leaving time for the square room]{Leaving time for the square 
-    room. We do not see the increase in leaving time as we increase the speed.}
+    room. We do not see the increase in leaving time as we increase the initial 
+    desired speed.}
     \label{fig:square-room-leaving}
 \end{figure}
 
 \subsubsection{Freezing by heating effect}
 The freezing by heating effect occurs when pedestrians are moving in opposite 
-directions and they block each other when the velocity increases (see 
+directions and they block each other when the initial desired velocity increases (see 
 section~\ref{sec:article-results}). The illustration of this effect as 
 presented in \cite{oscil} can be seen in 
 figure~\ref{fig:freezing_by_heating_litterature}.
@@ -170,8 +172,8 @@ figure~\ref{fig:freezing_by_heating_litterature}.
     \centering
     \subfloat[]{\includegraphics[width=0.45\textwidth]{Figures/heatfreeze.png}}
     \caption[Freezing by heating effect from \cite{oscil}]{Freezing by heating 
-    effect from \cite{oscil}. Pedestrians block each other as a result of the 
-    freezing by heating.}
+    effect from \cite{oscil}. Pedestrians block each other when the 
+    freezing by heating phenomenon occurs.}
     \label{fig:freezing_by_heating_litterature}
 \end{figure}
 
@@ -222,7 +224,8 @@ the lane formation occurs in all of the cases.
     }
     \caption[Lane formation in corridor simulations]{Lane formation in 
     corridor simulations. The colours indicate the direction the pedestrians 
-    are moving in. Lane formation can be seen in all three cases.}
+    are moving in. The blue ones are walking to the left; the green ones 
+    are walking to the right. Lane formation can be seen in all three cases. }
     \label{fig:laneformation}
 \end{figure}
 
@@ -238,7 +241,7 @@ whether the oscillatory flow occurs. Clogging appears in both ends of the
 bottleneck and people are sometimes squeezed through the bottleneck. To get a 
 better indication of whether or not oscillation occurs, we have graphed the 
 flow rate in each direction. This graph is seen in 
-figure~\ref{fig:oscillitoryflow}. The graph does not show a clear indication 
+figure~\ref{fig:oscillatory-flow}. The graph does not show a clear indication 
 of oscillating flows, however a possible source of error is that the flow rate 
 is measure at the ends of the corridor, which may dilute the effect as 
 pedestrians are passing through the crowd after having passed through the 
@@ -261,15 +264,21 @@ results are not completely clear.
 
 \begin{figure}[h]
     \centering
-    \subfloat[Bidirectional flow in a corridor.]{\includegraphics[width=0.45\textwidth]{Figures/flowrateBiDirecBottle.pdf}}
-    \subfloat[Bidirectional flow in a corridor with a bottleneck.]{
+    \subfloat[Flowrates measured at each end of the corridor]{
+        \includegraphics[width=0.45\textwidth]{Figures/flowrateBiDirecBottle.pdf}
+        \label{subfig:flow-graph}
+    }
+    \subfloat[Clogging of a bottleneck]{
         \resizebox{0.45\textwidth}{!}{\input{Figures/corridorbottleBiClog.tex}}
+        \label{subfig:bottleneck}
     }\\
     
-    \caption[Lane formation in corridor simulations]{Lane formation in 
-    corridor simulations. The colours indicate the direction the pedestrians 
-    are moving in. Lane formation can be seen in all three cases.}
-    \label{fig:laneformation}
+    \caption[Oscillatory flow simulations]{Oscillatory flow simulations. 
+    \subref{subfig:flow-graph} Flowrates measured at each end of the corridor 
+    of a simulation. While there is some alternating behaviour it is not clear 
+    whether oscillatory flow occurs. \subref{subfig:bottleneck} Clogging at a 
+    bottleneck when pedestrians approach it from both directions.}
+    \label{fig:oscillatory-flow}
 \end{figure}
 
 \subsection{Summary}
