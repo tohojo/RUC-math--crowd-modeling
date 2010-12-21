@@ -143,19 +143,37 @@ $1,5m/s$ (figure~\ref{subfig:fast-slow-graph}).
 \end{figure}
 
 In our simulations of the square room scenario we have clogging in the 
-doorways as expected (see figure~\ref{subfig:image-square-room}). We have 
-plotted the time to leave the room as a function of the initial desired 
-velocity with values from $0,5$ to $5,0$. As can be seen in 
+doorways as expected (see figure~\ref{subfig:image-square-room}). 
+
+It has been nesecarry to lower the relaxation time of the pedestrians, 
+$\tau$, when doing these simulation because with $\tau = 1$ the 
+pedestrians would hit a equlibrium formation at the end of the 
+simulation. That is when there were about three to four pedestrians 
+left they would lock into position where all the forces acting on 
+them resulted in zero. In this case we would expect the impatience 
+factor to kick in after a  while but sometimes the pedestrians stand 
+still for more than $100$ seconds and we have had to shut down the simulation. 
+With a lower $\tau$ we avoid this because it makes the impatience 
+factor have a stronger effect.
+
+When we plot the time to leave the room as a function of the initial 
+desired velocity with values from $0,75$ to $3,0$. As shown in 
 figure~\ref{fig:square-room-leaving}, we do not see the leaving 
-time increase with initial desired speed within any specific interval, although 
-it is not a linear relationship between the velocity and 
-leaving time either. Looking at the results, we conclude that we  do not see 
-the faster-is-slower effect.
+time increase with initial desired speed within any specific interval, 
+although it is not a linear relationship between the velocity and 
+leaving time either. Looking at the results, we conclude that we  
+do not see the faster-is-slower effect.
+
+But we do see that the time to leave the room in the interval 
+from $0.75$ to $1.5$ is close the the time preented in \cite{helbing00}
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.8\textwidth]{Figures/timetoclearroom.pdf}
-    \caption[Leaving time for the square room]{Leaving time for the square 
+    \subfloat[Screen shot taken from the simulation]{
+	\resizebox{0.45\textwidth}{!}{\input{Figures/time-to-clear.tex}}
+    	}
+	\subfloat[Graph of the time to clear the room as a function of mean desired velocity.]{\includegraphics[width=0.8\textwidth]{Figures/time-to-clear.pdf}}
+\caption[Leaving time for the square room]{Leaving time for the square 
     room. We do not see the increase in leaving time as we increase the initial 
     desired speed.}
     \label{fig:square-room-leaving}
@@ -215,7 +233,7 @@ figure~\ref{fig:freezing_by_heating_litterature}.
 \begin{figure}[h]
     \centering
     \subfloat[Freezing by heating effect from \cite{oscil}.]{\includegraphics[width=0.45\textwidth]{Figures/heatfreeze.png}}
-	\subfloat[Freezing-by-heating effect from our simulation.]\resizebox{0.45\textwidth}{!}{\input{Figures/freezing-by-heating.tex}}
+	\subfloat[Freezing-by-heating effect from our simulation.]{\resizebox{0.45\textwidth}{!}{\input{Figures/freezing-by-heating.tex}}}
     \caption[Comparison of Freezing-by-heating effect from \cite{oscil} with our own.]{Comparison of Freezing-by-heating effect from \cite{oscil} (a) with our own (b). Pedestrians block each other when the lanes break down.}
     \label{fig:freezing_by_heating_litterature}
 \end{figure}
@@ -280,7 +298,7 @@ results are not completely clear.
 We have seen that our simulation is able to show reasonable results of 
 pedestrians moving through our chosen scenarios. We have simulated four 
 different scenarios, and tried to replicate the results presented in the 
-literature. We have not been able to replicate either the faster-is-slower 
-effect or freezing by heating. Lane formation we do see, and it is unclear 
+literature. We have not been able to replicate the faster-is-slower 
+effect. Lane formation and freezing-by-heating we do see, and it is unclear 
 whether oscillatory flows are seen, perhaps partly because our way of 
 measuring this is not very good.
