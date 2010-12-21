@@ -325,13 +325,15 @@ repulsion force from walls.
 The algorithm is run for each pedestrian. Its input is the pedestrian 
 positions, $p_\alpha$, and the set of starting points and endpoints of the 
 walls. The output is the set of points from which repulsion should be 
-calculated. A set of endpoints that are already used and endpoints that are 
-candidates for repulsion are used during the operation of the algorithm.
+calculated (one for each wall). A set of endpoints that are already used and 
+endpoints that are candidates for repulsion are used during the operation of 
+the algorithm.
 
 \begin{enumerate}
     \item For each wall, calculate the projection of the vector pointing from 
         the wall's starting point to the pedestrian, unto the vector pointing 
         from the wall's starting point to its endpoint.
+
         \begin{enumerate}
             \item If this point is part of the wall, add it to the set of 
                 points repulsion should be calculated from, and add the wall's 
