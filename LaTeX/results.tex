@@ -17,43 +17,28 @@ give reasonable results.
 \subsubsection{Scenarios}
 As outlined in section~\ref{sec:scenario-presentation}, we will simulate two 
 different main scenarios, a square room and a corridor, with some variations 
-of the latter. Counting these variations, we simulate four different 
-scenarios: A rectangle shaped room with a door in the middle of one of the 
-walls, and a normal corridor, a corridor with a bottleneck in the middle and a 
-corridor with a sudden open space. In the corridors we do simulations of both 
-uni-- and birectional flow. Images of each of these scenarios are presented in 
-figure \ref{fig:fourcases}.
+of the latter. Counting the variations, we simulate three different scenarios: 
+A rectangle shaped room with a door in the middle of one of the walls, and a 
+normal corridor and a corridor with a bottleneck in the middle.  In the 
+corridors we do simulations of both uni-- and birectional flow. Images of each 
+of these scenarios are presented in figure \ref{fig:simulated-cases}.
 
 \begin{figure}[h]
     \centering
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \subfloat[Square room.]{
-        \resizebox{0.7\textwidth}{!}{\input{Figures/squareroomps.tex}}
+    \subfloat[Square room.]{
+        \resizebox{0.45\textwidth}{!}{\input{Figures/squareroomps.tex}}
         \label{subfig:image-square-room}
-        } 
-        \\
-        \subfloat[Bottleneck.]{
-        \resizebox{\textwidth}{!}{\input{Figures/bottleneckps.tex}}
-        \label{subfig:image-bottleneck}
-    	}
-    \end{minipage}
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \vspace{1.4cm}
-		\subfloat[Corridor.]{
-        \resizebox{\textwidth}{!}{\input{Figures/normalcorridorps.tex}}
+    }\\
+    \subfloat[Corridor.]{
+        \resizebox{0.45\textwidth}{!}{\input{Figures/normalcorridorps.tex}}
         \label{subfig:image-corridor}       
- 		}
-		\\
-        \vspace{6mm}
-        \subfloat[Corridor with an opening.]{
-        \resizebox{\textwidth}{!}{\input{Figures/widekinksps.tex}}
-        \label{subfig:image-widekinks}
-        }
-    \end{minipage}
-    \caption{Images of the four scenarios we simulate.}
-    \label{fig:fourcases}
+    }
+    \subfloat[Bottleneck.]{
+        \resizebox{0.45\textwidth}{!}{\input{Figures/bottleneckps.tex}}
+        \label{subfig:image-bottleneck}
+    }
+    \caption{Images of the three scenarios we simulate.}
+    \label{fig:simulated-cases}
 \end{figure}
 
 \subsubsection{Parameters}
@@ -77,8 +62,8 @@ the change has been necessary.
             Wall repulsion strength & $U$ &  $10,0$ \\
             \midrule
             \multicolumn{3}{c}{\textsf{Initial conditions}}\\
-            Mean pedestrian radius & $R_\alpha$ & $0,3 m \pm 0,05 m$\\
-            Mean desired velocity &  $V^{Id}_\alpha$ &  $1,34\frac{m}{s} \pm 0,26
+            Mean pedestrian radius & $R_\alpha$ & $0,3 \pm 0,05 m$\\
+            Mean desired velocity &  $V^{Id}_\alpha$ &  $1,34 \pm 0,26
             \frac{m}{s}$ \\
             Max velocity factor &  &  $1,3$ \\
             Relaxation time & $\tau$ & $1,0 s$\\
@@ -93,13 +78,13 @@ the change has been necessary.
 \subsubsection{General behaviour of the model}
 Our simulations have shown that it is indeed possible to create simulations 
 that upon visual inspection show reasonable behaviour of the pedestrians. That 
-is, pedestrians do not pass through the walls or each other, and we see clogging 
-of exits as we expected. However, the behaviour is very much dependent on the 
-parameter values. This means that if, for example, the mean initial desired 
-velocity for the pedestrians is increased, pedestrians will start walking 
-through each other and the walls. This can be remedied by also increasing 
-the parameters controlling the magnitude of the repulsive forces, which 
-indicates that there is some interdependence of the parameters. We have 
+is, pedestrians do not pass through the walls or each other, and we see 
+clogging of exits as we expected. However, the behaviour is very much 
+dependent on the parameter values. This means that if, for example, the mean 
+initial desired velocity for the pedestrians is increased, pedestrians will 
+start walking through each other and the walls. This can be remedied by also 
+increasing the parameters controlling the magnitude of the repulsive forces, 
+which indicates that there is some interdependence of the parameters. We have 
 not done a detailed analysis of this, though.
 
 For examples of simulations we've made films available along with the source 
@@ -110,8 +95,8 @@ code for the simulations\footnote{See
 In this section we present the results we obtained from our attempts
 to replicate the results from the literature outlined in 
 section~\ref{sec:article-results}.  For each of the results we will go into 
-more detail on the phenomenon we seek to replicate, and then present how 
-well our results match the expected. The results we replicate are presented in 
+more detail on the phenomenon we seek to replicate, and then present how well 
+our results match the expected. The results we replicate are presented in 
 detail in several different articles, but according to \cite{self-org}, they 
 should all be possible to see using the model we are simulating.
 
@@ -148,49 +133,45 @@ doorways as expected (see figure~\ref{subfig:image-square-room}).
 In \cite{helbing00} they simulate a square room with dimensions 
 $15\text{m} \cdot 15\text{m}$ with $200$ pedestrians as shown in 
 figure \ref{fig:LtNFasterIsSlower}. In order to compare our results 
-with theirs we simulate the same scenario.
+with theirs we simulate a corresponding scenario.
 
-It has been nesecarry to lower the relaxation time of the pedestrians, 
-$\tau$, from $1$ to $0.95$ when doing these simulation because 
-with $\tau = 1$ the pedestrians would hit a equlibrium formation 
-in front of the door when there are three or four pedestrians left. 
-In this case we would expect the impatience factor to kick in after 
-a while but sometimes the pedestrians stand still for more than $100$ 
-seconds and we have had to shut down the simulation. With a lower $\tau$ 
-we avoid this because it makes the impatience factor have a stronger effect. 
+It has been necessary to lower the relaxation time of the pedestrians, $\tau$, 
+from $1$ to $0.95$ when doing these simulation because with $\tau = 1$ the 
+pedestrians would end up in a locked state in front of the door when there are 
+three or four pedestrians left, where the repulsion between the pedestrians 
+prevent either of them of passing through the doorway. With a lower value of 
+$\tau$ this effect does not occur. 
 
-It has also been necesarry to remove the mean velocity deviation 
-when working at low velocities because some agents got an extremely 
-low initial desired velocity which resulted in extreme and unrealistic 
-leaving times.
+It has also been necessary to remove the variation of the mean velocity when 
+working at low velocities because some pedestrians ended up with an extremely 
+low initial desired velocity which resulted in extremely high leaving times 
+(for further discussion of this, see section~\ref{sec:random-errors}).
 
-When we plot the time to leave the room as a function of the initial 
-desired velocity with values from $0,75$ to $3,0$, as shown in 
-figure~\ref{fig:square-room-leaving}, we do not see the leaving 
-time increase with initial desired speed within any specific interval. 
-Looking at the results, we conclude that we do not see the faster-is-slower 
-effect.
+When we plot the time to leave the room as a function of the initial desired 
+velocity with values from $0,75$ to $3,0$, as shown in 
+figure~\ref{fig:square-room-leaving}, we do not see the leaving time increase 
+with initial desired speed within any specific interval.  Looking at the 
+results, we conclude that we do not see the faster-is-slower effect.
 
-We choose to stop the initial desired speed at $3.0 \text{m}/\text{s}$ 
-because if you increase it beyond this value people will start 
-going through the wall and extreme overlapping occurs. One could 
-avoid this by also increasing the wall potential and the 
-streanght of the social force, but such varyation are not 
-mentioned in the article. How they have managed to increase 
-the initial desired velocity to $10.0 \text{m}/\text{s}$ without 
-these effect we can't say. But we do see that the time to leave the 
-room in the interval from $0.25$ to $1.5$ is close the the time 
-presented in \cite{helbing00}. 
+We choose to stop the initial desired speed at $3.0 \text{m}/\text{s}$ because 
+if you increase it beyond this value people will start going through the walls 
+and each other. One could avoid this by also increasing the wall potential and 
+the strength of the social force, but such adjustments are not mentioned in 
+the article. How they have managed to run model simulations with the initial 
+desired velocity set to $10.0 \text{m}/\text{s}$ without seeing these errors 
+is not clear.
 
 \begin{figure}[ht]
     \centering
     \subfloat[Screen shot taken from the simulation]{
-	\resizebox{0.35\textwidth}{!}{\input{Figures/time-to-clear-room.tex}}
-    	}
-	\subfloat[Graph of the time to clear the room as a function of mean desired velocity.]{\includegraphics[width=0.65\textwidth]{Figures/time-to-clear.pdf}}
-\caption[Leaving time for the square room]{Leaving time for the square 
-    room. We do not see the increase in leaving time as we increase the initial 
-    desired speed.}
+        \resizebox{0.35\textwidth}{!}{\input{Figures/time-to-clear-room.tex}}
+    }
+    \subfloat[Time to clear the room as a function of mean desired velocity.]{
+        \includegraphics[width=0.65\textwidth]{Figures/time-to-clear.pdf}
+    }
+    \caption[Leaving time for the square room]{Leaving time for the square 
+    room. We do not see the increase in leaving time as we increase the 
+    initial desired speed.}
     \label{fig:square-room-leaving}
 \end{figure}
 
@@ -216,9 +197,9 @@ figure~\ref{fig:lanes-literature}.
     \label{fig:lanes-literature}
 \end{figure}
 
-Since we have three different corridor cases we have looked for lane
-formation in all of them. As can be seen in figure~\ref{fig:laneformation}, 
-the lane formation occurs in all of the cases.
+Since we have two different corridor cases we have looked for lane
+formation in both of them. As can be seen in figure~\ref{fig:laneformation}, 
+the lane formation occurs in both cases.
 
 \begin{figure}[h]
     \centering
@@ -227,35 +208,37 @@ the lane formation occurs in all of the cases.
     }
     \subfloat[Bidirectional flow in a corridor with a bottleneck.]{
         \resizebox{0.45\textwidth}{!}{\input{Figures/corridor-01899.tex}}
-    }\\
-    \subfloat[Bidirectional flow in a corridor with a widening.]{
-        \resizebox{0.45\textwidth}{!}{\input{Figures/corridor-01999.tex}}
     }
     \caption[Lane formation in corridor simulations]{Lane formation in 
     corridor simulations. The colours indicate the direction the pedestrians 
-    are moving in. The blue ones are walking to the left; the green ones 
-    are walking to the right. Lane formation can be seen in all three cases. }
+    are moving in. The blue ones are walking to the left; the green ones are 
+    walking to the right. Lane formation can be seen in both cases. }
     \label{fig:laneformation}
 \end{figure}
 
 \subsubsection{Freezing by heating effect}
-The freezing by heating effect occurs when the lane formations break 
-down due to extreme densities. This results in a clogging that brings 
-the pedestrians to a complete halt (see section~\ref{sec:article-results}). 
-The illustration of this effect as presented in \cite{oscil} can be seen in 
+The freezing by heating effect occurs when the lane formations break down due 
+to extreme densities. This results in a clogging that brings the pedestrians 
+to a complete halt (see section~\ref{sec:article-results}).  The illustration 
+of this effect as presented in \cite{oscil} can be seen in 
 figure~\ref{fig:freezing_by_heating_litterature}.
 
 \begin{figure}[h]
     \centering
-    \subfloat[Freezing by heating effect from \cite{oscil}.]{\includegraphics[width=0.45\textwidth]{Figures/heatfreeze.png}}
-	\subfloat[Freezing-by-heating effect from our simulation.]{\resizebox{0.45\textwidth}{!}{\input{Figures/freezing-by-heating.tex}}}
-    \caption[Comparison of Freezing-by-heating effect from \cite{oscil} with our own.]{Comparison of Freezing-by-heating effect from \cite{oscil} (a) with our own (b). Pedestrians block each other when the lanes break down.}
+    \subfloat[Freezing by heating effect from \cite{oscil}.]{
+        \includegraphics[width=0.45\textwidth]{Figures/heatfreeze.png}
+    }
+    \subfloat[Freezing-by-heating effect from our simulation.]{
+        \resizebox{0.45\textwidth}{!}{\input{Figures/freezing-by-heating.tex}}
+    }
+    \caption[Freezing-by-heating effect from \cite{oscil} compared with our 
+    own.]{Freezing-by-heating effect from \cite{oscil} compared with our own.}
     \label{fig:freezing_by_heating_litterature}
 \end{figure}
 
-We have been able to reproduce the freezing-by-heating effect in 
-all corridor cases. Actually it has been a challange not to produce the 
-effect when running simulations with high density.  
+We have been able to reproduce the freezing-by-heating effect in both corridor 
+cases. Actually, in most cases run with a high density of pedestrians, we see 
+the effect in our simulations.  
 
 \subsubsection{Oscillating flows}
 Oscillating flows occur when clogging occurs at a bottleneck, and small groups 
@@ -264,14 +247,14 @@ bottleneck. The effect is described in \cite{oscil}, but it is not clear how
 they measure it. Figure~\ref{fig:oscillitoryflow_litterature} shows the 
 illustration from the article that explains the effect.
 
-When looking at the simulation while it is running it is not immediately clear 
-whether the oscillatory flow occurs. Clogging appears in both ends of the 
-bottleneck and people are sometimes squeezed through the bottleneck. To get a 
-better indication of whether or not oscillation occurs, we have graphed the 
-flow rate in each direction. This graph is seen in 
+When looking at the simulation, it is apparent that clogging appears in both 
+ends of the bottleneck and people are sometimes squeezed through the 
+bottleneck, but it is not immediately clear whether this constitutes an 
+oscillating flow.  To get a better indication of whether or not oscillation 
+occurs, we have graphed the flow rate in each direction. This graph is seen in 
 figure~\ref{fig:oscillatory-flow}. The graph does not show a clear indication 
 of oscillating flows, however a possible source of error is that the flow rate 
-is measure at the ends of the corridor, which may dilute the effect as 
+is measured at the ends of the corridor, which may dilute the effect as 
 pedestrians are passing through the crowd after having passed through the 
 bottleneck. However, in the way our simulation is implemented, it is not 
 possible to distinguish between pedestrians moving in different directions 
@@ -279,6 +262,7 @@ when measuring the flow rate in the middle of the bottleneck.
 
 In conclusion, we may be able to replicate the oscillating flows, but the 
 results are not completely clear.
+
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.4\textwidth]{Figures/oscil_flow.png}
@@ -311,9 +295,9 @@ results are not completely clear.
 
 \subsection{Summary}
 We have seen that our simulation is able to show reasonable results of 
-pedestrians moving through our chosen scenarios. We have simulated four 
+pedestrians moving through our chosen scenarios. We have simulated three  
 different scenarios, and tried to replicate the results presented in the 
-literature. We have not been able to replicate the faster-is-slower 
-effect. Lane formation and freezing-by-heating we do see, and it is unclear 
-whether oscillatory flows are seen, perhaps partly because our way of 
-measuring this is not very good.
+literature. We have not been able to replicate the faster-is-slower effect. 
+Lane formation and freezing-by-heating we do see, and it is unclear whether 
+oscillating flows are seen, perhaps partly because our way of measuring this 
+is not very good.
