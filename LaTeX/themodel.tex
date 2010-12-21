@@ -89,6 +89,7 @@ and will be described in detail in the following sections.
         $\overrightarrow{V_{\alpha}}$ & Velocity of pedestrian $\alpha$ \\
         \addlinespace[0.3em]
         $R_\alpha$ & Radius of pedestrian $\alpha$\\
+        $\overrightarrow{e_\alpha}$ & Unit vector towards $\alpha$'s target.\\
         \bottomrule
     \end{tabular}
     \caption{Summary of main forces and base notation.}
@@ -97,10 +98,10 @@ and will be described in detail in the following sections.
 
 \subsection{The desired movement force}
 \label{sec:desired-force}
-The \emph{desired movement force} represents the pedestrians' desire to move towards its
-target. The idea is that a pedestrian, if unhindered, will move towards its
-target at an initial desired speed that is given as a model parameter. The
-desired movement force is a velocity dependent force given by:
+The \emph{desired movement force} represents the pedestrians' desire to move 
+towards its target. The idea is that a pedestrian, if unhindered, will move 
+towards its target at an initial desired speed that is given as a model 
+parameter. The desired movement force is a velocity dependent force given by:
 
 \begin{equation}\label{eqn:desired-force}
 	\overrightarrow{f^{d}_{\alpha}} (t) =
@@ -113,15 +114,16 @@ Here $V_{\alpha}^{d}(t)$ is the desired speed at time $t$,
 $\overrightarrow{e_{\alpha}}$ is the unit vector pointing towards the
 pedestrian's target and  $\overrightarrow{V_{\alpha}}(t)$ is the actual
 velocity of the pedestrian at time $t$. It is not clear from the article what
-the initial velocity of the pedestrians are (i.e.
+the initial velocity of the pedestrians is (i.e.
 $\overrightarrow{V_\alpha}(0)$), so we have assumed it to be zero.
 
 
-$\tau$ is the \emph{relaxation time} and determines how fast a pedestrian
-returns to its desired velocity after having been walking slower because of
-obstacles etc. The relaxation time is a model parameter that in principle can vary
-for each pedestrian. However, from \cite{self-org} it is clear that in
-practice, $\tau$ is the same for all pedestrians in the simulation.
+$\tau$ is the \emph{relaxation time} and scales the force, determining how 
+fast a pedestrian changes velocity and returns to its desired velocity after 
+having been walking slower because of obstacles etc. The relaxation time is a 
+model parameter that in principle can vary for each pedestrian. However, from 
+\cite{self-org} it is clear that in practice, $\tau$ is the same for all 
+pedestrians in the simulation.
 
 $V_{\alpha}^{d}(t)$ is the desired speed of the pedestrian. The desired speed
 can vary over time and is given by:
@@ -134,9 +136,11 @@ can vary over time and is given by:
 
 Here $V_{\alpha}^{Id}$ is the \emph{initial desired speed} (a model
 parameter), and $V_{\alpha}^{\text{max}}$ is the \emph{maximum desired speed}
-of pedestrian $V_{\alpha}^{\text{max}}=C V_{\alpha}^{Id}$, where C is some constant larger than 1. The maximum desired speed is given as a parameter and
-is calculated as $$. This speed is the maximum speed the pedestrian will
-try to accelerate to when compensating for slowing down because of obstacles.
+of pedestrian $\alpha$. The maximum desired speed is given as 
+$V_{\alpha}^{\text{max}}=C V_{\alpha}^{Id}$, where C is some constant larger 
+than 1, given as a parameter of the model. This speed is the maximum speed the 
+pedestrian will try to accelerate to when compensating for slowing down 
+because of obstacles.
 
 The value $\eta_{\alpha}(t)$ is called the \emph{impatience factor} of the
 pedestrian and is given by:
@@ -186,29 +190,30 @@ is defined as follows:
 
 Analysing equations~\eqref{eqn:desired-speed} and \eqref{eqn:impatience}, it
 is clear that as the average speed approaches $V^{Id}_\alpha$ so does the
-desired speed because; $\langle V_\alpha(t)\rangle \rightarrow V^{Id}_\alpha$ implies  $\eta_\alpha(t)\rightarrow0$ which implies $V^d_\alpha(t))\rightarrow $V^{Id}_\alpha$$
-
-Similar we see that $\langle V_\alpha(t)\rangle \rightarrow 0$ implies $\eta_\alpha(t)\rightarrow0$ which implies $V^d_\alpha(t))\rightarrow V^{max}_\alpha$
+desired speed, since $\langle V_\alpha(t)\rangle \rightarrow V^{Id}_\alpha$ 
+implies  $\eta_\alpha(t)\rightarrow0$ which implies $V^d_\alpha(t)\rightarrow 
+V^{Id}_\alpha$.  Correspondingly, $\langle V_\alpha(t)\rangle \rightarrow 0$ 
+implies $\eta_\alpha(t)\rightarrow0$ which implies $V^d_\alpha(t)\rightarrow 
+V^{max}_\alpha$.
 
 Since $V^{\text{max}}_\alpha$ is set to be larger than $V^{Id}_\alpha$, this
-means that as the average speed goes up, the desired speed goes down.  If
-the desired speed is in some case is lower than the actual speed, this will result in a
-negative desired movement force due to~\eqref{eqn:desired-force}, and vice
-versa. So you could say that the desired movement force acts as a
-stabilising force, that accelerates the pedestrian when it is moving slower
-than its desired speed, and decelerate it when it is moving faster, and
-allowing for movement of up to the maximum desired speed to ``make up'' for
-lost time if the pedestrian has been slowed down by the other forces acting on
-it.
+means that as the average speed goes up, the desired speed goes down.  When 
+the desired speed is lower than the actual speed, this will result in a 
+negative desired movement force due to~\eqref{eqn:desired-force}, and vice 
+versa. An interpretation of this is that the desired movement force acts as a 
+stabilising force, that accelerates the pedestrian when it is moving slower 
+than its desired speed, and decelerates it when it is moving faster, allowing 
+for movement speeds of up to the maximum desired speed to ``make up'' for lost 
+time if the pedestrian has been slowed down by the other forces acting on it.
 
-The components of the desired movement force are summarised in
+The components of the desired movement force are summarised in 
 table~\ref{tbl:desired-force}.
 
 \begin{table}[h]
     \centering
     \begin{tabular}{l l}
         \toprule
-        \multicolumn{2}{c}{\textsf{Parameters of the desired movement force}}\\
+        \multicolumn{2}{c}{\textsf{Components of the desired movement force}}\\
         $\overrightarrow{V_{\alpha}}(t)$ & Velocity of pedestrian $\alpha$
         at time $t$\\
         $V_{\alpha}^{d}(t)$ & Desired speed of pedestrian $\alpha$ at time
@@ -219,18 +224,23 @@ table~\ref{tbl:desired-force}.
         $\tau$& Relaxation time \\
         \bottomrule
     \end{tabular}
-    \caption{Summary of parameters of the desired movement force}
+    \caption{Summary of components of the desired movement force}
     \label{tbl:desired-force}
 \end{table}
 
 \subsection{Interaction force between pedestrians}
 \label{seq:interaction-pedestrians}
-The \emph{interaction force} between pedestrians is a summation of all the forces between a pedestrian $\alpha$ and the other pedestrians denoted $\beta$. 
-The interaction force is repulsive in nature, and should, if high enough, prevent the pedestrians from overlapping or
-walking through each other.
+The \emph{interaction force} between pedestrians is a force acting between all 
+pedestrians in the simulation. The total interaction force affecting 
+pedestrian $\alpha$ is the summation of the forces between it and all other 
+pedestrians in the simulation.  The interaction force is repulsive in nature, 
+and prevents pedestrians from overlapping or walking through each other if the 
+magnitude of the force is sufficiently large. In the following, the force 
+acting between two pedestrians $\alpha$ and $\beta$ is described when 
+calculated for $\alpha$.
 
 The variant of this force that we present is slightly different from the one
-in \cite{self-org}.  The force from the article contained too parts with
+in \cite{self-org}.  The force from the article contained two parts with
 different constants but otherwise identical; however, no explanation was given
 for how to obtain one set of constants. We have written the authors of the
 article, and they suggested we use the values from a newer article,
@@ -250,7 +260,8 @@ position and velocity of both pedestrians, and is given by:
 
 Here $\theta_{\alpha \beta}$ is the angle between the movement direction of
 $\alpha$ and the vector pointing from $\alpha$ to $\beta$ and $d_{\alpha
-\beta}$ is the distance between the centres of the pedestrians, as seen in figure \ref{subfig:notation-interaction}.
+\beta}$ is the distance between the centres of the pedestrians, as seen in 
+figure \ref{subfig:notation-interaction}.
 
 $ w(\theta_{\alpha \beta})$ is given as:
 
@@ -265,18 +276,16 @@ $ w(\theta_{\alpha \beta})$ is given as:
     \label{angleAB}
 \end{equation}
 
-Where $0\leq \lambda \leq 1$. This and the fact that $-1\leq cos(\theta_{\alpha \beta})\leq 1$ 
-implies $\lambda \leq w \leq 1$. So $w$ is modifies the force given by
-$\overrightarrow{g}\left(d_{\alpha \beta}(t)\right)$ by an angular component.
-When $\lambda=1$, so is $w$, and no angular modification is made. When
-$\lambda<1$, the force is modified by a weight determined by the angle, giving
-higher weights to angles closer to $0$ and lower weights to angles close to
-$\pi$. This corresponds to the pedestrian paying more attention to (and thus
-interacting more strongly with) other pedestrians in front of it, than behind
-it. The $\lambda$ parameter determines how pronounced this anisotropic
-property of the model is.
-
-% TODO: we should make a drawing of this.
+Where $0\leq \lambda \leq 1$ is a parameter of the model. This, and the fact 
+that $-1\leq cos(\theta_{\alpha \beta})\leq 1$,  implies that $\lambda \leq w 
+\leq 1$. So $w$ modifies the force given by $\overrightarrow{g}\left(d_{\alpha 
+\beta}(t)\right)$ by an angular component.  When $\lambda=1$, so is $w$, and 
+no angular modification is made. When $\lambda<1$, the force is modified by a 
+weight determined by the angle, giving higher weights to angles closer to $0$ 
+and lower weights to angles closer to $\pi$. This corresponds to the pedestrian 
+paying more attention to (and thus interacting more strongly with) other 
+pedestrians in front of it, than behind it. The $\lambda$ parameter determines 
+how pronounced this anisotropic property of the model is.
 
 The interaction force, $\overrightarrow{g}\left(d_{\alpha \beta} (t)\right)$, is
 given by:
@@ -338,7 +347,7 @@ strength of the force depends on the parameter $A$.
     \centering
     \begin{tabular}{l l}
         \toprule
-        \multicolumn{2}{c}{\textsf{Parameters of the interaction force}}\\
+        \multicolumn{2}{c}{\textsf{Components of the interaction force}}\\
         $\theta_{\alpha \beta}$ & Angle between $\alpha$'s direction of
         movement and the vector from $\alpha$ to $\beta$\\
         $d_{\alpha \beta}$& Distance between pedestrians $\alpha$ and $\beta$ \\
@@ -349,18 +358,17 @@ strength of the force depends on the parameter $A$.
         $B$& Parameter controlling the range of the repulsive interaction  \\
         \bottomrule
     \end{tabular}
-    \caption{Summary of parameters of the interaction force}
+    \caption{Summary of components of the interaction force}
     \label{tbl:interaction-forces}
 \end{table}
 
 \subsection{Repulsion from the walls}
 \label{sec:wall-repulsion}
 The \emph{repulsive force} from the walls is the force that measures the 
-pedestrian's desire to avoid the wall, and prevents
-pedestrians from walking into, or even through, walls in the simulation. As
-with the interaction force between pedestrians, the repulsive force from the
-walls functions without taking into account the physical forces between walls
-and pedestrians.
+pedestrian's desire to avoid the wall, and prevents pedestrians from walking 
+into, or even through, walls in the simulation. As with the interaction force 
+between pedestrians, the repulsive force from the walls functions without 
+taking into account the physical forces between walls and pedestrians.
 
 The repulsion from the wall $\gamma$ is given by:
 
@@ -376,12 +384,13 @@ $\nabla_{\overrightarrow{p_\alpha}}$ is the gradient of the repulsive
 potential with respect to the pedestrian's position. The notation for the wall
 interaction is summarised in figure~\ref{fig:wall-notation}.
 
-It is not clear from the article how finding the nearest point on the wall is
-accomplished. In most cases this can be done by projecting the position of the
-pedestrian onto the line segment that defines a wall. Some complications
-arise because the projection it not always a point on the wall; this is discussed further
-in section~\ref{sec:repulsion-points}. In the following, we assume that the
-nearest point on the wall, $\overrightarrow{p_{\gamma \alpha}}$, is known.
+It is not clear from the article how finding the nearest point on the wall is 
+accomplished. In most cases this can be done by projecting the position of the 
+pedestrian onto the line segment that defines a wall. Some complications arise 
+because the projection it not always a point on the wall; this is discussed 
+further in section~\ref{sec:repulsion-points}. In the following, we assume 
+that the nearest point on the wall, $\overrightarrow{p_{\gamma \alpha}}$, is 
+known.
 
 \begin{figure}[ht]
     \centering
@@ -408,8 +417,8 @@ nearest point on the wall, $\overrightarrow{p_{\gamma \alpha}}$, is known.
     \label{fig:wall-notation}
 \end{figure}
 
-The definition of $h\left( d_{\alpha \gamma}(t) \right)$ is not given in
-\cite{self-org}. However, as with the interaction force between pedestrians,
+The definition of $h\left( d_{\alpha \gamma}(t) \right)$ is not given in 
+\cite{self-org}. However, as with the interaction force between pedestrians, 
 it is given in \cite{ABconstant} by:
 
 \begin{equation}
@@ -419,8 +428,8 @@ it is given in \cite{ABconstant} by:
 
 where $U$ is a constant given as a model parameter.
 
-Since $p_{\gamma \alpha}$ and $p_\alpha$ are known, the gradient can be
-calculated only for the magnitude of the force, adding the direction later.
+Since $p_{\gamma \alpha}$ and $p_\alpha$ are known, the gradient can be 
+calculated only for the magnitude of the force, adding the direction later.  
 Given this interpretation, the wall interaction force becomes:
 
 
@@ -461,7 +470,7 @@ table~\ref{tbl:wall-repulsion}.
     \centering
     \begin{tabular}{l l}
         \toprule
-        \multicolumn{2}{c}{\textsf{Parameters for wall repulsion}}\\
+        \multicolumn{2}{c}{\textsf{Compontents for wall repulsion}}\\
         $\overrightarrow{p_{\gamma \alpha}}$ & Point on the wall $\gamma$ closest to
         the pedestrian.\\
         $d_{\alpha \gamma}(t)$ & Distance from the wall $\gamma$ to pedestrian
@@ -470,7 +479,7 @@ table~\ref{tbl:wall-repulsion}.
         walls. \\
         \bottomrule
     \end{tabular}
-    \caption{Summary of parameters for wall repulsion.}
+    \caption{Summary of components for wall repulsion.}
     \label{tbl:wall-repulsion}
 \end{table}
 
@@ -489,7 +498,7 @@ decreases exponentially with distance, and its magnitude is determined by a
 model parameter.
 
 A complete summary of the model's notation and parameters is given in
-table~\ref{tbl:model-summary}.
+table~\vref{tbl:model-summary}.
 
 Our review of the model has revealed various areas that we need to address in
 order to create practical numerical simulations. We have already filled out
@@ -517,9 +526,10 @@ simulation, and how we have solved these problems.
         $\overrightarrow{V_{\alpha}}$ & Velocity of pedestrian $\alpha$ \\
         \addlinespace[0.3em]
         $R_\alpha$ & Radius of pedestrian $\alpha$\\
+        $\overrightarrow{e_\alpha}$ & Unit vector towards $\alpha$'s target.\\
 
         \midrule
-        \multicolumn{2}{c}{\textsf{Parameters of the desired movement force}}\\
+        \multicolumn{2}{c}{\textsf{Components of the desired movement force}}\\
         $\overrightarrow{V_{\alpha}}(t)$ & Velocity of pedestrian $\alpha$
         at time $t$\\
         $V_{\alpha}^{d}(t)$ & Desired speed of pedestrian $\alpha$ at time
@@ -530,7 +540,7 @@ simulation, and how we have solved these problems.
         $\tau$& Relaxation time \\
 
         \midrule
-        \multicolumn{2}{c}{\textsf{Parameters of the interaction force}}\\
+        \multicolumn{2}{c}{\textsf{Components of the interaction force}}\\
         $\theta_{\alpha \beta}$ & Angle between $\alpha$'s direction of
         movement and the vector from $\alpha$ to $\beta$\\
         $d_{\alpha \beta}$& Distance between pedestrians $\alpha$ and $\beta$ \\
@@ -541,7 +551,7 @@ simulation, and how we have solved these problems.
         $B$& Parameter controlling the range of the repulsive interaction  \\
 
         \midrule
-        \multicolumn{2}{c}{\textsf{Parameters for wall repulsion}}\\
+        \multicolumn{2}{c}{\textsf{Components for wall repulsion}}\\
         $\overrightarrow{p_{\gamma \alpha}}$ & Point on the wall $\gamma$ closest to
         the pedestrian.\\
         $d_{\alpha \gamma}(t)$ & Distance from the wall $\gamma$ to pedestrian
