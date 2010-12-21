@@ -1,0 +1,13 @@
+*.pyc 
+*.so 
+*.png 
+*.tex 
+*.tar.gz 
+*.pdf 
+*.parameters 
+*.avi 
+.gitignore
+*.o
+tar-excludes
+build
+*.swp
