@@ -22,7 +22,7 @@ nothing else is indicated. We use custom data structures to keep track of the
 pedestrians and walls while running the simulation. Python is used to set up the 
 initial conditions, run the program's main control loop, and draw the 
 simulation results through the \emph{PyGame} library \cite{pygame}. This 
-allows to do both real-time animation as well as saving each simulation step 
+allows to do real-time animation as well as saving each simulation step 
 to be assembled into a film afterwards. All calculations and data processing 
 is done in a Python extension written in C, to increase performance. Gathering 
 of data to draw the graphs and the drawing itself is done in the Python code 
@@ -53,7 +53,7 @@ scenario. The parameters defined for each scenario include:
 \begin{itemize*}
     \item The model constants, $A$, $B$, $U$, $\lambda$ and pedestrian relaxation 
         time. These are the same for all pedestrians in a simulation.
-    \item Mean desired velocity and radius of pedestrians and their standard 
+    \item Mean initial desired velocity and radius of pedestrians and their standard 
         deviation, and the factor used to calculate the maximum velocity.
     \item The initial number of pedestrians, the area(s) they start in and the 
         target(s) they move towards.
