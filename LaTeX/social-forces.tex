@@ -31,8 +31,8 @@ law of motion, since they do not represent an actual interaction between
 pedestrians, but only a desire to move in a certain direction. Finally, it 
 does not make sense to talk about the results of the forces in terms of 
 physical forces. This means that it does not make sense to talk about, e.g., 
-pressure by measuring the magnitude of the forces a pedestrian is subjected 
-to.
+pressure by directly measuring the magnitude of the forces a pedestrian is 
+subjected to.
 
 Throughout the report, whenever we refer to forces we mean social forces, 
 unless stated otherwise. In the following we give an overview of which 
@@ -97,46 +97,43 @@ formation, the ``freezing-by-heating effect'', oscillatory flows at
 bottlenecks and the ``faster-is-slower effect''.
 
 \begin{itemize}
-    \item \textbf{The ``faster-is-slower effect''.}  This effect appears when 
-        a crowd of pedestrians try to exit through a narrow passageway, such 
-        as a door leading out from a room. It has been observed that when 
-        pedestrians attempt to move faster (e.g. in panic situations) it will 
-        actually result in a \emph{longer} time for all pedestrians to leave 
-        the room, because pedestrians block each other on the way out 
-        \cite{helbing00}.
+    \item \textbf{The ``faster-is-slower effect''}  appears when a crowd of 
+        pedestrians try to exit through a narrow passageway, such as a door 
+        leading out from a room. It has been observed that when pedestrians 
+        attempt to move faster (e.g. in panic situations) it will actually 
+        result in a \emph{longer} time for all pedestrians to leave the room, 
+        because pedestrians block each other on the way out \cite{helbing00}.
 
     \item \textbf{Lane Formation} occurs when pedestrians are walking towards 
         each other from opposite directions. The effect is caused by 
         pedestrians walking in the same direction lining up behind each other 
-        and walking behind each other in lanes. This effect is seen in 
-        simulations as well as in observations of real-life crowd behaviour 
-        and is obvious when viewing drawings of the simulation 
-        \cite{self-org}.
+        and walking in lanes. This effect is seen in simulations as well as in 
+        observations of real-life crowd behaviour and is obvious when viewing 
+        illustrations of the simulation \cite{self-org}.
         
-    \item \textbf{The ``freezing-by-heating effect''.} This phenomenon also 
-        occurs when pedestrians are walking towards each other from opposite 
-        directions. The effect is seen as a clogging up of the passageway when 
-        pedestrians try to move past each other. When exhibiting this effect, 
-        the clogging is more pronounced when pedestrian velocities increase, 
-        which gives rise to the name, that refers to the states of physical 
-        matter. Normally higher energy (faster movement of particles) in 
-        matter increases the entropy of the matter, (i.e.  heating a liquid 
-        turns it into gas), but in this case (when viewing pedestrians as 
-        particles and the crowd as matter) the opposite is seen: increasing 
-        the energy (velocity) makes pedestrians stand still, corresponding to 
-        freezing of matter \cite{frebyheat}.
+    \item \textbf{The ``freezing-by-heating effect''} also occurs when 
+        pedestrians are walking towards each other from opposite directions. 
+        The effect is seen as a clogging up of the passageway when pedestrians 
+        try to move past each other. When exhibiting this effect, the clogging 
+        is more pronounced when pedestrian velocities increase, which gives 
+        rise to the name, that refers to the states of physical matter. 
+        Normally higher energy (faster movement of particles) in matter 
+        increases the entropy of the matter, (i.e.  heating a liquid turns it 
+        into gas), but in this case (when viewing pedestrians as particles and 
+        the crowd as matter) the opposite is seen: increasing the energy 
+        (velocity) makes pedestrians stand still, corresponding to freezing of 
+        matter \cite{frebyheat}.
         
-    \item \textbf{Oscillatory Flows at Bottlenecks.}
-        This effect arises when pedestrians are moving in opposite directions 
-        and pass through a bottleneck, i.e. a narrowing of the passageway.  
-        When it is not possible for groups of pedestrians to pass each other 
-        at the bottleneck, crowds will line up on both sides of the 
-        bottleneck, trying to push through.This results in an oscillatory flow 
-        when small groups of pedestrians will pass through in one direction, 
-        making room for a small group to pass through in the other, and so on.
-        This can be seen as oscillations in the measured flow rate in each 
-        direction and has been seen in both simulations and real life 
-        observations \cite{self-org}.
+    \item \textbf{Oscillatory Flows at Bottlenecks} arise when pedestrians are 
+        moving in opposite directions and pass through a bottleneck, i.e.  a 
+        narrowing of the passageway.  When it is not possible for groups of 
+        pedestrians to pass each other at the bottleneck, crowds will line up 
+        on both sides of the bottleneck, trying to push through.This results 
+        in an oscillatory flow when small groups of pedestrians will pass 
+        through in one direction, making room for a small group to pass 
+        through in the other, and so on.  This can be seen as oscillations in 
+        the measured flow rate in each direction and has been seen in both 
+        simulations and real life observations \cite{self-org}.
 \end{itemize}
 
 \subsection{Simulation scenarios}
@@ -145,15 +142,13 @@ To attempt to replicate the results presented in the preceding section, we
 will simulate two main scenarios: a square room and a corridor, with a few 
 variations.
 
-To try to replicate the faster-is-slower effect, we will simulate 
-a square room filled with pedestrians, that all try to exit through the same 
-exit. To replicate the other effects, we will simulate a corridor in several 
-variations. In the simple case, we will simulate a plain corridor with 
-pedestrians walking in both directions, and see if we get lane formation and 
-freezing by heating. We will simulate a corridor with a narrowing in the 
-middle to simulate the oscillatory flows at bottlenecks, and finally we will 
-simulate a corridor with a widening in the middle to try to replicate the 
-faster-is-slower effect in the corridor case as well. The results from our 
+To replicate the faster-is-slower effect, we will simulate a square room 
+filled with pedestrians, that all try to exit through the same exit. To 
+replicate the other effects, we will simulate a corridor in two variations. In 
+the simple case, we will simulate a plain corridor with pedestrians walking in 
+both directions, and see if we get lane formation and freezing by heating.  
+Finally, we will simulate a corridor with a narrowing in the middle to 
+replicate the oscillatory flows at bottlenecks. The results from our 
 simulations are presented in section~\ref{sec:results} and discussed in 
 section~\ref{sec:discussion}.
 
