@@ -6,9 +6,8 @@ implementation works. This is done in part to document our implementation, and
 in part to give the reader an overview of how our results are obtained.
 We will describe briefly how the program is structured on a macro level, and 
 go into more detail on the parts specific to the calculations of the model 
-parameters. The full source code is available online\footnote{Source code 
-hosted at Github: \url{https://github.com/tohojo/RUC-math--crowd-modeling}.}.
-
+parameters. The full source code is available online\footnote{See 
+\url{http://akira.ruc.dk/~tohojo/crowd-modelling}.}.
 
 Our simulation is implemented in the Python programming language, with the 
 calculation intensive parts implemented in C for performance reasons. We 
@@ -25,15 +24,7 @@ simulation results through the \emph{PyGame} library \cite{pygame}. This
 allows to do real-time animation as well as saving each simulation step 
 to be assembled into a film afterwards. All calculations and data processing 
 is done in a Python extension written in C, to increase performance. Gathering 
-of data to draw the graphs and the drawing itself is done in the Python code 
-as well. 
-
-For all random numbers, the operating system's built-in random number 
-generator is used and considered to be sufficient for our purposes. We run 
-multiple simulations of the same initial conditions by fixing the seed of the 
-random number generator to the same value for each run. Distributions are 
-drawn by using the distribution functions of the \emph{NumPy} mathematical 
-library for Python \cite{numpy}.
+of data to draw the graphs and the drawing itself is done in the Python code. 
 
 \subsection{Structure of the program}
 The program is structured into four main parts: The simulation calculations, 
@@ -83,15 +74,16 @@ described in section~\ref{sec:init-pedestrians}.
 
 \subsection{Calculation of the model}
 \label{sec:model-calculation}
-For each step of the simulation, the calculations are tun in two parts: 
-Finding the accelerations (or resulting force) for all pedestrians, and updating 
-position and velocity for the pedestrians.  Since the acceleration for each pedestrian 
-is dependent on both position and velocity of the other pedestrians, splitting the 
-calculations this way enables us to do the calculations of each pedestrian in any 
-order, and even parallel. The drawback is that the pedestrians are only affected by 
-the movement and positions of other pedestrians as they were at the end of the last 
-simulation step. This means that the time step has to be small enough that 
-this doesn't matter in practice.
+For each step of the simulation, the calculations are run in two parts: 
+Finding the accelerations (or resulting force) for all pedestrians, and 
+updating position and velocity for the pedestrians.  Since the acceleration 
+for each pedestrian is dependent on both position and velocity of the other 
+pedestrians, splitting the calculations this way enables us to do the 
+calculations of pedestrians in any order, and even parallel. The drawback 
+is that the pedestrians are only affected by the movement and positions of 
+other pedestrians as they were at the end of the last simulation step. This 
+means that the time step has to be small enough that this doesn't matter in 
+practice.
 
 The acceleration vectors for each pedestrian, $\alpha$, is calculated in three 
 steps, corresponding to the parts $\overrightarrow{f_\alpha^d}$, 
@@ -127,12 +119,12 @@ void calculate_forces(Py_ssize_t i)
 \subsubsection{Calculating the desired force}
 The function for calculating the desired force can be seen in code 
 segment~\ref{lst:desired-force}. Of note is the implementation on lines 7-19 
-of the conditional definition of $V_\alpha^0(t)$ given in 
+of the conditional definition of $V_\alpha^d(t)$ given in 
 equation~\eqref{eqn:cond-define} and the creation of a unit vector in lines 
 20-21 to add the direction to the desired velocity.
 
 To increase performance, it is preferred to update values in place, instead of 
-copying them around in different places of the computer's memory. This gives 
+copying them around in different parts of the computer's memory. This gives 
 rise to the constructs around the \texttt{vector\_i*}-functions in the code; 
 here the \emph{i} stands for ``in place''.
 
@@ -226,7 +218,7 @@ void add_wall_repulsion(Pedestrian * a)
     int rep_p_c = 0;
     Vector repulsion;
 
-    rep_p_c = find_repultion_points(a, repulsion_points);
+    rep_p_c = find_repulsion_points(a, repulsion_points);
 
     for(i = 0; i < rep_p_c; i++) {
         repulsion = calculate_wall_repulsion(a, repulsion_points[i]);
@@ -262,12 +254,13 @@ In lines 29-35 an endpoint is discarded if it is already used because it is
 shared with a wall that has already defined a repulsion point. In lines 36-57 
 endpoints that are not discarded in this way are added to the list of 
 repulsion points if they are either not free-floating (i.e. shared with 
-another wall), or closer to the pedestrian centre than the pedestrian's radius. This 
-ensures that doorways to not repulse pedestrians that are passing through it.
+another wall), or closer to the pedestrian centre than the pedestrian's 
+radius. This ensures that doorways do not repulse pedestrians that are passing 
+through it.
 
 \begin{lstlisting}[caption={Finding the wall repulsion 
     points.},label=lst:repulsion-points]
-int find_repultion_points(Pedestrian * a, Vector repulsion_points[])
+int find_repulsion_points(Pedestrian * a, Vector repulsion_points[])
 {
     int i,j;
     double projection_length;
@@ -341,7 +334,7 @@ section~\ref{sec:continuous-movement}.
 
 After updating the position, the pedestrian's velocity is updated by adding 
 the acceleration vector, to be used for the next simulation step. The code 
-that does this is seen in code segment~\ref{lst:update-position}. Lines 14 is 
+that does this is seen in code segment~\ref{lst:update-position}. Line 14 is 
 related to the measuring of data for plotting, and will be explained in 
 section~\ref{sec:measurement}.
 
@@ -349,11 +342,9 @@ section~\ref{sec:measurement}.
     position.},label=lst:update-position]
 void update_position(Pedestrian * a)
 {
-    Vector delta_p;
-
-    delta_p.x = a->velocity.x * timestep + 0.5 * a->acceleration.x * pow(timestep, 2);
-    delta_p.y = a->velocity.y * timestep + 0.5 * a->acceleration.y * pow(timestep, 2);
-
+	Vector delta_p = vector_add(
+			vector_mul(a->velocity, timestep), 
+			vector_mul(a->acceleration, 0.5 * pow(timestep, 2)));
 
     vector_iadd(&a->position, &delta_p);
 	a->velocity = vector_add(a->velocity,
@@ -381,13 +372,13 @@ determining whether a lane formation occurs. We include the relevant images as
 illustrations in the results section.
 
 \subsubsection{Graphs of measurements}
-As part of the simulation program, we have added measurement of various 
+As part of the simulation program, we have added measurements of various 
 properties of the simulation, which are then assembled into graphs after the 
 simulation has run. This section describes the measuring features we have 
 added to the program, and \emph{how} they work. \emph{Why} we measure each 
 property is explained along with the results. Since we have revised which 
 graphs are needed throughout our work with the simulations, some additional 
-measuring and graphing features exist in the source code, that are not 
+measuring and graphing features exist in the source code, but are not 
 described here.
 
 The graphing functionality works in two different modes: One is graphing 
@@ -401,25 +392,17 @@ are used for both modes. The properties we measure are:
 
 \begin{itemize}
 
-    \item \textbf{Average velocity:} This property measures the average pedestrian 
-        velocity for the given simulation step, and is computed as a simple 
-        arithmetic mean. The property is measured both as a function of time 
-        and as a function of a varied parameter. In the case of varying a 
-        parameter, the average velocity for a whole simulation is computed as 
-        the mean of the average velocities for each simulation step.
-
     \item \textbf{Flow rate:} Flow rate is measured along a line segment 
         defined as a parameter to the scenario; the line segment is assumed to 
-        be perpendicular to the primary movement direction of the pedestrians. 
+        be perpendicular to the primary movement direction of the pedestrians.  
         The simulation keeps track of at what time each pedestrian first comes 
         into contact with this line segment, i.e. is first less than their 
-        radius away from it (as can be seen in code 
-        segment~\ref{lst:update-position}). This is used as an approximation 
-        of when the pedestrians cross the line. The average flow rate is then 
-        computed as the number of pedestrians who have crossed the line 
-        divided by the time.  This is graphed as a function of time, using a 
-        five second moving average, and as a function of parameters, using the 
-        average of the flow rate measurements of throughout the simulation.
+        radius away from it . This is used as an approximation of when the 
+        pedestrians cross the line. The average flow rate is then computed as 
+        the number of pedestrians who have crossed the line divided by the 
+        time.  This is graphed as a function of time, using a five second 
+        moving average, and as a function of parameters, using the average of 
+        the flow rate measurements of an entire simulation.
 
     \item \textbf{Leaving time:} The leaving time is a measure of how long it 
         takes for all pedestrians to leave the simulation completely. Pedestrians are 
@@ -431,3 +414,13 @@ are used for both modes. The properties we measure are:
         where pedestrians are added continuously, or where they never reach their 
         target) do not measure this property.
 \end{itemize}
+
+\subsection{Summary}
+In this section we have described our implementation of the simulation. The 
+program is split up into three parts: setting up the simulation with 
+parameters and initial conditions, the calculations of the model itself, and 
+measurements of the results. The first and last parts are implemented in the 
+Python programming language, while the calculations themselves are implemented 
+in C for performance reasons. The measurements of simulation results include 
+drawing of pictures of the simulation, and graphs of the flow rate and the 
+time it takes all pedestrians to leave a room.

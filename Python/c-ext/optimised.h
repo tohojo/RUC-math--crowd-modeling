@@ -33,7 +33,7 @@ static Vector calculate_repulsion(Pedestrian * a, Pedestrian * b, double A, doub
 static void add_repulsion(Pedestrian * a, Pedestrian * b);
 static void add_social_sphere(Pedestrian * a, Pedestrian * b);
 static void add_wall_repulsion(Pedestrian * a);
-static int find_repultion_points(Pedestrian * a, Vector repulsion_points[]);
+static int find_repulsion_points(Pedestrian * a, Vector repulsion_points[]);
 static Vector calculate_wall_repulsion(Pedestrian * a, Vector repulsion_point);
 static void update_position(Pedestrian * a);
 static int is_escaped(Pedestrian * a);
