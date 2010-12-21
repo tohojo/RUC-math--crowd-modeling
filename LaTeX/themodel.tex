@@ -134,9 +134,8 @@ can vary over time and is given by:
 
 Here $V_{\alpha}^{Id}$ is the \emph{initial desired speed} (a model
 parameter), and $V_{\alpha}^{\text{max}}$ is the \emph{maximum desired speed}
-of pedestrian $\alpha$. The maximum desired speed is given as a parameter and
-is calculated as a function of the initial desired speed by multiplying with a
-factor larger than one. This speed is the maximum speed the pedestrian will
+of pedestrian $V_{\alpha}^{\text{max}}=C V_{\alpha}^{Id}$, where C is some constant larger than 1. The maximum desired speed is given as a parameter and
+is calculated as $$. This speed is the maximum speed the pedestrian will
 try to accelerate to when compensating for slowing down because of obstacles.
 
 The value $\eta_{\alpha}(t)$ is called the \emph{impatience factor} of the
@@ -168,8 +167,7 @@ figure~\ref{impatience}.
     \label{impatience}
 \end{figure}
 
-$V^d_\alpha(t)$ is undefined at $t=0$, so that would result in a
-division by zero. We complete the definition by defining 
+$V^d_\alpha(t)$ is undefined at $t=0$. We complete the definition by defining 
 $V^d_\alpha(0)=V^{Id}_\alpha$. This means that $V^d_\alpha(t)$
 is defined as follows:
 
@@ -184,28 +182,21 @@ is defined as follows:
     \end{array} \right.
 \end{equation}
 
+
+
 Analysing equations~\eqref{eqn:desired-speed} and \eqref{eqn:impatience}, it
 is clear that as the average speed approaches $V^{Id}_\alpha$ so does the
-desired speed, since $\eta_\alpha(t)\rightarrow0$ for $\langle V_\alpha(t)
-\rangle \rightarrow V^{Id}_\alpha$ which makes $V^d_\alpha(t)$ be dominated by
-$V^{Id}_\alpha$.
+desired speed because; $\langle V_\alpha(t)\rangle \rightarrow V^{Id}_\alpha$ implies  $\eta_\alpha(t)\rightarrow0$ which implies $V^d_\alpha(t))\rightarrow $V^{Id}_\alpha$$
 
-If $\eta_\alpha(t)$ is considered as a function of the average velocity
-instead of the time, it is monotonously decreasing. This means that
-$V^d_\alpha(t)$ considered as a function of the average velocity is
-monotonously decreasing if $V^{\text{max}}_\alpha > V^{Id}_\alpha$,
-monotonously increasing if $V^{\text{max}}_\alpha < V^{Id}_\alpha$, and
-constant if $V^{\text{max}}_\alpha = V^{Id}_\alpha$. This function also has
-the property that $V^d_\alpha(t)=V^{Id}_\alpha$ when $\langle V_\alpha(t)
-\rangle = V^{Id}_\alpha$.
+Similar we see that $\langle V_\alpha(t)\rangle \rightarrow 0$ implies $\eta_\alpha(t)\rightarrow0$ which implies $V^d_\alpha(t))\rightarrow V^{max}_\alpha$
 
 Since $V^{\text{max}}_\alpha$ is set to be larger than $V^{Id}_\alpha$, this
-means that as the average speed goes up, the desired speed goes down.  When
-the desired speed is lower than the actual speed, this will result in a
+means that as the average speed goes up, the desired speed goes down.  If
+the desired speed is in some case is lower than the actual speed, this will result in a
 negative desired movement force due to~\eqref{eqn:desired-force}, and vice
-versa. The end result is that the desired movement force will act as a
+versa. So you could say that the desired movement force acts as a
 stabilising force, that accelerates the pedestrian when it is moving slower
-than its desired speed, and decelerate it when it is moving faster, but
+than its desired speed, and decelerate it when it is moving faster, and
 allowing for movement of up to the maximum desired speed to ``make up'' for
 lost time if the pedestrian has been slowed down by the other forces acting on
 it.
@@ -234,10 +225,8 @@ table~\ref{tbl:desired-force}.
 
 \subsection{Interaction force between pedestrians}
 \label{seq:interaction-pedestrians}
-The \emph{interaction force} between pedestrians is a force between each pair
-of pedestrians $\alpha$ and $\beta$. This force is calculated for $\alpha$ as
-a sum of the interaction forces for all other pedestrians. The interaction
-force is repulsive in nature, and prevents the pedestrians from overlapping or
+The \emph{interaction force} between pedestrians is a summation of all the forces between a pedestrian $\alpha$ and the other pedestrians denoted $\beta$. 
+The interaction force is repulsive in nature, and should, if high enough, prevent the pedestrians from overlapping or
 walking through each other.
 
 The variant of this force that we present is slightly different from the one
@@ -261,7 +250,7 @@ position and velocity of both pedestrians, and is given by:
 
 Here $\theta_{\alpha \beta}$ is the angle between the movement direction of
 $\alpha$ and the vector pointing from $\alpha$ to $\beta$ and $d_{\alpha
-\beta}$ is the distance between the centres of the pedestrians.
+\beta}$ is the distance between the centres of the pedestrians, as seen in figure \ref{subfig:notation-interaction}.
 
 $ w(\theta_{\alpha \beta})$ is given as:
 
@@ -276,8 +265,8 @@ $ w(\theta_{\alpha \beta})$ is given as:
     \label{angleAB}
 \end{equation}
 
-Where $\lambda$ is a parameter of the model between zero and one. This means
-that $w$ is a weight between zero and one that modifies the force given by
+Where $0\leq \lambda \leq 1$. This and the fact that $-1\leq cos(\theta_{\alpha \beta})\leq 1$ 
+implies $\lambda \leq w \leq 1$. So $w$ is modifies the force given by
 $\overrightarrow{g}\left(d_{\alpha \beta}(t)\right)$ by an angular component.
 When $\lambda=1$, so is $w$, and no angular modification is made. When
 $\lambda<1$, the force is modified by a weight determined by the angle, giving
@@ -390,7 +379,7 @@ interaction is summarised in figure~\ref{fig:wall-notation}.
 It is not clear from the article how finding the nearest point on the wall is
 accomplished. In most cases this can be done by projecting the position of the
 pedestrian onto the line segment that defines a wall. Some complications
-arise when walls are at odd angles to pedestrians; this is discussed further
+arise because the projection it not always a point on the wall; this is discussed further
 in section~\ref{sec:repulsion-points}. In the following, we assume that the
 nearest point on the wall, $\overrightarrow{p_{\gamma \alpha}}$, is known.
 

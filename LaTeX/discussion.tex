@@ -1,7 +1,10 @@
 \section{Discussion of our results}
 \label{sec:discussion}
-We have seen in section~\ref{sec:results}, that when implementing the model presented in \cite{self-org} as accurate as possible, we can't reproduce the results. Throw our study of social force models we have come across a wide variety of different improvements. We believe that some of these improvements will be able to solve the discrepancies between our results and the results in \cite{self-org}.
- 
+We have seen in section~\ref{sec:results}, that when implementing the model 
+presented in \cite{self-org} by ourselves, we cannot reproduce some of the results. 
+Through our study of social force models we have come across a wide variety of 
+different improvements. We believe that some of these improvements will be able to 
+solve the discrepancies between our results and the results in \cite{self-org}. 
 The section is divided into three parts: A discussion of the effects of modifying  
 the interaction forces, a discussion of parameter values, and a 
 discussion of possible errors related to our implementation of the simulation.
@@ -9,12 +12,21 @@ discussion of possible errors related to our implementation of the simulation.
 \subsection{Modifying interaction forces}
 \label{sec:new-forces}
 An obvious possibility when discussing why we do not see the expected results, 
-is analysing the forces that comprise the model. Two things become apparent: 
-none of the forces in the model are dependent on the current velocities of the 
-pedestrians and they all operate only in a straight line between repulsion 
-points. 
+is analysing the forces that comprise the model. As there is no defined mathematical 
+expression for social force that should be put into this model, the way to 
+measure social force is to evaluate the impression of the environment to the pedestrian 
+and design a proper expression of the force. Thus the design of the force can have 
+specific emphasis on some particular features. What we are try to find out now is 
+if some important features in the force are missing and are necessary to make simulations 
+show some phenomena. 
 
-We speculate that the reason that we do not see the faster-is-slower effect is that our model do not take into account friction between pedestrians. Such a force has been suggested to give rise to the faster is slower effect in \ref{HelbingNew} and a term for the frictional force is given in \cite{helbing00}, here they reproduce the faster-is-slower effect through simulations. The friction force is given as a force which is perpendicular to the direction of the repulsive force, as illustrated in 
+We speculate that the reason that we do not see the faster-is-slower effect is 
+that our model does not take into account frictional effect between pedestrians. 
+Such a force has been suggested to give rise to the faster is slower effect 
+in \ref{HelbingNew} and a term for the frictional force is given in \cite{helbing00}, 
+where they reproduce the faster-is-slower effect through simulations. 
+The friction force is given as a force which is perpendicular to the direction 
+of the repulsive force, as illustrated in 
 figure~\ref{fig:friction}. The magnitude of the frictional component depends 
 on both the distance and the relative velocity between the two pedestrians and 
 would make it harder for pedestrians to move in dense crowds.  Other 
@@ -100,10 +112,11 @@ figure~\ref{fig:extra-forces-behaviour}.
     \label{fig:extra-forces-behaviour}
 \end{figure}
 
-Making pedestrians avoid colliding with each other could be achieved by adding 
-a force that is perpendicular to the direction of other pedestrians, much like 
-the friction forces, but weaker and with a longer range. This might allow 
-pedestrians to sidestep each other, as illustrated in 
+We think of a way of solving the first strange behaviour ourselves, 
+that may make pedestrians avoid colliding with each other and could be 
+achieved by adding a force that is perpendicular to the direction of other 
+pedestrians, much like the friction forces, but weaker and with a longer range. 
+This might allow pedestrians to sidestep each other, as illustrated in 
 figure~\ref{subfig:colliding}. We believe this would improve the results from 
 the simulations of corridors that have pedestrians walking in both directions.  
 It could also enable pedestrians to navigate around static obstacles, such as 
@@ -113,11 +126,21 @@ pedestrians to navigate along a wall if its target is on the other side of it;
 this could be used to simulate pedestrians trapped in a smoke-filled room 
 where the exits are not visible.
 
-When pedestrians decelerate at the same rate no matter their velocities, they 
+The other problematic behaviour in our simulation is that pedestrians 
+decelerate with the same rate no matter their velocities when they are 
+moving toward a wall at the same distance away from the wall, they 
 will in certain extreme cases (i.e. when they are moving very fast) not 
-decelerate enough, and so will move through walls or even each other. One could speculate that this is cause by a to large time step but it turns out that this can happen independent of the time step. To avoid this we either have to recalibrate the constants i.e. increasing the wall potential. A more efficient way of solving this problem is by adding a velocity-dependent term to the repulsive forces so 
+decelerate enough, and so will move through walls or even each other. 
+We first speculate that this is caused by a too large time step but it turns out 
+that this can happen independent of the time step. To avoid this we 
+have also tried to recalibrate the constants i.e. increasing the wall potential. 
+A more reasonable way of solving this problem is suggested in the 
+article \cite{ABconstant}, that is by adding a velocity-dependent 
+effect to the repulsive forces so 
 that pedestrians moving faster will be repulsed stronger or at a greater 
-range, could be a remedy for this behaviour. Indeed, adding such a force has 
+range, could be a remedy for this behaviour, because pedestrians moving 
+toward the wall with a larger value of velocity should receive a greater impulse 
+from the wall. Indeed, adding such a force has 
 been seen to improve model predictions when compared to data from real life 
 situations \cite{ABconstant}.
 
@@ -125,16 +148,18 @@ situations \cite{ABconstant}.
 The magnitude of the forces in the model depends heavily on the values of the 
 various constants that are set as model parameters. This means that choosing 
 proper model parameters is important to get good results.
-The value of the parameters we have 
-used are obtained from \cite{self-org}, but they do no mention the size of the
-max desired velocity and the wall potential. We have found these in the article \cite{social-force} so we cannot be completely sure that these are of the right size.
-There has been a tendency that the parameters vary wildly between articles which are comparable \cite{frebyheat} \cite{} \cite{}. We have 
+The value of the parameters we have used are obtained from \cite{self-org}, 
+but they have not mentioned the size of the
+max desired velocity and the wall potential. We have found them in the 
+article \cite{social-force} but we cannot be completely sure that they are of 
+the right value. There has been a tendency that the parameters vary wildly 
+between articles which are comparable \cite{frebyheat} \cite{} \cite{}. We have 
 attempted to adjust some of the parameters when we have seen strange 
 behaviour, such as pedestrians walking through walls. The fact remains, 
 though, that we cannot be sure that the parameters we have ended up using are 
 good ones, and this might be a source of error.
 
-In newer articles we have seen parameter values obtained by fitting model 
+In the latest articles we have seen parameter values obtained by fitting model 
 predictions to results obtained experimentally, by filming real human crowds.  
 We believe this is a good way to estimate parameters, but it leaves us at a 
 disadvantage since we are not able to do such experiments with our own 
@@ -196,10 +221,10 @@ numbers.
 
 
 \subsection{Summary}
-We have discussed several possible cause for discrepancies in our model, and 
-possible remedies. The forces in the model only have one direction, 
-corresponding to the direction between the repulsion points, and they are not 
-adjusted by pedestrian walking speed. This could be remedied by adding 
+We have discussed several possible causes for discrepancies in our model, and 
+possible remedies. The forces in the model only have a repulsive component that 
+depends on the relative positions but not the relative velocity between pedestrians. 
+This could be remedied by adding 
 perpendicular forces and forces that are dependent on walking speed, which 
 might produce better results. Depending on the way they are formulated, such 
 forces could be interpreted as frictional forces between agents. Selection of 
@@ -208,7 +233,7 @@ inaccessible to us, is obtaining parameters from real-world experiments, by
 fitting data to simulations. Finally, errors arising from the nature of our 
 implementation might occur. This includes possible coding errors, and errors 
 as a result of extremely small or large random numbers used when setting 
-initial conditions.  This can be somewhat mitigated by testing the 
+initial conditions. This can be somewhat mitigated by testing the 
 implementation, and by discarding very small or large random numbers.
 
 In the next section we will assess social force models in a more general sense, 
