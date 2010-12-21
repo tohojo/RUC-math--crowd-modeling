@@ -93,7 +93,7 @@ void add_wall_repulsion(Pedestrian * a)
     int rep_p_c = 0;
     Vector repulsion;
 
-    rep_p_c = find_repultion_points(a, repulsion_points);
+    rep_p_c = find_repulsion_points(a, repulsion_points);
 
     for(i = 0; i < rep_p_c; i++) {
         repulsion = calculate_wall_repulsion(a, repulsion_points[i]);
@@ -104,7 +104,7 @@ void add_wall_repulsion(Pedestrian * a)
     PyMem_Free(repulsion_points);
 }
 
-int find_repultion_points(Pedestrian * a, Vector repulsion_points[])
+int find_repulsion_points(Pedestrian * a, Vector repulsion_points[])
 {
     int i,j;
     double projection_length;
