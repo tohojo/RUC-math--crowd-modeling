@@ -161,7 +161,7 @@ figure~\ref{impatience}.
 
 \begin{figure}[ht]
     \centering
-    {\includegraphics[width=0.5\textwidth]{Figures/impatience.pdf}}
+    {\includegraphics[width=0.4\textwidth]{Figures/impatience.pdf}}
     \caption[Our interpretation of the average velocity]{Our interpretation of
     the average velocity. The vector pointing from the pedestrian's initial
     position $p^i_\alpha$ to the current position $p_\alpha$, is projected 
@@ -204,12 +204,11 @@ versa. An interpretation of this is that the desired movement force acts as a
 stabilising force, that accelerates the pedestrian when it is moving slower 
 than its desired speed, and decelerates it when it is moving faster, allowing 
 for movement speeds of up to the maximum desired speed to ``make up'' for lost 
-time if the pedestrian has been slowed down by the other forces acting on it.
-
+time if the pedestrian has been slowed down by the other forces acting on it. 
 The components of the desired movement force are summarised in 
 table~\ref{tbl:desired-force}.
 
-\begin{table}[h]
+\begin{table}[hb]
     \centering
     \begin{tabular}{l l}
         \toprule
@@ -261,7 +260,7 @@ position and velocity of both pedestrians, and is given by:
 Here $\theta_{\alpha \beta}$ is the angle between the movement direction of
 $\alpha$ and the vector pointing from $\alpha$ to $\beta$ and $d_{\alpha
 \beta}$ is the distance between the centres of the pedestrians, as seen in 
-figure \ref{subfig:notation-interaction}.
+figure \vref{subfig:notation-interaction}.
 
 $ w(\theta_{\alpha \beta})$ is given as:
 
@@ -314,11 +313,11 @@ figure~\ref{subfig:notation-interaction}.
 \begin{figure}[h]
     \centering
     \subfloat[Notation for interaction]{
-        \includegraphics[width=0.45\textwidth]{Figures/NotationOfInteraction.pdf}
+        \includegraphics[width=0.4\textwidth]{Figures/NotationOfInteraction.pdf}
         \label{subfig:notation-interaction}
     }
     \subfloat[Relation between distance and force]{
-        \includegraphics[width=0.45\textwidth]{Figures/physicalinteraction.pdf}
+        \includegraphics[width=0.4\textwidth]{Figures/physicalinteraction.pdf}
         \label{subfig:interaction-relation}
     }
     \caption[Interaction between two
@@ -498,7 +497,7 @@ decreases exponentially with distance, and its magnitude is determined by a
 model parameter.
 
 A complete summary of the model's notation and parameters is given in
-table~\vref{tbl:model-summary}.
+table~\ref{tbl:model-summary}.
 
 Our review of the model has revealed various areas that we need to address in
 order to create practical numerical simulations. We have already filled out
