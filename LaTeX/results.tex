@@ -153,10 +153,9 @@ the faster-is-slower effect.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.8\textwidth]{Figures/fastIsSlowNot.pdf}
+    \includegraphics[width=0.8\textwidth]{Figures/timetoclearroom.pdf}
     \caption[Leaving time for the square room]{Leaving time for the square 
-    room. While there is not a linear relation between velocity and leaving 
-    time, we do not see the increase in leaving time we expected.}
+    room. We do not see the increase in leaving time as we increase the speed.}
     \label{fig:square-room-leaving}
 \end{figure}
 
@@ -234,17 +233,6 @@ bottleneck. The effect is described in \cite{oscil}, but it is not clear how
 they measure it. Figure~\ref{fig:oscillitoryflow_litterature} shows the 
 illustration from the article that explains the effect.
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.4\textwidth]{Figures/oscil_flow.png}
-    \caption[Illustration of oscillating flow from \cite{oscil}]{Illustration 
-    of oscillating flow from \cite{oscil}. A small group of pedestrians 
-    slipping through the bottleneck passes through the bottleneck in one 
-    direction. Oscillations occur when pedestrians alternately pass through 
-    the bottleneck from each direction.}
-    \label{fig:oscillitoryflow_litterature}
-\end{figure}
-
 When looking at the simulation while it is running it is not immediately clear 
 whether the oscillatory flow occurs. Clogging appears in both ends of the 
 bottleneck and people are sometimes squeezed through the bottleneck. To get a 
@@ -260,7 +248,29 @@ when measuring the flow rate in the middle of the bottleneck.
 
 In conclusion, we may be able to replicate the oscillating flows, but the 
 results are not completely clear.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Figures/oscil_flow.png}
+    \caption[Illustration of oscillating flow from \cite{oscil}]{Illustration 
+    of oscillating flow from \cite{oscil}. A small group of pedestrians 
+    slipping through the bottleneck passes through the bottleneck in one 
+    direction. Oscillations occur when pedestrians alternately pass through 
+    the bottleneck from each direction.}
+    \label{fig:oscillitoryflow_litterature}
+\end{figure}
 
+\begin{figure}[h]
+    \centering
+    \subfloat[Bidirectional flow in a corridor.]{\includegraphics[width=0.45\textwidth]{Figures/flowrateBiDirecBottle.pdf}}
+    \subfloat[Bidirectional flow in a corridor with a bottleneck.]{
+        \resizebox{0.45\textwidth}{!}{\input{Figures/corridorbottleBiClog.tex}}
+    }\\
+    
+    \caption[Lane formation in corridor simulations]{Lane formation in 
+    corridor simulations. The colours indicate the direction the pedestrians 
+    are moving in. Lane formation can be seen in all three cases.}
+    \label{fig:laneformation}
+\end{figure}
 
 \subsection{Summary}
 We have seen that our simulation is able to show reasonable results of 
