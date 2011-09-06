@@ -61,13 +61,41 @@ static void add_desired_acceleration(Pedestrian * a)
 Vector calculate_repulsion(Pedestrian * a, Pedestrian * b, double A, double B)
 {
     double radius_sum = a->radius + b->radius;
+    Vector velocity_diff = vector_sub(b->velocity, a->velocity);
     Vector from_b     = vector_sub(a->position, b->position);
+// Længden mellem person a og b
     double distance   = vector_length(from_b);
+//FRIKTION OG BODY INTERACTION START
+// Længden af radius og afstand mellem 2 personer "tjekker om de overlapper".
+    double distance2  = (radius_sum - distance);
+//step 1 finder tangenten mellem to personer
+    vector_unitise(&from_b);
+    Vector tangenten = vector_tangent(from_b);
+//step 2 prikker hastighedens forskellen med tangenten for at finde deltaV
+    double velosTang = vector_dot(tangenten, velocity_diff);
+//step 3 Finder hastigheds tangenten ganget med forskellen mellem afstand og radius.
+    double step3 = velosTang * distance2;
+//step 4 Finder det samlede udtryk
+    Vector friction = vector_mul(tangenten, 700 * step3);
+
+
+// BODY START:
+    Vector nij = vector_sub(a->position, b->position);
+    vector_imul(&nij, 700 * distance2);
+//FRIKTION OG BODY SLUT:
 
     vector_unitise(&from_b);
     vector_imul(&from_b, A * exp((radius_sum-distance)/B));
-
-    return from_b;
+    Vector resault = from_b;
+    // EKSTRA BEREGNING KAN UDKOMMENTERES
+    if(radius_sum > distance)
+    {
+        //Ligger friktion til:
+    Vector resault2 = vector_add(from_b,friction);
+        //Ligger body til:
+    resault = vector_add(resault2, nij);
+    }
+    return resault;
 }
 
 void add_repulsion(Pedestrian * a, Pedestrian * b)
@@ -172,11 +200,30 @@ int find_repulsion_points(Pedestrian * a, Vector repulsion_points[])
 Vector calculate_wall_repulsion(Pedestrian * a, Vector repulsion_point)
 {
     Vector repulsion_vector = vector_sub(a->position, repulsion_point);
+    Vector velocity_a = a->velocity;
     double repulsion_length = vector_length(repulsion_vector);
 	vector_unitise_c(&repulsion_vector, repulsion_length);
 
-	double repulsion_force = (1/a->radius) * U * exp(-repulsion_length/a->radius);
+    // START EKSTRA
+    //Wall tangent (friction)
 
+	double repulsion_force = (1/a->radius) * U * exp(-repulsion_length/a->radius);
+        //Tilføjer ekstra ting til væggen! Så de ikke løber (Kan udkommenters)
+
+        if(a->radius > repulsion_length)
+        {
+            Vector tangent = vector_tangent(repulsion_vector);
+            vector_unitise(&tangent);
+            double veloTan = vector_dot(velocity_a,tangent);
+            //Friktion fra væg
+            vector_imul(&tangent, 90 * veloTan * (a->radius - repulsion_length));
+            //Friktion bodyinteraction fra væg
+            vector_imul(&repulsion_vector, 200 * (a->radius - repulsion_length));
+
+            Vector repulsion_vector = vector_add(repulsion_vector, tangent);
+
+        }
+     //SLUT EKSTRA
 	vector_imul(&repulsion_vector, repulsion_force);
 
     return repulsion_vector;

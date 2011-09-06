@@ -5,6 +5,8 @@ typedef struct {
     double y;
 } Vector;
 
+Vector vector_tangent(Vector v1);
+Vector vector_gange(Vector v1, Vector v2);
 Vector vector_add(Vector v1, Vector v2);
 void vector_iadd(Vector * v1, Vector * v2);
 Vector vector_sub(Vector v1, Vector v2);

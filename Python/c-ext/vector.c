@@ -1,5 +1,26 @@
 #include "vector.h"
 
+
+Vector vector_tangent(Vector v1)
+{
+    Vector v;
+
+    v.x = v1.y*-1;
+    v.y = v1.x;
+
+    return v;
+}
+
+Vector vector_gange(Vector v1, Vector v2)
+{
+    Vector v;
+
+    v.x = v1.x*v2.x;
+    v.y = v1.y*v2.y;
+
+    return v;
+}
+
 Vector vector_add(Vector v1, Vector v2)
 {
     Vector v;
