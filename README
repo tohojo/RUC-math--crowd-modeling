@@ -14,3 +14,7 @@ license. See http://creativecommons.org/licenses/by-sa/3.0/
 
 All source code is licensed under the GNU GPL version 3.
 See http://www.gnu.org/licenses/gpl.html
+
+The 'extra-forces' branch contains modifications to the C code representing 
+extra forces, as discussed in the report. This work was done as exam
+preparation by Troels Christensen.
